@@ -11,10 +11,10 @@ small-chat-backend/node_modules
 small-chat-backend/libs/graphql/schema.gql
 
 # OS
-/.DS_Store
+.DS_Store
 
 # IDEs and editors
-/.idea
+.idea
 
 # IDE - VSCode
 .vscode/*
