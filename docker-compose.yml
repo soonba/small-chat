@@ -28,6 +28,13 @@ services:
       - mongodb
     depends_on:
       - mongodb
+  server:
+    build:
+      context: small-chat-backend/
+    ports:
+      - 3000:3000
+    networks:
+      - small-chat
   pubsub:
     image: redis:6.2.4-alpine
     networks:

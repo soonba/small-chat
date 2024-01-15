@@ -9,21 +9,15 @@
     "prebuild": "/node_modules/.bin/rimraf dist",
     "build": "/node_modules/.bin/nest build",
     "format": "/node_modules/.bin/prettier --write \\\\\\\"src/**/*.ts\\\\\\\" \\\\\\\"test/**/*.ts\\\\\\\"",
-    "start": "/node_modules/.bin/nest start",
-    "start:dev": "/node_modules/.bin/nest start --watch",
-    "start:debug": "/node_modules/.bin/nest start --debug --watch",
-    "start:prod": "node dist/main",
-    "lint": "/node_modules/.bin/eslint \\\\\\\"{src,apps,libs,test}/**/*.ts\\\\\\\" --fix",
-    "test": "/node_modules/.bin/jest",
-    "test:watch": "/node_modules/.bin/jest --watch",
-    "test:cov": "/node_modules/.bin/jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register /node_modules/.bin/jest --runInBand",
-    "test:e2e": "/node_modules/.bin/jest --config ./test/jest-e2e.json"
+    "start": "nest start",
+    "lint": "/node_modules/.bin/eslint \\\\\\\"{src,apps,libs,test}/**/*.ts\\\\\\\" --fix"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mongoose": "^10.0.2",
     "@nestjs/platform-express": "^9.0.0",
+    "mongoose": "^8.0.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
