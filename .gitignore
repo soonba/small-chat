@@ -2,6 +2,7 @@
 .DS_Store
 
 # Tests
+/build.sh
 /coverage
 /.nyc_output
 
