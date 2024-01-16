@@ -3,15 +3,23 @@ import { useNavigate } from 'react-router-dom';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
+import { useJoinMutation } from 'generated/graphql';
+
 export default function Login() {
     const [nickname, setNickname] = useState('');
     const navigate = useNavigate();
 
+    const [joinMutation] = useJoinMutation({
+        onCompleted() {
+            localStorage.setItem('nickname', nickname);
+            navigate('/chat');
+        }
+    });
+
     // TODO: API
     const handleClick = () => {
         if (nickname) {
-            localStorage.setItem('nickname', nickname);
-            navigate('/chat');
+            joinMutation({ variables: { input: { nickname } } });
         }
     };
 
