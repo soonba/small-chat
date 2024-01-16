@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class AppController {
   @Get()
   async helloWorld() {
-    return 'helloWorld';
+    return 'helloWorld2';
   }
 }
