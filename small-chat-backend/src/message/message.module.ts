@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+import { MessageResolver } from './message.resolver';
+import { SubscriptionModule } from 'libs/graphql/subscription.module';
 
-@Module({})
+@Module({
+  imports: [SubscriptionModule],
+  providers: [MessageResolver],
+})
 export class MessageModule {}
