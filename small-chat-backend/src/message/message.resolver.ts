@@ -19,7 +19,9 @@ export class MessageResolver {
     input: MessageInput,
   ) {
     await this.pubsub.publish(input.roomId, {
-      ...input,
+      roomId: 'sv',
+      sender: 'johm',
+      message: 'drg',
     });
 
     return {

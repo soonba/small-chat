@@ -28,7 +28,9 @@ export class RoomResolver {
     };
   }
 
-  @Subscription(() => MessageResponse)
+  @Subscription(() => MessageResponse, {
+    resolve: (value) => value,
+  })
   async subscribeRoom(
     @Args({
       name: 'input',

@@ -5,9 +5,6 @@ export class MessageResponse {
   @Field(() => String)
   roomId: string;
 
-  @Field(() => Date)
-  sendAt: Date;
-
   @Field(() => String)
   sender: string;
 
@@ -19,9 +16,6 @@ export class MessageResponse {
 export class MessageInput {
   @Field(() => String)
   roomId: string;
-
-  @Field(() => Date)
-  sendAt: Date;
 
   @Field(() => String)
   sender: string;
