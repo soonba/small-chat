@@ -6,12 +6,6 @@ import { join } from 'path';
 const subscriptions: SubscriptionConfig = {
   'graphql-ws': {
     path: '/graphql',
-    onConnect: (context) => {
-      const { connectionParams, extra } = context;
-      (extra as any).user = {
-        authorization: connectionParams.Authorization,
-      };
-    },
   },
 };
 
