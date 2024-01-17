@@ -15,7 +15,6 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  DateTime: { input: any; output: any; }
 };
 
 export type GeneralResponse = {
@@ -39,7 +38,6 @@ export type JoinResponse = {
 export type MessageInput = {
   message: Scalars['String']['input'];
   roomId: Scalars['String']['input'];
-  sendAt: Scalars['DateTime']['input'];
   sender: Scalars['String']['input'];
 };
 
@@ -47,7 +45,6 @@ export type MessageResponse = {
   __typename?: 'MessageResponse';
   message: Scalars['String']['output'];
   roomId: Scalars['String']['output'];
-  sendAt: Scalars['DateTime']['output'];
   sender: Scalars['String']['output'];
 };
 
@@ -110,7 +107,7 @@ export type SubscribeRoomSubscriptionVariables = Exact<{
 }>;
 
 
-export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', roomId: string, sendAt: any, sender: string, message: string } };
+export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', roomId: string, sender: string, message: string } };
 
 
 export const JoinDocument = gql`
@@ -151,7 +148,6 @@ export const SubscribeRoomDocument = gql`
     subscription subscribeRoom($input: SubscriptionInput!) {
   subscribeRoom(input: $input) {
     roomId
-    sendAt
     sender
     message
   }
