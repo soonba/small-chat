@@ -1,0 +1,15 @@
+mutation join($input: JoinInput!) {
+    join(input: $input) {
+        userId
+        nickname
+    }
+}
+
+subscription subscribeRoom($input: SubscriptionInput!) {
+    subscribeRoom(input: $input) {
+        roomId
+        sendAt
+        sender
+        message
+    }
+}

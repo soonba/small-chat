@@ -1,5 +1,7 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
+import { useSubscribeRoomSubscription } from 'generated/graphql';
+
 import ChatList from './components/ChatList';
 import ChatRoom from './components/ChatRoom/ChatRoom';
 
@@ -15,6 +17,14 @@ export default function Chat() {
     const handleSubmit = useCallback(() => {
         // TODO:
     }, []);
+
+    useSubscribeRoomSubscription({
+        variables: { input: { roomIds: ['1', '2'] } },
+        onData(options) {
+            // eslint-disable-next-line no-console
+            console.log(options.data.data);
+        }
+    });
 
     return (
         <>

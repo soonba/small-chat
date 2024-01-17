@@ -21,8 +21,7 @@
         "prettier": "prettier --write --config ./.prettierrc \"**/*.{ts,tsx}\"",
         "lint": "eslint \"**/*.{ts,tsx}\"",
         "lint:fix": "eslint --fix \"**/*.{ts,tsx}\"",
-        "gen-dev": "DOTENV_CONFIG_PATH=./.env.development graphql-codegen -r dotenv/config --config codegen.yml",
-        "gen-dev:local": "DOTENV_CONFIG_PATH=./.env.development.local graphql-codegen -r dotenv/config --config codegen.yml"
+        "gen-dev": "graphql-codegen -r --config codegen.yml"
     },
     "eslintConfig": {
         "extends": [
