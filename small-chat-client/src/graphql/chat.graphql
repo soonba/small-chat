@@ -8,7 +8,6 @@ mutation join($input: JoinInput!) {
 subscription subscribeRoom($input: SubscriptionInput!) {
     subscribeRoom(input: $input) {
         roomId
-        sendAt
         sender
         message
     }
