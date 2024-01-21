@@ -1,9 +1,10 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import BaseLayout from 'layout/BaseLayout';
-
+import Add from 'pages/Add';
 import Chat from 'pages/Chat';
 import Login from 'pages/Login';
+
+import BaseLayout from '../layout/BaseLayout';
 
 export default function App() {
     return (
@@ -22,6 +23,10 @@ export default function App() {
                 {
                     path: '/login',
                     element: <Login />
+                },
+                {
+                    path: '/add',
+                    element: <Add />
                 }
             ])}
         />

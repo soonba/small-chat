@@ -1,38 +1,21 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { InformationCircleIcon } from '@heroicons/react/20/solid';
+import { InformationCircleIcon } from "@heroicons/react/20/solid";
 
-import { useJoinMutation, useSubscribeRoomSubscription } from 'generated/graphql';
+import { useJoinMutation } from "generated/graphql";
 
 export default function Login() {
     const [nickname, setNickname] = useState('');
     const navigate = useNavigate();
 
     const [joinMutation] = useJoinMutation({
-        onCompleted() {
-            localStorage.setItem('nickname', nickname);
+        onCompleted( { join: {userId, nickname: _nickname}}) {
+            localStorage.setItem('userId', userId);
             navigate('/chat');
         }
     });
 
-    useSubscribeRoomSubscription({
-        variables: {
-            input: {
-                roomIds: ['1']
-            }
-        },
-        onData({ data: { data } }) {
-            console.log('도착111');
-            // eslint-disable-next-line no-console
-            console.log(data);
-        },
-        onError(error) {
-            console.log(error);
-        }
-    });
-
-    // TODO: API
     const handleClick = () => {
         if (nickname) {
             joinMutation({ variables: { input: { nickname } } });
