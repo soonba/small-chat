@@ -7,14 +7,18 @@ import { PUB_SUB } from 'libs/graphql/subscription.module';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { SubscriptionInput } from './inputs/room.input';
 import { MessageResponse } from '../message/models/message.model';
+import { RoomService } from './room.service';
 
 @Resolver()
 export class RoomResolver {
-  constructor(@Inject(PUB_SUB) private readonly pubsub: RedisPubSub) {}
+  constructor(
+    @Inject(PUB_SUB) private readonly pubsub: RedisPubSub,
+    private readonly roomService: RoomService,
+  ) {}
 
   //todo
   @Query(() => JoinResponse)
-  async getMyChattingList(
+  async getRooms(
     @Args({
       name: 'input',
       description: 'Args 입력',

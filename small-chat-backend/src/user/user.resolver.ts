@@ -21,7 +21,7 @@ export class UserResolver {
     input: UserToken,
   ): Promise<MyRoomsResponse> {
     return {
-      roomIds: await this.userService.getRoomsByUserToken(input),
+      participationRooms: await this.userService.getRoomsByUserToken(input),
     };
   }
 

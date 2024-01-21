@@ -17,6 +17,7 @@ export class RoomService {
       roomId: uuid(),
       host: input.userId,
       roomName: input.roomName,
+      participationIds: [input.userId],
     }).save();
 
     const { roomId } = savedRoom;

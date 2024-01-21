@@ -37,11 +37,19 @@ export class UserService {
   }
 
   async getRoomsByUserToken(input: UserToken) {
-    const result = await this.userModel.findById(input.userId);
-    return [];
+    const result = await this.userModel.findOne({ userId: input.userId });
+    return result.participatingRooms;
   }
 
+  //방 생성, 유저 문서에 참여 중인 방 추가
   async createRoom(input: CreateRoomInput) {
-    return await this.roomService.createRoom(input);
+    const user = await this.userModel.findOne({ userId: input.userId });
+    const result = await this.roomService.createRoom(input);
+    user.participatingRooms.push({
+      roomId: result.roomId,
+      roomName: input.roomName,
+    });
+    await user.save();
+    return result;
   }
 }

@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
+import { ParticipationRoom } from '../models/my-rooms.model';
 
 export type UserDocument = User & Document;
-
 @Schema({ timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt ' } })
 export class User {
   @Prop()
@@ -14,7 +14,7 @@ export class User {
   @Prop({ default: [] })
   hostRooms: string[];
   @Prop({ default: [] })
-  participatingRooms: string[];
+  participatingRooms: ParticipationRoom[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
