@@ -5,10 +5,25 @@ mutation join($input: JoinInput!) {
     }
 }
 
+mutation createRoom($input: CreateRoomInput!) {
+    createRoom(input: $input) {
+        roomId
+    }
+}
+
 subscription subscribeRoom($input: SubscriptionInput!) {
     subscribeRoom(input: $input) {
         roomId
         sender
         message
+    }
+}
+
+query getMyChattingList($input: UserToken!) {
+    getMyChattingList(input: $input) {
+        participationRooms {
+            roomId
+            roomName
+        }
     }
 }
