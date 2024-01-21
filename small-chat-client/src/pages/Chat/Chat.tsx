@@ -35,6 +35,7 @@ export default function Chat() {
         }
     });
 
+    // 메시지를 받으면 sender: userId 검사를 통해 누구인지 판단..
     return (
         <>
             <ChatList rooms={rooms} onClick={handleChatRoomSelect} />
