@@ -16,7 +16,7 @@ export default function Chat() {
     const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => setMessage({ message: e.currentTarget.value, sender: '', roomId: selected }), []);
 
     const handleSubmit = useCallback(() => {
-        // TODO:
+        // useSendMutation()
     }, []);
 
     const userId = localStorage.getItem('userId') || '';

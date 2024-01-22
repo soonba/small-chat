@@ -151,6 +151,13 @@ export type SubscribeRoomSubscriptionVariables = Exact<{
 
 export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', roomId: string, sender: string, message: string } };
 
+export type SendMutationVariables = Exact<{
+  input: MessageInput;
+}>;
+
+
+export type SendMutation = { __typename?: 'Mutation', send: { __typename?: 'GeneralResponse', message: string } };
+
 export type GetMyChattingListQueryVariables = Exact<{
   input: UserToken;
 }>;
@@ -258,6 +265,39 @@ export function useSubscribeRoomSubscription(baseOptions: Apollo.SubscriptionHoo
       }
 export type SubscribeRoomSubscriptionHookResult = ReturnType<typeof useSubscribeRoomSubscription>;
 export type SubscribeRoomSubscriptionResult = Apollo.SubscriptionResult<SubscribeRoomSubscription>;
+export const SendDocument = gql`
+    mutation send($input: MessageInput!) {
+  send(input: $input) {
+    message
+  }
+}
+    `;
+export type SendMutationFn = Apollo.MutationFunction<SendMutation, SendMutationVariables>;
+
+/**
+ * __useSendMutation__
+ *
+ * To run a mutation, you first call `useSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendMutation, { data, loading, error }] = useSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSendMutation(baseOptions?: Apollo.MutationHookOptions<SendMutation, SendMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendMutation, SendMutationVariables>(SendDocument, options);
+      }
+export type SendMutationHookResult = ReturnType<typeof useSendMutation>;
+export type SendMutationResult = Apollo.MutationResult<SendMutation>;
+export type SendMutationOptions = Apollo.BaseMutationOptions<SendMutation, SendMutationVariables>;
 export const GetMyChattingListDocument = gql`
     query getMyChattingList($input: UserToken!) {
   getMyChattingList(input: $input) {

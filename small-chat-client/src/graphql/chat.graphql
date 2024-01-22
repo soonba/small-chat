@@ -19,6 +19,12 @@ subscription subscribeRoom($input: SubscriptionInput!) {
     }
 }
 
+mutation send($input: MessageInput!) {
+    send(input: $input) {
+        message
+    }
+}
+
 query getMyChattingList($input: UserToken!) {
     getMyChattingList(input: $input) {
         participationRooms {
