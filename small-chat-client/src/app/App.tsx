@@ -1,10 +1,11 @@
+import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Add from 'pages/Add';
-import Chat from 'pages/Chat';
 import Login from 'pages/Login';
 
 import BaseLayout from '../layout/BaseLayout';
+import Chat from '../pages/Chat';
 
 export default function App() {
     return (
@@ -12,17 +13,17 @@ export default function App() {
             router={createBrowserRouter([
                 {
                     path: '/',
+                    element: <Login />
+                },
+                {
+                    path: '/chat',
                     element: <BaseLayout />,
                     children: [
                         {
-                            path: 'chat',
+                            path: '',
                             element: <Chat />
                         }
                     ]
-                },
-                {
-                    path: '/login',
-                    element: <Login />
                 },
                 {
                     path: '/add',
