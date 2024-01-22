@@ -9,7 +9,7 @@ import OpponentChat from './OpponentChat';
 type ChatRoomType = {
     selected: string;
     onLeave: () => void;
-    value: string;
+    value: { sender: string; roomId: string; message: string };
     onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     onClick: () => void;
 };

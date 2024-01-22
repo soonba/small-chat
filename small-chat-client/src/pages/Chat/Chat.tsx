@@ -6,13 +6,14 @@ import { ParticipationRoom, useGetMyChattingListQuery, useSubscribeRoomSubscript
 
 export default function Chat() {
     const [selected, setSelected] = useState('');
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState({ message: '', roomId: '', sender: '' });
     const [rooms, setRooms] = useState([{ roomId: '', roomName: '' } as ParticipationRoom]);
 
     const handleChatRoomSelect = useCallback((id: string) => setSelected(id), []);
     const handleChatRoomLeave = useCallback(() => setSelected(''), []);
 
-    const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => setMessage(e.currentTarget.value), []);
+    // todo 수정
+    const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => setMessage({ message: e.currentTarget.value, sender: '', roomId: selected }), []);
 
     const handleSubmit = useCallback(() => {
         // TODO:
@@ -28,10 +29,11 @@ export default function Chat() {
     });
 
     useSubscribeRoomSubscription({
-        variables: { input: { roomIds: ['1'] } },
+        variables: { input: { roomIds: rooms.map((el) => el.roomId) } },
         onData({ data: { data } }) {
             const messageResponse = data?.subscribeRoom;
-            console.log(messageResponse?.message);
+            const { sender, roomId, message: _message } = messageResponse ?? { sender: '', roomId: '', message: '' };
+            setMessage({ sender, roomId, message: _message });
         }
     });
 
