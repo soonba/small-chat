@@ -11,20 +11,22 @@ type ChatRoomType = {
     selected: string;
     onLeave: () => void;
 };
-
+type MessageType = {
+    message: string;
+    sender: string;
+    roomId: string;
+};
 export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
-    const [message, setMessage] = useState([{ message: '', sender: '', roomId: '' }]);
+    const [message, setMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
     const [inputMessage, setInputMessage] = useState('');
     const [roomName, setRoomName] = useState('');
     const [roomId, setRoomId] = useState('');
-    // todo 수정
+
     const handleChange = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
-            const newMessage = message;
-            newMessage.push({ message: e.currentTarget.value, sender: '', roomId: selected });
-            setMessage(newMessage);
+            setMessage((prev) => [...prev, { message: e.currentTarget.value, sender: '', roomId: selected } as MessageType]);
         },
-        [message, selected]
+        [selected]
     );
 
     const handleSubmit = useCallback(() => {
