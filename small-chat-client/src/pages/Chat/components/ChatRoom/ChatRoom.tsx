@@ -8,6 +8,7 @@ import OpponentChat from './OpponentChat';
 import { useGetRoomDetailsQuery, useSubscribeRoomSubscription } from '../../../../generated/graphql';
 
 type ChatRoomType = {
+    userId: string;
     selected: string;
     onLeave: () => void;
 };
@@ -16,13 +17,23 @@ type MessageType = {
     sender: string;
     roomId: string;
 };
-export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
+export default function ChatRoom({ userId, selected, onLeave }: ChatRoomType) {
+    // 기존메시지
     const [message, setMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
+    // 사용자 입력메시지
     const [inputMessage, setInputMessage] = useState('');
-
+    // 새로운 메시지
+    const [subscriptionMessage, setSubscriptionMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
     const handleChange = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
-            setMessage((prev) => [...prev, { message: e.currentTarget.value, sender: '', roomId: selected } as MessageType]);
+            setMessage((prev) => [
+                ...prev,
+                {
+                    message: e.currentTarget.value,
+                    sender: userId,
+                    roomId: selected
+                } as MessageType
+            ]);
         },
         [selected]
     );
@@ -31,36 +42,43 @@ export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
         // useSendMutation()
     }, []);
 
-    // 새로운 메시지가 왔을 때
     useSubscribeRoomSubscription({
         variables: { input: { roomIds: [selected] } },
         onData({ data: { data } }) {
             const messageResponse = data?.subscribeRoom;
-            const { sender, roomId: _roomId, message: _message } = messageResponse ?? { sender: '', roomId: '', message: '' };
-            const newMessage = message;
-            newMessage.push({ sender, roomId: _roomId, message: _message });
-            setMessage(newMessage);
+            const { sender, roomId, message } = messageResponse ?? {
+                sender: '',
+                roomId: '',
+                message: ''
+            };
+            setMessage((prev) => [...prev, { sender, roomId, message } as MessageType]);
         }
     });
 
     const { data } = useGetRoomDetailsQuery({
         fetchPolicy: 'no-cache',
-        variables: { input: { roomId: selected } },
-        onCompleted({ getRoomDetails: { roomId: _roomId, roomName: _roomName, messages } }) {
-            setMessage(messages);
-            console.log('리스트 쿼리호출');
-        }
+        variables: { input: { roomId: selected } }
     });
     const roomId = data?.getRoomDetails?.roomId || '';
     const roomName = data?.getRoomDetails?.roomName || '';
-
+    const messages = data?.getRoomDetails?.messages || null;
     return selected ? (
         <div className="relative mx-auto ml-96 w-full">
             <ChatRoomTitle roomName={roomName} onClick={onLeave} />
-            <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
-                <OpponentChat />
-                <MyChat />
-            </div>
+            {/* old messages -> from useGetRoomDetailQuery */}
+            {messages?.map((message) => (
+                <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
+                    <OpponentChat />
+                    <MyChat />
+                </div>
+            ))}
+            {/* newer messages -> from useSubscribeRoomSubscription */}
+            {subscriptionMessage.map((subscribeMessage) => (
+                <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
+                    <OpponentChat />
+                    <MyChat />
+                </div>
+            ))}
             <ChatTextarea value={inputMessage} onChange={handleChange} onClick={handleSubmit} />
         </div>
     ) : (
