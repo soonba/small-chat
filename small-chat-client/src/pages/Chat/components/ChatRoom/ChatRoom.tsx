@@ -19,8 +19,6 @@ type MessageType = {
 export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
     const [message, setMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
     const [inputMessage, setInputMessage] = useState('');
-    const [roomName, setRoomName] = useState('');
-    const [roomId, setRoomId] = useState('');
 
     const handleChange = useCallback(
         (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -45,16 +43,16 @@ export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
         }
     });
 
-    useGetRoomDetailsQuery({
+    const { data } = useGetRoomDetailsQuery({
         fetchPolicy: 'no-cache',
         variables: { input: { roomId: selected } },
         onCompleted({ getRoomDetails: { roomId: _roomId, roomName: _roomName, messages } }) {
-            setRoomName(_roomName);
             setMessage(messages);
-            setRoomId(_roomId);
             console.log('리스트 쿼리호출');
         }
     });
+    const roomId = data?.getRoomDetails?.roomId || '';
+    const roomName = data?.getRoomDetails?.roomName || '';
 
     return selected ? (
         <div className="relative mx-auto ml-96 w-full">
