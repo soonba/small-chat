@@ -8,7 +8,6 @@ import OpponentChat from './OpponentChat';
 import { useGetRoomDetailsQuery, useSubscribeRoomSubscription } from '../../../../generated/graphql';
 
 type ChatRoomType = {
-    userId: string;
     selected: string;
     onLeave: () => void;
 };
@@ -17,26 +16,23 @@ type MessageType = {
     sender: string;
     roomId: string;
 };
-export default function ChatRoom({ userId, selected, onLeave }: ChatRoomType) {
+export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
     // 기존메시지
-    const [message, setMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
+    // const [message, setMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
     // 사용자 입력메시지
     const [inputMessage, setInputMessage] = useState('');
     // 새로운 메시지
     const [subscriptionMessage, setSubscriptionMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
-    const handleChange = useCallback(
-        (e: ChangeEvent<HTMLTextAreaElement>) => {
-            setMessage((prev) => [
-                ...prev,
-                {
-                    message: e.currentTarget.value,
-                    sender: userId,
-                    roomId: selected
-                } as MessageType
-            ]);
-        },
-        [selected]
-    );
+    const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+        // setMessage((prev) => [
+        //     ...prev,
+        //     {
+        //         message: e.currentTarget.value,
+        //         sender: userId,
+        //         roomId: selected
+        //     } as MessageType
+        // ]);
+    }, []);
 
     const handleSubmit = useCallback(() => {
         // useSendMutation()
@@ -51,7 +47,7 @@ export default function ChatRoom({ userId, selected, onLeave }: ChatRoomType) {
                 roomId: '',
                 message: ''
             };
-            setMessage((prev) => [...prev, { sender, roomId, message } as MessageType]);
+            setSubscriptionMessage((prev) => [...prev, { sender, roomId, message } as MessageType]);
         }
     });
 

@@ -15,7 +15,7 @@ export default function Chat() {
     return (
         <>
             <ChatList userId={userId} onClick={handleChatRoomSelect} />
-            <ChatRoom userId={userId} selected={selected} onLeave={handleChatRoomLeave} />{' '}
+            <ChatRoom selected={selected} onLeave={handleChatRoomLeave} />{' '}
         </>
     );
 }
