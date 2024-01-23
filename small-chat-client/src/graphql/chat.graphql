@@ -33,3 +33,15 @@ query getMyChattingList($input: UserToken!) {
         }
     }
 }
+
+query getRoomDetails($input: GetRoomDetailInput!) {
+    getRoomDetails(input: $input) {
+        roomId
+        roomName
+        messages {
+            roomId
+            sender
+            message
+        }
+    }
+}
