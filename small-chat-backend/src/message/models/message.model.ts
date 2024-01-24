@@ -3,6 +3,9 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class MessageResponse {
   @Field(() => String)
+  messageId: string;
+
+  @Field(() => String)
   roomId: string;
 
   @Field(() => String)

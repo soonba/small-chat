@@ -1,13 +1,11 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
-import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { MessageInput } from './models/message.model';
-import { PUB_SUB } from 'libs/graphql/subscription.module';
 import { GeneralResponse } from 'libs/graphql/general.response';
+import { MessageService } from './message.service';
 
 @Resolver()
 export class MessageResolver {
-  constructor(@Inject(PUB_SUB) private readonly pubsub: RedisPubSub) {}
+  constructor(private readonly messageService: MessageService) {}
 
   @Mutation(() => GeneralResponse)
   async send(
@@ -18,12 +16,7 @@ export class MessageResolver {
     })
     input: MessageInput,
   ) {
-    await this.pubsub.publish(input.roomId, {
-      roomId: 'sv',
-      sender: 'johm',
-      message: 'drg',
-    });
-
+    await this.messageService.save(input);
     return {
       message: 'succeed',
     };

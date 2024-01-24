@@ -13,6 +13,7 @@ mutation createRoom($input: CreateRoomInput!) {
 
 subscription subscribeRoom($input: SubscriptionInput!) {
     subscribeRoom(input: $input) {
+        messageId
         roomId
         sender
         message
@@ -42,6 +43,7 @@ query getRoomDetails($input: GetRoomDetailInput!) {
             roomId
             sender
             message
+            messageId
         }
     }
 }

@@ -6,6 +6,7 @@ import { CreateRoomInput } from '../user/inputs/create-room.input';
 import { v4 as uuid } from 'uuid';
 import { GetRoomDetailInput } from './inputs/room.input';
 import { MessageService } from '../message/message.service';
+import { RoomInfoResponse } from './model/room.info.model';
 
 @Injectable()
 export class RoomService {
@@ -29,17 +30,30 @@ export class RoomService {
     };
   }
 
-  async getRoomAndMessageHistoryById(input: GetRoomDetailInput) {
+  async getRoomAndMessageHistoryById(
+    input: GetRoomDetailInput,
+  ): Promise<RoomInfoResponse> {
     const roomId = input.roomId;
-    const room = await this.roomModel.find({ roomId }).exec();
-    console.log('room________________________');
-    console.log(room);
-    console.log('room________________________');
-    await this.messageService.findAllByRoomId(roomId);
+    const room = await this.roomModel.findOne({ roomId }).exec();
+    const roomName = room?.roomName ?? '없음';
+    const messages = await this.messageService.findAllByRoomId(roomId);
     return {
-      roomId: '',
-      roomName: '',
-      messages: [],
+      roomId,
+      roomName,
+      messages: [
+        {
+          messageId: 'msg1',
+          roomId: roomId,
+          sender: 'abcde',
+          message: 'hello?',
+        },
+        {
+          messageId: 'msg2',
+          roomId: roomId,
+          sender: 'eefff',
+          message: 'hi...',
+        },
+      ],
     };
   }
 }

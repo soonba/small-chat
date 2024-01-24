@@ -1,19 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Message, MessageDocument } from './schemas/message.schema';
+import { MessageInput, MessageResponse } from './models/message.model';
+import { PUB_SUB } from '../../libs/graphql/subscription.module';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 
 @Injectable()
 export class MessageService {
   constructor(
     @InjectModel(Message.name)
     private messageModel: Model<MessageDocument>,
+    @Inject(PUB_SUB) private readonly pubsub: RedisPubSub,
   ) {}
 
-  async findAllByRoomId(roomId: string) {
+  async findAllByRoomId(roomId: string): Promise<MessageResponse[]> {
     const result = await this.messageModel.find({ roomId }).exec();
-    console.log('result________________________');
-    console.log(result);
-    console.log('result________________________');
+    return [];
+  }
+
+  async save(input: MessageInput) {
+    const { roomId, sender, message } = input;
+    const saved = await new this.messageModel({ ...input }).save();
+    //저장해야지?
+    await this.pubsub.publish(roomId, {
+      messageId: saved.messageId,
+      roomId,
+      sender,
+      message,
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import ChatRoomTitle from './ChatRoomTitle';
 import ChatTextarea from './ChatTextarea';
@@ -11,71 +11,58 @@ type ChatRoomType = {
     selected: string;
     onLeave: () => void;
 };
-type MessageType = {
+export type MessageType = {
     message: string;
     sender: string;
     roomId: string;
+    messageId: string;
 };
 export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
     // 기존메시지
-    // const [message, setMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
-    // 사용자 입력메시지
-    const [inputMessage, setInputMessage] = useState('');
+    const [existingMessage, setExistingMessage] = useState([{ messageId: '', message: '', sender: '', roomId: '' } as MessageType]);
     // 새로운 메시지
-    const [subscriptionMessage, setSubscriptionMessage] = useState([{ message: '', sender: '', roomId: '' } as MessageType]);
-    const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-        // setMessage((prev) => [
-        //     ...prev,
-        //     {
-        //         message: e.currentTarget.value,
-        //         sender: userId,
-        //         roomId: selected
-        //     } as MessageType
-        // ]);
-    }, []);
-
-    const handleSubmit = useCallback(() => {
-        // useSendMutation()
-    }, []);
+    const [subscriptionMessage, setSubscriptionMessage] = useState(new Map<string, MessageType[]>());
 
     useSubscribeRoomSubscription({
         variables: { input: { roomIds: [selected] } },
         onData({ data: { data } }) {
             const messageResponse = data?.subscribeRoom;
-            const { sender, roomId, message } = messageResponse ?? {
-                sender: '',
-                roomId: '',
-                message: ''
-            };
-            setSubscriptionMessage((prev) => [...prev, { sender, roomId, message } as MessageType]);
+            if (messageResponse) {
+                const { sender, roomId, message, messageId } = messageResponse;
+                const newMessage = subscriptionMessage;
+                const messageTypes = newMessage.get(roomId) || [];
+                newMessage.set(roomId, [...messageTypes, { sender, roomId, message } as MessageType]);
+                setSubscriptionMessage(newMessage);
+            }
         }
     });
+    const newMessageArr = subscriptionMessage.get(selected) ?? [];
 
     const { data } = useGetRoomDetailsQuery({
         fetchPolicy: 'no-cache',
-        variables: { input: { roomId: selected } }
+        variables: { input: { roomId: selected } },
+        onCompleted({ getRoomDetails: { messages } }) {
+            setExistingMessage(messages || []);
+        }
     });
     const roomId = data?.getRoomDetails?.roomId || '';
     const roomName = data?.getRoomDetails?.roomName || '';
-    const messages = data?.getRoomDetails?.messages || null;
+    const userId = localStorage.getItem('userId') ?? null;
+
     return selected ? (
         <div className="relative mx-auto ml-96 w-full">
             <ChatRoomTitle roomName={roomName} onClick={onLeave} />
             {/* old messages -> from useGetRoomDetailQuery */}
-            {messages?.map((message) => (
-                <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
-                    <OpponentChat />
-                    <MyChat />
-                </div>
-            ))}
+            {existingMessage.map((el) => {
+                const chatComponent = userId && userId === el.sender ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />;
+                return <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">{chatComponent}</div>;
+            })}
             {/* newer messages -> from useSubscribeRoomSubscription */}
-            {subscriptionMessage.map((subscribeMessage) => (
-                <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
-                    <OpponentChat />
-                    <MyChat />
-                </div>
-            ))}
-            <ChatTextarea value={inputMessage} onChange={handleChange} onClick={handleSubmit} />
+            {newMessageArr.map((el) => {
+                const chatComponent = userId && userId === el.sender ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />;
+                return <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">{chatComponent}</div>;
+            })}
+            <ChatTextarea roomId={roomId} />
         </div>
     ) : (
         <DefaultImage />
