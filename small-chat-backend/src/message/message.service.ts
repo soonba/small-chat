@@ -5,6 +5,7 @@ import { Message, MessageDocument } from './schemas/message.schema';
 import { MessageInput, MessageResponse } from './models/message.model';
 import { PUB_SUB } from '../../libs/graphql/subscription.module';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class MessageService {
@@ -21,8 +22,11 @@ export class MessageService {
 
   async save(input: MessageInput) {
     const { roomId, sender, message } = input;
-    const saved = await new this.messageModel({ ...input }).save();
-    //저장해야지?
+    const saved = await new this.messageModel({
+      ...input,
+      messageId: uuid(),
+    }).save();
+    console.log(saved);
     await this.pubsub.publish(roomId, {
       messageId: saved.messageId,
       roomId,
