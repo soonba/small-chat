@@ -31,7 +31,7 @@ export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
                 const { sender, roomId, message, messageId } = messageResponse;
                 const newMessage = subscriptionMessage;
                 const messageTypes = newMessage.get(roomId) || [];
-                newMessage.set(roomId, [...messageTypes, { sender, roomId, message } as MessageType]);
+                newMessage.set(roomId, [...messageTypes, { sender, roomId, message, messageId } as MessageType]);
                 setSubscriptionMessage(newMessage);
             }
         }
@@ -52,16 +52,12 @@ export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
     return selected ? (
         <div className="relative mx-auto ml-96 w-full">
             <ChatRoomTitle roomName={roomName} onClick={onLeave} />
-            {/* old messages -> from useGetRoomDetailQuery */}
-            {existingMessage.map((el) => {
-                const chatComponent = userId && userId === el.sender ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />;
-                return <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">{chatComponent}</div>;
-            })}
-            {/* newer messages -> from useSubscribeRoomSubscription */}
-            {newMessageArr.map((el) => {
-                const chatComponent = userId && userId === el.sender ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />;
-                return <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">{chatComponent}</div>;
-            })}
+            <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
+                {/* old messages -> from useGetRoomDetailQuery */}
+                {existingMessage.map((el) => (userId && userId === el.sender ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />))}
+                {/* newer messages -> from useSubscribeRoomSubscription */}
+                {newMessageArr.map((el) => (userId && userId === el.sender ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />))}
+            </div>
             <ChatTextarea roomId={roomId} />
         </div>
     ) : (
