@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
+import { MessageResponse, useGetRoomDetailsQuery, useSubscribeRoomSubscription } from 'generated/graphql';
+
 import ChatRoomTitle from './ChatRoomTitle';
 import ChatTextarea from './ChatTextarea';
 import DefaultImage from './DefaultImage';
 import MyChat from './MyChat';
 import OpponentChat from './OpponentChat';
-import { MessageResponse, useGetRoomDetailsQuery, useSubscribeRoomSubscription } from '../../../../generated/graphql';
 
 type ChatRoomType = {
     selected: string;

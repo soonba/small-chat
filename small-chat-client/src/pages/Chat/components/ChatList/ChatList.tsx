@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import { ParticipationRoom, useGetMyChattingListQuery } from 'generated/graphql';
+
 import ChatListItem from './ChatListItem';
-import { ParticipationRoom, useGetMyChattingListQuery } from '../../../../generated/graphql';
 
 type ChatListType = {
     userId: string;

@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
-import { useSendMutation } from '../../../../generated/graphql';
+import { useSendMutation } from 'generated/graphql';
 
 type ChatTextareaType = {
     roomId: string;

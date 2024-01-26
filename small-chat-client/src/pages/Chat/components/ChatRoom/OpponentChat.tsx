@@ -1,4 +1,4 @@
-import { MessageResponse } from '../../../../generated/graphql';
+import { MessageResponse } from 'generated/graphql';
 
 type OpponentChatType = {
     data: MessageResponse;
