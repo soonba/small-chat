@@ -44,13 +44,13 @@ export class RoomService {
         {
           messageId: 'msg1',
           roomId: roomId,
-          sender: 'abcde',
+          sender: { userId: 'abcde', nickname: 'nick1' },
           message: 'hello?',
         },
         {
           messageId: 'msg2',
           roomId: roomId,
-          sender: 'eefff',
+          sender: { userId: 'effff', nickname: 'nick2' },
           message: 'hi...',
         },
       ],

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
+import { Sender } from '../models/message.model';
 
 export type MessageDocument = Message & Document;
 
@@ -12,7 +13,7 @@ export class Message {
   @Prop({ default: new Date(), type: mongoose.Schema.Types.Date })
   createdAt: Date;
   @Prop()
-  sender: string;
+  sender: Sender;
   @Prop()
   message: string;
 }

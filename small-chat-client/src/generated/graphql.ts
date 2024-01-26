@@ -50,18 +50,12 @@ export type JoinResponse = {
   userId: Scalars['String']['output'];
 };
 
-export type MessageInput = {
-  message: Scalars['String']['input'];
-  roomId: Scalars['String']['input'];
-  sender: Scalars['String']['input'];
-};
-
 export type MessageResponse = {
   __typename?: 'MessageResponse';
   message: Scalars['String']['output'];
   messageId: Scalars['String']['output'];
   roomId: Scalars['String']['output'];
-  sender: Scalars['String']['output'];
+  sender: Sender;
 };
 
 export type Mutation = {
@@ -84,7 +78,7 @@ export type MutationJoinArgs = {
 
 
 export type MutationSendArgs = {
-  input: MessageInput;
+  input: SubmitMessageInput;
 };
 
 export type MyRoomsResponse = {
@@ -127,6 +121,18 @@ export type RoomInfoResponse = {
   roomName: Scalars['String']['output'];
 };
 
+export type Sender = {
+  __typename?: 'Sender';
+  nickname: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
+export type SubmitMessageInput = {
+  message: Scalars['String']['input'];
+  roomId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   subscribeRoom: MessageResponse;
@@ -165,10 +171,10 @@ export type SubscribeRoomSubscriptionVariables = Exact<{
 }>;
 
 
-export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', messageId: string, roomId: string, sender: string, message: string } };
+export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', messageId: string, roomId: string, message: string, sender: { __typename?: 'Sender', userId: string, nickname: string } } };
 
 export type SendMutationVariables = Exact<{
-  input: MessageInput;
+  input: SubmitMessageInput;
 }>;
 
 
@@ -186,7 +192,7 @@ export type GetRoomDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetRoomDetailsQuery = { __typename?: 'Query', getRoomDetails: { __typename?: 'RoomInfoResponse', roomId: string, roomName: string, messages: Array<{ __typename?: 'MessageResponse', roomId: string, sender: string, message: string, messageId: string }> } };
+export type GetRoomDetailsQuery = { __typename?: 'Query', getRoomDetails: { __typename?: 'RoomInfoResponse', roomId: string, roomName: string, messages: Array<{ __typename?: 'MessageResponse', roomId: string, message: string, messageId: string, sender: { __typename?: 'Sender', userId: string, nickname: string } }> } };
 
 
 export const JoinDocument = gql`
@@ -261,7 +267,10 @@ export const SubscribeRoomDocument = gql`
   subscribeRoom(input: $input) {
     messageId
     roomId
-    sender
+    sender {
+      userId
+      nickname
+    }
     message
   }
 }
@@ -290,7 +299,7 @@ export function useSubscribeRoomSubscription(baseOptions: Apollo.SubscriptionHoo
 export type SubscribeRoomSubscriptionHookResult = ReturnType<typeof useSubscribeRoomSubscription>;
 export type SubscribeRoomSubscriptionResult = Apollo.SubscriptionResult<SubscribeRoomSubscription>;
 export const SendDocument = gql`
-    mutation send($input: MessageInput!) {
+    mutation send($input: SubmitMessageInput!) {
   send(input: $input) {
     message
   }
@@ -367,7 +376,10 @@ export const GetRoomDetailsDocument = gql`
     roomName
     messages {
       roomId
-      sender
+      sender {
+        userId
+        nickname
+      }
       message
       messageId
     }
