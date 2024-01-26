@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
-import { GetMyChattingListDocument, useCreateRoomMutation } from 'generated/graphql';
+import { useCreateRoomMutation } from 'generated/graphql';
 
 export default function Add() {
     const [roomName, setRoomName] = useState('');
     const navigate = useNavigate();
 
     const [createRoomMutation] = useCreateRoomMutation({
-        refetchQueries: [GetMyChattingListDocument],
         onCompleted() {
             navigate('/chat');
         }
