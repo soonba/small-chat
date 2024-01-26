@@ -6,6 +6,8 @@ import { UserToken } from './inputs/user.token';
 import { MyRoomsResponse } from './models/my-rooms.model';
 import { CreateRoomInput } from './inputs/create-room.input';
 import { CreateRoomResponse } from './models/create.room.model';
+import { GeneralResponse } from '../../libs/graphql/general.response';
+import { SubmitMessageInput } from '../message/models/message.model';
 
 @Resolver()
 export class UserResolver {
@@ -47,5 +49,20 @@ export class UserResolver {
     input: JoinInput,
   ): Promise<JoinResponse> {
     return await this.userService.loginOrCreateUser(input);
+  }
+
+  @Mutation(() => GeneralResponse)
+  async send(
+    @Args({
+      name: 'input',
+      description: '메시지',
+      type: () => SubmitMessageInput,
+    })
+    input: SubmitMessageInput,
+  ) {
+    await this.userService.submitMessage(input);
+    return {
+      message: 'succeed',
+    };
   }
 }

@@ -13,13 +13,17 @@ mutation createRoom($input: CreateRoomInput!) {
 
 subscription subscribeRoom($input: SubscriptionInput!) {
     subscribeRoom(input: $input) {
+        messageId
         roomId
-        sender
+        sender {
+            userId
+            nickname
+        }
         message
     }
 }
 
-mutation send($input: MessageInput!) {
+mutation send($input: SubmitMessageInput!) {
     send(input: $input) {
         message
     }
@@ -40,8 +44,12 @@ query getRoomDetails($input: GetRoomDetailInput!) {
         roomName
         messages {
             roomId
-            sender
+            sender {
+                userId
+                nickname
+            }
             message
+            messageId
         }
     }
 }
