@@ -20,7 +20,8 @@ export default function ChatListItem({ room, onClick }: ChatListItemType) {
                             <p className="w-32 truncate text-base font-bold group-hover:text-blue-gray-300">{room.roomName}</p>
                             {/* <time className="whitespace-nowrap text-[10px] font-bold">23.01.01 11:00</time> */}
                         </div>
-                        <p className="w-52 truncate text-xs">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        {/* todo 마지막 메시지 들어가야 함 */}
+                        <p className="w-52 truncate text-xs">입장하기</p>
                         {/* <span className="font-blue-gray-900 absolute bottom-0 right-0 flex min-h-4 min-w-4 items-center justify-center rounded-md bg-red-500 text-[9px] font-semibold text-white"> */}
                         {/*    <strong>1</strong> */}
                         {/* </span> */}
