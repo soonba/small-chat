@@ -32,6 +32,11 @@ export type GeneralResponse = {
   message: Scalars['String']['output'];
 };
 
+export type GetRoomDetailInput = {
+  /** 채팅방 id */
+  roomId: Scalars['String']['input'];
+};
+
 export type JoinInput = {
   /** 닉네임 */
   nickname: Scalars['String']['input'];
@@ -45,17 +50,12 @@ export type JoinResponse = {
   userId: Scalars['String']['output'];
 };
 
-export type MessageInput = {
-  message: Scalars['String']['input'];
-  roomId: Scalars['String']['input'];
-  sender: Scalars['String']['input'];
-};
-
 export type MessageResponse = {
   __typename?: 'MessageResponse';
   message: Scalars['String']['output'];
+  messageId: Scalars['String']['output'];
   roomId: Scalars['String']['output'];
-  sender: Scalars['String']['output'];
+  sender: Sender;
 };
 
 export type Mutation = {
@@ -78,7 +78,7 @@ export type MutationJoinArgs = {
 
 
 export type MutationSendArgs = {
-  input: MessageInput;
+  input: SubmitMessageInput;
 };
 
 export type MyRoomsResponse = {
@@ -98,7 +98,7 @@ export type ParticipationRoom = {
 export type Query = {
   __typename?: 'Query';
   getMyChattingList: MyRoomsResponse;
-  getRooms: JoinResponse;
+  getRoomDetails: RoomInfoResponse;
 };
 
 
@@ -107,8 +107,30 @@ export type QueryGetMyChattingListArgs = {
 };
 
 
-export type QueryGetRoomsArgs = {
-  input: UserToken;
+export type QueryGetRoomDetailsArgs = {
+  input: GetRoomDetailInput;
+};
+
+export type RoomInfoResponse = {
+  __typename?: 'RoomInfoResponse';
+  /** 메시지 */
+  messages: Array<MessageResponse>;
+  /** 방 ID */
+  roomId: Scalars['String']['output'];
+  /** 방 제목 */
+  roomName: Scalars['String']['output'];
+};
+
+export type Sender = {
+  __typename?: 'Sender';
+  nickname: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
+export type SubmitMessageInput = {
+  message: Scalars['String']['input'];
+  roomId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 export type Subscription = {
@@ -149,7 +171,14 @@ export type SubscribeRoomSubscriptionVariables = Exact<{
 }>;
 
 
-export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', roomId: string, sender: string, message: string } };
+export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', messageId: string, roomId: string, message: string, sender: { __typename?: 'Sender', userId: string, nickname: string } } };
+
+export type SendMutationVariables = Exact<{
+  input: SubmitMessageInput;
+}>;
+
+
+export type SendMutation = { __typename?: 'Mutation', send: { __typename?: 'GeneralResponse', message: string } };
 
 export type GetMyChattingListQueryVariables = Exact<{
   input: UserToken;
@@ -157,6 +186,13 @@ export type GetMyChattingListQueryVariables = Exact<{
 
 
 export type GetMyChattingListQuery = { __typename?: 'Query', getMyChattingList: { __typename?: 'MyRoomsResponse', participationRooms: Array<{ __typename?: 'ParticipationRoom', roomId: string, roomName: string }> } };
+
+export type GetRoomDetailsQueryVariables = Exact<{
+  input: GetRoomDetailInput;
+}>;
+
+
+export type GetRoomDetailsQuery = { __typename?: 'Query', getRoomDetails: { __typename?: 'RoomInfoResponse', roomId: string, roomName: string, messages: Array<{ __typename?: 'MessageResponse', roomId: string, message: string, messageId: string, sender: { __typename?: 'Sender', userId: string, nickname: string } }> } };
 
 
 export const JoinDocument = gql`
@@ -229,8 +265,12 @@ export type CreateRoomMutationOptions = Apollo.BaseMutationOptions<CreateRoomMut
 export const SubscribeRoomDocument = gql`
     subscription subscribeRoom($input: SubscriptionInput!) {
   subscribeRoom(input: $input) {
+    messageId
     roomId
-    sender
+    sender {
+      userId
+      nickname
+    }
     message
   }
 }
@@ -258,6 +298,39 @@ export function useSubscribeRoomSubscription(baseOptions: Apollo.SubscriptionHoo
       }
 export type SubscribeRoomSubscriptionHookResult = ReturnType<typeof useSubscribeRoomSubscription>;
 export type SubscribeRoomSubscriptionResult = Apollo.SubscriptionResult<SubscribeRoomSubscription>;
+export const SendDocument = gql`
+    mutation send($input: SubmitMessageInput!) {
+  send(input: $input) {
+    message
+  }
+}
+    `;
+export type SendMutationFn = Apollo.MutationFunction<SendMutation, SendMutationVariables>;
+
+/**
+ * __useSendMutation__
+ *
+ * To run a mutation, you first call `useSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendMutation, { data, loading, error }] = useSendMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSendMutation(baseOptions?: Apollo.MutationHookOptions<SendMutation, SendMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendMutation, SendMutationVariables>(SendDocument, options);
+      }
+export type SendMutationHookResult = ReturnType<typeof useSendMutation>;
+export type SendMutationResult = Apollo.MutationResult<SendMutation>;
+export type SendMutationOptions = Apollo.BaseMutationOptions<SendMutation, SendMutationVariables>;
 export const GetMyChattingListDocument = gql`
     query getMyChattingList($input: UserToken!) {
   getMyChattingList(input: $input) {
@@ -296,3 +369,48 @@ export function useGetMyChattingListLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetMyChattingListQueryHookResult = ReturnType<typeof useGetMyChattingListQuery>;
 export type GetMyChattingListLazyQueryHookResult = ReturnType<typeof useGetMyChattingListLazyQuery>;
 export type GetMyChattingListQueryResult = Apollo.QueryResult<GetMyChattingListQuery, GetMyChattingListQueryVariables>;
+export const GetRoomDetailsDocument = gql`
+    query getRoomDetails($input: GetRoomDetailInput!) {
+  getRoomDetails(input: $input) {
+    roomId
+    roomName
+    messages {
+      roomId
+      sender {
+        userId
+        nickname
+      }
+      message
+      messageId
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRoomDetailsQuery__
+ *
+ * To run a query within a React component, call `useGetRoomDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRoomDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRoomDetailsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetRoomDetailsQuery(baseOptions: Apollo.QueryHookOptions<GetRoomDetailsQuery, GetRoomDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRoomDetailsQuery, GetRoomDetailsQueryVariables>(GetRoomDetailsDocument, options);
+      }
+export function useGetRoomDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRoomDetailsQuery, GetRoomDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRoomDetailsQuery, GetRoomDetailsQueryVariables>(GetRoomDetailsDocument, options);
+        }
+export type GetRoomDetailsQueryHookResult = ReturnType<typeof useGetRoomDetailsQuery>;
+export type GetRoomDetailsLazyQueryHookResult = ReturnType<typeof useGetRoomDetailsLazyQuery>;
+export type GetRoomDetailsQueryResult = Apollo.QueryResult<GetRoomDetailsQuery, GetRoomDetailsQueryVariables>;

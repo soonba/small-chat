@@ -1,13 +1,12 @@
 import { Args, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { JoinResponse } from '../user/models/join.model';
-import { UserToken } from 'src/user/inputs/user.token';
 
 import { Inject } from '@nestjs/common';
 import { PUB_SUB } from 'libs/graphql/subscription.module';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { SubscriptionInput } from './inputs/room.input';
+import { GetRoomDetailInput, SubscriptionInput } from './inputs/room.input';
 import { MessageResponse } from '../message/models/message.model';
 import { RoomService } from './room.service';
+import { RoomInfoResponse } from './model/room.info.model';
 
 @Resolver()
 export class RoomResolver {
@@ -17,19 +16,16 @@ export class RoomResolver {
   ) {}
 
   //todo
-  @Query(() => JoinResponse)
-  async getRooms(
+  @Query(() => RoomInfoResponse)
+  async getRoomDetails(
     @Args({
       name: 'input',
       description: 'Args 입력',
-      type: () => UserToken,
+      type: () => GetRoomDetailInput,
     })
-    input: UserToken,
-  ) {
-    console.log(input.userId);
-    return {
-      userId: input.userId,
-    };
+    input: GetRoomDetailInput,
+  ): Promise<RoomInfoResponse> {
+    return await this.roomService.getRoomAndMessageHistoryById(input);
   }
 
   @Subscription(() => MessageResponse, {

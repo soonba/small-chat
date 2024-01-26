@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
@@ -7,6 +7,10 @@ import { v4 as uuid } from 'uuid';
 import { UserToken } from './inputs/user.token';
 import { CreateRoomInput } from './inputs/create-room.input';
 import { RoomService } from '../room/room.service';
+import { SubmitMessageInput } from '../message/models/message.model';
+import { MessageService } from '../message/message.service';
+import { PUB_SUB } from '../../libs/graphql/subscription.module';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 
 @Injectable()
 export class UserService {
@@ -14,6 +18,8 @@ export class UserService {
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
     private readonly roomService: RoomService,
+    private readonly messageService: MessageService,
+    @Inject(PUB_SUB) private readonly pubsub: RedisPubSub,
   ) {}
 
   async loginOrCreateUser(input: JoinInput) {
@@ -51,5 +57,27 @@ export class UserService {
     });
     await user.save();
     return result;
+  }
+
+  async findById(userId: string) {
+    return await this.userModel.findOne({ userId }).exec();
+  }
+
+  async submitMessage(input: SubmitMessageInput) {
+    const { userId, ...rest } = input;
+    const user = await this.findById(userId);
+    const savedMessage = await this.messageService.save({
+      ...rest,
+      sender: { userId, nickname: user.nickname },
+    });
+    const { roomId } = input;
+    await this.pubsub.publish(roomId, {
+      messageId: savedMessage.messageId,
+      sender: {
+        userId,
+        nickname: user.nickname,
+      },
+      ...rest,
+    });
   }
 }
