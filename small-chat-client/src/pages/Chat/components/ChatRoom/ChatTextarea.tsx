@@ -12,7 +12,10 @@ export default function ChatTextarea({ roomId }: ChatTextareaType) {
     const userId = localStorage.getItem('userId') || '';
 
     const handleSubmit = useCallback(() => {
-        if (inputMessage) sendMutation({ variables: { input: { roomId, sender: userId, message: inputMessage } } });
+        if (inputMessage) {
+            sendMutation({ variables: { input: { roomId, userId, message: inputMessage } } });
+            setInputMessage('');
+        }
     }, [inputMessage, roomId, sendMutation, userId]);
 
     // 사용자 입력메시지
