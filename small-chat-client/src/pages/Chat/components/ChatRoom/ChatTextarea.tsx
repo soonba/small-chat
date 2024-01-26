@@ -13,8 +13,12 @@ export default function ChatTextarea({ roomId }: ChatTextareaType) {
 
     const handleSubmit = useCallback(() => {
         if (inputMessage) {
-            sendMutation({ variables: { input: { roomId, userId, message: inputMessage } } });
-            setInputMessage('');
+            sendMutation({
+                variables: { input: { roomId, userId, message: inputMessage } },
+                onCompleted() {
+                    setInputMessage('');
+                }
+            });
         }
     }, [inputMessage, roomId, sendMutation, userId]);
 
