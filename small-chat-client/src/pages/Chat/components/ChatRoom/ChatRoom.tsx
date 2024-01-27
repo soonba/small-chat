@@ -37,7 +37,7 @@ export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
 
     return selected ? (
         <div className="relative mx-auto ml-96 w-full">
-            <ChatRoomTitle roomName={roomName} onClick={onLeave} />
+            <ChatRoomTitle roomName={roomName} roomId={roomId} onClick={onLeave} />
             <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
                 {/* old messages -> from useGetRoomDetailQuery */}
                 {existingMessages.map((el) => (userId && userId === el.sender.userId ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />))}
