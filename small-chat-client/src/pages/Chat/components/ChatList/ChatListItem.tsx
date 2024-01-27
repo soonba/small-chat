@@ -3,7 +3,6 @@ type ChatListItemType = {
     onClick: (id: string) => void;
 };
 
-// TODO: Remove Dummy
 export default function ChatListItem({ room, onClick }: ChatListItemType) {
     return (
         <li className="group rounded-md border border-blue-gray-100 bg-white p-2.5 hover:bg-blue-gray-50/50">

@@ -6,6 +6,7 @@ import Login from 'pages/Login';
 
 import BaseLayout from '../layout/BaseLayout';
 import Chat from '../pages/Chat';
+import Join from '../pages/Join/Join';
 
 export default function App() {
     return (
@@ -28,6 +29,10 @@ export default function App() {
                 {
                     path: '/add',
                     element: <Add />
+                },
+                {
+                    path: '/join',
+                    element: <Join />
                 }
             ])}
         />

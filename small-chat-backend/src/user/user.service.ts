@@ -9,8 +9,9 @@ import { CreateRoomInput } from './inputs/create-room.input';
 import { RoomService } from '../room/room.service';
 import { SubmitMessageInput } from '../message/models/message.model';
 import { MessageService } from '../message/message.service';
-import { PUB_SUB } from '../../libs/graphql/subscription.module';
+import { PUB_SUB } from 'libs/graphql/subscription.module';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { JoinRoomInput } from './inputs/join-room.input';
 
 @Injectable()
 export class UserService {
@@ -79,5 +80,15 @@ export class UserService {
       },
       ...rest,
     });
+  }
+
+  async joinRoom(input: JoinRoomInput) {
+    const { userId, roomId } = input;
+    const user = await this.userModel.findOne({ userId }).exec();
+    const room = await this.roomService.getRoomById(roomId);
+    user.participatingRooms.push({ roomId, roomName: room.roomName });
+    room.participationIds.push(userId);
+    await user.save();
+    await room.save();
   }
 }

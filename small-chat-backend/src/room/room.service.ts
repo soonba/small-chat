@@ -40,20 +40,11 @@ export class RoomService {
     return {
       roomId,
       roomName,
-      messages: [
-        {
-          messageId: 'msg1',
-          roomId: roomId,
-          sender: { userId: 'abcde', nickname: 'nick1' },
-          message: 'hello?',
-        },
-        {
-          messageId: 'msg2',
-          roomId: roomId,
-          sender: { userId: 'effff', nickname: 'nick2' },
-          message: 'hi...',
-        },
-      ],
+      messages,
     };
+  }
+
+  async getRoomById(roomId: string) {
+    return await this.roomModel.findOne({ roomId }).exec();
   }
 }
