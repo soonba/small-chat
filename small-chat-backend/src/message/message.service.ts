@@ -13,8 +13,7 @@ export class MessageService {
   ) {}
 
   async findAllByRoomId(roomId: string): Promise<MessageResponse[]> {
-    const result = await this.messageModel.find({ roomId }).exec();
-    return [];
+    return await this.messageModel.find({ roomId }).exec();
   }
 
   async save(input: SaveMessageInput) {

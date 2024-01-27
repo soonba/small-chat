@@ -18,6 +18,9 @@ export class MessageResponse {
   @Field(() => Sender)
   sender: Sender;
 
+  @Field(() => Date)
+  createdAt: Date;
+
   @Field(() => String)
   message: string;
 }

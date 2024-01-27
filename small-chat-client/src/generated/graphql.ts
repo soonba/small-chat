@@ -15,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type CreateRoomInput = {
@@ -57,6 +58,7 @@ export type JoinRoomInput = {
 
 export type MessageResponse = {
   __typename?: 'MessageResponse';
+  createdAt: Scalars['DateTime']['output'];
   message: Scalars['String']['output'];
   messageId: Scalars['String']['output'];
   roomId: Scalars['String']['output'];
@@ -203,7 +205,7 @@ export type GetRoomDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetRoomDetailsQuery = { __typename?: 'Query', getRoomDetails: { __typename?: 'RoomInfoResponse', roomId: string, roomName: string, messages: Array<{ __typename?: 'MessageResponse', roomId: string, message: string, messageId: string, sender: { __typename?: 'Sender', userId: string, nickname: string } }> } };
+export type GetRoomDetailsQuery = { __typename?: 'Query', getRoomDetails: { __typename?: 'RoomInfoResponse', roomId: string, roomName: string, messages: Array<{ __typename?: 'MessageResponse', roomId: string, message: string, messageId: string, createdAt: any, sender: { __typename?: 'Sender', userId: string, nickname: string } }> } };
 
 export type JoinRoomMutationVariables = Exact<{
   input: JoinRoomInput;
@@ -400,6 +402,7 @@ export const GetRoomDetailsDocument = gql`
       }
       message
       messageId
+      createdAt
     }
   }
 }

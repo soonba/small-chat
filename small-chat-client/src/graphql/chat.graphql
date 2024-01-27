@@ -50,6 +50,7 @@ query getRoomDetails($input: GetRoomDetailInput!) {
             }
             message
             messageId
+            createdAt
         }
     }
 }
