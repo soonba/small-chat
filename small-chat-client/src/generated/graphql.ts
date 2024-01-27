@@ -50,6 +50,11 @@ export type JoinResponse = {
   userId: Scalars['String']['output'];
 };
 
+export type JoinRoomInput = {
+  roomId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type MessageResponse = {
   __typename?: 'MessageResponse';
   message: Scalars['String']['output'];
@@ -63,6 +68,7 @@ export type Mutation = {
   createRoom: CreateRoomResponse;
   /** 로그인/회원가입 */
   join: JoinResponse;
+  joinRoom: GeneralResponse;
   send: GeneralResponse;
 };
 
@@ -74,6 +80,11 @@ export type MutationCreateRoomArgs = {
 
 export type MutationJoinArgs = {
   input: JoinInput;
+};
+
+
+export type MutationJoinRoomArgs = {
+  input: JoinRoomInput;
 };
 
 
@@ -193,6 +204,13 @@ export type GetRoomDetailsQueryVariables = Exact<{
 
 
 export type GetRoomDetailsQuery = { __typename?: 'Query', getRoomDetails: { __typename?: 'RoomInfoResponse', roomId: string, roomName: string, messages: Array<{ __typename?: 'MessageResponse', roomId: string, message: string, messageId: string, sender: { __typename?: 'Sender', userId: string, nickname: string } }> } };
+
+export type JoinRoomMutationVariables = Exact<{
+  input: JoinRoomInput;
+}>;
+
+
+export type JoinRoomMutation = { __typename?: 'Mutation', joinRoom: { __typename?: 'GeneralResponse', message: string } };
 
 
 export const JoinDocument = gql`
@@ -414,3 +432,36 @@ export function useGetRoomDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetRoomDetailsQueryHookResult = ReturnType<typeof useGetRoomDetailsQuery>;
 export type GetRoomDetailsLazyQueryHookResult = ReturnType<typeof useGetRoomDetailsLazyQuery>;
 export type GetRoomDetailsQueryResult = Apollo.QueryResult<GetRoomDetailsQuery, GetRoomDetailsQueryVariables>;
+export const JoinRoomDocument = gql`
+    mutation joinRoom($input: JoinRoomInput!) {
+  joinRoom(input: $input) {
+    message
+  }
+}
+    `;
+export type JoinRoomMutationFn = Apollo.MutationFunction<JoinRoomMutation, JoinRoomMutationVariables>;
+
+/**
+ * __useJoinRoomMutation__
+ *
+ * To run a mutation, you first call `useJoinRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useJoinRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [joinRoomMutation, { data, loading, error }] = useJoinRoomMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useJoinRoomMutation(baseOptions?: Apollo.MutationHookOptions<JoinRoomMutation, JoinRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<JoinRoomMutation, JoinRoomMutationVariables>(JoinRoomDocument, options);
+      }
+export type JoinRoomMutationHookResult = ReturnType<typeof useJoinRoomMutation>;
+export type JoinRoomMutationResult = Apollo.MutationResult<JoinRoomMutation>;
+export type JoinRoomMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutation, JoinRoomMutationVariables>;

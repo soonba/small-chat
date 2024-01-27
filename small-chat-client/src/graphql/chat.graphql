@@ -53,3 +53,9 @@ query getRoomDetails($input: GetRoomDetailInput!) {
         }
     }
 }
+
+mutation joinRoom($input: JoinRoomInput!) {
+    joinRoom(input: $input) {
+        message
+    }
+}
