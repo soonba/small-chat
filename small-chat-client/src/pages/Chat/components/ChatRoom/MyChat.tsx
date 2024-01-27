@@ -12,7 +12,7 @@ export default function MyChat({ data }: MyChatType) {
             </div>
             <div className="flex flex-row-reverse items-end gap-x-2.5">
                 <div className="mr-[50px] min-w-80 max-w-md whitespace-pre-wrap break-all rounded-3xl rounded-tr-none bg-blue-gray-50 p-5 text-sm">{data.message}</div>
-                <time className="text-xs font-semibold">11:01</time>
+                <time className="text-xs font-semibold">{data.createdAt}</time>
             </div>
         </div>
     );

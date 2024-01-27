@@ -53,6 +53,7 @@ services:
     restart: always
   pubsub:
     image: redis:6.2.4-alpine
+    container_name: message_broker
     networks:
       - small-chat
     hostname: redis

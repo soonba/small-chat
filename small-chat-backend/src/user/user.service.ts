@@ -74,6 +74,7 @@ export class UserService {
     const { roomId } = input;
     await this.pubsub.publish(roomId, {
       messageId: savedMessage.messageId,
+      createdAt: savedMessage.createdAt,
       sender: {
         userId,
         nickname: user.nickname,

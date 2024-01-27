@@ -15,7 +15,6 @@ export class RoomResolver {
     private readonly roomService: RoomService,
   ) {}
 
-  //todo
   @Query(() => RoomInfoResponse)
   async getRoomDetails(
     @Args({

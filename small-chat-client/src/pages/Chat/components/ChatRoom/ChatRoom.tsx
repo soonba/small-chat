@@ -19,7 +19,7 @@ export default function ChatRoom({ selected, onLeave }: ChatRoomType) {
     useSubscribeRoomSubscription({
         variables: { input: { roomIds: [selected] } },
         onData({ data: { data } }) {
-            const messageResponse = data?.subscribeRoom;
+            const messageResponse: MessageResponse = data?.subscribeRoom as MessageResponse;
             if (messageResponse) {
                 setSubscriptionMessages((prev) => [...prev, messageResponse]);
             }
