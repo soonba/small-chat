@@ -1,8 +1,15 @@
-# 작은 대화 (small-talk)
+# 작은 대화 (small-talk) v1.0
 
 퍼블리싱, React 기본구조에 도움주신 [@akffkdahffkdgo77](https://github.com/akffkdahffkdgo77) 님 감사합니다 :)
 
-todo
+프로젝트를 다운받아 아래 명령어로 실행합니다. 
+```
+docker-compose up -d
+```
+컨테이너가 모두 정상적으로 실행됐다면 ```localhost:3000``` 에서 접속 가능합니다.
+
+# todo
+
 BE
 1. mongoDB 트랜잭션처리
 2. 인증(현재 같은 브라우저는 같은 유저취급..)
