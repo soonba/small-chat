@@ -11,6 +11,12 @@ docker-compose up -d
 컨테이너가 모두 정상적으로 실행됐다면 ```localhost:3000``` 에서 접속 가능합니다.
 <br /><br /><br />
 
+2024.03.13 v1.1 start
+기능 요구사항
+로그인
+방 리스트 구독
+채팅방 입장, 퇴장
+
 <details>
 <summary>todo</summary>
 
