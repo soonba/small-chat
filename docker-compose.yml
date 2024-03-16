@@ -33,21 +33,28 @@ services:
     build:
       context: small-chat-client/
     container_name: client
-    image: small-chat-client:latest
+#    image: small-chat-client
     ports:
       - 3000:3000
     networks:
       - small-chat
     restart: always
     depends_on:
-      - server
-  server:
+      - chat-service
+  chat-service:
     build:
-      context: small-chat-backend/
-    container_name: server
-    image: small-chat-server:latest
+      context: chat-service/
+    container_name: chat-service
+#    image: chat-service
     ports:
       - 3010:3000
+    networks:
+      - small-chat
+    restart: always
+  auth-service:
+    image: seonba/auth-service
+    ports:
+      - 8080:8080
     networks:
       - small-chat
     restart: always
