@@ -18,9 +18,9 @@ public class JwtProcessor {
     Date rtExp = TokenType.REFRESH_TOKEN.getExpDate();
     return new Token(
         Jwts.builder()
-            .subject(auth.getId().toString())
-            .subject(auth.getUserId())
-            .subject(auth.getNickname())
+            .claim("id",auth.getId().toString())
+            .claim("userId",auth.getUserId())
+            .claim("nickname",auth.getNickname())
             .expiration(atExp)
             .signWith(Keys.hmacShaKeyFor(key))
             .compact(),
