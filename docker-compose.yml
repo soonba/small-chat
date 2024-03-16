@@ -31,7 +31,7 @@ services:
       - mongodb
   client:
     build:
-      context: small-chat-client/
+      context: chat-client/
     container_name: client
 #    image: small-chat-client
     ports:
