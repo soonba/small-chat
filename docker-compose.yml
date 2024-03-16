@@ -53,11 +53,24 @@ services:
     restart: always
   auth-service:
     image: seonba/auth-service
+    container_name: auth-service
     ports:
       - 8080:8080
     networks:
       - small-chat
     restart: always
+  postgres:
+    container_name: postgres
+    image: postgres:14-alpine
+    ports:
+      - 5433:5432
+    restart: always
+    networks:
+      - small-chat
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auth
   pubsub:
     image: redis:6.2.4-alpine
     container_name: message_broker
