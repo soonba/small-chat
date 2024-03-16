@@ -7,9 +7,9 @@
 /.nyc_output
 
 # compiled output
-small-chat-backend/dist
-small-chat-backend/node_modules
-small-chat-backend/libs/graphql/schema.gql
+chat-service/dist
+chat-service/node_modules
+chat-service/libs/graphql/schema.gql
 
 # OS
 .DS_Store
