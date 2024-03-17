@@ -1,6 +1,7 @@
 package com.smallchat.auth.data.entity;
 
 import com.smallchat.auth.data.dto.JoinDto;
+import com.smallchat.auth.util.PasswordUtil;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class Auth extends BaseTime {
   protected Auth() {}
 
   public static Auth fromDto(JoinDto.Request request) {
-    return new Auth(request.userId(), request.nickname(), request.password());
+    return new Auth(request.userId(), request.nickname(), PasswordUtil.encrypt(request.password()));
   }
 
   public UUID getId() {
