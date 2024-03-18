@@ -31,13 +31,13 @@ public class JwtProcessor {
     }
 
     public JwtPayload compile(String rt) {
-        String id = Jwts
+        String id = (String) Jwts
             .parser()
             .verifyWith(Keys.hmacShaKeyFor(key))
             .build()
             .parseSignedClaims(rt)
             .getPayload()
-            .getId();
+            .get("id");
         System.out.println(id);
         return new JwtPayload(new UUID(1, 1));
     }

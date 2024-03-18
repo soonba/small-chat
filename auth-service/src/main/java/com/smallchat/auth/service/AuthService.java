@@ -42,9 +42,7 @@ public class AuthService {
             authRepository
                 .findOneByUserId(request.userId())
                 .orElseThrow(() -> new RuntimeException("찾을 수 없는 아이디"));
-        if (!PasswordUtil.verifying(auth.getPassword())) {
-            throw new RuntimeException("비밀번호 불일치");
-        }
+        PasswordUtil.verifying(request.password(), auth.getPassword());
         Tokens tokens = jwtProcessor.generateByAuth(auth);
         return new LoginDto.Response(tokens);
     }

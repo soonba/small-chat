@@ -2,13 +2,15 @@ package com.smallchat.auth.util;
 
 public class PasswordUtil {
 
-  public static String encrypt(String rawString) {
-    // todo encrypt
-    return rawString;
-  }
+    public static String encrypt(String rawString) {
+        // todo encrypt
+        return rawString;
+    }
 
-  public static boolean verifying(String encryptString) {
-    // todo verify password
-    return true;
-  }
+    public static void verifying(String encryptString, String rawString) {
+        // todo verify password
+        if (!encryptString.equals(rawString)) {
+            throw new RuntimeException("비밀번호 불일치");
+        }
+    }
 }
