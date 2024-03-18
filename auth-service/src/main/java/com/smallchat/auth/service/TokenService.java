@@ -1,8 +1,10 @@
 package com.smallchat.auth.service;
 
-public interface TokenService {
-    void saveRefreshToken(String rt);
+import java.util.UUID;
 
-    boolean existsRefreshToken(String rt);
+public interface TokenService {
+    void saveRefreshToken(UUID id, String rt);
+
+    void validateRefreshToken(UUID id, String rt);
 
 }
