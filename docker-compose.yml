@@ -1,56 +1,56 @@
 version: "3.8"
 services:
-  mongodb:
-    image: mongo
-    networks:
-      - small-chat
-    container_name: mongodb
-    ports:
-      - 27017:27017
-    volumes:
-      - data:/data
-    environment:
-      #      - MONGO_INITDB_ROOT_USERNAME=root
-      #      - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGODB_DATABASE="small_chat"
-  mongo-express:
-    image: mongo-express
-    networks:
-      - small-chat
-    container_name: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      #      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      #      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
-  client:
-    build:
-      context: chat-client/
-    container_name: client
-#    image: small-chat-client
-    ports:
-      - 3000:3000
-    networks:
-      - small-chat
-    restart: always
-    depends_on:
-      - chat-service
-  chat-service:
-    build:
-      context: chat-service/
-    container_name: chat-service
-#    image: chat-service
-    ports:
-      - 3010:3000
-    networks:
-      - small-chat
-    restart: always
+  #  mongodb:
+  #    image: mongo
+  #    networks:
+  #      - small-chat
+  #    container_name: mongodb
+  #    ports:
+  #      - 27017:27017
+  #    volumes:
+  #      - data:/data
+  #    environment:
+  #      #      - MONGO_INITDB_ROOT_USERNAME=root
+  #      #      - MONGO_INITDB_ROOT_PASSWORD=root
+  #      - MONGODB_DATABASE="small_chat"
+  #  mongo-express:
+  #    image: mongo-express
+  #    networks:
+  #      - small-chat
+  #    container_name: mongo-express
+  #    restart: always
+  #    ports:
+  #      - 8081:8081
+  #    environment:
+  #      #      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+  #      #      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+  #      - ME_CONFIG_MONGODB_SERVER=mongodb
+  #    links:
+  #      - mongodb
+  #    depends_on:
+  #      - mongodb
+#  client:
+#    build:
+#      context: chat-client/
+#    container_name: client
+#    #    image: small-chat-client
+#    ports:
+#      - 3000:3000
+#    networks:
+#      - small-chat
+#    restart: always
+  #    depends_on:
+  #      - chat-service
+  #  chat-service:
+  #    build:
+  #      context: chat-service/
+  #    container_name: chat-service
+  ##    image: chat-service
+  #    ports:
+  #      - 3010:3000
+  #    networks:
+  #      - small-chat
+  #    restart: always
   auth-service:
     image: seonba/auth-service
     container_name: auth-service
@@ -58,28 +58,35 @@ services:
       - 8080:8080
     networks:
       - small-chat
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/auth
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
     restart: always
   postgres:
     container_name: postgres
     image: postgres:14-alpine
     ports:
-      - 5433:5432
+      - "5434:5432"
     restart: always
     networks:
       - small-chat
+    volumes:
+      - /var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=auth
-  pubsub:
-    image: redis:6.2.4-alpine
-    container_name: message_broker
-    networks:
-      - small-chat
-    hostname: redis
-    ports:
-      - 6379:6379
-    restart: always
+#  pubsub:
+#    image: redis:6.2.4-alpine
+#    container_name: message_broker
+#    networks:
+#      - small-chat
+#    hostname: redis
+#    ports:
+#      - 6379:6379
+#    restart: always
 
 volumes:
   data:
