@@ -1,5 +1,6 @@
 package com.smallchat.auth.service;
 
+import com.smallchat.auth.data.dto.ApiResponse;
 import com.smallchat.auth.data.dto.JoinDto;
 import com.smallchat.auth.data.dto.LoginDto;
 import com.smallchat.auth.data.dto.RefreshDto;
@@ -26,31 +27,31 @@ public class AuthService {
     }
 
     @Transactional
-    public JoinDto.Response join(JoinDto.Request request) {
+    public ApiResponse<JoinDto.Response> join(JoinDto.Request request) {
         if (authRepository.existsByUserId(request.userId())) {
             throw new RuntimeException("이미 존재하는 아이디");
         }
         Auth save = authRepository.save(Auth.fromDto(request));
         Tokens tokens = jwtProcessor.generateByAuth(save);
         tokenService.saveRefreshToken(save.getId(), tokens.refreshToken());
-        return new JoinDto.Response(tokens);
+        return new ApiResponse<>(new JoinDto.Response(tokens));
     }
 
     @Transactional
-    public LoginDto.Response login(LoginDto.Request request) {
+    public ApiResponse<LoginDto.Response> login(LoginDto.Request request) {
         Auth auth =
             authRepository
                 .findOneByUserId(request.userId())
                 .orElseThrow(() -> new RuntimeException("찾을 수 없는 아이디"));
         PasswordUtil.verifying(request.password(), auth.getPassword());
         Tokens tokens = jwtProcessor.generateByAuth(auth);
-        return new LoginDto.Response(tokens);
+        return new ApiResponse<>( new LoginDto.Response(tokens));
     }
 
     @Transactional
-    public RefreshDto.Response refresh(RefreshDto.Request request) {
+    public ApiResponse<RefreshDto.Response> refresh(RefreshDto.Request request) {
         String rt = request.rt();
         jwtProcessor.compile(rt);
-        return new RefreshDto.Response(new Tokens("at", "rt"));
+        return new ApiResponse<>( new RefreshDto.Response(new Tokens("at", "rt")));
     }
 }

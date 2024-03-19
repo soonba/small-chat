@@ -1,5 +1,6 @@
 package com.smallchat.auth.controller;
 
+import com.smallchat.auth.data.dto.ApiResponse;
 import com.smallchat.auth.data.dto.JoinDto;
 import com.smallchat.auth.data.dto.LoginDto;
 import com.smallchat.auth.data.dto.RefreshDto;
@@ -21,20 +22,20 @@ public class AuthController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<JoinDto.Response> join(@RequestBody JoinDto.Request request) {
-        JoinDto.Response response = authService.join(request);
+    public ResponseEntity<ApiResponse<JoinDto.Response>> join(@RequestBody JoinDto.Request request) {
+        ApiResponse<JoinDto.Response> response = authService.join(request);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDto.Response> login(@RequestBody LoginDto.Request request) {
-        LoginDto.Response response = authService.login(request);
+    public ResponseEntity<ApiResponse<LoginDto.Response>> login(@RequestBody LoginDto.Request request) {
+        ApiResponse<LoginDto.Response> response = authService.login(request);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<RefreshDto.Response> refresh(@RequestBody RefreshDto.Request request) {
-        RefreshDto.Response response = authService.refresh(request);
+    public ResponseEntity<ApiResponse<RefreshDto.Response>> refresh(@RequestBody RefreshDto.Request request) {
+        ApiResponse<RefreshDto.Response> response = authService.refresh(request);
         return ResponseEntity.ok(response);
     }
 }
