@@ -1,12 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { IError } from './types';
-import appConfig from '../../src/config';
+import appConfig from '../../config';
 import { LOCAL_STORAGE_KEYS } from '../common/constant';
 import { clearStorage, setTokens } from '../utils/storage';
 
 export const defaultAxiosConfig: AxiosRequestConfig = {
-    baseURL: appConfig.authApiUrl,
+    baseURL: 'http://localhost:8080/api',
     responseType: 'json',
     timeout: 5000
 };
