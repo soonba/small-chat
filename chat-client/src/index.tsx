@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { ApolloProvider } from '@apollo/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import client from 'apollo';
 import App from 'app/App';
@@ -10,12 +11,15 @@ import 'styles/index.css';
 
 import reportWebVitals from './reportWebVitals';
 
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
-        <ApolloProvider client={client}>
-            <App />
-        </ApolloProvider>
+        <QueryClientProvider client={queryClient}>
+            <ApolloProvider client={client}>
+                <App />
+            </ApolloProvider>
+        </QueryClientProvider>
     </React.StrictMode>
 );
 
