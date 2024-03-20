@@ -1,9 +1,6 @@
 package com.smallchat.auth.service;
 
-import com.smallchat.auth.data.dto.ApiResponse;
-import com.smallchat.auth.data.dto.JoinDto;
-import com.smallchat.auth.data.dto.LoginDto;
-import com.smallchat.auth.data.dto.RefreshDto;
+import com.smallchat.auth.data.dto.*;
 import com.smallchat.auth.data.entity.Auth;
 import com.smallchat.auth.data.infra.AuthRepository;
 import com.smallchat.auth.data.jwt.JwtProcessor;
@@ -53,5 +50,9 @@ public class AuthService {
         String rt = request.rt();
         jwtProcessor.compile(rt);
         return new ApiResponse<>( new RefreshDto.Response(new Tokens("at", "rt")));
+    }
+
+    public ApiResponse<CheckUserResponse> checkUsernameExists(String userId) {
+        return new ApiResponse<>(new CheckUserResponse(authRepository.existsByUserId(userId)));
     }
 }
