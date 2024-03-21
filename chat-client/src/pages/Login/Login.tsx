@@ -5,7 +5,7 @@ import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
 import { useMutation } from '@tanstack/react-query';
 
-import useLogin from '../../rest/apis/useLogin';
+import useLogin from 'rest/apis/useLogin';
 
 export default function Login() {
     const [userId, setUserId] = useState<string>('');
