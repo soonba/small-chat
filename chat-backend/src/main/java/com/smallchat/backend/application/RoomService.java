@@ -1,6 +1,6 @@
-package com.smallchat.backend.service;
+package com.smallchat.backend.application;
 
-import com.smallchat.backend.data.infra.RoomRepository;
+import com.smallchat.backend.persistance.RoomRepository;
 import org.springframework.stereotype.Service;
 
 @Service

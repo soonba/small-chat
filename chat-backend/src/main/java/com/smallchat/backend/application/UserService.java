@@ -1,4 +1,4 @@
-package com.smallchat.backend.service;
+package com.smallchat.backend.application;
 
 import org.springframework.stereotype.Service;
 
