@@ -9,7 +9,7 @@ import { setTokens } from 'libs/utils/storage';
 import useLogin from 'rest/apis/useLogin';
 
 export default function Login() {
-    const [userId, setUserId] = useState<string>('');
+    const [accountId, setAccountId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function Login() {
     });
     // todo join || login
     const handleLogin = () => {
-        loginMutation.mutate({ userId, password });
+        loginMutation.mutate({ accountId, password });
     };
     const handleSignup = () => {
         navigate('/signup');
@@ -38,7 +38,7 @@ export default function Login() {
                             id="userId"
                             type="text"
                             maxLength={20}
-                            value={userId}
+                            value={accountId}
                             onChange={(e) => {
                                 if (e.currentTarget.type === 'text') {
                                     if (e.currentTarget.maxLength && e.currentTarget.value.length > e.currentTarget.maxLength) {
@@ -46,7 +46,7 @@ export default function Login() {
                                         e.currentTarget.value = e.currentTarget.value.slice(0, e.currentTarget.maxLength);
                                     }
                                 }
-                                setUserId(e.currentTarget.value);
+                                setAccountId(e.currentTarget.value);
                             }}
                             className="h-10 min-w-56 truncate rounded-md border border-blue-gray-200 bg-white p-2 text-sm font-medium text-blue-gray-900 outline-none ring-0 hover:border-2 hover:border-blue-gray-900 focus:border-2 focus:border-blue-gray-900"
                         />
