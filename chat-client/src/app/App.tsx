@@ -7,7 +7,7 @@ import Login from 'pages/Login';
 import BaseLayout from '../layout/BaseLayout';
 import Chat from '../pages/Chat';
 import Join from '../pages/Join/Join';
-import Signup from '../pages/Login/Signup/Signup';
+import Signup from '../pages/Login/componenets/Signup';
 
 export default function App() {
     return (

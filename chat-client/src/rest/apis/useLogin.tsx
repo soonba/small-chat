@@ -1,5 +1,4 @@
-import { api } from '../../libs/axios';
-import { IResponseBody } from '../../libs/axios/types';
+import { api } from 'libs/axios';
 
 interface IRequestBody {
     userId: string;
@@ -7,12 +6,14 @@ interface IRequestBody {
 }
 
 interface LoginResponse {
-    accessToken: string;
-    refreshToken: string;
+    tokens: {
+        accessToken: string;
+        refreshToken: string;
+    };
 }
 
 const useLogin = async (body: IRequestBody) => {
-    return api.post<IResponseBody<LoginResponse>, IRequestBody>('/auth/login', body).then((response) => response.data);
+    return api.post<LoginResponse, IRequestBody>('/auth/login', body);
 };
 
 export default useLogin;
