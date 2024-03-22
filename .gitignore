@@ -6,10 +6,28 @@
 /coverage
 /.nyc_output
 
-# compiled output
-small-chat-backend/dist
-small-chat-backend/node_modules
-small-chat-backend/libs/graphql/schema.gql
+#chat-service
+chat-service/dist
+chat-service/node_modules
+chat-service/libs/graphql/schema.gql
+
+#chat-backend
+chat-backend/HELP.md
+chat-backend/.gradle
+chat-backend/build/
+chat-backend/!gradle/wrapper/gradle-wrapper.jar
+chat-backend/!**/src/main/**/build/
+chat-backend/!**/src/test/**/build/
+chat-backend/
+chat-backend/### IntelliJ IDEA ###
+chat-backend/.idea
+chat-backend/*.iws
+chat-backend/*.iml
+chat-backend/*.ipr
+chat-backend/out/
+chat-backend/!**/src/main/**/out/
+chat-backend/!**/src/test/**/out/
+
 
 # OS
 .DS_Store
