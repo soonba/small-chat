@@ -5,6 +5,7 @@ import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
 import { useMutation } from '@tanstack/react-query';
 
+import { setTokens } from 'libs/utils/storage';
 import useLogin from 'rest/apis/useLogin';
 
 export default function Login() {
@@ -12,7 +13,13 @@ export default function Login() {
     const [password, setPassword] = useState<string>('');
     const navigate = useNavigate();
 
-    const loginMutation = useMutation({ mutationFn: useLogin });
+    const loginMutation = useMutation({
+        mutationFn: useLogin,
+        onSuccess: (response) => {
+            const { accessToken, refreshToken } = response.tokens;
+            setTokens(accessToken, refreshToken);
+        }
+    });
     // todo join || login
     const handleLogin = () => {
         loginMutation.mutate({ userId, password });

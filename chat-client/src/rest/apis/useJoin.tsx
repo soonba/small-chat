@@ -1,5 +1,4 @@
-import { api } from '../../libs/axios';
-import { IResponseBody } from '../../libs/axios/types';
+import { api } from 'libs/axios';
 
 interface IRequestBody {
     userId: string;
@@ -8,11 +7,13 @@ interface IRequestBody {
 }
 
 interface JoinResponse {
-    accessToken: string;
-    refreshToken: string;
+    tokens: {
+        accessToken: string;
+        refreshToken: string;
+    };
 }
 
 const useJoin = async (body: IRequestBody) => {
-    return api.post<IResponseBody<JoinResponse>, IRequestBody>('/auth/join', body).then((response) => response.data);
+    return api.post<JoinResponse, IRequestBody>('/auth/join', body);
 };
 export default useJoin;

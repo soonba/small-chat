@@ -5,15 +5,15 @@ import { ParticipationRoom, useGetMyChattingListQuery } from 'generated/graphql'
 import ChatListItem from './ChatListItem';
 
 type ChatListType = {
-    userId: string;
+    accessToken: string;
     onClick: (id: string) => void;
 };
 
-export default function ChatList({ userId, onClick }: ChatListType) {
+export default function ChatList({ accessToken, onClick }: ChatListType) {
     const [rooms, setRooms] = useState([{ roomId: '', roomName: '' } as ParticipationRoom]);
     useGetMyChattingListQuery({
         fetchPolicy: 'no-cache',
-        variables: { input: { userId } },
+        variables: { input: { userId: '1' } },
         onCompleted({ getMyChattingList: { participationRooms } }) {
             setRooms(participationRooms);
         }

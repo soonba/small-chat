@@ -9,12 +9,12 @@ export default function Chat() {
     const handleChatRoomSelect = useCallback((id: string) => setSelected(id), []);
     const handleChatRoomLeave = useCallback(() => setSelected(''), []);
 
-    const userId = localStorage.getItem('userId') || '';
+    const accessToken = localStorage.getItem('accessToken') || '';
 
     /* 메시지를 받으면 sender: userId 검사를 통해 누구인지 판단.. */
     return (
         <>
-            <ChatList userId={userId} onClick={handleChatRoomSelect} />
+            <ChatList accessToken={accessToken} onClick={handleChatRoomSelect} />
             <ChatRoom selected={selected} onLeave={handleChatRoomLeave} />
         </>
     );
