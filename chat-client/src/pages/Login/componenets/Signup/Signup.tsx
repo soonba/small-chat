@@ -12,7 +12,7 @@ import useJoin from 'rest/apis/useJoin';
 export default function Signup() {
     const navigate = useNavigate();
 
-    const [userId, setUserId] = useState<string>('');
+    const [accountId, setAccountId] = useState<string>('');
     const [inputValue, setInputValue] = useState<string>('');
 
     const [password, setPassword] = useState<string>('');
@@ -31,7 +31,7 @@ export default function Signup() {
         enabled: !!inputValue
     });
     const onClickDuplication = () => {
-        setInputValue(userId);
+        setInputValue(accountId);
     };
 
     const handleSignup = () => {
@@ -39,7 +39,7 @@ export default function Signup() {
             // todo 처리?
             return;
         }
-        joinMutation.mutate({ userId, password, nickname });
+        joinMutation.mutate({ accountId, password, nickname });
         navigate('/chat');
     };
     const onChange = (e: ChangeEvent<HTMLInputElement>, setter: (value: string) => void) => {
@@ -61,11 +61,11 @@ export default function Signup() {
                             <div className="flex flex-col">
                                 ID
                                 <input
-                                    id={userId}
+                                    id={accountId}
                                     type="text"
                                     maxLength={20}
-                                    value={userId}
-                                    onChange={(e) => onChange(e, setUserId)}
+                                    value={accountId}
+                                    onChange={(e) => onChange(e, setAccountId)}
                                     readOnly={!!data && !data?.isUsed}
                                     className={`h-10 min-w-56 truncate rounded-md border border-blue-gray-200 p-2 text-sm font-medium text-blue-gray-900 outline-none ring-0 ${!!data && !data?.isUsed ? 'bg-blue-gray-300' : 'bg-white hover:border-2 hover:border-blue-gray-900 focus:border-2 focus:border-blue-gray-900'}`}
                                 />

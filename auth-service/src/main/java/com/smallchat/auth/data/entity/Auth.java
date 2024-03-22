@@ -1,53 +1,52 @@
 package com.smallchat.auth.data.entity;
 
 import com.smallchat.auth.data.dto.JoinDto;
-import com.smallchat.auth.util.PasswordUtil;
 import jakarta.persistence.*;
+
 import java.util.UUID;
 
-@Table(name = "auth")
+@Table(name = "tb_auth")
 @Entity
 public class Auth extends BaseTime {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "id", nullable = false)
-  private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "auth_id", nullable = false)
+    private UUID authId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+    @Column(name = "account_id", nullable = false)
+    private String accountId;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-  @Column(name = "user_id", nullable = false)
-  private String userId;
+    public Auth(User user, String accountId, String password) {
+        this.user = user;
+        this.accountId = accountId;
+        this.password = password;
+    }
 
-  @Column(name = "nickname", nullable = false)
-  private String nickname;
+    protected Auth() {
+    }
 
-  @Column(name = "password", nullable = false)
-  private String password;
+    public static Auth fromUserAndDto(User user, JoinDto.Request request) {
+        return new Auth(user, request.accountId(), request.password());
+    }
 
-  public Auth(String userId, String nickname, String password) {
-    this.userId = userId;
-    this.nickname = nickname;
-    this.password = password;
-  }
+    public UUID getAuthId() {
+        return authId;
+    }
 
-  protected Auth() {}
+    public User getUser() {
+        return user;
+    }
 
-  public static Auth fromDto(JoinDto.Request request) {
-    return new Auth(request.userId(), request.nickname(), PasswordUtil.encrypt(request.password()));
-  }
+    public String getAccountId() {
+        return accountId;
+    }
 
-  public UUID getId() {
-    return id;
-  }
-
-  public String getUserId() {
-    return userId;
-  }
-
-  public String getNickname() {
-    return nickname;
-  }
-
-  public String getPassword() {
-    return password;
-  }
+    public String getPassword() {
+        return password;
+    }
 }

@@ -1,7 +1,7 @@
 import { api } from 'libs/axios';
 
 interface IRequestBody {
-    userId: string;
+    accountId: string;
     password: string;
 }
 

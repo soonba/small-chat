@@ -8,17 +8,17 @@ import jakarta.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "token")
+@Table(name = "tb_token")
 public class Token {
     @Id
-    @Column(name = "id", nullable = false)
-    private UUID id;
+    @Column(name = "auth_id", nullable = false)
+    private UUID authId;
 
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken;
 
-    public Token(UUID id, String refreshToken) {
-        this.id = id;
+    public Token(UUID authId, String refreshToken) {
+        this.authId = authId;
         this.refreshToken = refreshToken;
     }
 
