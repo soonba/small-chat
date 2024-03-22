@@ -1,6 +1,6 @@
-package com.smallchat.backend.data.infra;
+package com.smallchat.backend.persistance;
 
-import com.smallchat.backend.data.entity.User;
+import com.smallchat.backend.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

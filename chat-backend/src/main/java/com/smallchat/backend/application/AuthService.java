@@ -1,12 +1,12 @@
-package com.smallchat.backend.service;
+package com.smallchat.backend.application;
 
 import com.smallchat.backend.data.dto.*;
-import com.smallchat.backend.data.entity.Auth;
-import com.smallchat.backend.data.entity.User;
-import com.smallchat.backend.data.infra.AuthRepository;
-import com.smallchat.backend.data.infra.UserRepository;
 import com.smallchat.backend.data.jwt.JwtPayload;
 import com.smallchat.backend.data.jwt.Tokens;
+import com.smallchat.backend.domain.Auth;
+import com.smallchat.backend.domain.User;
+import com.smallchat.backend.persistance.AuthRepository;
+import com.smallchat.backend.persistance.UserRepository;
 import com.smallchat.backend.util.PasswordUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,8 +1,8 @@
-package com.smallchat.backend.controller;
+package com.smallchat.backend.presentation;
 
+import com.smallchat.backend.application.RoomService;
 import com.smallchat.backend.data.dto.ApiResponse;
 import com.smallchat.backend.data.dto.CheckUserDuplicationDto;
-import com.smallchat.backend.service.RoomService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

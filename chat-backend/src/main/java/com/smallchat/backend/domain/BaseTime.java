@@ -1,4 +1,4 @@
-package com.smallchat.backend.data.entity;
+package com.smallchat.backend.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

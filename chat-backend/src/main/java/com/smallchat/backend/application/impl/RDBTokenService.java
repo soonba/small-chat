@@ -1,11 +1,12 @@
-package com.smallchat.backend.data.infra;
+package com.smallchat.backend.application.impl;
 
-import com.smallchat.backend.data.entity.Auth;
-import com.smallchat.backend.data.entity.Token;
+import com.smallchat.backend.application.TokenService;
 import com.smallchat.backend.data.jwt.JwtPayload;
 import com.smallchat.backend.data.jwt.TokenType;
 import com.smallchat.backend.data.jwt.Tokens;
-import com.smallchat.backend.service.TokenService;
+import com.smallchat.backend.domain.Auth;
+import com.smallchat.backend.domain.Token;
+import com.smallchat.backend.persistance.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
