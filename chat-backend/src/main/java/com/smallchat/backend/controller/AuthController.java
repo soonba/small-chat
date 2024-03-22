@@ -34,8 +34,8 @@ public class AuthController {
     }
 
     @GetMapping("/{accountId}/exists")
-    public ResponseEntity<ApiResponse<CheckUserResponse>> checkAccountExists(@PathVariable String accountId) {
-        ApiResponse<CheckUserResponse> exists = authService.checkAccountIdExists(accountId);
+    public ResponseEntity<ApiResponse<CheckUserDuplicationDto.Response>> checkAccountExists(@PathVariable String accountId) {
+        ApiResponse<CheckUserDuplicationDto.Response> exists = authService.checkAccountIdExists(accountId);
         return ResponseEntity.ok(exists);
     }
 }

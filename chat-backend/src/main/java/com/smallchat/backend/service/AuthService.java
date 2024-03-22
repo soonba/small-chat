@@ -55,7 +55,7 @@ public class AuthService {
         return new ApiResponse<>(new RefreshDto.Response(tokens));
     }
 
-    public ApiResponse<CheckUserResponse> checkAccountIdExists(String accountId) {
-        return new ApiResponse<>(new CheckUserResponse(authRepository.existsByAccountId(accountId)));
+    public ApiResponse<CheckUserDuplicationDto.Response> checkAccountIdExists(String accountId) {
+        return new ApiResponse<>(new CheckUserDuplicationDto.Response(authRepository.existsByAccountId(accountId)));
     }
 }
