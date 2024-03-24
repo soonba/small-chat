@@ -25,4 +25,16 @@ public class UserRoom {
         this.room = room;
         this.user = user;
     }
+
+    public UUID getUserRoomId() {
+        return userRoomId;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }

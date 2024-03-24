@@ -26,6 +26,18 @@ public class Room extends BaseTime {
 
     protected Room() {
     }
+
+    public UUID getRoomId() {
+        return roomId;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 
 
