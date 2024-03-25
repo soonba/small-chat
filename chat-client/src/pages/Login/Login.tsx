@@ -18,6 +18,7 @@ export default function Login() {
         onSuccess: (response) => {
             const { accessToken, refreshToken } = response.tokens;
             setTokens(accessToken, refreshToken);
+            navigate('/chat');
         }
     });
     // todo join || login

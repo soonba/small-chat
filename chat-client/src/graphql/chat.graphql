@@ -20,6 +20,7 @@ subscription subscribeRoom($input: SubscriptionInput!) {
             nickname
         }
         message
+        createdAt
     }
 }
 
