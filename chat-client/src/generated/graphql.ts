@@ -184,7 +184,7 @@ export type SubscribeRoomSubscriptionVariables = Exact<{
 }>;
 
 
-export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', messageId: string, roomId: string, message: string, sender: { __typename?: 'Sender', userId: string, nickname: string } } };
+export type SubscribeRoomSubscription = { __typename?: 'Subscription', subscribeRoom: { __typename?: 'MessageResponse', messageId: string, roomId: string, message: string, createdAt: any, sender: { __typename?: 'Sender', userId: string, nickname: string } } };
 
 export type SendMutationVariables = Exact<{
   input: SubmitMessageInput;
@@ -292,6 +292,7 @@ export const SubscribeRoomDocument = gql`
       nickname
     }
     message
+    createdAt
   }
 }
     `;

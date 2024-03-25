@@ -69,7 +69,7 @@ export default function Signup() {
                                     readOnly={!!data && !data?.isUsed}
                                     className={`h-10 min-w-56 truncate rounded-md border border-blue-gray-200 p-2 text-sm font-medium text-blue-gray-900 outline-none ring-0 ${!!data && !data?.isUsed ? 'bg-blue-gray-300' : 'bg-white hover:border-2 hover:border-blue-gray-900 focus:border-2 focus:border-blue-gray-900'}`}
                                 />
-                                <div className="mb-3 mt-1">{data?.msg}</div>
+                                <div className="mb-3 mt-1 h-3">{data?.msg}</div>
                             </div>
                             <button
                                 type="button"
@@ -92,7 +92,7 @@ export default function Signup() {
                             />
                         </div>
                         <div className="flex">
-                            <label htmlFor="nickname" className="ml-1 flex flex-col justify-center text-xs font-bold text-blue-gray-600">
+                            <label htmlFor="nickname" className="flex flex-col justify-center text-xs font-bold text-blue-gray-600">
                                 Nickname
                                 <input
                                     id="nickname"
