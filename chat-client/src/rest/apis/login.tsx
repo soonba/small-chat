@@ -12,8 +12,8 @@ interface LoginResponse {
     };
 }
 
-const useLogin = async (body: IRequestBody) => {
+const login = async (body: IRequestBody) => {
     return api.post<LoginResponse, IRequestBody>('/auth/login', body);
 };
 
-export default useLogin;
+export default login;

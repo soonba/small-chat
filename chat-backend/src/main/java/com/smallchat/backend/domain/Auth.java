@@ -1,4 +1,4 @@
-package com.smallchat.backend.data.entity;
+package com.smallchat.backend.domain;
 
 import com.smallchat.backend.data.dto.JoinDto;
 import jakarta.persistence.*;

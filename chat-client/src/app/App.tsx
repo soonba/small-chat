@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Add from 'pages/Add';
-import Login from 'pages/Login';
+import BaseLayout from 'layout/BaseLayout';
 
-import BaseLayout from '../layout/BaseLayout';
-import Chat from '../pages/Chat';
-import Join from '../pages/Join/Join';
-import Signup from '../pages/Login/componenets/Signup';
+import Add from 'pages/Add';
+import Chat from 'pages/Chat';
+import Join from 'pages/Join/Join';
+import Login from 'pages/Login';
+import Signup from 'pages/Signup';
 
 export default function App() {
     return (

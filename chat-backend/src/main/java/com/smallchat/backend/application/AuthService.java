@@ -1,12 +1,12 @@
-package com.smallchat.backend.service;
+package com.smallchat.backend.application;
 
 import com.smallchat.backend.data.dto.*;
-import com.smallchat.backend.data.entity.Auth;
-import com.smallchat.backend.data.entity.User;
-import com.smallchat.backend.data.infra.AuthRepository;
-import com.smallchat.backend.data.infra.UserRepository;
 import com.smallchat.backend.data.jwt.JwtPayload;
 import com.smallchat.backend.data.jwt.Tokens;
+import com.smallchat.backend.domain.Auth;
+import com.smallchat.backend.domain.User;
+import com.smallchat.backend.persistance.AuthRepository;
+import com.smallchat.backend.persistance.UserRepository;
 import com.smallchat.backend.util.PasswordUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +50,7 @@ public class AuthService {
     public ApiResponse<RefreshDto.Response> refresh(RefreshDto.Request request) {
         String rt = request.refreshToken();
         JwtPayload jwtPayload = tokenService.compile(rt);
-        Auth auth = authRepository.findById(jwtPayload.id()).orElseThrow(() -> new RuntimeException("찾을 수 없는 아이디"));
+        Auth auth = authRepository.findById(jwtPayload.authId()).orElseThrow(() -> new RuntimeException("찾을 수 없는 아이디"));
         Tokens tokens = tokenService.generateTokensByAuth(auth);
         return new ApiResponse<>(new RefreshDto.Response(tokens));
     }

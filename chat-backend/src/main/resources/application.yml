@@ -5,13 +5,12 @@ spring:
   #  web:
   #    resources:
   #      static-locations: META-INF:/resources, classpath:/resources, classpath:/static, classpath:/static/dist
-  #  datasource:
-  #    driver-class-name: org.postgresql.Driver
-  # todo...
-  #    url: jdbc:postgresql://localhost:5434/auth
-  #    url: jdbc:postgresql://postgres:5434/auth
-  #    username: postgres
-  #    password: postgres
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    #   todo...
+    url: jdbc:postgresql://localhost:5433/auth
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: create

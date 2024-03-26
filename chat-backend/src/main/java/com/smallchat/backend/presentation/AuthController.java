@@ -1,7 +1,7 @@
-package com.smallchat.backend.controller;
+package com.smallchat.backend.presentation;
 
+import com.smallchat.backend.application.AuthService;
 import com.smallchat.backend.data.dto.*;
-import com.smallchat.backend.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
