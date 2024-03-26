@@ -1,13 +1,20 @@
 import { api } from 'libs/axios';
 
-interface Rooms {
-    roomResponse: {
-        roomId: string;
-        roomName: string;
-    }[];
+interface RoomResponse {
+    roomId: string;
+    roomName: string;
 }
 
-const getParticipationRooms = async (): Promise<Rooms> => {
-    return api.get<Rooms, string>(`/rooms`);
+interface rooms {
+    rooms: {
+        rooms: {
+            roomId: string;
+            roomName: string;
+        }[];
+    };
+}
+
+const getParticipationRooms = async (): Promise<RoomResponse[]> => {
+    return api.get<rooms, string>(`/rooms`).then((r) => r.rooms.rooms);
 };
 export default getParticipationRooms;

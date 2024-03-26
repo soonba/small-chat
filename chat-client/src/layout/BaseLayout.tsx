@@ -14,7 +14,7 @@ export default function BaseLayout() {
 
     return (
         <div className="h-full w-full pt-16">
-            <header className="fixed inset-x-0 top-0 z-10 flex h-16 items-center justify-between px-5 shadow-sm">
+            <header className="fixed inset-x-0 top-0 z-10 flex h-16 w-1/3 items-center justify-between px-5 shadow-sm">
                 <h1 className="text-2xl font-bold uppercase text-blue-gray-900">작은 대화</h1>
                 <div className="flex">
                     <div>

@@ -72,6 +72,14 @@ export class RoomService {
           lastMessageSenderNickname: foundModel.sender.nickname,
           lastMessageTime: foundModel.createdAt,
         });
+      } else {
+        //todo 시스템 메시지로 변경
+        response.push({
+          roomId,
+          lastMessage: '대화를 시작해보세요.',
+          lastMessageSenderNickname: '시스템',
+          lastMessageTime: new Date(),
+        });
       }
     }
     return response;

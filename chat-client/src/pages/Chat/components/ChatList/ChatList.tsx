@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 
 import { RoomResponse, useGetRoomLatestInfosQuery, useSubscribeRoomSubscription } from 'generated/graphql';
 import getParticipationRooms from 'rest/apis/getParticipationRooms';
@@ -17,7 +18,7 @@ export default function ChatList({ onClick }: ChatListType) {
             ...({
                 roomId: '',
                 lastMessage: '',
-                lastMessageTime: new Date(),
+                lastMessageTime: '',
                 lastMessageSenderNickname: ''
             } as RoomResponse),
             roomName: '',
@@ -32,13 +33,13 @@ export default function ChatList({ onClick }: ChatListType) {
 
     const { data: latestData } = useGetRoomLatestInfosQuery({
         skip: !data,
-        variables: { input: { roomIds: data?.roomResponse?.map((room) => room.roomId) ?? [] } },
+        variables: { input: { roomIds: data?.map((room) => room.roomId) ?? [] } },
         onCompleted: (res) => {
             if (res?.getRoomLatestInfos) {
                 // todo 개선... data
                 setRoomsLatestMessage(
                     res.getRoomLatestInfos.map((datum) => {
-                        const { roomName } = data?.roomResponse.find((el2) => el2.roomId === datum.roomId) ?? { roomName: '' };
+                        const { roomName } = data?.find((el2) => el2.roomId === datum.roomId) ?? { roomName: '' };
                         return { ...datum, roomName, unReadMassageCount: 0 };
                     })
                 );
@@ -70,7 +71,7 @@ export default function ChatList({ onClick }: ChatListType) {
                 return;
             }
             newData[index].lastMessage = _message;
-            newData[index].lastMessageTime = createdAt;
+            newData[index].lastMessageTime = dayjs(createdAt);
             newData[index].unReadMassageCount += 1;
             newData[index].lastMessageSenderNickname = sender.nickname;
             setRoomsLatestMessage(newData);
