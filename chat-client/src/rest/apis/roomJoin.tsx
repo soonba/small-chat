@@ -4,7 +4,7 @@ interface IRequestBody {
     roomName: string;
 }
 
-const joinRoom = async (body: IRequestBody): Promise<void> => {
+const roomJoin = async (body: IRequestBody): Promise<void> => {
     return api.post<void, IRequestBody>(`/rooms`, body);
 };
-export default joinRoom;
+export default roomJoin;

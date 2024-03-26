@@ -5,14 +5,14 @@ import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
 import { useMutation } from '@tanstack/react-query';
 
-import joinRoom from 'rest/apis/joinRoom';
+import roomJoin from 'rest/apis/roomJoin';
 
 export default function Add() {
     const [roomName, setRoomName] = useState('');
     const navigate = useNavigate();
 
     const joinMutation = useMutation({
-        mutationFn: joinRoom,
+        mutationFn: roomJoin,
         onSuccess: () => {
             navigate('/chat');
         }
