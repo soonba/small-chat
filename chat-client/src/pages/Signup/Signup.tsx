@@ -6,8 +6,8 @@ import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { setTokens } from 'libs/utils/storage';
-import useCheckDuplication from 'rest/apis/useCheckDuplication';
-import useJoin from 'rest/apis/useJoin';
+import userJoin from 'rest/apis/userJoin';
+import verifyingUserDuplication from 'rest/apis/verifyingUserDuplication';
 
 export default function Signup() {
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function Signup() {
     const [nickname, setNickname] = useState<string>('');
 
     const joinMutation = useMutation({
-        mutationFn: useJoin,
+        mutationFn: userJoin,
         onSuccess: (response) => {
             const { accessToken, refreshToken } = response.tokens;
             setTokens(accessToken, refreshToken);
@@ -27,7 +27,7 @@ export default function Signup() {
     });
     const { data } = useQuery({
         queryKey: [{ inputValue }],
-        queryFn: useCheckDuplication,
+        queryFn: verifyingUserDuplication,
         enabled: !!inputValue
     });
     const onClickDuplication = () => {
