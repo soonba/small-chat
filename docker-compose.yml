@@ -51,9 +51,9 @@ services:
     networks:
       - small-chat
     restart: always
-  auth-service:
-    image: seonba/auth-service
-    container_name: auth-service
+  chat-backend:
+    image: seonba/chat-backend
+    container_name: chat-backend
     ports:
       - 8080:8080
     networks:
