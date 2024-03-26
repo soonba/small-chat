@@ -38,6 +38,11 @@ export type GetRoomDetailInput = {
   roomId: Scalars['String']['input'];
 };
 
+export type GetRoomLatestInfosInput = {
+  /** 채팅방 ids */
+  roomIds: Array<Scalars['String']['input']>;
+};
+
 export type JoinInput = {
   /** 닉네임 */
   nickname: Scalars['String']['input'];
@@ -112,6 +117,7 @@ export type Query = {
   __typename?: 'Query';
   getMyChattingList: MyRoomsResponse;
   getRoomDetails: RoomInfoResponse;
+  getRoomLatestInfos: Array<RoomResponse>;
 };
 
 
@@ -124,6 +130,11 @@ export type QueryGetRoomDetailsArgs = {
   input: GetRoomDetailInput;
 };
 
+
+export type QueryGetRoomLatestInfosArgs = {
+  input: GetRoomLatestInfosInput;
+};
+
 export type RoomInfoResponse = {
   __typename?: 'RoomInfoResponse';
   /** 메시지 */
@@ -132,6 +143,18 @@ export type RoomInfoResponse = {
   roomId: Scalars['String']['output'];
   /** 방 제목 */
   roomName: Scalars['String']['output'];
+};
+
+export type RoomResponse = {
+  __typename?: 'RoomResponse';
+  /** 마지막 메시지 */
+  lastMessage: Scalars['String']['output'];
+  /** 마지막 메시지 전송자 닉네임 */
+  lastMessageSenderNickname: Scalars['String']['output'];
+  /** 마지막 메시지 전송 시각 */
+  lastMessageTime: Scalars['DateTime']['output'];
+  /** 방 ID */
+  roomId: Scalars['String']['output'];
 };
 
 export type Sender = {
@@ -157,7 +180,7 @@ export type SubscriptionSubscribeRoomArgs = {
 };
 
 export type SubscriptionInput = {
-  /** 채팅방 IDs */
+  /** 채팅방 ids */
   roomIds: Array<Scalars['String']['input']>;
 };
 
@@ -206,6 +229,13 @@ export type GetRoomDetailsQueryVariables = Exact<{
 
 
 export type GetRoomDetailsQuery = { __typename?: 'Query', getRoomDetails: { __typename?: 'RoomInfoResponse', roomId: string, roomName: string, messages: Array<{ __typename?: 'MessageResponse', roomId: string, message: string, messageId: string, createdAt: any, sender: { __typename?: 'Sender', userId: string, nickname: string } }> } };
+
+export type GetRoomLatestInfosQueryVariables = Exact<{
+  input: GetRoomLatestInfosInput;
+}>;
+
+
+export type GetRoomLatestInfosQuery = { __typename?: 'Query', getRoomLatestInfos: Array<{ __typename?: 'RoomResponse', roomId: string, lastMessage: string, lastMessageSenderNickname: string, lastMessageTime: any }> };
 
 export type JoinRoomMutationVariables = Exact<{
   input: JoinRoomInput;
@@ -436,6 +466,44 @@ export function useGetRoomDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetRoomDetailsQueryHookResult = ReturnType<typeof useGetRoomDetailsQuery>;
 export type GetRoomDetailsLazyQueryHookResult = ReturnType<typeof useGetRoomDetailsLazyQuery>;
 export type GetRoomDetailsQueryResult = Apollo.QueryResult<GetRoomDetailsQuery, GetRoomDetailsQueryVariables>;
+export const GetRoomLatestInfosDocument = gql`
+    query getRoomLatestInfos($input: GetRoomLatestInfosInput!) {
+  getRoomLatestInfos(input: $input) {
+    roomId
+    lastMessage
+    lastMessageSenderNickname
+    lastMessageTime
+  }
+}
+    `;
+
+/**
+ * __useGetRoomLatestInfosQuery__
+ *
+ * To run a query within a React component, call `useGetRoomLatestInfosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRoomLatestInfosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRoomLatestInfosQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetRoomLatestInfosQuery(baseOptions: Apollo.QueryHookOptions<GetRoomLatestInfosQuery, GetRoomLatestInfosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRoomLatestInfosQuery, GetRoomLatestInfosQueryVariables>(GetRoomLatestInfosDocument, options);
+      }
+export function useGetRoomLatestInfosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRoomLatestInfosQuery, GetRoomLatestInfosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRoomLatestInfosQuery, GetRoomLatestInfosQueryVariables>(GetRoomLatestInfosDocument, options);
+        }
+export type GetRoomLatestInfosQueryHookResult = ReturnType<typeof useGetRoomLatestInfosQuery>;
+export type GetRoomLatestInfosLazyQueryHookResult = ReturnType<typeof useGetRoomLatestInfosLazyQuery>;
+export type GetRoomLatestInfosQueryResult = Apollo.QueryResult<GetRoomLatestInfosQuery, GetRoomLatestInfosQueryVariables>;
 export const JoinRoomDocument = gql`
     mutation joinRoom($input: JoinRoomInput!) {
   joinRoom(input: $input) {

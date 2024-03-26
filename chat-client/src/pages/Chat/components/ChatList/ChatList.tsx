@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { useSubscribeRoomSubscription } from 'generated/graphql';
-import useParticipationRooms from 'rest/apis/useParticipationRooms';
+import { RoomResponse, useGetRoomLatestInfosQuery, useSubscribeRoomSubscription } from 'generated/graphql';
+import getParticipationRooms from 'rest/apis/getParticipationRooms';
 
 import ChatListItem from './ChatListItem';
 
@@ -12,58 +12,75 @@ type ChatListType = {
 };
 
 export default function ChatList({ onClick }: ChatListType) {
-    const [rooms, setRooms] = useState([
+    const [roomsLatestMessage, setRoomsLatestMessage] = useState([
         {
-            roomId: '',
+            ...({
+                roomId: '',
+                lastMessage: '',
+                lastMessageTime: new Date(),
+                lastMessageSenderNickname: ''
+            } as RoomResponse),
             roomName: '',
-            lastMessage: '',
-            lastMessageTime: '',
             unReadMassageCount: 0
         }
     ]);
 
     const { data } = useQuery({
         queryKey: ['rooms'],
-        queryFn: useParticipationRooms
+        queryFn: getParticipationRooms
     });
 
-    useEffect(() => {
-        if (data) {
-            setRooms(data);
+    const { data: latestData } = useGetRoomLatestInfosQuery({
+        skip: !data,
+        variables: { input: { roomIds: data?.roomResponse?.map((room) => room.roomId) ?? [] } },
+        onCompleted: (res) => {
+            if (res?.getRoomLatestInfos) {
+                // todo 개선... data
+                setRoomsLatestMessage(
+                    res.getRoomLatestInfos.map((datum) => {
+                        const { roomName } = data?.roomResponse.find((el2) => el2.roomId === datum.roomId) ?? { roomName: '' };
+                        return { ...datum, roomName, unReadMassageCount: 0 };
+                    })
+                );
+            }
         }
-    }, [data]);
+    });
 
     useSubscribeRoomSubscription({
-        variables: { input: { roomIds: rooms.map((el) => el.roomId) } },
+        skip: !latestData,
+        variables: { input: { roomIds: latestData?.getRoomLatestInfos.map((el) => el?.roomId ?? '') ?? [] } },
         onData({ data: { data: datum } }) {
             // todo 검토 모든 메시지 수신하며 모든 구독중인 방을 갱신?
             const messageResponse = datum?.subscribeRoom;
             const {
                 roomId,
+                sender,
                 message: _message,
                 createdAt
             } = messageResponse ?? {
-                sender: '',
                 roomId: '',
+                sender: { userId: '', nickname: '' },
                 message: '',
-                sendAt: ''
+                createdAt: ''
             };
-            const newRooms = rooms;
-            const index = newRooms.findIndex((el) => el.roomId === roomId);
+
+            const newData = roomsLatestMessage;
+            const index = newData.findIndex((el) => el?.roomId === roomId);
             if (!index || index === -1) {
                 return;
             }
-            newRooms[index].lastMessage = _message;
-            newRooms[index].lastMessageTime = createdAt;
-            newRooms[index].unReadMassageCount += 1;
-            setRooms(newRooms);
+            newData[index].lastMessage = _message;
+            newData[index].lastMessageTime = createdAt;
+            newData[index].unReadMassageCount += 1;
+            newData[index].lastMessageSenderNickname = sender.nickname;
+            setRoomsLatestMessage(newData);
         }
     });
     return (
         <div className="fixed bottom-0 left-0 top-16 w-96 py-2 shadow-md">
-            {!!rooms && rooms.length > 0 ? (
+            {!!roomsLatestMessage && roomsLatestMessage.length > 0 ? (
                 <ul className="max-h-[calc(100vh-64px)] w-full space-y-5 overflow-y-auto p-5 custom-scroll">
-                    {rooms.map((room) => (
+                    {roomsLatestMessage.map((room) => (
                         <ChatListItem key={room.roomId} room={room} onClick={onClick} />
                     ))}
                 </ul>

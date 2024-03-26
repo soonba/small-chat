@@ -3,14 +3,12 @@ package com.smallchat.backend.presentation;
 import com.smallchat.backend.application.RoomService;
 import com.smallchat.backend.application.TokenService;
 import com.smallchat.backend.data.dto.ApiResponse;
+import com.smallchat.backend.data.dto.CreateRoomDto;
 import com.smallchat.backend.data.dto.RoomListDto;
 import com.smallchat.backend.data.jwt.JwtPayload;
 import com.smallchat.backend.data.room.Rooms;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/rooms")
@@ -24,9 +22,20 @@ public class RoomController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<RoomListDto.Response>> getParticipationRoomList(@RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity<ApiResponse<RoomListDto.Response>> getParticipationRoomList(@RequestHeader("Authorization") String authorization) {
+        //todo 토큰 파싱 인터셉터
+        String accessToken = authorization.replace("Bearer ", "");
         JwtPayload jwtPayload = tokenService.compile(accessToken);
-        Rooms rooms = roomService.findRoomListByUser(jwtPayload.id());
+        Rooms rooms = roomService.findRoomListByUser(jwtPayload.userId());
         return ResponseEntity.ok(new ApiResponse<>(new RoomListDto.Response(rooms)));
+    }
+
+    @PostMapping()
+    public ResponseEntity<ApiResponse<String>> createRoom(@RequestHeader("Authorization") String authorization,
+                                                          @RequestBody CreateRoomDto.Request request) {
+        String accessToken = authorization.replace("Bearer ", "");
+        JwtPayload jwtPayload = tokenService.compile(accessToken);
+        roomService.createRoom(jwtPayload.userId(), request);
+        return ResponseEntity.status(201).body(new ApiResponse<>("created"));
     }
 }
