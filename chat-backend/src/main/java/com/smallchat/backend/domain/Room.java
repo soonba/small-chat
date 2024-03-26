@@ -18,8 +18,7 @@ public class Room extends BaseTime {
     @Column(name = "name", nullable = false)
     private String name;
 
-    public Room(UUID roomId, User owner, String name) {
-        this.roomId = roomId;
+    public Room(User owner, String name) {
         this.owner = owner;
         this.name = name;
     }
@@ -37,6 +36,10 @@ public class Room extends BaseTime {
 
     public String getName() {
         return name;
+    }
+
+    public static Room fromUserId(User user, String name) {
+        return new Room(user, name);
     }
 }
 

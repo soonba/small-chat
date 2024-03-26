@@ -1,5 +1,6 @@
 package com.smallchat.backend.domain;
 
+import com.smallchat.backend.data.room.RoomResponse;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -14,8 +15,9 @@ public class UserRoom {
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     protected UserRoom() {
@@ -36,5 +38,10 @@ public class UserRoom {
 
     public User getUser() {
         return user;
+    }
+
+    public RoomResponse toResponse() {
+        Room room = this.room;
+        return new RoomResponse(room.getRoomId(), room.getName());
     }
 }

@@ -1,5 +1,12 @@
 type ChatListItemType = {
-    room: { roomId: string; roomName: string };
+    room: {
+        roomId: string;
+        lastMessage: string;
+        lastMessageTime: Date;
+        lastMessageSenderNickname: string;
+        roomName: string;
+        unReadMassageCount: number;
+    };
     onClick: (id: string) => void;
 };
 

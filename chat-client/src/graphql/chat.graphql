@@ -56,6 +56,15 @@ query getRoomDetails($input: GetRoomDetailInput!) {
     }
 }
 
+query getRoomLatestInfos($input: GetRoomLatestInfosInput!){
+    getRoomLatestInfos(input: $input) {
+        roomId
+        lastMessage
+        lastMessageSenderNickname
+        lastMessageTime
+    }
+}
+
 mutation joinRoom($input: JoinRoomInput!) {
     joinRoom(input: $input) {
         message
