@@ -11,7 +11,7 @@ public class Room extends BaseTime {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "room_id", nullable = false)
     private UUID roomId;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
 
