@@ -68,10 +68,10 @@ public class RDBTokenService implements TokenService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        UUID id = Optional.ofNullable(payload.get("authId", UUID.class)).orElseThrow(() -> new RuntimeException("유효하지 않은 토큰입니다."));
-        String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
+        String authId = Optional.ofNullable(payload.get("authId", String.class)).orElseThrow(() -> new RuntimeException("유효하지 않은 토큰입니다."));
         String userId = Optional.ofNullable(payload.get("userId", String.class)).orElse("");
-        return new JwtPayload(id, nickname, userId);
+        String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
+        return new JwtPayload(UUID.fromString(userId), UUID.fromString(authId), nickname);
     }
 
 }

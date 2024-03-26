@@ -50,7 +50,7 @@ public class AuthService {
     public ApiResponse<RefreshDto.Response> refresh(RefreshDto.Request request) {
         String rt = request.refreshToken();
         JwtPayload jwtPayload = tokenService.compile(rt);
-        Auth auth = authRepository.findById(jwtPayload.id()).orElseThrow(() -> new RuntimeException("찾을 수 없는 아이디"));
+        Auth auth = authRepository.findById(jwtPayload.authId()).orElseThrow(() -> new RuntimeException("찾을 수 없는 아이디"));
         Tokens tokens = tokenService.generateTokensByAuth(auth);
         return new ApiResponse<>(new RefreshDto.Response(tokens));
     }
