@@ -6,7 +6,7 @@ import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import { useMutation } from '@tanstack/react-query';
 
 import { setTokens } from 'libs/utils/storage';
-import useLogin from 'rest/apis/useLogin';
+import login from 'rest/apis/login';
 
 export default function Login() {
     const [accountId, setAccountId] = useState<string>('');
@@ -14,10 +14,11 @@ export default function Login() {
     const navigate = useNavigate();
 
     const loginMutation = useMutation({
-        mutationFn: useLogin,
+        mutationFn: login,
         onSuccess: (response) => {
             const { accessToken, refreshToken } = response.tokens;
             setTokens(accessToken, refreshToken);
+            navigate('/chat');
         }
     });
     // todo join || login

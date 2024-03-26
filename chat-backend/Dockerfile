@@ -1,5 +1,5 @@
 FROM openjdk:17-ea-slim
 WORKDIR /app
-COPY ./build/libs/*.jar auth.jar
+COPY ./build/libs/*.jar backend.jar
 
-CMD ["java", "-jar", "auth.jar"]
+CMD ["java", "-jar", "backend.jar"]

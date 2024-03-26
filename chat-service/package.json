@@ -6,8 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "/node_modules/.bin/rimraf dist",
-    "build": "/node_modules/.bin/nest build",
+    "build": "nest build",
     "format": "/node_modules/.bin/prettier --write \\\\\\\"src/**/*.ts\\\\\\\" \\\\\\\"test/**/*.ts\\\\\\\"",
     "start": "nest start",
     "lint": "/node_modules/.bin/eslint \\\\\\\"{src,apps,libs,test}/**/*.ts\\\\\\\" --fix"

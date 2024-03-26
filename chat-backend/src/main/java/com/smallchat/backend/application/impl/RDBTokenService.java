@@ -1,11 +1,12 @@
-package com.smallchat.backend.data.infra;
+package com.smallchat.backend.application.impl;
 
-import com.smallchat.backend.data.entity.Auth;
-import com.smallchat.backend.data.entity.Token;
+import com.smallchat.backend.application.TokenService;
 import com.smallchat.backend.data.jwt.JwtPayload;
 import com.smallchat.backend.data.jwt.TokenType;
 import com.smallchat.backend.data.jwt.Tokens;
-import com.smallchat.backend.service.TokenService;
+import com.smallchat.backend.domain.Auth;
+import com.smallchat.backend.domain.Token;
+import com.smallchat.backend.persistance.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -67,10 +68,10 @@ public class RDBTokenService implements TokenService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        UUID id = Optional.ofNullable(payload.get("authId", UUID.class)).orElseThrow(() -> new RuntimeException("유효하지 않은 토큰입니다."));
-        String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
+        String authId = Optional.ofNullable(payload.get("authId", String.class)).orElseThrow(() -> new RuntimeException("유효하지 않은 토큰입니다."));
         String userId = Optional.ofNullable(payload.get("userId", String.class)).orElse("");
-        return new JwtPayload(id, nickname, userId);
+        String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
+        return new JwtPayload(UUID.fromString(userId), UUID.fromString(authId), nickname);
     }
 
 }

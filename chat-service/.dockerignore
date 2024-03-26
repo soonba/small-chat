@@ -1,0 +1,10 @@
+.idea
+.git
+.gitignore
+.dockerignore
+Dockerfile
+*.md
+*.sh
+*.yml
+/chat-service/dist
+/chat-service/node_modules

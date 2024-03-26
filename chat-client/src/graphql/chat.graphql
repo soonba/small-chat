@@ -20,6 +20,7 @@ subscription subscribeRoom($input: SubscriptionInput!) {
             nickname
         }
         message
+        createdAt
     }
 }
 
@@ -52,6 +53,15 @@ query getRoomDetails($input: GetRoomDetailInput!) {
             messageId
             createdAt
         }
+    }
+}
+
+query getRoomLatestInfos($input: GetRoomLatestInfosInput!){
+    getRoomLatestInfos(input: $input) {
+        roomId
+        lastMessage
+        lastMessageSenderNickname
+        lastMessageTime
     }
 }
 

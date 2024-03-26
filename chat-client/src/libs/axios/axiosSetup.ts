@@ -1,7 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
+import appConfig from 'config';
+
 import { IError } from './types';
-import appConfig from '../../config';
 import { LOCAL_STORAGE_KEYS } from '../common/constant';
 import { clearStorage, setTokens } from '../utils/storage';
 

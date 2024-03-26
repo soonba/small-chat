@@ -13,7 +13,7 @@ interface JoinResponse {
     };
 }
 
-const useJoin = async (body: IRequestBody) => {
+const userJoin = async (body: IRequestBody) => {
     return api.post<JoinResponse, IRequestBody>('/auth/join', body);
 };
-export default useJoin;
+export default userJoin;

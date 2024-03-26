@@ -1,18 +1,18 @@
 version: "3.8"
 services:
-  #  mongodb:
-  #    image: mongo
-  #    networks:
-  #      - small-chat
-  #    container_name: mongodb
-  #    ports:
-  #      - 27017:27017
-  #    volumes:
-  #      - data:/data
-  #    environment:
-  #      #      - MONGO_INITDB_ROOT_USERNAME=root
-  #      #      - MONGO_INITDB_ROOT_PASSWORD=root
-  #      - MONGODB_DATABASE="small_chat"
+  mongodb:
+    image: mongo
+    networks:
+      - small-chat
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data
+    environment:
+      #      - MONGO_INITDB_ROOT_USERNAME=root
+      #      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGODB_DATABASE="small_chat"
   #  mongo-express:
   #    image: mongo-express
   #    networks:
@@ -29,31 +29,31 @@ services:
   #      - mongodb
   #    depends_on:
   #      - mongodb
-#  client:
-#    build:
-#      context: chat-client/
-#    container_name: client
-#    #    image: small-chat-client
-#    ports:
-#      - 3000:3000
-#    networks:
-#      - small-chat
-#    restart: always
-  #    depends_on:
-  #      - chat-service
-  #  chat-service:
+  #  client:
   #    build:
-  #      context: chat-service/
-  #    container_name: chat-service
-  ##    image: chat-service
+  #      context: chat-client/
+  #    container_name: client
+  #    #    image: small-chat-client
   #    ports:
-  #      - 3010:3000
+  #      - 3000:3000
   #    networks:
   #      - small-chat
   #    restart: always
-  auth-service:
-    image: seonba/auth-service
-    container_name: auth-service
+  #    depends_on:
+  #      - chat-service
+  chat-service:
+    build:
+      context: chat-service/
+    container_name: chat-service
+    image: seonba/chat-service
+    ports:
+      - 3010:3000
+    networks:
+      - small-chat
+    restart: always
+  chat-backend:
+    image: seonba/chat-backend
+    container_name: chat-backend
     ports:
       - 8080:8080
     networks:
@@ -78,15 +78,15 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=auth
-#  pubsub:
-#    image: redis:6.2.4-alpine
-#    container_name: message_broker
-#    networks:
-#      - small-chat
-#    hostname: redis
-#    ports:
-#      - 6379:6379
-#    restart: always
+  pubsub:
+    image: redis:6.2.4-alpine
+    container_name: message_broker
+    networks:
+      - small-chat
+    hostname: redis
+    ports:
+      - 6379:6379
+    restart: always
 
 volumes:
   data:
