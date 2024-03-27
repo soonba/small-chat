@@ -6,7 +6,7 @@ import { InformationCircleIcon } from '@heroicons/react/20/solid';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { setTokens } from 'libs/utils/storage';
-import userJoin from 'rest/apis/userJoin';
+import joinUser from 'rest/apis/joinUser';
 import verifyingUserDuplication from 'rest/apis/verifyingUserDuplication';
 
 export default function Signup() {
@@ -19,7 +19,7 @@ export default function Signup() {
     const [nickname, setNickname] = useState<string>('');
 
     const joinMutation = useMutation({
-        mutationFn: userJoin,
+        mutationFn: joinUser,
         onSuccess: (response) => {
             const { accessToken, refreshToken } = response.tokens;
             setTokens(accessToken, refreshToken);
