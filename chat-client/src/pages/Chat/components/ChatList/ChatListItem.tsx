@@ -9,14 +9,14 @@ type ChatListItemType = {
         roomName: string;
         unReadMassageCount: number;
     };
-    onClick: (id: string) => void;
+    onClick: (id: string, roomName: string) => void;
 };
 
 export default function ChatListItem({ room, onClick }: ChatListItemType) {
     const { roomId, unReadMassageCount, roomName, lastMessageSenderNickname, lastMessage, lastMessageTime } = room;
     return (
         <li className="group rounded-md border border-blue-gray-100 bg-white p-2.5 hover:bg-blue-gray-50/50">
-            <button type="button" className="block h-full w-full" onClick={() => onClick(roomId)}>
+            <button type="button" className="block h-full w-full" onClick={() => onClick(roomId, roomName)}>
                 <div className="flex items-center gap-x-2">
                     <div className="relative flex-none">
                         <img src="https://picsum.photos/56" alt="" width={56} height={56} className="h-14 w-14 rounded-lg border border-blue-gray-100" />

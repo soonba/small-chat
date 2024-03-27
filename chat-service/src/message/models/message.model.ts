@@ -7,6 +7,7 @@ export class Sender {
   @Field(() => String)
   nickname: string;
 }
+
 @ObjectType()
 export class MessageResponse {
   @Field(() => String)
@@ -46,5 +47,20 @@ export class SubmitMessageInput {
   userId: string;
 
   @Field(() => String)
+  nickname: string;
+
+  @Field(() => String)
   message: string;
+}
+
+@InputType()
+export class MessageHistoryInput {
+  @Field(() => String)
+  roomId: string;
+}
+
+@ObjectType()
+export class MessageHistoryResponse {
+  @Field(() => [MessageResponse], { description: '메시지' })
+  messages: MessageResponse[];
 }
