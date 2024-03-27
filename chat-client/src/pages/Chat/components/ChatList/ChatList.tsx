@@ -9,7 +9,7 @@ import getParticipationRooms from 'rest/apis/getParticipationRooms';
 import ChatListItem from './ChatListItem';
 
 type ChatListType = {
-    onClick: (id: string) => void;
+    onClick: (id: string, roomName: string) => void;
 };
 
 export default function ChatList({ onClick }: ChatListType) {
@@ -28,15 +28,16 @@ export default function ChatList({ onClick }: ChatListType) {
 
     const { data } = useQuery({
         queryKey: ['rooms'],
-        queryFn: getParticipationRooms
+        queryFn: getParticipationRooms,
+        initialData: () => []
     });
 
     const { data: latestData } = useGetRoomLatestInfosQuery({
-        skip: !data,
-        variables: { input: { roomIds: data?.map((room) => room.roomId) ?? [] } },
+        skip: !data || data.length === 0,
+        variables: { input: { roomIds: data.map((room) => room.roomId) ?? [] } },
         onCompleted: (res) => {
             if (res?.getRoomLatestInfos) {
-                // todo 개선... data
+                // todo 개선... O(n^2)
                 setRoomsLatestMessage(
                     res.getRoomLatestInfos.map((datum) => {
                         const { roomName } = data?.find((el2) => el2.roomId === datum.roomId) ?? { roomName: '' };
@@ -79,7 +80,7 @@ export default function ChatList({ onClick }: ChatListType) {
     });
     return (
         <div className="fixed bottom-0 left-0 top-16 w-96 py-2 shadow-md">
-            {!!roomsLatestMessage && roomsLatestMessage.length > 0 ? (
+            {!!roomsLatestMessage && roomsLatestMessage[0].roomId !== '' ? (
                 <ul className="max-h-[calc(100vh-64px)] w-full space-y-5 overflow-y-auto p-5 custom-scroll">
                     {roomsLatestMessage.map((room) => (
                         <ChatListItem key={room.roomId} room={room} onClick={onClick} />

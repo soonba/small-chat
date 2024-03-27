@@ -19,6 +19,7 @@
     "@nestjs/graphql": "^12.0.11",
     "@nestjs/mongoose": "^10.0.2",
     "@nestjs/platform-express": "^9.0.0",
+    "dayjs": "^1.11.10",
     "graphql": "^16.8.1",
     "graphql-redis-subscriptions": "^2.6.0",
     "mongoose": "^8.0.4",

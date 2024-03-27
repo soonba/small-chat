@@ -65,11 +65,10 @@ export class UserService {
   }
 
   async submitMessage(input: SubmitMessageInput) {
-    const { userId, ...rest } = input;
-    const user = await this.findById(userId);
+    const { userId, nickname, ...rest } = input;
     const savedMessage = await this.messageService.save({
       ...rest,
-      sender: { userId, nickname: user.nickname },
+      sender: { userId, nickname },
     });
     const { roomId } = input;
     await this.pubsub.publish(roomId, {
@@ -77,7 +76,7 @@ export class UserService {
       createdAt: savedMessage.createdAt,
       sender: {
         userId,
-        nickname: user.nickname,
+        nickname,
       },
       ...rest,
     });
