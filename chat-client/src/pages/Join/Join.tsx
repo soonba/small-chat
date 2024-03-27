@@ -3,22 +3,23 @@ import { useNavigate } from 'react-router-dom';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
-import { useJoinRoomMutation } from 'generated/graphql';
+import { useMutation } from '@tanstack/react-query';
+
+import joinRoom from 'rest/apis/joinRoom';
 
 export default function Join() {
     const [roomId, setRoomId] = useState('');
     const navigate = useNavigate();
 
-    const [joinRoomMutation] = useJoinRoomMutation({
-        onCompleted() {
+    const roomJoinMutation = useMutation({
+        mutationFn: joinRoom,
+        onSuccess: () => {
             navigate('/chat');
         }
     });
-
     const handleClick = () => {
-        const userId = localStorage.getItem('userId');
-        if (roomId && userId) {
-            joinRoomMutation({ variables: { input: { roomId, userId } } });
+        if (roomId) {
+            roomJoinMutation.mutate(roomId);
         }
     };
     return (
