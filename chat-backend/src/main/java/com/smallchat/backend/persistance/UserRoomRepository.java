@@ -13,4 +13,6 @@ public interface UserRoomRepository extends JpaRepository<UserRoom, UUID> {
     List<UserRoom> findUserRoomByUser(User user);
 
     List<UserRoom> findUserRoomByRoom(Room user);
+
+    boolean existsByUserAndRoom(User user, Room room);
 }

@@ -4,7 +4,7 @@ import appConfig from 'config';
 
 import { IError } from './types';
 import { LOCAL_STORAGE_KEYS } from '../common/constant';
-import { clearStorage, setTokens } from '../utils/storage';
+import { clearToken, setTokens } from '../utils/storage';
 
 export const defaultAxiosConfig: AxiosRequestConfig = {
     baseURL: 'http://localhost:8080/api',
@@ -25,7 +25,7 @@ const onRejected = async (error: IError) => {
             config.headers = { Authorization: `Bearer ${newAccessToken}` };
             return await axios.request(error.config);
         } catch (err) {
-            clearStorage();
+            clearToken();
             window.location.replace('/');
             return window.location.reload();
         }

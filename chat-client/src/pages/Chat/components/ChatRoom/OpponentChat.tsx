@@ -13,7 +13,7 @@ export default function OpponentChat({ data }: OpponentChatType) {
             </div>
             <div className="flex items-end gap-x-2.5">
                 <div className="ml-[50px] min-w-80 max-w-md whitespace-pre-wrap break-all rounded-3xl rounded-tl-none bg-blue-gray-50 p-5 text-sm">{data.message}</div>
-                <time className="text-xs font-semibold">{getFormatDate(data.createdAt, 'YYYY-MM-DD HH:MM:SS')}</time>
+                <time className="text-xs font-semibold">{getFormatDate(data.createdAt, 'YYYY-MM-DD HH:MM:ss')}</time>
             </div>
         </div>
     );

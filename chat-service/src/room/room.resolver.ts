@@ -45,6 +45,7 @@ export class RoomResolver {
 
   @Subscription(() => MessageResponse, {
     resolve: (value) => value,
+    nullable: false,
   })
   async subscribeRoom(
     @Args({
