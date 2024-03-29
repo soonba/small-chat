@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -26,21 +26,23 @@ export default function ChatList({ onClick }: ChatListType) {
         }
     ]);
 
-    const { data } = useQuery({
+    const [selectedId, setSelectedId] = useState('');
+
+    const { data: rooms } = useQuery({
         queryKey: ['rooms'],
         queryFn: getParticipationRooms,
         initialData: () => []
     });
 
     const { data: latestData } = useGetRoomLatestInfosQuery({
-        skip: !data || data.length === 0,
-        variables: { input: { roomIds: data.map((room) => room.roomId) ?? [] } },
+        skip: !rooms || rooms.length === 0,
+        variables: { input: { roomIds: rooms.map((room) => room.roomId) ?? [] } },
         onCompleted: (res) => {
             if (res?.getRoomLatestInfos) {
                 // todo 개선... O(n^2)
                 setRoomsLatestMessage(
                     res.getRoomLatestInfos.map((datum) => {
-                        const { roomName } = data?.find((el2) => el2.roomId === datum.roomId) ?? { roomName: '' };
+                        const { roomName } = rooms?.find((el2) => el2.roomId === datum.roomId) ?? { roomName: '' };
                         return { ...datum, roomName, unReadMassageCount: 0 };
                     })
                 );
@@ -48,32 +50,38 @@ export default function ChatList({ onClick }: ChatListType) {
         }
     });
 
+    const handleChatRoomSelect = useCallback(
+        (id: string, roomName: string) => {
+            const resetUnReadCountMessage = roomsLatestMessage;
+            const index = resetUnReadCountMessage.findIndex((el) => el?.roomId === id);
+            if (index !== -1) {
+                resetUnReadCountMessage[index].unReadMassageCount = 0;
+                setRoomsLatestMessage(resetUnReadCountMessage);
+            }
+            setSelectedId(id);
+            return onClick(id, roomName);
+        },
+        [onClick, roomsLatestMessage]
+    );
+
     useSubscribeRoomSubscription({
         skip: !latestData,
-        variables: { input: { roomIds: latestData?.getRoomLatestInfos.map((el) => el?.roomId ?? '') ?? [] } },
-        onData({ data: { data: datum } }) {
-            // todo 검토 모든 메시지 수신하며 모든 구독중인 방을 갱신?
-            const messageResponse = datum?.subscribeRoom;
-            const {
-                roomId,
-                sender,
-                message: _message,
-                createdAt
-            } = messageResponse ?? {
-                roomId: '',
-                sender: { userId: '', nickname: '' },
-                message: '',
-                createdAt: ''
-            };
-
+        variables: { input: { roomIds: latestData?.getRoomLatestInfos.map((el) => (el?.roomId ? `list_${el.roomId}` : '')) ?? [] } },
+        onData({ data: { data } }) {
+            if (!data) return;
+            // todo 검토. 모든 메시지 수신하며 모든 구독중인 방을 갱신?
+            const messageResponse = data.subscribeRoom;
+            const { roomId, sender, message: _message, createdAt } = messageResponse;
             const newData = roomsLatestMessage;
+
             const index = newData.findIndex((el) => el?.roomId === roomId);
-            if (!index || index === -1) {
-                return;
-            }
+            if (index === -1) return;
+
             newData[index].lastMessage = _message;
             newData[index].lastMessageTime = dayjs(createdAt);
-            newData[index].unReadMassageCount += 1;
+            if (selectedId !== roomId) {
+                newData[index].unReadMassageCount += 1;
+            }
             newData[index].lastMessageSenderNickname = sender.nickname;
             setRoomsLatestMessage(newData);
         }
@@ -83,7 +91,7 @@ export default function ChatList({ onClick }: ChatListType) {
             {!!roomsLatestMessage && roomsLatestMessage[0].roomId !== '' ? (
                 <ul className="max-h-[calc(100vh-64px)] w-full space-y-5 overflow-y-auto p-5 custom-scroll">
                     {roomsLatestMessage.map((room) => (
-                        <ChatListItem key={room.roomId} room={room} onClick={onClick} />
+                        <ChatListItem key={room.roomId} room={room} selectedId={selectedId} onClick={handleChatRoomSelect} />
                     ))}
                 </ul>
             ) : (

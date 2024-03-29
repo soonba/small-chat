@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { setTokens } from 'libs/utils/storage';
+import { clearToken, setTokens } from 'libs/utils/storage';
 import joinUser from 'rest/apis/joinUser';
 import verifyingUserDuplication from 'rest/apis/verifyingUserDuplication';
 
@@ -33,6 +33,10 @@ export default function Signup() {
     const onClickDuplication = () => {
         setInputValue(accountId);
     };
+
+    useEffect(() => {
+        clearToken();
+    }, []);
 
     const handleSignup = () => {
         if (!data || data?.isUsed) {

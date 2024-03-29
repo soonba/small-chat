@@ -10,19 +10,19 @@ export class Sender {
 
 @ObjectType()
 export class MessageResponse {
-  @Field(() => String)
+  @Field(() => String, { nullable: false })
   messageId: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: false })
   roomId: string;
 
-  @Field(() => Sender)
+  @Field(() => Sender, { nullable: false })
   sender: Sender;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: false })
   createdAt: Date;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: false })
   message: string;
 }
 

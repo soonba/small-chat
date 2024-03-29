@@ -47,6 +47,9 @@ public class RoomService {
         UUID roomId = UUID.fromString(roomIdStr);
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("찾을 수 없는 유저"));
         Room room = roomRepository.findById(roomId).orElseThrow(() -> new RuntimeException("찾을 수 없는 채팅방"));
+        if (userRoomRepository.existsByUserAndRoom(user, room)) {
+            throw new RuntimeException("이미 참여중인 채팅방입니다.");
+        }
         userRoomRepository.save(new UserRoom(room, user));
     }
 }
