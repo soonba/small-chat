@@ -61,6 +61,16 @@ export type JoinRoomInput = {
   userId: Scalars['String']['input'];
 };
 
+export type MessageHistoryInput = {
+  roomId: Scalars['String']['input'];
+};
+
+export type MessageHistoryResponse = {
+  __typename?: 'MessageHistoryResponse';
+  /** 메시지 */
+  messages: Array<MessageResponse>;
+};
+
 export type MessageResponse = {
   __typename?: 'MessageResponse';
   createdAt: Scalars['DateTime']['output'];
@@ -115,9 +125,15 @@ export type ParticipationRoom = {
 
 export type Query = {
   __typename?: 'Query';
+  getHistoryByRoomId: MessageHistoryResponse;
   getMyChattingList: MyRoomsResponse;
   getRoomDetails: RoomInfoResponse;
   getRoomLatestInfos: Array<RoomResponse>;
+};
+
+
+export type QueryGetHistoryByRoomIdArgs = {
+  input: MessageHistoryInput;
 };
 
 
@@ -165,6 +181,7 @@ export type Sender = {
 
 export type SubmitMessageInput = {
   message: Scalars['String']['input'];
+  nickname: Scalars['String']['input'];
   roomId: Scalars['String']['input'];
   userId: Scalars['String']['input'];
 };
@@ -243,6 +260,13 @@ export type JoinRoomMutationVariables = Exact<{
 
 
 export type JoinRoomMutation = { __typename?: 'Mutation', joinRoom: { __typename?: 'GeneralResponse', message: string } };
+
+export type GetHistoryByRoomIdQueryVariables = Exact<{
+  input: MessageHistoryInput;
+}>;
+
+
+export type GetHistoryByRoomIdQuery = { __typename?: 'Query', getHistoryByRoomId: { __typename?: 'MessageHistoryResponse', messages: Array<{ __typename?: 'MessageResponse', messageId: string, roomId: string, createdAt: any, message: string, sender: { __typename?: 'Sender', userId: string, nickname: string } }> } };
 
 
 export const JoinDocument = gql`
@@ -537,3 +561,47 @@ export function useJoinRoomMutation(baseOptions?: Apollo.MutationHookOptions<Joi
 export type JoinRoomMutationHookResult = ReturnType<typeof useJoinRoomMutation>;
 export type JoinRoomMutationResult = Apollo.MutationResult<JoinRoomMutation>;
 export type JoinRoomMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutation, JoinRoomMutationVariables>;
+export const GetHistoryByRoomIdDocument = gql`
+    query getHistoryByRoomId($input: MessageHistoryInput!) {
+  getHistoryByRoomId(input: $input) {
+    messages {
+      messageId
+      roomId
+      sender {
+        userId
+        nickname
+      }
+      createdAt
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetHistoryByRoomIdQuery__
+ *
+ * To run a query within a React component, call `useGetHistoryByRoomIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHistoryByRoomIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHistoryByRoomIdQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetHistoryByRoomIdQuery(baseOptions: Apollo.QueryHookOptions<GetHistoryByRoomIdQuery, GetHistoryByRoomIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetHistoryByRoomIdQuery, GetHistoryByRoomIdQueryVariables>(GetHistoryByRoomIdDocument, options);
+      }
+export function useGetHistoryByRoomIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetHistoryByRoomIdQuery, GetHistoryByRoomIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetHistoryByRoomIdQuery, GetHistoryByRoomIdQueryVariables>(GetHistoryByRoomIdDocument, options);
+        }
+export type GetHistoryByRoomIdQueryHookResult = ReturnType<typeof useGetHistoryByRoomIdQuery>;
+export type GetHistoryByRoomIdLazyQueryHookResult = ReturnType<typeof useGetHistoryByRoomIdLazyQuery>;
+export type GetHistoryByRoomIdQueryResult = Apollo.QueryResult<GetHistoryByRoomIdQuery, GetHistoryByRoomIdQueryVariables>;

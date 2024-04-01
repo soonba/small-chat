@@ -38,4 +38,13 @@ public class RoomController {
         roomService.createRoom(jwtPayload.userId(), request);
         return ResponseEntity.status(201).body(new ApiResponse<>("created"));
     }
+
+    @PostMapping("/{roomId}/join")
+    public ResponseEntity<ApiResponse<String>> joinRoom(@RequestHeader("Authorization") String authorization,
+                                                        @PathVariable String roomId) {
+        String accessToken = authorization.replace("Bearer ", "");
+        JwtPayload jwtPayload = tokenService.compile(accessToken);
+        roomService.joinRoom(jwtPayload.userId(), roomId);
+        return ResponseEntity.ok(new ApiResponse<>("joined"));
+    }
 }

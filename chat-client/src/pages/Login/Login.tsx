@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { InformationCircleIcon } from '@heroicons/react/20/solid';
 
 import { useMutation } from '@tanstack/react-query';
 
-import { setTokens } from 'libs/utils/storage';
+import { clearToken, setTokens } from 'libs/utils/storage';
 import login from 'rest/apis/login';
 
 export default function Login() {
@@ -21,7 +21,11 @@ export default function Login() {
             navigate('/chat');
         }
     });
-    // todo join || login
+
+    useEffect(() => {
+        clearToken();
+    }, []);
+
     const handleLogin = () => {
         loginMutation.mutate({ accountId, password });
     };

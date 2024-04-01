@@ -65,22 +65,20 @@ export class UserService {
   }
 
   async submitMessage(input: SubmitMessageInput) {
-    const { userId, ...rest } = input;
-    const user = await this.findById(userId);
-    const savedMessage = await this.messageService.save({
+    const { userId, nickname, ...rest } = input;
+    const { messageId, createdAt } = await this.messageService.save({
       ...rest,
-      sender: { userId, nickname: user.nickname },
+      sender: { userId, nickname },
     });
+    const payload = {
+      messageId,
+      createdAt,
+      sender: { userId, nickname },
+      ...rest,
+    };
     const { roomId } = input;
-    await this.pubsub.publish(roomId, {
-      messageId: savedMessage.messageId,
-      createdAt: savedMessage.createdAt,
-      sender: {
-        userId,
-        nickname: user.nickname,
-      },
-      ...rest,
-    });
+    await this.pubsub.publish(`list_${roomId}`, payload);
+    await this.pubsub.publish(`chat_${roomId}`, payload);
   }
 
   async joinRoom(input: JoinRoomInput) {

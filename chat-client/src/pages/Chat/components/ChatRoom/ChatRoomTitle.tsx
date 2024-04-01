@@ -7,6 +7,10 @@ type ChatRoomTitleType = {
 };
 
 export default function ChatRoomTitle({ roomName, roomId, onClick }: ChatRoomTitleType) {
+    const copyRoomCode = () => {
+        navigator.clipboard.writeText(roomId);
+    };
+
     return (
         <div className="absolute inset-x-0 top-px z-10 flex h-[106px] w-full items-center gap-x-5 border-b-2 border-b-blue-gray-100 bg-white px-5">
             <button
@@ -17,9 +21,15 @@ export default function ChatRoomTitle({ roomName, roomId, onClick }: ChatRoomTit
             >
                 <ChevronLeftIcon width={28} height={28} className="m-auto" />
             </button>
-            <h2 className="text-2xl font-bold text-blue-gray-900">
-                {roomName}({roomId})
-            </h2>
+            <h2 className="text-2xl font-bold text-blue-gray-900">{roomName}</h2>
+            <button
+                aria-label="방 코드 복사"
+                type="button"
+                onClick={copyRoomCode}
+                className="h-10 w-36 whitespace-nowrap rounded-md border border-blue-gray-900 text-xs font-bold text-blue-gray-900 hover:opacity-80"
+            >
+                방 코드 복사하기
+            </button>
         </div>
     );
 }
