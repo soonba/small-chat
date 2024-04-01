@@ -1,47 +1,51 @@
-import { getFormatDate } from 'libs/utils/date';
+import { useState } from 'react';
 
-type ChatListItemType = {
-    room: {
-        roomId: string;
-        lastMessage: string;
-        lastMessageTime: string;
-        lastMessageSenderNickname: string;
-        roomName: string;
-        unReadMassageCount: number;
-    };
-    selectedId: string;
-    onClick: (id: string, roomName: string) => void;
+import { MessageResponse, useGetHistoryByRoomIdQuery, useSubscribeRoomSubscription } from 'generated/graphql';
+
+import ChatRoomTitle from './ChatRoomTitle';
+import ChatTextarea from './ChatTextarea';
+import DefaultImage from './DefaultImage';
+import MyChat from './MyChat';
+import OpponentChat from './OpponentChat';
+
+type ChatRoomType = {
+    selected: { id: string; roomName: string };
+    me: { userId: string; nickname: string };
+    onLeave: () => void;
 };
+export default function ChatRoom({ selected, me, onLeave }: ChatRoomType) {
+    const [subscriptionMessages, setSubscriptionMessages] = useState([] as MessageResponse[]);
 
-export default function ChatListItem({ room, selectedId, onClick }: ChatListItemType) {
-    const { roomId, unReadMassageCount, roomName, lastMessageSenderNickname, lastMessage, lastMessageTime } = room;
+    const { id: roomId, roomName } = selected;
 
-    return (
-        <li className={`group rounded-md border border-blue-gray-100 ${selectedId === roomId ? 'bg-gray-300' : 'bg-white'} p-2.5 hover:bg-blue-gray-50/50`}>
-            <button type="button" className="block h-full w-full" onClick={() => onClick(roomId, roomName)}>
-                <div className="flex items-center gap-x-2">
-                    <div className="relative flex-none">
-                        <img src="https://picsum.photos/56" alt="" width={56} height={56} className="h-14 w-14 rounded-lg border border-blue-gray-100" />
-                        {unReadMassageCount > 0 && (
-                            <small className="font-blue-gray-900 absolute -bottom-1.5 -right-1.5 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-blue-gray-50 text-[9px] font-semibold text-blue-gray-900">
-                                <strong>+{unReadMassageCount}</strong>
-                            </small>
-                        )}
-                    </div>
+    const { userId, nickname } = me;
 
-                    <div className="relative h-14 w-full">
-                        <div className="my-1 flex w-full items-start justify-between">
-                            <p className="w-full truncate text-base font-bold group-hover:text-blue-gray-300">{roomName}</p>
-                            <time className="whitespace-nowrap text-[10px] font-bold">{getFormatDate(lastMessageTime, 'YYYY-MM-DD HH:MM')}</time>
-                        </div>
-                        <p className="mt-3 w-52 truncate text-xs">
-                            <strong>
-                                {lastMessageSenderNickname} : {lastMessage}
-                            </strong>
-                        </p>
-                    </div>
-                </div>
-            </button>
-        </li>
+    useSubscribeRoomSubscription({
+        variables: { input: { roomIds: [`chat_${roomId}`] } },
+        onData({ data: { data } }) {
+            const messageResponse: MessageResponse = data?.subscribeRoom as MessageResponse;
+            if (messageResponse) {
+                setSubscriptionMessages((prev) => [...prev, messageResponse]);
+            }
+        }
+    });
+
+    const { data } = useGetHistoryByRoomIdQuery({
+        fetchPolicy: 'no-cache',
+        variables: { input: { roomId } }
+    });
+    const messages = data?.getHistoryByRoomId.messages || [];
+
+    return selected.id ? (
+        <div className="relative mx-auto ml-96 w-full">
+            <ChatRoomTitle roomName={roomName} roomId={roomId} onClick={onLeave} />
+            <div className="mt-[106px] max-h-[calc(100vh-298px)] space-y-5 overflow-y-auto p-5">
+                {messages.map((el) => (me && me.userId === el.sender.userId ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />))}
+                {subscriptionMessages.map((el) => (me && me.userId === el.sender.userId ? <MyChat key={el.messageId} data={el} /> : <OpponentChat key={el.messageId} data={el} />))}
+            </div>
+            <ChatTextarea roomId={roomId} userId={userId} nickname={nickname} />
+        </div>
+    ) : (
+        <DefaultImage />
     );
 }
