@@ -3,9 +3,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import BaseLayout from 'layout/BaseLayout';
 
-import Add from 'pages/Add';
+import AddRoom from 'pages/AddRoom';
 import Chat from 'pages/Chat';
-import Join from 'pages/Join/Join';
+import JoinRoom from 'pages/JoinRoom/JoinRoom';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 
@@ -29,11 +29,11 @@ export default function App() {
                 },
                 {
                     path: '/add',
-                    element: <Add />
+                    element: <AddRoom />
                 },
                 {
                     path: '/join',
-                    element: <Join />
+                    element: <JoinRoom />
                 },
                 {
                     path: '/signup',

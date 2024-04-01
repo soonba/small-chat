@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Sender } from '../models/message.model';
+import * as dayjs from 'dayjs';
 
 export type MessageDocument = Message & Document;
 
@@ -10,7 +11,7 @@ export class Message {
   messageId: string;
   @Prop()
   roomId: string;
-  @Prop({ default: new Date(), type: mongoose.Schema.Types.Date })
+  @Prop({ default: dayjs(), type: mongoose.Schema.Types.Date })
   createdAt: Date;
   @Prop()
   sender: Sender;

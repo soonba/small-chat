@@ -70,3 +70,19 @@ mutation joinRoom($input: JoinRoomInput!) {
         message
     }
 }
+
+query getHistoryByRoomId($input: MessageHistoryInput!) {
+    getHistoryByRoomId(input: $input) {
+        messages {
+            messageId
+            roomId
+            sender {
+                userId
+                nickname
+            }
+            createdAt
+            message
+        }
+    }
+}
+
