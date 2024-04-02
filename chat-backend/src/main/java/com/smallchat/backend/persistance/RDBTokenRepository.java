@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface TokenRepository extends JpaRepository<Token, UUID> {
+public interface RDBTokenRepository extends JpaRepository<Token, UUID> {
 }
