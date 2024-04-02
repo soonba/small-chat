@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
-import { RoomResponse, useGetRoomLatestInfosQuery, useSubscribeRoomSubscription } from 'generated/graphql';
+import { useGetRoomLatestInfosQuery, useSubscribeRoomSubscription } from 'generated/graphql';
 import getParticipationRooms from 'rest/apis/getParticipationRooms';
 
 import ChatListItem from './ChatListItem';
@@ -12,19 +12,17 @@ type ChatListType = {
     onClick: (id: string, roomName: string) => void;
 };
 
+export type roomsLatestMessageType = {
+    roomId: string;
+    lastMessage: string;
+    lastMessageTime: dayjs.Dayjs;
+    lastMessageSenderNickname: string;
+    roomName: string;
+    unReadMessageCount: number;
+};
+
 export default function ChatList({ onClick }: ChatListType) {
-    const [roomsLatestMessage, setRoomsLatestMessage] = useState([
-        {
-            ...({
-                roomId: '',
-                lastMessage: '',
-                lastMessageTime: '',
-                lastMessageSenderNickname: ''
-            } as RoomResponse),
-            roomName: '',
-            unReadMassageCount: 0
-        }
-    ]);
+    const [roomsLatestMessage, setRoomsLatestMessage] = useState([] as roomsLatestMessageType[]);
 
     const [selectedId, setSelectedId] = useState('');
 
@@ -43,7 +41,7 @@ export default function ChatList({ onClick }: ChatListType) {
                 setRoomsLatestMessage(
                     res.getRoomLatestInfos.map((datum) => {
                         const { roomName } = rooms?.find((el2) => el2.roomId === datum.roomId) ?? { roomName: '' };
-                        return { ...datum, roomName, unReadMassageCount: 0 };
+                        return { ...datum, roomName, unReadMessageCount: 0 };
                     })
                 );
             }
@@ -55,7 +53,7 @@ export default function ChatList({ onClick }: ChatListType) {
             const resetUnReadCountMessage = roomsLatestMessage;
             const index = resetUnReadCountMessage.findIndex((el) => el?.roomId === id);
             if (index !== -1) {
-                resetUnReadCountMessage[index].unReadMassageCount = 0;
+                resetUnReadCountMessage[index].unReadMessageCount = 0;
                 setRoomsLatestMessage(resetUnReadCountMessage);
             }
             setSelectedId(id);
@@ -80,7 +78,7 @@ export default function ChatList({ onClick }: ChatListType) {
             newData[index].lastMessage = _message;
             newData[index].lastMessageTime = dayjs(createdAt);
             if (selectedId !== roomId) {
-                newData[index].unReadMassageCount += 1;
+                newData[index].unReadMessageCount += 1;
             }
             newData[index].lastMessageSenderNickname = sender.nickname;
             setRoomsLatestMessage(newData);
@@ -88,7 +86,7 @@ export default function ChatList({ onClick }: ChatListType) {
     });
     return (
         <div className="fixed bottom-0 left-0 top-16 w-96 py-2 shadow-md">
-            {!!roomsLatestMessage && roomsLatestMessage[0].roomId !== '' ? (
+            {!!roomsLatestMessage && roomsLatestMessage.length !== 0 ? (
                 <ul className="max-h-[calc(100vh-64px)] w-full space-y-5 overflow-y-auto p-5 custom-scroll">
                     {roomsLatestMessage.map((room) => (
                         <ChatListItem key={room.roomId} room={room} selectedId={selectedId} onClick={handleChatRoomSelect} />
