@@ -6,7 +6,7 @@ import com.smallchat.backend.data.jwt.TokenType;
 import com.smallchat.backend.data.jwt.Tokens;
 import com.smallchat.backend.domain.Auth;
 import com.smallchat.backend.domain.Token;
-import com.smallchat.backend.persistance.TokenRepository;
+import com.smallchat.backend.persistance.RDBTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,22 +22,22 @@ public class RDBTokenService implements TokenService {
 
     @Value("${auth.key}")
     private byte[] key;
-    private final TokenRepository tokenRepository;
+    private final RDBTokenRepository RDBTokenRepository;
 
-    public RDBTokenService(TokenRepository tokenRepository) {
-        this.tokenRepository = tokenRepository;
+    public RDBTokenService(RDBTokenRepository RDBTokenRepository) {
+        this.RDBTokenRepository = RDBTokenRepository;
     }
 
     @Override
     public void saveRefreshToken(UUID id, String rt) {
-        Token token = tokenRepository.findById(id)
+        Token token = RDBTokenRepository.findById(id)
                 .orElseGet(() -> new Token(id, rt));
-        tokenRepository.save(token);
+        RDBTokenRepository.save(token);
     }
 
     @Override
     public void validateRefreshToken(UUID id, String rt) {
-        tokenRepository.findById(id)
+        RDBTokenRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("찾을 수 없는 토큰"))
                 .verifying(rt);
     }
@@ -56,7 +56,7 @@ public class RDBTokenService implements TokenService {
         String refreshToken = Jwts.builder()
                 .claim("authId", auth.getAuthId().toString())
                 .expiration(rtExp).signWith(Keys.hmacShaKeyFor(key)).compact();
-        tokenRepository.save(new Token(auth.getAuthId(), refreshToken));
+        RDBTokenRepository.save(new Token(auth.getAuthId(), refreshToken));
         return new Tokens(accessToken, refreshToken);
     }
 
