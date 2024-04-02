@@ -41,7 +41,6 @@ export default function Signup() {
 
     const handleSignup = () => {
         if (!data || data?.isUsed) {
-            // todo 처리?
             return;
         }
         joinMutation.mutate({ accountId, password, nickname });
