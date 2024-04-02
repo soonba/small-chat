@@ -2,12 +2,8 @@ server:
   port: 8080
 
 spring:
-  #  web:
-  #    resources:
-  #      static-locations: META-INF:/resources, classpath:/resources, classpath:/static, classpath:/static/dist
   datasource:
     driver-class-name: org.postgresql.Driver
-    #   todo...
     url: jdbc:postgresql://localhost:5433/auth
     username: postgres
     password: postgres
@@ -19,9 +15,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
-#  sql:
-#    init:
-#      platform: postgres
 
 auth:
   key: my-small-chat-applications-jwt-sign-key
