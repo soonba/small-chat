@@ -1,7 +1,6 @@
 package com.smallchat.backend.presentation;
 
 import com.smallchat.backend.application.TokenService;
-import com.smallchat.backend.application.UserService;
 import com.smallchat.backend.data.dto.ApiResponse;
 import com.smallchat.backend.data.dto.FetchMeDto;
 import com.smallchat.backend.data.jwt.JwtPayload;
@@ -14,11 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private final UserService userService;
     private final TokenService tokenService;
 
-    public UserController(UserService userService, TokenService tokenService) {
-        this.userService = userService;
+    public UserController(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
