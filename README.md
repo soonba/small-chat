@@ -9,7 +9,9 @@ small-chat은 [graphql subscription](https://www.apollographql.com/docs/react/da
 > ✅️ 프로젝트 참고 내용 <br />
 > 이 앱은 localhost 에서 동작하므로 독립된 브라우저끼리만 테스트 가능합니다. <br />
 > 초기 퍼블리싱 작업을 제외한 1인 프로젝트이며, 개발간 경험을 [블로그](https://sunba30.tistory.com/52)에 정리하였습니다. <br />
-> 퍼블리싱 및 프론트엔드 코드 리뷰에 도움을 주신 분 [@akffkdahffkdgo77](https://github.com/akffkdahffkdgo77)
+>
+> 퍼블리싱 및 프론트엔드 코드 리뷰에 도움을 주신 분 <br />
+> [@akffkdahffkdgo77](https://github.com/akffkdahffkdgo77)
 
 ## 실행
 
