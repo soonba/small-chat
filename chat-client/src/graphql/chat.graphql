@@ -1,0 +1,88 @@
+mutation join($input: JoinInput!) {
+    join(input: $input) {
+        userId
+        nickname
+    }
+}
+
+mutation createRoom($input: CreateRoomInput!) {
+    createRoom(input: $input) {
+        roomId
+    }
+}
+
+subscription subscribeRoom($input: SubscriptionInput!) {
+    subscribeRoom(input: $input) {
+        messageId
+        roomId
+        sender {
+            userId
+            nickname
+        }
+        message
+        createdAt
+    }
+}
+
+mutation send($input: SubmitMessageInput!) {
+    send(input: $input) {
+        message
+    }
+}
+
+query getMyChattingList($input: UserToken!) {
+    getMyChattingList(input: $input) {
+        participationRooms {
+            roomId
+            roomName
+        }
+    }
+}
+
+query getRoomDetails($input: GetRoomDetailInput!) {
+    getRoomDetails(input: $input) {
+        roomId
+        roomName
+        messages {
+            roomId
+            sender {
+                userId
+                nickname
+            }
+            message
+            messageId
+            createdAt
+        }
+    }
+}
+
+query getRoomLatestInfos($input: GetRoomLatestInfosInput!){
+    getRoomLatestInfos(input: $input) {
+        roomId
+        lastMessage
+        lastMessageSenderNickname
+        lastMessageTime
+    }
+}
+
+mutation joinRoom($input: JoinRoomInput!) {
+    joinRoom(input: $input) {
+        message
+    }
+}
+
+query getHistoryByRoomId($input: MessageHistoryInput!) {
+    getHistoryByRoomId(input: $input) {
+        messages {
+            messageId
+            roomId
+            sender {
+                userId
+                nickname
+            }
+            createdAt
+            message
+        }
+    }
+}
+

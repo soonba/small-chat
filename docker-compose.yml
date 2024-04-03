@@ -29,31 +29,62 @@ services:
       - mongodb
     depends_on:
       - mongodb
-  client:
+  chat-client:
     build:
-      context: small-chat-client/
-    container_name: client
-    image: small-chat-client:latest
+      context: chat-client/
+    container_name: chat-client
+    image: seonba/chat-client
     ports:
       - 3000:3000
     networks:
       - small-chat
     restart: always
     depends_on:
-      - server
-  server:
+      - chat-service
+  chat-service:
     build:
-      context: small-chat-backend/
-    container_name: server
-    image: small-chat-server:latest
+      context: chat-service/
+    container_name: chat-service
+    image: seonba/chat-service
     ports:
       - 3010:3000
     networks:
       - small-chat
     restart: always
+  chat-backend:
+    build:
+      context: chat-backend/
+    image: seonba/chat-backend
+    container_name: chat-backend
+    ports:
+      - 8080:8080
+    networks:
+      - small-chat
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/auth
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    restart: always
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres
+    image: postgres:14-alpine
+    ports:
+      - "5434:5432"
+    restart: always
+    networks:
+      - small-chat
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auth
   pubsub:
     image: redis:6.2.4-alpine
-    container_name: message_broker
+    container_name: redis_pubsub
     networks:
       - small-chat
     hostname: redis
