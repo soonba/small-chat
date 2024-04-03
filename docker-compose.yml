@@ -52,6 +52,8 @@ services:
       - small-chat
     restart: always
   chat-backend:
+    build:
+      context: chat-backend/
     image: seonba/chat-backend
     container_name: chat-backend
     ports:
@@ -64,6 +66,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create
     restart: always
+    depends_on: postgres
   postgres:
     container_name: postgres
     image: postgres:14-alpine
