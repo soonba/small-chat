@@ -29,18 +29,18 @@ services:
       - mongodb
     depends_on:
       - mongodb
-  chat-client:
-    build:
-      context: chat-client/
-    container_name: chat-client
-    image: seonba/chat-client
-    ports:
-      - 3000:3000
-    networks:
-      - small-chat
-    restart: always
-    depends_on:
-      - chat-service
+  #  chat-client:
+  #    build:
+  #      context: chat-client/
+  #    container_name: chat-client
+  #    image: seonba/chat-client
+  #    ports:
+  #      - 3000:3000
+  #    networks:
+  #      - small-chat
+  #    restart: always
+  #    depends_on:
+  #      - chat-service
   chat-service:
     build:
       context: chat-service/
