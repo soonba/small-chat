@@ -24,7 +24,7 @@ export default function ChatRoom({ selected, me, onLeave }: ChatRoomType) {
         variables: { input: { roomIds: [`chat_${roomId}`] } },
         onData({ data: { data } }) {
             const messageResponse: MessageResponse = data?.subscribeRoom as MessageResponse;
-            if (messageResponse) {
+            if (messageResponse && messageResponse.roomId === selected.id) {
                 setSubscriptionMessages((prev) => [...prev, messageResponse]);
             }
         }
@@ -32,7 +32,10 @@ export default function ChatRoom({ selected, me, onLeave }: ChatRoomType) {
 
     const { data } = useGetHistoryByRoomIdQuery({
         fetchPolicy: 'no-cache',
-        variables: { input: { roomId } }
+        variables: { input: { roomId } },
+        onCompleted: () => {
+            setSubscriptionMessages([]);
+        }
     });
     const messages = data?.getHistoryByRoomId.messages || [];
 
