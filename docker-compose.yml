@@ -7,8 +7,6 @@ services:
     container_name: mongodb
     ports:
       - 27017:27017
-    volumes:
-      - data:/data
     environment:
       #      - MONGO_INITDB_ROOT_USERNAME=root
       #      - MONGO_INITDB_ROOT_PASSWORD=root
@@ -29,18 +27,18 @@ services:
       - mongodb
     depends_on:
       - mongodb
-  #  chat-client:
-  #    build:
-  #      context: chat-client/
-  #    container_name: chat-client
-  #    image: seonba/chat-client
-  #    ports:
-  #      - 3000:3000
-  #    networks:
-  #      - small-chat
-  #    restart: always
-  #    depends_on:
-  #      - chat-service
+  chat-client:
+    build:
+      context: chat-client/
+    container_name: chat-client
+    image: seonba/chat-client
+    ports:
+      - 3000:3000
+    networks:
+      - small-chat
+    restart: always
+    depends_on:
+      - chat-service
   chat-service:
     build:
       context: chat-service/
@@ -76,8 +74,6 @@ services:
     restart: always
     networks:
       - small-chat
-    volumes:
-      - /var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -91,9 +87,6 @@ services:
     ports:
       - 6379:6379
     restart: always
-
-volumes:
-  data:
 
 networks:
   small-chat:
