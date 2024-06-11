@@ -5,16 +5,20 @@ public class ApiResponse<T> {
     private final String message;
     private final T data;
 
-    public ApiResponse(int statusCode, String message, T data) {
+    public ApiResponse(int statusCode, String message) {
         this.statusCode = statusCode;
         this.message = message;
-        this.data = data;
+        this.data = null;
     }
 
     public ApiResponse(T data) {
         this.statusCode = 200;
         this.message = "";
         this.data = data;
+    }
+
+    public static ApiResponse error(int statusCode, String message) {
+        return new ApiResponse(statusCode, message);
     }
 
     public int getStatusCode() {
