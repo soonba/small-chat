@@ -1,5 +1,6 @@
-package com.smallchat.backend.domain;
+package com.smallchat.backend.user.domain;
 
+import com.smallchat.backend.domain.BaseTime;
 import jakarta.persistence.*;
 
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.smallchat.backend.persistance;
 
-import com.smallchat.backend.domain.User;
+import com.smallchat.backend.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

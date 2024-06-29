@@ -1,6 +1,7 @@
 package com.smallchat.backend.domain;
 
 import com.smallchat.backend.data.dto.JoinDto;
+import com.smallchat.backend.user.domain.User;
 import com.smallchat.backend.util.PasswordUtil;
 import jakarta.persistence.*;
 

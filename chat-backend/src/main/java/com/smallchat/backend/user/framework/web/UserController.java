@@ -1,4 +1,4 @@
-package com.smallchat.backend.presentation;
+package com.smallchat.backend.user.framework.web;
 
 import com.smallchat.backend.application.TokenService;
 import com.smallchat.backend.data.dto.ApiResponse;
