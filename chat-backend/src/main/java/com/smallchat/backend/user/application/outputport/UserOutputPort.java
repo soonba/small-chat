@@ -11,5 +11,9 @@ public interface UserOutputPort {
 
     V2User saveUser(V2User v2User);
 
+    void saveRefreshToken(UUID id, String rt);
+
+    void validateRefreshToken(UUID id, String rt);
+    
     boolean isExistID(ID id);
 }

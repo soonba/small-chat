@@ -1,6 +1,5 @@
 package com.smallchat.backend.user.application.inputport;
 
-import com.smallchat.backend.user.application.outputport.RefreshTokenOutputPort;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase;
 import com.smallchat.backend.user.domain.model.V2User;
@@ -23,7 +22,6 @@ public class CreateUserInputPort implements CreateUserUseCase {
 
     private final JwtProvider jwtProvider;
     private final UserOutputPort userOutputPort;
-    private final RefreshTokenOutputPort refreshTokenOutputPort;
 
     @Override
     @Transactional
@@ -37,7 +35,7 @@ public class CreateUserInputPort implements CreateUserUseCase {
         V2User savedV2User = userOutputPort.saveUser(V2User.createUser(nickname, id, password));
         Token at = jwtProvider.createToken(new TokenPayload(TokenType.ACCESS_TOKEN, savedV2User.getUserId(), savedV2User.getNickname()));
         Token rt = jwtProvider.createToken(new TokenPayload(TokenType.REFRESH_TOKEN, savedV2User.getUserId(), savedV2User.getNickname()));
-        refreshTokenOutputPort.saveRefreshToken(savedV2User.getUserId(), rt.token());
+        userOutputPort.saveRefreshToken(savedV2User.getUserId(), rt.token());
         return new CreateUserDto.Response(new Tokens(at, rt));
     }
 }
