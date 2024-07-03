@@ -11,6 +11,15 @@ import java.util.UUID;
 @Repository
 @RequiredArgsConstructor
 public class UserOutputAdapter implements UserOutputPort {
+    @Override
+    public void validateRefreshToken(UUID id, String rt) {
+        
+    }
+
+    @Override
+    public void saveRefreshToken(UUID id, String rt) {
+
+    }
 
     @Override
     public boolean isExistID(ID id) {
