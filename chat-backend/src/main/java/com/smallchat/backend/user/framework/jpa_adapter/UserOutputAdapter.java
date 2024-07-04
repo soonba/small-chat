@@ -13,7 +13,7 @@ import java.util.UUID;
 public class UserOutputAdapter implements UserOutputPort {
     @Override
     public void validateRefreshToken(UUID id, String rt) {
-        
+
     }
 
     @Override
@@ -33,6 +33,11 @@ public class UserOutputAdapter implements UserOutputPort {
 
     @Override
     public V2User saveUser(V2User v2User) {
+        return null;
+    }
+
+    @Override
+    public V2User loadUserById(ID id) {
         return null;
     }
 }
