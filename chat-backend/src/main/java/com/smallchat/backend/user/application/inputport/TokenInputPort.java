@@ -32,7 +32,7 @@ public class TokenInputPort implements TokenUseCase {
     @Override
     public RefreshDto.Response refresh(RefreshDto.Request refreshDto) {
         String rt = refreshDto.refreshToken();
-        TokenPayload tokenPayload = jwtProvider.compile(rt);
+        TokenPayload tokenPayload = jwtProvider.parseToken(rt);
 
         UUID id = tokenPayload.userId();
         Nickname nickname = tokenPayload.nickname();
@@ -47,7 +47,7 @@ public class TokenInputPort implements TokenUseCase {
 
     @Override
     public FetchMeDto.Response fetchMe(String token) {
-        TokenPayload tokenPayload = jwtProvider.compile(token);
+        TokenPayload tokenPayload = jwtProvider.parseToken(token);
         V2User v2User = userOutputPort.loadUser(tokenPayload.userId());
         return new FetchMeDto.Response(v2User.getUserId(), v2User.getNickname());
     }
