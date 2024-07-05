@@ -5,13 +5,12 @@ import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.TokenUseCase;
 import com.smallchat.backend.user.domain.model.V2User;
 import com.smallchat.backend.user.domain.model.vo.Nickname;
-import com.smallchat.backend.user.domain.model.vo.Tokens;
 import com.smallchat.backend.user.framework.web.dto.FetchMeDto;
 import com.smallchat.backend.user.framework.web.dto.RefreshDto;
 import com.smallchat.backend.user.utils.JwtProvider;
 import com.smallchat.backend.user.utils.Token;
 import com.smallchat.backend.user.utils.TokenPayload;
-import com.smallchat.backend.user.utils.TokenType;
+import com.smallchat.backend.user.utils.Tokens;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,11 +37,10 @@ public class TokenInputPort implements TokenUseCase {
         Nickname nickname = tokenPayload.nickname();
         userOutputPort.validateRefreshToken(id, rt);
 
-        Token newAt = jwtProvider.createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
-        Token newRt = jwtProvider.createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
-        userOutputPort.saveRefreshToken(id, newRt.value());
+        Tokens tokens = jwtProvider.createTokens(id, nickname);
+        userOutputPort.saveRefreshToken(id, tokens.refreshToken().value());
 
-        return new RefreshDto.Response(new Tokens(newAt, newRt));
+        return new RefreshDto.Response(tokens);
     }
 
     @Override

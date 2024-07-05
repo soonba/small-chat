@@ -18,13 +18,12 @@ public class RefreshToken {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "refresh_token", nullable = false)
-    private String refreshToken;
+    @Column(name = "value", nullable = false)
+    private String value;
 
     public void verifying(String rt) {
-        if (!this.refreshToken.equals(rt)) {
+        if (!this.value.equals(rt)) {
             throw new RuntimeException("토큰 불일치");
         }
-        ;
     }
 }
