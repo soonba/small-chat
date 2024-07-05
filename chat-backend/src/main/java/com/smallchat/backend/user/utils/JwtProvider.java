@@ -19,6 +19,12 @@ public class JwtProvider {
     }
 
 
+    public Tokens createTokens(UUID id, Nickname nickname) {
+        Token at = createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
+        Token rt = createToken(new TokenPayload(TokenType.REFRESH_TOKEN, id, nickname));
+        return new Tokens(at, rt);
+    }
+
     public Token createToken(TokenPayload payload) {
         String token = Jwts.builder()
                 .claim("type", payload.tokenType())

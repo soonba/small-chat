@@ -1,6 +1,6 @@
 package com.smallchat.backend.user.framework.web.dto;
 
-import com.smallchat.backend.user.domain.model.vo.Tokens;
+import com.smallchat.backend.user.utils.Tokens;
 
 public class CreateUserDto {
     public record Request(String id, String nickname, String password) {

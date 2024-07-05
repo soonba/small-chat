@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Embeddable
 public class LoginId {
-    private String value;
+    private String loginId;
 }

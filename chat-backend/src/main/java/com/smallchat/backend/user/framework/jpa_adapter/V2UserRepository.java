@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface V2UserRepository extends JpaRepository<V2User, UUID> {
 
     Optional<V2User> findByLoginId(LoginId loginId);
+
+    Boolean existsByLoginId(LoginId loginId);
 }
