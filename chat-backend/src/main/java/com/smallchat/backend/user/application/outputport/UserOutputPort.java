@@ -1,7 +1,7 @@
 package com.smallchat.backend.user.application.outputport;
 
 import com.smallchat.backend.user.domain.model.V2User;
-import com.smallchat.backend.user.domain.model.vo.ID;
+import com.smallchat.backend.user.domain.model.vo.LoginId;
 
 import java.util.UUID;
 
@@ -9,7 +9,7 @@ public interface UserOutputPort {
 
     V2User loadUser(UUID userId);
 
-    V2User loadUserById(ID id);
+    V2User loadUserById(LoginId loginId);
 
     V2User saveUser(V2User v2User);
 
@@ -17,5 +17,5 @@ public interface UserOutputPort {
 
     void validateRefreshToken(UUID id, String rt);
 
-    boolean isExistID(ID id);
+    boolean isExistID(LoginId loginId);
 }

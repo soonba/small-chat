@@ -1,7 +1,7 @@
 package com.smallchat.backend.user.domain.model;
 
 import com.smallchat.backend.domain.BaseTime;
-import com.smallchat.backend.user.domain.model.vo.ID;
+import com.smallchat.backend.user.domain.model.vo.LoginId;
 import com.smallchat.backend.user.domain.model.vo.Nickname;
 import com.smallchat.backend.user.domain.model.vo.Password;
 import jakarta.persistence.*;
@@ -24,18 +24,18 @@ public class V2User extends BaseTime {
     private Nickname nickname;
 
     @Embedded
-    private ID id;
+    private LoginId loginId;
 
     @Embedded
     private Password password;
 
-    public V2User(Nickname nickname, ID id, Password password) {
+    public V2User(Nickname nickname, LoginId loginId, Password password) {
         this.nickname = nickname;
-        this.id = id;
+        this.loginId = loginId;
         this.password = password;
     }
 
-    public static V2User createUser(Nickname nickname, ID id, Password password) {
-        return new V2User(nickname, id, password);
+    public static V2User createUser(Nickname nickname, LoginId loginId, Password password) {
+        return new V2User(nickname, loginId, password);
     }
 }
