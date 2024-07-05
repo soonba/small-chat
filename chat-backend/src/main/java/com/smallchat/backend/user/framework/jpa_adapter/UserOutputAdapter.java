@@ -1,5 +1,6 @@
 package com.smallchat.backend.user.framework.jpa_adapter;
 
+import com.smallchat.backend.persistance.UserRepository;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.domain.model.V2User;
 import com.smallchat.backend.user.domain.model.vo.ID;
@@ -11,14 +12,15 @@ import java.util.UUID;
 @Repository
 @RequiredArgsConstructor
 public class UserOutputAdapter implements UserOutputPort {
+
+    private final UserRepository userRepository;
+
     @Override
     public void validateRefreshToken(UUID id, String rt) {
-
     }
 
     @Override
     public void saveRefreshToken(UUID id, String rt) {
-
     }
 
     @Override

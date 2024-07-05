@@ -1,7 +1,7 @@
 package com.smallchat.backend.user.application.usecase;
 
-import com.smallchat.backend.data.dto.RefreshDto;
 import com.smallchat.backend.user.framework.web.dto.FetchMeDto;
+import com.smallchat.backend.user.framework.web.dto.RefreshDto;
 import com.smallchat.backend.user.utils.Token;
 import com.smallchat.backend.user.utils.TokenPayload;
 
