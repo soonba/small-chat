@@ -27,12 +27,12 @@ public class JwtProvider {
         return new Token(token, payload.tokenType());
     }
 
-    public TokenPayload compile(Token token) {
+    public TokenPayload compile(String token) {
         Claims payload = Jwts
                 .parser()
                 .verifyWith(Keys.hmacShaKeyFor(key))
                 .build()
-                .parseSignedClaims(token.value())
+                .parseSignedClaims(token)
                 .getPayload();
         TokenType tokenType = Optional.ofNullable(payload.get("type", TokenType.class)).orElseThrow(RuntimeException::new);
         UUID userId = Optional.ofNullable(payload.get("userId", UUID.class)).orElseThrow(RuntimeException::new);

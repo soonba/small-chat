@@ -3,6 +3,7 @@ package com.smallchat.backend.user.application.inputport;
 
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.TokenUseCase;
+import com.smallchat.backend.user.domain.model.V2User;
 import com.smallchat.backend.user.domain.model.vo.Nickname;
 import com.smallchat.backend.user.domain.model.vo.Tokens;
 import com.smallchat.backend.user.framework.web.dto.FetchMeDto;
@@ -31,7 +32,7 @@ public class TokenInputPort implements TokenUseCase {
     @Override
     public RefreshDto.Response refresh(RefreshDto.Request refreshDto) {
         String rt = refreshDto.refreshToken();
-        TokenPayload tokenPayload = jwtProvider.compile(new Token(rt, TokenType.REFRESH_TOKEN));
+        TokenPayload tokenPayload = jwtProvider.compile(rt);
 
         UUID id = tokenPayload.userId();
         Nickname nickname = tokenPayload.nickname();
@@ -46,6 +47,8 @@ public class TokenInputPort implements TokenUseCase {
 
     @Override
     public FetchMeDto.Response fetchMe(String token) {
-        return null;
+        TokenPayload tokenPayload = jwtProvider.compile(token);
+        V2User v2User = userOutputPort.loadUser(tokenPayload.userId());
+        return new FetchMeDto.Response(v2User.getUserId(), v2User.getNickname());
     }
 }

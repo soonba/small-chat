@@ -12,7 +12,7 @@ import java.util.Random;
 @NoArgsConstructor
 @Embeddable
 public class Nickname {
-    private String nickname;
+    private String value;
 
     public static Nickname sample() {
         Random random = new Random();
