@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:15432/auth
+    url: jdbc:postgresql://localhost:15432/small_chat
     username: postgres
     password: postgres
   jpa:

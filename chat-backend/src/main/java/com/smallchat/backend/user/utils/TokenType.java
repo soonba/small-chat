@@ -15,4 +15,13 @@ public enum TokenType {
     public Date getExpDate() {
         return new Date(System.currentTimeMillis() + this.expiredTimeInMills);
     }
+
+    public static TokenType getTokenType(String tokenTypeString) {
+        for (TokenType tokenType : TokenType.values()) {
+            if (tokenType.name().equalsIgnoreCase(tokenTypeString)) {
+                return tokenType;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant " + TokenType.class.getCanonicalName() + "." + tokenTypeString);
+    }
 }
