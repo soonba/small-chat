@@ -1,9 +1,8 @@
 package com.smallchat.backend.user.framework.jpa_adapter;
 
-import com.smallchat.backend.persistance.UserRepository;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.domain.model.V2User;
-import com.smallchat.backend.user.domain.model.vo.ID;
+import com.smallchat.backend.user.domain.model.vo.LoginId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserOutputAdapter implements UserOutputPort {
 
-    private final UserRepository userRepository;
+    private final V2UserRepository userRepository;
 
     @Override
     public void validateRefreshToken(UUID id, String rt) {
@@ -24,22 +23,22 @@ public class UserOutputAdapter implements UserOutputPort {
     }
 
     @Override
-    public boolean isExistID(ID id) {
+    public boolean isExistID(LoginId loginId) {
         return false;
     }
 
     @Override
     public V2User loadUser(UUID userId) {
-        return null;
+        return userRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 
     @Override
     public V2User saveUser(V2User v2User) {
-        return null;
+        return userRepository.save(v2User);
     }
 
     @Override
-    public V2User loadUserById(ID id) {
-        return null;
+    public V2User loadUserById(LoginId loginId) {
+        return userRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
     }
 }

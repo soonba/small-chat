@@ -3,7 +3,7 @@ package com.smallchat.backend.user.application.inputport;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase;
 import com.smallchat.backend.user.domain.model.V2User;
-import com.smallchat.backend.user.domain.model.vo.ID;
+import com.smallchat.backend.user.domain.model.vo.LoginId;
 import com.smallchat.backend.user.domain.model.vo.Nickname;
 import com.smallchat.backend.user.domain.model.vo.Password;
 import com.smallchat.backend.user.domain.model.vo.Tokens;
@@ -26,7 +26,7 @@ public class CreateUserInputPort implements CreateUserUseCase {
     @Override
     @Transactional
     public CreateUserDto.Response createUser(CreateUserDto.Request request) {
-        ID id = new ID(request.id());
+        LoginId id = new LoginId(request.id());
         Password password = new Password(request.password(), request.password());
         Nickname nickname = new Nickname(request.nickname());
         if (userOutputPort.isExistID(id)) {
