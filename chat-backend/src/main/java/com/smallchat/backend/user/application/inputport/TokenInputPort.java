@@ -44,8 +44,7 @@ public class TokenInputPort implements TokenUseCase {
     }
 
     @Override
-    public FetchMeDto.Response fetchMe(String token) {
-        TokenPayload tokenPayload = jwtProvider.parseToken(token);
+    public FetchMeDto.Response fetchMe(TokenPayload tokenPayload) {
         User user = userOutputPort.loadUser(tokenPayload.userId());
         return new FetchMeDto.Response(user.getUserId(), user.getNickname().getValue());
     }
