@@ -1,8 +1,8 @@
 package com.smallchat.backend.persistance;
 
 import com.smallchat.backend.domain.Room;
-import com.smallchat.backend.domain.User;
 import com.smallchat.backend.domain.UserRoom;
+import com.smallchat.backend.user.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

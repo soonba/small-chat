@@ -3,11 +3,11 @@ package com.smallchat.backend.application;
 import com.smallchat.backend.data.dto.CreateRoomDto;
 import com.smallchat.backend.data.room.Rooms;
 import com.smallchat.backend.domain.Room;
-import com.smallchat.backend.domain.User;
 import com.smallchat.backend.domain.UserRoom;
 import com.smallchat.backend.persistance.RoomRepository;
-import com.smallchat.backend.persistance.UserRepository;
 import com.smallchat.backend.persistance.UserRoomRepository;
+import com.smallchat.backend.user.domain.model.User;
+import com.smallchat.backend.user.framework.jpa_adapter.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

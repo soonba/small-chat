@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.utils;
+package com.smallchat.backend.global.utils;
 
 import java.util.Date;
 

@@ -2,7 +2,7 @@ package com.smallchat.backend.user.framework.jpa_adapter;
 
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.domain.model.RefreshToken;
-import com.smallchat.backend.user.domain.model.V2User;
+import com.smallchat.backend.user.domain.model.User;
 import com.smallchat.backend.user.domain.model.vo.LoginId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserOutputAdapter implements UserOutputPort {
 
-    private final V2UserRepository userRepository;
+    private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
@@ -34,20 +34,20 @@ public class UserOutputAdapter implements UserOutputPort {
     }
 
     @Override
-    public V2User loadUser(UUID userId) {
+    public User loadUser(UUID userId) {
         return userRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 
     @Override
-    public V2User saveUser(V2User v2User) {
-        if (isExistID(v2User.getLoginId())) {
+    public User saveUser(User user) {
+        if (isExistID(user.getLoginId())) {
             throw new RuntimeException("이미 존재하는 아이디");
         }
-        return userRepository.save(v2User);
+        return userRepository.save(user);
     }
 
     @Override
-    public V2User loadUserById(LoginId loginId) {
+    public User loadUserById(LoginId loginId) {
         return userRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
     }
 }

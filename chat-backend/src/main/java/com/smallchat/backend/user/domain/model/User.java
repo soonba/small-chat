@@ -12,9 +12,9 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "tb_v2_user")
+@Table(name = "tb_user")
 @Entity
-public class V2User extends BaseTime {
+public class User extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id", nullable = false)
@@ -29,13 +29,13 @@ public class V2User extends BaseTime {
     @Embedded
     private Password password;
 
-    public V2User(Nickname nickname, LoginId loginId, Password password) {
+    public User(Nickname nickname, LoginId loginId, Password password) {
         this.nickname = nickname;
         this.loginId = loginId;
         this.password = password;
     }
 
-    public static V2User createUser(Nickname nickname, LoginId loginId, Password password) {
-        return new V2User(nickname, loginId, password);
+    public static User createUser(Nickname nickname, LoginId loginId, Password password) {
+        return new User(nickname, loginId, password);
     }
 }
