@@ -59,7 +59,7 @@ services:
     networks:
       - small-chat
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/auth
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/small_chat
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create
