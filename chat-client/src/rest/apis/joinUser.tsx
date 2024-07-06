@@ -14,6 +14,6 @@ interface JoinResponse {
 }
 
 const joinUser = async (body: IRequestBody) => {
-    return api.post<JoinResponse, IRequestBody>('/auth/join', body);
+    return api.post<JoinResponse, IRequestBody>('/v2/users', body);
 };
 export default joinUser;
