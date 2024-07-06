@@ -1,4 +1,4 @@
 package com.smallchat.backend.user.utils;
 
-public record Tokens(Token accessToken, Token refreshToken) {
+public record Tokens(String accessToken, String refreshToken) {
 }

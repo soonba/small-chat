@@ -38,7 +38,7 @@ public class TokenInputPort implements TokenUseCase {
         userOutputPort.validateRefreshToken(id, rt);
 
         Tokens tokens = jwtProvider.createTokens(id, nickname);
-        userOutputPort.saveRefreshToken(id, tokens.refreshToken().value());
+        userOutputPort.saveRefreshToken(id, tokens.refreshToken());
 
         return new RefreshDto.Response(tokens);
     }
