@@ -7,9 +7,7 @@ import com.smallchat.backend.user.domain.model.vo.Nickname;
 import com.smallchat.backend.user.domain.model.vo.Password;
 import com.smallchat.backend.user.framework.web.dto.LoginDto;
 import com.smallchat.backend.user.utils.JwtProvider;
-import com.smallchat.backend.user.utils.Token;
 import com.smallchat.backend.user.utils.TokenPayload;
-import com.smallchat.backend.user.utils.TokenType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,8 +33,8 @@ public class AuthInputPortTest {
     private AuthInputPort authInputPort;
 
     private V2User v2User;
-    private Token accessToken;
-    private Token refreshToken;
+    private String accessToken;
+    private String refreshToken;
 
     @BeforeEach
     public void setUp() {
@@ -48,8 +46,8 @@ public class AuthInputPortTest {
         Password password = mock(Password.class);
         when(v2User.getPassword()).thenReturn(password);
 
-        accessToken = new Token("accessToken", TokenType.ACCESS_TOKEN);
-        refreshToken = new Token("refreshToken", TokenType.REFRESH_TOKEN);
+        accessToken = "at";
+        refreshToken = "rt";
 
         when(jwtProvider.createToken(any(TokenPayload.class))).thenReturn(accessToken, refreshToken);
     }
