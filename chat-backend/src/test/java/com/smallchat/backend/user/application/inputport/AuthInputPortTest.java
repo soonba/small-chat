@@ -1,13 +1,13 @@
 package com.smallchat.backend.user.application.inputport;
 
+import com.smallchat.backend.global.utils.JwtProvider;
+import com.smallchat.backend.global.utils.TokenPayload;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
-import com.smallchat.backend.user.domain.model.V2User;
+import com.smallchat.backend.user.domain.model.User;
 import com.smallchat.backend.user.domain.model.vo.LoginId;
 import com.smallchat.backend.user.domain.model.vo.Nickname;
 import com.smallchat.backend.user.domain.model.vo.Password;
 import com.smallchat.backend.user.framework.web.dto.LoginDto;
-import com.smallchat.backend.user.utils.JwtProvider;
-import com.smallchat.backend.user.utils.TokenPayload;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,19 +32,19 @@ public class AuthInputPortTest {
     @InjectMocks
     private AuthInputPort authInputPort;
 
-    private V2User v2User;
+    private User user;
     private String accessToken;
     private String refreshToken;
 
     @BeforeEach
     public void setUp() {
         // 설정하는 부분
-        v2User = mock(V2User.class);
-        when(v2User.getUserId()).thenReturn(UUID.randomUUID());
-        when(v2User.getNickname()).thenReturn(Nickname.sample());
+        user = mock(User.class);
+        when(user.getUserId()).thenReturn(UUID.randomUUID());
+        when(user.getNickname()).thenReturn(Nickname.sample());
 
         Password password = mock(Password.class);
-        when(v2User.getPassword()).thenReturn(password);
+        when(user.getPassword()).thenReturn(password);
 
         accessToken = "at";
         refreshToken = "rt";
@@ -57,7 +57,7 @@ public class AuthInputPortTest {
         // given
         LoginDto.Request request = new LoginDto.Request("1234", "password");
 
-        when(userOutputPort.loadUserById(new LoginId(request.id()))).thenReturn(v2User);
+        when(userOutputPort.loadUserById(new LoginId(request.id()))).thenReturn(user);
 
 //        doNothing().when(v2User.getPassword()).verifying(request.password());
 
@@ -70,7 +70,7 @@ public class AuthInputPortTest {
         assertEquals(refreshToken, response.tokens().refreshToken());
 
         verify(userOutputPort).loadUserById(new LoginId(request.id()));
-        verify(v2User.getPassword()).verifying(request.password());
+        verify(user.getPassword()).verifying(request.password());
         verify(jwtProvider).createToken(any(TokenPayload.class));
     }
 
@@ -79,7 +79,7 @@ public class AuthInputPortTest {
         // given
         LoginDto.Request request = new LoginDto.Request("1234", "wrongPassword");
 
-        when(userOutputPort.loadUserById(new LoginId(request.id()))).thenReturn(v2User);
+        when(userOutputPort.loadUserById(new LoginId(request.id()))).thenReturn(user);
 
 //        doThrow(new RuntimeException("Invalid password")).when(v2User.getPassword()).verifying(request.password());
 
@@ -87,7 +87,7 @@ public class AuthInputPortTest {
         assertThrows(RuntimeException.class, () -> authInputPort.login(request));
 
         verify(userOutputPort).loadUserById(new LoginId(request.id()));
-        verify(v2User.getPassword()).verifying(request.password());
+        verify(user.getPassword()).verifying(request.password());
         verify(jwtProvider, never()).createToken(any(TokenPayload.class));
     }
 }

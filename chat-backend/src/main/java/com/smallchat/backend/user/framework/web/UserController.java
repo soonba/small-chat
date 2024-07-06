@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v2/users")
-public class V2UserController {
+public class UserController {
     private final CreateUserUseCase createUserUseCase;
     private final TokenUseCase tokenUseCase;
     private final AuthUseCase authUseCase;

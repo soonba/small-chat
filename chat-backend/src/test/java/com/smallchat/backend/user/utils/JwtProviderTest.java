@@ -1,5 +1,8 @@
 package com.smallchat.backend.user.utils;
 
+import com.smallchat.backend.global.utils.JwtProvider;
+import com.smallchat.backend.global.utils.TokenPayload;
+import com.smallchat.backend.global.utils.TokenType;
 import com.smallchat.backend.user.domain.model.vo.Nickname;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,20 +33,19 @@ public class JwtProviderTest {
     @Test
     public void testCreateToken() {
         TokenPayload payload = new TokenPayload(TokenType.ACCESS_TOKEN, UUID.randomUUID(), Nickname.sample());
-        Token token = jwtProvider.createToken(payload);
+        String token = jwtProvider.createToken(payload);
 
         assertNotNull(token);
-        assertNotNull(token.value());
-        assertEquals(payload.tokenType(), token.tokenType());
+        assertEquals(payload.tokenType(), token);
     }
 
     @Test
     public void testParseToken() {
         UUID userId = UUID.randomUUID();
         TokenPayload payload = new TokenPayload(TokenType.ACCESS_TOKEN, userId, Nickname.sample());
-        Token token = jwtProvider.createToken(payload);
+        String token = jwtProvider.createToken(payload);
 
-        TokenPayload parsedPayload = jwtProvider.parseToken(token.value());
+        TokenPayload parsedPayload = jwtProvider.parseToken(token);
 
         assertEquals(payload.tokenType(), parsedPayload.tokenType());
         assertEquals(payload.userId(), parsedPayload.userId());

@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.utils;
+package com.smallchat.backend.global.utils;
 
 import com.smallchat.backend.user.domain.model.vo.Nickname;
 import io.jsonwebtoken.Claims;
@@ -26,14 +26,13 @@ public class JwtProvider {
     }
 
     public String createToken(TokenPayload payload) {
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .claim("type", payload.tokenType())
                 .claim("userId", payload.userId())
                 .claim("nickname", payload.nickname().getValue())
                 .expiration(payload.tokenType().getExpDate())
                 .signWith(Keys.hmacShaKeyFor(key))
                 .compact();
-        return token;
     }
 
     public TokenPayload parseToken(String token) {
