@@ -20,12 +20,12 @@ public class JwtProvider {
 
 
     public Tokens createTokens(UUID id, Nickname nickname) {
-        Token at = createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
-        Token rt = createToken(new TokenPayload(TokenType.REFRESH_TOKEN, id, nickname));
+        String at = createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
+        String rt = createToken(new TokenPayload(TokenType.REFRESH_TOKEN, id, nickname));
         return new Tokens(at, rt);
     }
 
-    public Token createToken(TokenPayload payload) {
+    public String createToken(TokenPayload payload) {
         String token = Jwts.builder()
                 .claim("type", payload.tokenType())
                 .claim("userId", payload.userId())
@@ -33,7 +33,7 @@ public class JwtProvider {
                 .expiration(payload.tokenType().getExpDate())
                 .signWith(Keys.hmacShaKeyFor(key))
                 .compact();
-        return new Token(token, payload.tokenType());
+        return token;
     }
 
     public TokenPayload parseToken(String token) {

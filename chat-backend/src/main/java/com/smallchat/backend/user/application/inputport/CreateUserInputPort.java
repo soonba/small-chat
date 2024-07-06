@@ -30,7 +30,7 @@ public class CreateUserInputPort implements CreateUserUseCase {
         V2User savedV2User = userOutputPort.saveUser(V2User.createUser(nickname, id, password));
 
         Tokens tokens = jwtProvider.createTokens(savedV2User.getUserId(), savedV2User.getNickname());
-        userOutputPort.saveRefreshToken(savedV2User.getUserId(), tokens.refreshToken().value());
+        userOutputPort.saveRefreshToken(savedV2User.getUserId(), tokens.refreshToken());
         return new CreateUserDto.Response(tokens);
     }
 }
