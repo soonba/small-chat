@@ -1,92 +1,115 @@
 version: "3.8"
 services:
-  mongodb:
-    image: mongo
+  #  mongodb:
+  #    image: mongo
+  #    networks:
+  #      - small-chat
+  #    container_name: mongodb
+  #    ports:
+  #      - "27017:27017"
+  #    environment:
+  #      #      - MONGO_INITDB_ROOT_USERNAME=root
+  #      #      - MONGO_INITDB_ROOT_PASSWORD=root
+  #      - MONGODB_DATABASE="small_chat"
+  #  mongo-express:
+  #    image: mongo-express
+  #    networks:
+  #      - small-chat
+  #    container_name: mongo-express
+  #    restart: always
+  #    ports:
+  #      - "8081:8081"
+  #    environment:
+  #      #      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+  #      #      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+  #      - ME_CONFIG_MONGODB_SERVER=mongodb
+  #    links:
+  #      - mongodb
+  #    depends_on:
+  #      - mongodb
+  #  chat-client:
+  #    build:
+  #      context: chat-client/
+  #    container_name: chat-client
+  #    image: seonba/chat-client
+  #    ports:
+  #      - "3000:3000"
+  #    networks:
+  #      - small-chat
+  #    restart: always
+  #    depends_on:
+  #      - chat-service
+  #  chat-service:
+  #    build:
+  #      context: chat-service/
+  #    container_name: chat-service
+  #    image: seonba/chat-service
+  #    ports:
+  #      - "3010:3000"
+  #    networks:
+  #      - small-chat
+  #    restart: always
+  #  chat-backend:
+  #    build:
+  #      context: chat-backend/
+  #    image: seonba/chat-backend
+  #    container_name: chat-backend
+  #    ports:
+  #      - "8080:8080"
+  #    networks:
+  #      - small-chat
+  #    environment:
+  #      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/small_chat
+  #      - SPRING_DATASOURCE_USERNAME=postgres
+  #      - SPRING_DATASOURCE_PASSWORD=postgres
+  #      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+  #    restart: always
+  #    depends_on:
+  #      - postgres
+  #  postgres:
+  #    container_name: postgres
+  #    image: postgres:14-alpine
+  #    ports:
+  #      - "5434:5432"
+  #    restart: always
+  #    networks:
+  #      - small-chat
+  #    environment:
+  #      - POSTGRES_USER=postgres
+  #      - POSTGRES_PASSWORD=postgres
+  #      - POSTGRES_DB=small_chat
+  #  pubsub:
+  #    image: redis:6.2.4-alpine
+  #    container_name: redis_pubsub
+  #    networks:
+  #      - small-chat
+  #    hostname: redis
+  #    ports:
+  #      - "6379:6379"
+  #    restart: always
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    container_name: zookeeper
     networks:
       - small-chat
-    container_name: mongodb
     ports:
-      - 27017:27017
+      - '2181:2181'
     environment:
-      #      - MONGO_INITDB_ROOT_USERNAME=root
-      #      - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGODB_DATABASE="small_chat"
-  mongo-express:
-    image: mongo-express
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: 'bitnami/kafka:latest'
+    container_name: kafka
     networks:
       - small-chat
-    container_name: mongo-express
-    restart: always
     ports:
-      - 8081:8081
+      - '9092:9092'
     environment:
-      #      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      #      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-    links:
-      - mongodb
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
     depends_on:
-      - mongodb
-  chat-client:
-    build:
-      context: chat-client/
-    container_name: chat-client
-    image: seonba/chat-client
-    ports:
-      - 3000:3000
-    networks:
-      - small-chat
-    restart: always
-    depends_on:
-      - chat-service
-  chat-service:
-    build:
-      context: chat-service/
-    container_name: chat-service
-    image: seonba/chat-service
-    ports:
-      - 3010:3000
-    networks:
-      - small-chat
-    restart: always
-  chat-backend:
-    build:
-      context: chat-backend/
-    image: seonba/chat-backend
-    container_name: chat-backend
-    ports:
-      - 8080:8080
-    networks:
-      - small-chat
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/small_chat
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
-    restart: always
-    depends_on:
-      - postgres
-  postgres:
-    container_name: postgres
-    image: postgres:14-alpine
-    ports:
-      - "5434:5432"
-    restart: always
-    networks:
-      - small-chat
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=small_chat
-  pubsub:
-    image: redis:6.2.4-alpine
-    container_name: redis_pubsub
-    networks:
-      - small-chat
-    hostname: redis
-    ports:
-      - 6379:6379
-    restart: always
+      - zookeeper
 
 networks:
   small-chat:
