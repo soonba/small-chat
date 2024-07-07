@@ -10,5 +10,5 @@ public interface TokenUseCase {
 
     RefreshDto.Response refresh(RefreshDto.Request refreshDto);
 
-    FetchMeDto.Response fetchMe(String token);
+    FetchMeDto.Response fetchMe(TokenPayload tokenPayload);
 }

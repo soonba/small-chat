@@ -35,6 +35,11 @@ public class JwtProvider {
                 .compact();
     }
 
+    public TokenPayload parseFromBearer(String authorization) {
+        String accessToken = authorization.replace("Bearer ", "");
+        return parseToken(accessToken);
+    }
+
     public TokenPayload parseToken(String token) {
         Claims payload = Jwts
                 .parser()

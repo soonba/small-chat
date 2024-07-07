@@ -1,4 +1,4 @@
-package com.smallchat.backend.data.dto;
+package com.smallchat.backend.global.framework.web.dto;
 
 public class ApiResponse<T> {
     private final int statusCode;

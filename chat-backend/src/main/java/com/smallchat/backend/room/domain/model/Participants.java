@@ -6,6 +6,7 @@ import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,5 +15,20 @@ import java.util.List;
 public class Participants {
 
     @ElementCollection
-    List<Participant> participants;
+    private List<Participant> participants = new ArrayList<>();
+
+    public static Participants init() {
+        return new Participants();
+    }
+
+
+    public Participants joinParticipant(Participant participant) {
+        participants.add(participant);
+        return this;
+    }
+
+    public Participants leaveParticipant(Participant participant) {
+        participants.remove(participant);
+        return this;
+    }
 }

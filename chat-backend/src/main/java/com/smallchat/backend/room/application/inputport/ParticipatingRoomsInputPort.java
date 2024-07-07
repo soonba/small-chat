@@ -1,0 +1,30 @@
+package com.smallchat.backend.room.application.inputport;
+
+import com.smallchat.backend.room.application.outputport.RoomOutputPort;
+import com.smallchat.backend.room.application.usecase.ParticipatingRoomsUseCase;
+import com.smallchat.backend.room.domain.model.Room;
+import com.smallchat.backend.room.framework.web.dto.RoomBasicInfoListDto;
+import com.smallchat.backend.user.application.inputport.UserRoomListInputPort;
+import com.smallchat.backend.user.domain.model.ParticipatingRooms;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class ParticipatingRoomsInputPort implements ParticipatingRoomsUseCase {
+
+    private final UserRoomListInputPort userRoomListInputPort;
+    private final RoomOutputPort roomOutputPort;
+
+    @Override
+    public RoomBasicInfoListDto.Response getParticipationRoomList(UUID userId) {
+        ParticipatingRooms participatingRooms = userRoomListInputPort.getUserJoinedRooms(userId);
+        System.out.println("participatingRooms");
+        participatingRooms.print();
+        List<Room> byIds = roomOutputPort.findByIds(participatingRooms.toRoomIdList());
+        return new RoomBasicInfoListDto.Response(byIds.stream().map(Room::toRoomBasicInfo).toList());
+    }
+}
