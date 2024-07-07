@@ -18,3 +18,21 @@ spring:
 
 auth:
   key: my-small-chat-applications-jwt-sign-key
+
+
+producers:
+  bootstrap-servers: localhost:9092
+  topic1:
+    name: rental_rent
+  topic2:
+    name: rental_return
+  topic3:
+    name: overdue_clear
+  topic4:
+    name: point_use
+
+consumer:
+  topic1:
+    name: rental_result
+  groupid:
+    name: rental
