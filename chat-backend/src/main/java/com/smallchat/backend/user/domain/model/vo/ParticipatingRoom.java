@@ -1,4 +1,4 @@
-package com.smallchat.backend.room.domain.model.vo;
+package com.smallchat.backend.user.domain.model.vo;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -10,24 +10,23 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class Participant {
-    private UUID userId;
+public class ParticipatingRoom {
+    private UUID roomId;
 
-
-    public static Participant of(UUID userId) {
-        return new Participant(userId);
+    public UUID getRoomId() {
+        return roomId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Participant that = (Participant) o;
-        return Objects.equals(userId, that.userId);
+        ParticipatingRoom that = (ParticipatingRoom) o;
+        return Objects.equals(roomId, that.roomId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(userId);
+        return Objects.hashCode(roomId);
     }
 }

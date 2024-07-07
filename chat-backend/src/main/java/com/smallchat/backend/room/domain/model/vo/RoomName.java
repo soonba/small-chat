@@ -19,4 +19,8 @@ public class RoomName {
         Random random = new Random();
         return new RoomName("방" + random.nextInt(900));
     }
+
+    public static RoomName of(String name) {
+        return new RoomName(name);
+    }
 }

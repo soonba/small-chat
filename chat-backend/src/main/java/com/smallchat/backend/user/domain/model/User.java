@@ -29,6 +29,9 @@ public class User extends BaseTime {
     @Embedded
     private Password password;
 
+    @Embedded
+    private ParticipatingRooms participatingRooms;
+
     public User(Nickname nickname, LoginId loginId, Password password) {
         this.nickname = nickname;
         this.loginId = loginId;

@@ -5,11 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
 public class Owner {
-    private String userId;
-    private String nickname;
+    private UUID userId;
+
+    public static Owner of(UUID userId) {
+        return new Owner(userId);
+    }
 }

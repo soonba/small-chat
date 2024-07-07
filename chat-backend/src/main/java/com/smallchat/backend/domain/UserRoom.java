@@ -1,6 +1,7 @@
 package com.smallchat.backend.domain;
 
 import com.smallchat.backend.data.room.RoomResponse;
+import com.smallchat.backend.room.domain.model.Room;
 import com.smallchat.backend.user.domain.model.User;
 import jakarta.persistence.*;
 
@@ -43,6 +44,6 @@ public class UserRoom {
 
     public RoomResponse toResponse() {
         Room room = this.room;
-        return new RoomResponse(room.getRoomId(), room.getName());
+        return new RoomResponse(room.getRoomId(), room.getRoomName().getName());
     }
 }

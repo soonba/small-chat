@@ -1,10 +1,11 @@
 package com.smallchat.backend.user.framework.web;
 
 
-import com.smallchat.backend.data.dto.ApiResponse;
 import com.smallchat.backend.data.dto.CheckUserDuplicationDto;
+import com.smallchat.backend.global.framework.web.dto.ApiResponse;
 import com.smallchat.backend.global.utils.JwtProvider;
 import com.smallchat.backend.global.utils.TokenPayload;
+import com.smallchat.backend.room.application.usecase.ParticipatingRoomsUseCase;
 import com.smallchat.backend.user.application.usecase.AuthUseCase;
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase;
 import com.smallchat.backend.user.application.usecase.TokenUseCase;
@@ -25,6 +26,7 @@ public class UserController {
     private final TokenUseCase tokenUseCase;
     private final AuthUseCase authUseCase;
     private final ValidateUserUseCase validateUserUseCase;
+    private final ParticipatingRoomsUseCase participatingRoomsUseCase;
     private final JwtProvider jwtProvider;
 
     @PostMapping()
@@ -53,8 +55,7 @@ public class UserController {
 
     @GetMapping()
     public ResponseEntity<ApiResponse<FetchMeDto.Response>> fetchMe(@RequestHeader("Authorization") String authorization) {
-        String accessToken = authorization.replace("Bearer ", "");
-        TokenPayload tokenPayload = jwtProvider.parseToken(accessToken);
+        TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
         FetchMeDto.Response response = tokenUseCase.fetchMe(tokenPayload);
         return ResponseEntity.ok(new ApiResponse<>(response));
     }

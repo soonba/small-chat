@@ -1,6 +1,7 @@
 package com.smallchat.backend.user.framework.jpa_adapter;
 
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
+import com.smallchat.backend.user.domain.model.ParticipatingRooms;
 import com.smallchat.backend.user.domain.model.RefreshToken;
 import com.smallchat.backend.user.domain.model.User;
 import com.smallchat.backend.user.domain.model.vo.LoginId;
@@ -49,5 +50,10 @@ public class UserOutputAdapter implements UserOutputPort {
     @Override
     public User loadUserById(LoginId loginId) {
         return userRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public ParticipatingRooms getParticipatingRooms(UUID userId) {
+        return userRepository.findById(userId).orElseThrow(RuntimeException::new).getParticipatingRooms();
     }
 }

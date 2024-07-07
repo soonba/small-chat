@@ -1,5 +1,6 @@
 package com.smallchat.backend.user.application.outputport;
 
+import com.smallchat.backend.user.domain.model.ParticipatingRooms;
 import com.smallchat.backend.user.domain.model.User;
 import com.smallchat.backend.user.domain.model.vo.LoginId;
 
@@ -18,4 +19,6 @@ public interface UserOutputPort {
     void validateRefreshToken(UUID id, String rt);
 
     boolean isExistID(LoginId loginId);
+
+    ParticipatingRooms getParticipatingRooms(UUID userId);
 }
