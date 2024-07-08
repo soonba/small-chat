@@ -23,7 +23,7 @@ auth:
 producers:
   bootstrap-servers: localhost:9092
   topic1:
-    name: rental_rent
+    name: create_room
   topic2:
     name: rental_return
   topic3:
@@ -33,6 +33,6 @@ producers:
 
 consumer:
   topic1:
-    name: rental_result
+    name: create_room
   groupid:
-    name: rental
+    name: room
