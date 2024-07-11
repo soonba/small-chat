@@ -4,6 +4,7 @@ import com.smallchat.backend.global.utils.TokenPayload;
 import com.smallchat.backend.room.application.outputport.EventOutputPort;
 import com.smallchat.backend.room.application.outputport.RoomOutputPort;
 import com.smallchat.backend.room.application.usecase.CreateRoomUseCase;
+import com.smallchat.backend.room.domain.event.RoomJoined;
 import com.smallchat.backend.room.domain.model.Room;
 import com.smallchat.backend.room.domain.model.vo.Owner;
 import com.smallchat.backend.room.domain.model.vo.RoomName;
@@ -23,7 +24,7 @@ public class CreateRoomInputPort implements CreateRoomUseCase {
         Room room = Room.createRoom(Owner.of(tokenPayload.userId()), RoomName.of(request.roomName()));
         roomOutputPort.save(room);
         try {
-            eventOutputPort.occurCreateRoomEvent(room.getRoomId());
+            eventOutputPort.occurCreateRoomEvent(new RoomJoined(tokenPayload.userId(), room.getRoomId()));
         } catch (Exception e) {
             throw new RuntimeException("이벤트 발행 실패");
         }

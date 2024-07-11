@@ -2,6 +2,7 @@ package com.smallchat.backend.user.domain.model.vo;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Embeddable
 public class ParticipatingRoom {
     private UUID roomId;
