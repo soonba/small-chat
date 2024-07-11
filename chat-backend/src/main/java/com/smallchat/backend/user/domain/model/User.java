@@ -3,6 +3,7 @@ package com.smallchat.backend.user.domain.model;
 import com.smallchat.backend.global.framework.jpa.BaseTime;
 import com.smallchat.backend.user.domain.model.vo.LoginId;
 import com.smallchat.backend.user.domain.model.vo.Nickname;
+import com.smallchat.backend.user.domain.model.vo.ParticipatingRoom;
 import com.smallchat.backend.user.domain.model.vo.Password;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -40,5 +41,11 @@ public class User extends BaseTime {
 
     public static User createUser(Nickname nickname, LoginId loginId, Password password) {
         return new User(nickname, loginId, password);
+    }
+
+
+    public User joinParticipatingRoom(ParticipatingRoom participatingRoom) {
+        participatingRooms.joinRoom(participatingRoom);
+        return this;
     }
 }
