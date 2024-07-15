@@ -4,7 +4,6 @@ import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.domain.model.ParticipatingRooms;
 import com.smallchat.backend.user.domain.model.RefreshToken;
 import com.smallchat.backend.user.domain.model.User;
-import com.smallchat.backend.user.domain.model.vo.LoginId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +29,7 @@ public class UserOutputAdapter implements UserOutputPort {
     }
 
     @Override
-    public boolean isExistID(LoginId loginId) {
+    public boolean isExistID(String loginId) {
         return userRepository.existsByLoginId(loginId);
     }
 
@@ -53,7 +52,7 @@ public class UserOutputAdapter implements UserOutputPort {
     }
 
     @Override
-    public User loadUserById(LoginId loginId) {
+    public User loadUserById(String loginId) {
         return userRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
     }
 

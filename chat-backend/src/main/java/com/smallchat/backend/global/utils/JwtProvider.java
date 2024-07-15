@@ -1,6 +1,5 @@
 package com.smallchat.backend.global.utils;
 
-import com.smallchat.backend.user.domain.model.vo.Nickname;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -19,7 +18,7 @@ public class JwtProvider {
     }
 
 
-    public Tokens createTokens(UUID id, Nickname nickname) {
+    public Tokens createTokens(UUID id, String nickname) {
         String at = createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
         String rt = createToken(new TokenPayload(TokenType.REFRESH_TOKEN, id, nickname));
         return new Tokens(at, rt);
@@ -29,7 +28,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .claim("type", payload.tokenType())
                 .claim("userId", payload.userId())
-                .claim("nickname", payload.nickname().getValue())
+                .claim("nickname", payload.nickname())
                 .expiration(payload.tokenType().getExpDate())
                 .signWith(Keys.hmacShaKeyFor(key))
                 .compact();
@@ -50,6 +49,6 @@ public class JwtProvider {
         String tokenType = Optional.ofNullable(payload.get("type", String.class)).orElseThrow(RuntimeException::new);
         String userId = Optional.ofNullable(payload.get("userId", String.class)).orElse("");
         String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
-        return new TokenPayload(TokenType.getTokenType(tokenType), UUID.fromString(userId), new Nickname(nickname));
+        return new TokenPayload(TokenType.getTokenType(tokenType), UUID.fromString(userId), nickname);
     }
 }

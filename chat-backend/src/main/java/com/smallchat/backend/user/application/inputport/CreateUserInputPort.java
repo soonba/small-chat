@@ -5,8 +5,6 @@ import com.smallchat.backend.global.utils.Tokens;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase;
 import com.smallchat.backend.user.domain.model.User;
-import com.smallchat.backend.user.domain.model.vo.LoginId;
-import com.smallchat.backend.user.domain.model.vo.Nickname;
 import com.smallchat.backend.user.domain.model.vo.Password;
 import com.smallchat.backend.user.framework.web.dto.CreateUserDto;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +21,9 @@ public class CreateUserInputPort implements CreateUserUseCase {
     @Override
     @Transactional
     public CreateUserDto.Response createUser(CreateUserDto.Request request) {
-        LoginId id = new LoginId(request.id());
+        String id = request.id();
         Password password = new Password(request.password(), request.password());
-        Nickname nickname = new Nickname(request.nickname());
+        String nickname = request.nickname();
 
         User savedUser = userOutputPort.createUser(User.createUser(nickname, id, password));
 

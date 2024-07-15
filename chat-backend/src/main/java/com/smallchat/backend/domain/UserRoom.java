@@ -44,6 +44,6 @@ public class UserRoom {
 
     public RoomResponse toResponse() {
         Room room = this.room;
-        return new RoomResponse(room.getRoomId(), room.getRoomName().getName());
+        return new RoomResponse(room.getRoomId(), room.getName());
     }
 }
