@@ -12,6 +12,8 @@ public interface UserOutputPort {
 
     User loadUserById(LoginId loginId);
 
+    User createUser(User user);
+
     User saveUser(User user);
 
     void saveRefreshToken(UUID id, String rt);

@@ -6,6 +6,7 @@ import com.smallchat.backend.user.domain.model.User;
 import com.smallchat.backend.user.domain.model.vo.ParticipatingRoom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ public class UserJoinRoomInputPort implements UserJoinRoomUseCase {
 
     private final UserOutputPort userOutputPort;
 
+    @Transactional
     @Override
     public void joinRoom(UUID userId, UUID roomId) {
         User user = userOutputPort.loadUser(userId);
