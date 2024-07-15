@@ -1,6 +1,5 @@
 package com.smallchat.backend.user.domain.model;
 
-import com.smallchat.backend.user.domain.model.vo.ParticipatingRoom;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -16,28 +15,24 @@ import java.util.UUID;
 public class ParticipatingRooms {
 
     @ElementCollection
-    private List<ParticipatingRoom> participatingRooms = new ArrayList<>();
+    private List<UUID> participatingRooms = new ArrayList<>();
 
     public static ParticipatingRooms init() {
         return new ParticipatingRooms();
     }
 
-    public ParticipatingRooms joinRoom(ParticipatingRoom participatingRoom) {
-        participatingRooms.add(participatingRoom);
+    public ParticipatingRooms joinRoom(UUID roomId) {
+        participatingRooms.add(roomId);
         return this;
     }
 
-    public ParticipatingRooms leaveRoom(ParticipatingRoom participatingRoom) {
+    public ParticipatingRooms leaveRoom(UUID participatingRoom) {
         participatingRooms.remove(participatingRoom);
         return this;
     }
 
-    public List<UUID> toRoomIdList() {
-        return participatingRooms.stream().map(ParticipatingRoom::getRoomId).toList();
-    }
-
-    public void print() {
-        participatingRooms.stream().forEach(el -> System.out.println(el.getRoomId()));
+    public List<UUID> getRoomList() {
+        return participatingRooms;
     }
 }
 

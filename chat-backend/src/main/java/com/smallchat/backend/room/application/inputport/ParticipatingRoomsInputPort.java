@@ -22,9 +22,7 @@ public class ParticipatingRoomsInputPort implements ParticipatingRoomsUseCase {
     @Override
     public RoomBasicInfoListDto.Response getParticipationRoomList(UUID userId) {
         ParticipatingRooms participatingRooms = userRoomListInputPort.getUserJoinedRooms(userId);
-        System.out.println("participatingRooms");
-        participatingRooms.print();
-        List<Room> byIds = roomOutputPort.findByIds(participatingRooms.toRoomIdList());
+        List<Room> byIds = roomOutputPort.findByIds(participatingRooms.getRoomList());
         return new RoomBasicInfoListDto.Response(byIds.stream().map(Room::toRoomBasicInfo).toList());
     }
 }

@@ -8,7 +8,6 @@ import com.smallchat.backend.global.utils.Tokens;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.TokenUseCase;
 import com.smallchat.backend.user.domain.model.User;
-import com.smallchat.backend.user.domain.model.vo.Nickname;
 import com.smallchat.backend.user.framework.web.dto.FetchMeDto;
 import com.smallchat.backend.user.framework.web.dto.RefreshDto;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,7 @@ public class TokenInputPort implements TokenUseCase {
         TokenPayload tokenPayload = jwtProvider.parseToken(rt);
 
         UUID id = tokenPayload.userId();
-        Nickname nickname = tokenPayload.nickname();
+        String nickname = tokenPayload.nickname();
         userOutputPort.validateRefreshToken(id, rt);
 
         Tokens tokens = jwtProvider.createTokens(id, nickname);
@@ -46,6 +45,6 @@ public class TokenInputPort implements TokenUseCase {
     @Override
     public FetchMeDto.Response fetchMe(TokenPayload tokenPayload) {
         User user = userOutputPort.loadUser(tokenPayload.userId());
-        return new FetchMeDto.Response(user.getUserId(), user.getNickname().getValue());
+        return new FetchMeDto.Response(user.getUserId(), user.getNickname());
     }
 }
