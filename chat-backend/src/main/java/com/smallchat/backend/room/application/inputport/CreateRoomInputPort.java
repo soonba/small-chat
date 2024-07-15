@@ -7,7 +7,6 @@ import com.smallchat.backend.room.application.usecase.CreateRoomUseCase;
 import com.smallchat.backend.room.domain.event.RoomJoined;
 import com.smallchat.backend.room.domain.model.Room;
 import com.smallchat.backend.room.domain.model.vo.Owner;
-import com.smallchat.backend.room.domain.model.vo.RoomName;
 import com.smallchat.backend.room.framework.web.dto.CreateRoomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class CreateRoomInputPort implements CreateRoomUseCase {
 
     @Override
     public void createRoom(TokenPayload tokenPayload, CreateRoomDto.Request request) {
-        Room room = Room.createRoom(Owner.of(tokenPayload.userId()), RoomName.of(request.roomName()));
+        Room room = Room.createRoom(Owner.of(tokenPayload.userId()), request.roomName());
         roomOutputPort.save(room);
         try {
             eventOutputPort.occurCreateRoomEvent(new RoomJoined(tokenPayload.userId(), room.getRoomId()));

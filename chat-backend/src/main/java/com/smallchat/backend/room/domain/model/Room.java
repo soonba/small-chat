@@ -3,7 +3,6 @@ package com.smallchat.backend.room.domain.model;
 import com.smallchat.backend.global.framework.jpa.BaseTime;
 import com.smallchat.backend.room.domain.model.vo.Owner;
 import com.smallchat.backend.room.domain.model.vo.Participant;
-import com.smallchat.backend.room.domain.model.vo.RoomName;
 import com.smallchat.backend.room.framework.web.dto.RoomBasicInfo;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,29 +23,29 @@ public class Room extends BaseTime {
     @Embedded
     private Owner owner;
 
-    @Embedded
-    private RoomName roomName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Embedded
     private Participants participants;
 
-    public Room(Owner owner, RoomName roomName, Participants participants) {
+    public Room(Owner owner, String name, Participants participants) {
         this.owner = owner;
-        this.roomName = roomName;
+        this.name = name;
         this.participants = participants;
     }
 
-    public static Room createRoom(Owner owner, RoomName roomName) {
-        return new Room(owner, roomName, Participants.init());
+    public static Room createRoom(Owner owner, String name) {
+        return new Room(owner, name, Participants.init());
     }
 
     public Room addParticipant(UUID userId) {
-        participants.joinParticipant(Participant.of(userId));
+        participants.addParticipant(Participant.of(userId));
         return this;
     }
 
     public RoomBasicInfo toRoomBasicInfo() {
-        return new RoomBasicInfo(this.getRoomId(), this.getRoomName().getName());
+        return new RoomBasicInfo(this.getRoomId(), getName());
     }
 }
 

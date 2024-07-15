@@ -22,7 +22,7 @@ public class Participants {
     }
 
 
-    public Participants joinParticipant(Participant participant) {
+    public Participants addParticipant(Participant participant) {
         participants.add(participant);
         return this;
     }

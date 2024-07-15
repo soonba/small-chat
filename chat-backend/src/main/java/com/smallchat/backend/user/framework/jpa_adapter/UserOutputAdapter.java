@@ -40,10 +40,15 @@ public class UserOutputAdapter implements UserOutputPort {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User createUser(User user) {
         if (isExistID(user.getLoginId())) {
             throw new RuntimeException("이미 존재하는 아이디");
         }
+        return this.saveUser(user);
+    }
+
+    @Override
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
