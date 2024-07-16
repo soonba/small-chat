@@ -13,7 +13,7 @@ interface LoginResponse {
 }
 
 const login = async (body: IRequestBody) => {
-    return api.post<LoginResponse, IRequestBody>('/auth/login', body);
+    return api.post<LoginResponse, IRequestBody>('/v2/users/login', body);
 };
 
 export default login;

@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/auth
+    url: jdbc:postgresql://localhost:15432/small_chat
     username: postgres
     password: postgres
   jpa:
@@ -18,3 +18,21 @@ spring:
 
 auth:
   key: my-small-chat-applications-jwt-sign-key
+
+
+producers:
+  bootstrap-servers: localhost:9092
+  topic1:
+    name: create_room
+  topic2:
+    name: rental_return
+  topic3:
+    name: overdue_clear
+  topic4:
+    name: point_use
+
+consumer:
+  topic1:
+    name: create_room
+  groupid:
+    name: room
