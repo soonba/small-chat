@@ -34,6 +34,7 @@ public class User extends BaseTime {
         this.nickname = nickname;
         this.loginId = loginId;
         this.password = password;
+        this.participatingRooms = ParticipatingRooms.init();
     }
 
     public static User createUser(String nickname, String loginId, Password password) {
