@@ -1,7 +1,7 @@
-import { api } from 'libs/axios';
+import {api} from 'libs/axios';
 
 interface IRequestBody {
-    accountId: string;
+    id: string;
     password: string;
     nickname: string;
 }
