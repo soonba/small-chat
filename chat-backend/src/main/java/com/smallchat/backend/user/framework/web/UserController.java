@@ -1,7 +1,6 @@
 package com.smallchat.backend.user.framework.web;
 
 
-import com.smallchat.backend.data.dto.CheckUserDuplicationDto;
 import com.smallchat.backend.global.framework.web.dto.ApiResponse;
 import com.smallchat.backend.global.utils.JwtProvider;
 import com.smallchat.backend.global.utils.TokenPayload;
@@ -10,10 +9,7 @@ import com.smallchat.backend.user.application.usecase.AuthUseCase;
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase;
 import com.smallchat.backend.user.application.usecase.TokenUseCase;
 import com.smallchat.backend.user.application.usecase.ValidateUserUseCase;
-import com.smallchat.backend.user.framework.web.dto.CreateUserDto;
-import com.smallchat.backend.user.framework.web.dto.FetchMeDto;
-import com.smallchat.backend.user.framework.web.dto.LoginDto;
-import com.smallchat.backend.user.framework.web.dto.RefreshDto;
+import com.smallchat.backend.user.framework.web.dto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

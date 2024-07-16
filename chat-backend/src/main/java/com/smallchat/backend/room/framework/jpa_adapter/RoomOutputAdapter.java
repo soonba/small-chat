@@ -1,6 +1,5 @@
 package com.smallchat.backend.room.framework.jpa_adapter;
 
-import com.smallchat.backend.persistance.RoomRepository;
 import com.smallchat.backend.room.application.outputport.RoomOutputPort;
 import com.smallchat.backend.room.domain.model.Room;
 import lombok.RequiredArgsConstructor;

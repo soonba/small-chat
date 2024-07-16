@@ -1,4 +1,4 @@
-package com.smallchat.backend.persistance;
+package com.smallchat.backend.room.framework.jpa_adapter;
 
 import com.smallchat.backend.room.domain.model.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
