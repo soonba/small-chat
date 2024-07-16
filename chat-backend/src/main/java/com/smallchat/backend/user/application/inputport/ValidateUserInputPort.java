@@ -1,8 +1,8 @@
 package com.smallchat.backend.user.application.inputport;
 
-import com.smallchat.backend.data.dto.CheckUserDuplicationDto;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.ValidateUserUseCase;
+import com.smallchat.backend.user.framework.web.dto.CheckUserDuplicationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
