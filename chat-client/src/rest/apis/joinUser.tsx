@@ -1,7 +1,7 @@
-import { api } from 'libs/axios';
+import {api} from 'libs/axios';
 
 interface IRequestBody {
-    accountId: string;
+    id: string;
     password: string;
     nickname: string;
 }
@@ -14,6 +14,6 @@ interface JoinResponse {
 }
 
 const joinUser = async (body: IRequestBody) => {
-    return api.post<JoinResponse, IRequestBody>('/auth/join', body);
+    return api.post<JoinResponse, IRequestBody>('/v2/users', body);
 };
 export default joinUser;
