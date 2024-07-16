@@ -44,7 +44,7 @@ public class Room extends BaseTime {
     }
 
     public RoomBasicInfo toRoomBasicInfo() {
-        return new RoomBasicInfo(this.getRoomId(), getName());
+        return new RoomBasicInfo(getRoomId(), getName());
     }
 }
 

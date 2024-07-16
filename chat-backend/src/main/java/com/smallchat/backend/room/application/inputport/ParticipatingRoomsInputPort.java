@@ -8,6 +8,7 @@ import com.smallchat.backend.user.application.inputport.UserRoomListInputPort;
 import com.smallchat.backend.user.domain.model.ParticipatingRooms;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class ParticipatingRoomsInputPort implements ParticipatingRoomsUseCase {
     private final RoomOutputPort roomOutputPort;
 
     @Override
+    @Transactional
     public RoomBasicInfoListDto.Response getParticipationRoomList(UUID userId) {
         ParticipatingRooms participatingRooms = userRoomListInputPort.getUserJoinedRooms(userId);
         List<Room> byIds = roomOutputPort.findByIds(participatingRooms.getRoomList());
