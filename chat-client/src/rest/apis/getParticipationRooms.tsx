@@ -1,4 +1,4 @@
-import { api } from 'libs/axios';
+import {api} from 'libs/axios';
 
 interface RoomResponse {
     roomId: string;
@@ -15,6 +15,6 @@ interface rooms {
 }
 
 const getParticipationRooms = async (): Promise<RoomResponse[]> => {
-    return api.get<rooms, string>(`/rooms`).then((r) => r.rooms.rooms);
+    return api.get<rooms, string>(`/v2/rooms`).then((r) => r.rooms.rooms);
 };
 export default getParticipationRooms;
