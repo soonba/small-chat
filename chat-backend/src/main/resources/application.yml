@@ -15,7 +15,9 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
-
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/small_chat
 auth:
   key: my-small-chat-applications-jwt-sign-key
 
