@@ -1,16 +1,16 @@
 version: "3.8"
 services:
-  #  mongodb:
-  #    image: mongo
-  #    networks:
-  #      - small-chat
-  #    container_name: mongodb
-  #    ports:
-  #      - "27017:27017"
-  #    environment:
-  #      #      - MONGO_INITDB_ROOT_USERNAME=root
-  #      #      - MONGO_INITDB_ROOT_PASSWORD=root
-  #      - MONGODB_DATABASE="small_chat"
+  mongodb:
+    image: mongo
+    networks:
+      - small-chat
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      #      - MONGO_INITDB_ROOT_USERNAME=root
+      #      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGODB_DATABASE="small_chat"
   #  mongo-express:
   #    image: mongo-express
   #    networks:
@@ -115,18 +115,18 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       #      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_NUM_PARTITIONS: 4
-  kafka-ui:
-    image: provectuslabs/kafka-ui
-    networks:
-      - small-chat
-    container_name: kafka-ui
-    ports:
-      - "8989:8080"
-    restart: always
-    environment:
-      - KAFKA_CLUSTERS_0_NAME=local
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092
-      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:32181
+#  kafka-ui:
+#    image: provectuslabs/kafka-ui
+#    networks:
+#      - small-chat
+#    container_name: kafka-ui
+#    ports:
+#      - "8989:8080"
+#    restart: always
+#    environment:
+#      - KAFKA_CLUSTERS_0_NAME=local
+#      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092
+#      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:32181
 
 
 networks:
