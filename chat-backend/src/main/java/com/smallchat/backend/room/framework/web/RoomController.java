@@ -29,6 +29,7 @@ public class RoomController {
                                                           @RequestBody CreateRoomDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
         createRoomUseCase.createRoom(tokenPayload, request);
+        //todo roomId
         return ResponseEntity.status(201).body(new ApiResponse<>("created"));
     }
 

@@ -27,14 +27,12 @@ producers:
   topic1:
     name: create_room
   topic2:
-    name: rental_return
-  topic3:
-    name: overdue_clear
-  topic4:
-    name: point_use
+    name: publish_chat
 
 consumer:
   topic1:
     name: create_room
+  topic2:
+    name: publish_chat
   groupid:
     name: room
