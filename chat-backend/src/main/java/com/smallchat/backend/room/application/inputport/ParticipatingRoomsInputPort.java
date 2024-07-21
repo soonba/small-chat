@@ -18,6 +18,7 @@ import java.util.UUID;
 public class ParticipatingRoomsInputPort implements ParticipatingRoomsUseCase {
 
     private final UserRoomListInputPort userRoomListInputPort;
+    //    private final
     private final RoomOutputPort roomOutputPort;
 
     @Override
