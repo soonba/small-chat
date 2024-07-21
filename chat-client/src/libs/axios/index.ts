@@ -1,16 +1,10 @@
-import { AxiosRequestConfig } from 'axios';
+import instance from './setup';
 
-import initialization, { defaultAxiosConfig } from './axiosSetup';
-import { IResponseBody } from './types';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getData = async <ReturnType, QueryParamType = any>(
+    url: string,
+    params?: QueryParamType
+): Promise<ReturnType> => instance.get<ReturnType>(`${url}`, { params }).then((res) => res.data);
 
-export const axiosInstance = initialization(defaultAxiosConfig);
-
-const get = <ReturnType, QueryParamType = unknown>(url: string, queryParams?: QueryParamType, config?: AxiosRequestConfig<any> | undefined) => {
-    return axiosInstance.get<IResponseBody<ReturnType>, ReturnType>(url, { ...config, params: queryParams });
-};
-
-const post = <ReturnType, BodyType>(url: string, body?: BodyType, config?: AxiosRequestConfig<any> | undefined) => {
-    return axiosInstance.post<IResponseBody<ReturnType>, ReturnType>(url, body, config);
-};
-
-export const api = { get, post };
+export const postData = async <ReturnType, BodyType>(url: string, body: BodyType): Promise<ReturnType> =>
+    instance.post(`${url}`, body).then((res) => res.data);
