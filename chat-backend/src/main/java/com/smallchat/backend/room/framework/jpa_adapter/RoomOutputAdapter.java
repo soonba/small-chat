@@ -15,8 +15,8 @@ public class RoomOutputAdapter implements RoomOutputPort {
 
 
     @Override
-    public void save(Room room) {
-        roomRepository.save(room);
+    public Room save(Room room) {
+        return roomRepository.save(room);
     }
 
     @Override

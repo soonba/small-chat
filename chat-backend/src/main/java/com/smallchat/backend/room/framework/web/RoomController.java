@@ -26,12 +26,12 @@ public class RoomController {
     private final JwtProvider jwtProvider;
 
     @PostMapping()
-    public ResponseEntity<ApiResponse<String>> createRoom(@RequestHeader("Authorization") String authorization,
-                                                          @RequestBody CreateRoomDto.Request request) {
+    public ResponseEntity<ApiResponse<UUID>> createRoom(@RequestHeader("Authorization") String authorization,
+                                                        @RequestBody CreateRoomDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
-        createRoomUseCase.createRoom(tokenPayload, request);
+        UUID roomId = createRoomUseCase.createRoom(tokenPayload, request);
         //todo roomId
-        return ResponseEntity.status(201).body(new ApiResponse<>("created"));
+        return ResponseEntity.status(201).body(new ApiResponse<>(roomId));
     }
 
     @PostMapping("/participants")

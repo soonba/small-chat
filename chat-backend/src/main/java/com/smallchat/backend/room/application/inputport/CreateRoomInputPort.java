@@ -10,6 +10,8 @@ import com.smallchat.backend.room.framework.web.dto.CreateRoomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CreateRoomInputPort implements CreateRoomUseCase {
@@ -18,13 +20,13 @@ public class CreateRoomInputPort implements CreateRoomUseCase {
     private final EventOutputPort eventOutputPort;
 
     @Override
-    public void createRoom(TokenPayload tokenPayload, CreateRoomDto.Request request) {
+    public UUID createRoom(TokenPayload tokenPayload, CreateRoomDto.Request request) {
         Room room = Room.createRoom(tokenPayload.userId(), request.roomName());
-        roomOutputPort.save(room);
         try {
             eventOutputPort.occurCreateRoomEvent(new RoomJoined(tokenPayload.userId(), room.getRoomId()));
         } catch (Exception e) {
             throw new RuntimeException("이벤트 발행 실패");
         }
+        return roomOutputPort.save(room).getRoomId();
     }
 }
