@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RoomOutputPort {
-    void save(Room room);
+    Room save(Room room);
 
     Room load(UUID roomId);
 
