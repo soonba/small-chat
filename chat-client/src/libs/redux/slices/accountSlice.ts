@@ -8,8 +8,8 @@ export interface Account {
 }
 
 const initialState: Account = {
-    accountId: 'test',
-    nickname: 'test123'
+    accountId: '',
+    nickname: ''
 };
 
 export const accountSlice = createSlice({
