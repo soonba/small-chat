@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class RoomKafkaProducer implements EventOutputPort {
     @Value(value = "${producers.topic1.name}")
-    private String TOPIC_RENT;
+    private String TOPIC_CREATE_ROOM;
 //    @Value(value = "${producers.topic2.name}")
 //    private String TOPIC_RETURN;
 //    @Value(value = "${producers.topic3.name}")
@@ -27,7 +27,7 @@ public class RoomKafkaProducer implements EventOutputPort {
 
     @Override
     public void occurCreateRoomEvent(RoomJoined roomJoined) throws JsonProcessingException {
-        CompletableFuture<SendResult<String, RoomJoined>> future = kafkaTemplate1.send(TOPIC_RENT, roomJoined);
+        CompletableFuture<SendResult<String, RoomJoined>> future = kafkaTemplate1.send(TOPIC_CREATE_ROOM, roomJoined);
         future.whenComplete((result, throwable) -> {
             if (throwable != null) {
                 System.err.println("Failure: " + throwable.getMessage());

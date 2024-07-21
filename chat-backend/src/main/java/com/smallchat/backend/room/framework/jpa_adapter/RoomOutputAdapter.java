@@ -21,7 +21,7 @@ public class RoomOutputAdapter implements RoomOutputPort {
 
     @Override
     public Room load(UUID roomId) {
-        return null;
+        return roomRepository.findById(roomId).orElseThrow(() -> new RuntimeException("찾을 수 없음"));
     }
 
     @Override
