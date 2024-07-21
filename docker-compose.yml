@@ -88,7 +88,9 @@ services:
   #      - "6379:6379"
   #    restart: always
   zookeeper-1:
-    image: confluentinc/cp-zookeeper:5.5.1
+    # arm- 5.5.1 amd- latest
+    image: confluentinc/cp-zookeeper:latest
+    #    image: confluentinc/cp-zookeeper:5.5.1
     networks:
       - small-chat
     ports:
@@ -97,7 +99,9 @@ services:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
   kafka-1:
-    image: confluentinc/cp-kafka:5.5.1
+    # arm- 5.5.1 amd- latest
+    image: confluentinc/cp-kafka:latest
+    #    image: confluentinc/cp-kafka:5.5.1
     networks:
       - small-chat
     container_name: kafka

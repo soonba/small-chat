@@ -7,6 +7,7 @@ import com.smallchat.backend.room.application.usecase.CreateRoomUseCase;
 import com.smallchat.backend.room.application.usecase.JoinRoomUseCase;
 import com.smallchat.backend.room.application.usecase.ParticipatingRoomsUseCase;
 import com.smallchat.backend.room.framework.web.dto.CreateRoomDto;
+import com.smallchat.backend.room.framework.web.dto.JoinRoomDto;
 import com.smallchat.backend.room.framework.web.dto.RoomBasicInfoListDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +34,11 @@ public class RoomController {
         return ResponseEntity.status(201).body(new ApiResponse<>("created"));
     }
 
-    @PostMapping("/{roomId}/users")
+    @PostMapping("/participants")
     public ResponseEntity<ApiResponse<String>> joinRoom(@RequestHeader("Authorization") String authorization,
-                                                        @PathVariable String roomId) {
+                                                        @RequestBody JoinRoomDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
-        joinRoomUseCase.join(tokenPayload.userId(), UUID.fromString(roomId));
+        joinRoomUseCase.join(tokenPayload.userId(), UUID.fromString(request.roomId()));
         return ResponseEntity.ok(new ApiResponse<>("joined"));
     }
 
