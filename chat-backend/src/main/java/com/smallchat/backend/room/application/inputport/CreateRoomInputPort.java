@@ -22,11 +22,12 @@ public class CreateRoomInputPort implements CreateRoomUseCase {
     @Override
     public UUID createRoom(TokenPayload tokenPayload, CreateRoomDto.Request request) {
         Room room = Room.createRoom(tokenPayload.userId(), request.roomName());
+        UUID roomId = roomOutputPort.save(room).getRoomId();
         try {
-            eventOutputPort.occurCreateRoomEvent(new RoomJoined(tokenPayload.userId(), room.getRoomId()));
+            eventOutputPort.occurCreateRoomEvent(new RoomJoined(tokenPayload.userId(), roomId));
         } catch (Exception e) {
             throw new RuntimeException("이벤트 발행 실패");
         }
-        return roomOutputPort.save(room).getRoomId();
+        return roomId;
     }
 }
