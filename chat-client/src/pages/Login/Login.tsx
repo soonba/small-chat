@@ -9,7 +9,7 @@ import { clearToken, setTokens } from 'utils/storage';
 export default function Login() {
     const navigate = useNavigate();
 
-    const [accountId, setAccountId] = useState('');
+    const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
     const loginMutation = useLogin({
@@ -21,7 +21,7 @@ export default function Login() {
 
     const handleLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loginMutation.mutate({ accountId, password });
+        loginMutation.mutate({ id, password });
     };
 
     const handleRegister = () => {
@@ -41,9 +41,9 @@ export default function Login() {
                 <TextField
                     labelText="Id"
                     type="text"
-                    value={accountId}
+                    value={id}
                     placeholder="아이디를 입력해 주세요."
-                    onChange={setAccountId}
+                    onChange={setId}
                 />
                 <TextField
                     labelText="Password"
@@ -53,13 +53,7 @@ export default function Login() {
                     onChange={setPassword}
                 />
                 <div className="mt-4 flex flex-col gap-2">
-                    <Button
-                        type="submit"
-                        disabled={!accountId && !password}
-                        text="로그인"
-                        variant="contained"
-                        size="large"
-                    />
+                    <Button type="submit" disabled={!id && !password} text="로그인" variant="contained" size="large" />
                     <Button type="button" onClick={handleRegister} text="회원가입" variant="outlined" size="large" />
                 </div>
             </form>
