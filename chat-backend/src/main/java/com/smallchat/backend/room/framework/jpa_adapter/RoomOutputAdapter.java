@@ -25,7 +25,7 @@ public class RoomOutputAdapter implements RoomOutputPort {
     }
 
     @Override
-    public List<Room> findByIds(List<UUID> roomIDs) {
+    public List<Room> findRoomBasicByIds(List<UUID> roomIDs) {
         return roomRepository.findByRoomIdIn(roomIDs);
     }
 }

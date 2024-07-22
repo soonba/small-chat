@@ -9,13 +9,13 @@ import java.util.UUID;
 
 @Getter
 @Document(collation = "chat")
-public class ChatModel {
+public class Chat {
     private final String message;
     private final UUID roomId;
     private final Sender sender;
     private final LocalDateTime createdAt;
 
-    public ChatModel(String message, UUID roomId, Sender sender) {
+    public Chat(String message, UUID roomId, Sender sender) {
         this.message = message;
         this.roomId = roomId;
         this.sender = sender;
