@@ -1,6 +1,7 @@
 package com.smallchat.backend.room.application.inputport;
 
 import com.smallchat.backend.global.utils.TokenPayload;
+import com.smallchat.backend.room.application.outputport.ChatOutputPort;
 import com.smallchat.backend.room.application.outputport.EventOutputPort;
 import com.smallchat.backend.room.application.outputport.RoomOutputPort;
 import com.smallchat.backend.room.application.usecase.CreateRoomUseCase;
@@ -18,11 +19,14 @@ public class CreateRoomInputPort implements CreateRoomUseCase {
 
     private final RoomOutputPort roomOutputPort;
     private final EventOutputPort eventOutputPort;
+    private final ChatOutputPort chatOutputPort;
 
     @Override
     public UUID createRoom(TokenPayload tokenPayload, CreateRoomDto.Request request) {
         Room room = Room.createRoom(tokenPayload.userId(), request.roomName());
         UUID roomId = roomOutputPort.save(room).getRoomId();
+        //todo
+//        chatOutputPort.save(new Chat());
         try {
             eventOutputPort.occurJoinRoomEvent(new RoomJoined(tokenPayload.userId(), roomId));
         } catch (Exception e) {

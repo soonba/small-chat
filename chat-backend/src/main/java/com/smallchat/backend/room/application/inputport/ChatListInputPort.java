@@ -3,7 +3,7 @@ package com.smallchat.backend.room.application.inputport;
 import com.smallchat.backend.room.application.outputport.ChatOutputPort;
 import com.smallchat.backend.room.application.usecase.ChatListUseCase;
 import com.smallchat.backend.room.domain.model.vo.Chat;
-import com.smallchat.backend.room.framework.web.dto.MessageListDto;
+import com.smallchat.backend.room.framework.web.dto.ChatListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,8 @@ public class ChatListInputPort implements ChatListUseCase {
     private final ChatOutputPort chatOutputPort;
 
     @Override
-    public MessageListDto.Response getChatList(UUID roomID) {
+    public ChatListDto.Response getChatList(UUID roomID) {
         List<Chat> list = chatOutputPort.getChatList(roomID);
-        return new MessageListDto.Response(list.stream().map(Chat::toMessage).toList());
+        return new ChatListDto.Response(list.stream().map(Chat::toChatBasicInfo).toList());
     }
 }
