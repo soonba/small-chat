@@ -56,7 +56,7 @@ query getRoomDetails($input: GetRoomDetailInput!) {
     }
 }
 
-query getRoomLatestInfos($input: GetRoomLatestInfosInput!){
+query getRoomLatestInfos($input: GetRoomLatestInfosInput!) {
     getRoomLatestInfos(input: $input) {
         roomId
         lastMessage
@@ -85,4 +85,3 @@ query getHistoryByRoomId($input: MessageHistoryInput!) {
         }
     }
 }
-

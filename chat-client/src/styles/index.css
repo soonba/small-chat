@@ -25,4 +25,5 @@ body,
         'Segoe UI Emoji',
         'Segoe UI Symbol',
         sans-serif;
+    @apply bg-background-light scrollbar-hide dark:bg-background-dark;
 }

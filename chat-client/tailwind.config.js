@@ -1,28 +1,36 @@
+/* eslint-disable global-require */
 // eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-var-requires
 const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    darkMode: 'selector',
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
             colors: {
-                'blue-gray': {
-                    50: '#eceff1',
-                    100: '#cfd8dc',
-                    200: '#b0bec5',
-                    300: '#90a4ae',
-                    400: '#78909c',
-                    500: '#607d8b',
-                    600: '#546e7a',
-                    700: '#455a64',
-                    800: '#37474f',
-                    900: '#263238'
+                background: {
+                    dark: '#0e0e11',
+                    light: '#ffffff'
+                },
+                primary: {
+                    50: '#f0f8ff',
+                    100: '#e0f0fe',
+                    200: '#bae2fd',
+                    300: '#7dcbfc',
+                    400: '#38b0f8',
+                    500: '#0e96e9',
+                    600: '#0277c7',
+                    700: '#035ea1',
+                    800: '#075185',
+                    900: '#0c436e',
+                    950: '#082b49'
                 }
             }
         }
     },
     plugins: [
+        require('tailwind-scrollbar-hide'),
         // eslint-disable-next-line func-names
         plugin(function ({ addUtilities }) {
             addUtilities({
