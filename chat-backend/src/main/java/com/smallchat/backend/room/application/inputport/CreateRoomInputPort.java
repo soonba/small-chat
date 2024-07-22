@@ -24,7 +24,7 @@ public class CreateRoomInputPort implements CreateRoomUseCase {
         Room room = Room.createRoom(tokenPayload.userId(), request.roomName());
         UUID roomId = roomOutputPort.save(room).getRoomId();
         try {
-            eventOutputPort.occurCreateRoomEvent(new RoomJoined(tokenPayload.userId(), roomId));
+            eventOutputPort.occurJoinRoomEvent(new RoomJoined(tokenPayload.userId(), roomId));
         } catch (Exception e) {
             throw new RuntimeException("이벤트 발행 실패");
         }

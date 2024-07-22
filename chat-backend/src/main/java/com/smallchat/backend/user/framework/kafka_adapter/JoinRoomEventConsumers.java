@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class CreateRoomEventConsumers {
+public class JoinRoomEventConsumers {
 
     private final UserJoinRoomUseCase userJoinRoomUseCase;
     private final ObjectMapper objectMapper = new ObjectMapper();
