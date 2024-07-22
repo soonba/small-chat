@@ -1,10 +1,10 @@
-import {FormEvent, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import {Button, TextField} from 'components';
+import { Button, TextField } from 'components';
 
 import useLogin from 'services/auth/useLogin';
-import {clearToken, setTokens} from 'utils/storage';
+import { clearToken, setTokens } from 'utils/storage';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -13,15 +13,15 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const loginMutation = useLogin({
-        onSuccess({tokens}) {
+        onSuccess({ tokens }) {
             setTokens(tokens);
-            navigate('/', {replace: true});
+            navigate('/', { replace: true });
         }
     });
 
     const handleLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loginMutation.mutate({accountId: id, password});
+        loginMutation.mutate({ id, password });
     };
 
     const handleRegister = () => {
@@ -53,14 +53,8 @@ export default function Login() {
                     onChange={setPassword}
                 />
                 <div className="mt-4 flex flex-col gap-2">
-                    <Button
-                        type="submit"
-                        disabled={!id && !password}
-                        text="로그인"
-                        variant="contained"
-                        size="large"
-                    />
-                    <Button type="button" onClick={handleRegister} text="회원가입" variant="outlined" size="large"/>
+                    <Button type="submit" disabled={!id && !password} text="로그인" variant="contained" size="large" />
+                    <Button type="button" onClick={handleRegister} text="회원가입" variant="outlined" size="large" />
                 </div>
             </form>
         </div>
