@@ -1,20 +1,46 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import { PlusIcon } from '@heroicons/react/20/solid';
+import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
+import { Button, IconButton } from 'components';
+
+import useMode from 'hooks/useMode';
+import { clearToken } from 'utils/storage';
 
 export default function Header() {
-    const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const { mode, onModeChange } = useMode();
 
-    const handleClick = () => {
-        navigate('/add');
+    const handleLogout = () => {
+        clearToken();
+        window.location.reload();
     };
 
     return (
-        <header className="fixed inset-x-0 top-0 z-10 flex h-16 items-center justify-between px-5 shadow-sm">
-            <h1 className="text-2xl font-bold uppercase text-blue-gray-900">작은 대화</h1>
-            <button aria-label="등록" type="button" onClick={handleClick} className="h-10 w-10 whitespace-nowrap rounded-md bg-blue-gray-900 text-xs font-bold text-blue-gray-50 hover:opacity-80">
-                <PlusIcon width={20} height={20} className="m-auto" />
-            </button>
+        <header
+            className={`${['/login', '/register'].includes(pathname) ? 'bg-inherit' : 'rounded-b-md bg-[#f7fbff] shadow-sm shadow-primary-100 dark:bg-[#02101c] dark:shadow-primary-950'} fixed left-0 right-0 top-0 z-10`}
+        >
+            <div className="mx-auto flex h-14 w-full items-center justify-between rounded-b-md p-5">
+                {!['/login', '/register'].includes(pathname) && (
+                    <Link reloadDocument to="/">
+                        <h1 className="text-center text-2xl font-black text-primary-900 dark:text-primary-100">
+                            작은 대화
+                        </h1>
+                    </Link>
+                )}
+                <div className="ml-auto flex items-center gap-5">
+                    {!['/login', '/register'].includes(pathname) && (
+                        <Button text="로그아웃" variant="text" size="small" onClick={handleLogout} />
+                    )}
+                    <IconButton
+                        aria-label={`change to ${mode === 'light' ? 'dark' : 'light'} mode`}
+                        title={`${mode === 'light' ? '다크' : '라이트'} 모드로 변경하기`}
+                        variant="text"
+                        size="small"
+                        onClick={onModeChange}
+                        icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
+                    />
+                </div>
+            </div>
         </header>
     );
 }
