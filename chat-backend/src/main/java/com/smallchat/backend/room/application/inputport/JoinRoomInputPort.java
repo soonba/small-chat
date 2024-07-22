@@ -25,7 +25,7 @@ public class JoinRoomInputPort implements JoinRoomUseCase {
         Room room = loadedRoom.addParticipant(userId);
         roomOutputPort.save(room);
         try {
-            eventOutputPort.occurCreateRoomEvent(new RoomJoined(userId, roomId));
+            eventOutputPort.occurJoinRoomEvent(new RoomJoined(userId, roomId));
         } catch (Exception e) {
             throw new RuntimeException("이벤트 발행 실패");
         }

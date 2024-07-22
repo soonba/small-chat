@@ -26,7 +26,7 @@ public class RoomKafkaProducer implements EventOutputPort {
     private final KafkaTemplate<String, RoomJoined> kafkaTemplate1;
 
     @Override
-    public void occurCreateRoomEvent(RoomJoined roomJoined) throws JsonProcessingException {
+    public void occurJoinRoomEvent(RoomJoined roomJoined) throws JsonProcessingException {
         CompletableFuture<SendResult<String, RoomJoined>> future = kafkaTemplate1.send(TOPIC_CREATE_ROOM, roomJoined);
         future.whenComplete((result, throwable) -> {
             if (throwable != null) {
