@@ -1,10 +1,10 @@
 package com.smallchat.backend.room.application.usecase;
 
-import com.smallchat.backend.room.domain.model.Room;
-import com.smallchat.backend.room.domain.model.vo.ChatBasic;
+import com.smallchat.backend.room.domain.model.vo.Chat;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface LastChatMessageUseCase {
-    List<ChatBasic> addChatBasicInfo(List<Room> roomList);
+    List<Chat> getLastMessageListByRoomIdList(List<UUID> roomIdList);
 }

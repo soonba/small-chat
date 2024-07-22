@@ -10,5 +10,5 @@ public interface RoomOutputPort {
 
     Room load(UUID roomId);
 
-    List<Room> findByIds(List<UUID> roomIDs);
+    List<Room> findRoomBasicByIds(List<UUID> roomIDs);
 }

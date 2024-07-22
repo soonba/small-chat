@@ -1,5 +1,6 @@
 package com.smallchat.backend.user.application.inputport;
 
+import com.smallchat.backend.user.application.outputport.ParticipatingRoomOutputPort;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.application.usecase.UserJoinRoomUseCase;
 import com.smallchat.backend.user.domain.model.User;
@@ -14,11 +15,12 @@ import java.util.UUID;
 public class UserJoinRoomInputPort implements UserJoinRoomUseCase {
 
     private final UserOutputPort userOutputPort;
+    private final ParticipatingRoomOutputPort participatingRoomOutputPort;
 
-    @Transactional
     @Override
+    @Transactional
     public void joinRoom(UUID userId, UUID roomId) {
         User user = userOutputPort.loadUser(userId);
-        userOutputPort.saveUser(user.joinParticipatingRoom(roomId));
+        participatingRoomOutputPort.joinRoom(user, roomId);
     }
 }

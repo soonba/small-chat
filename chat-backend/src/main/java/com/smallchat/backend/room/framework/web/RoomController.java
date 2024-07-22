@@ -43,10 +43,10 @@ public class RoomController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<RoomBasicInfoListDto.Response>> participationRoomList(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<ApiResponse<RoomBasicInfoListDto.Response>> getChattingRoomList(@RequestHeader("Authorization") String authorization) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
         System.out.println(tokenPayload.userId());
-        RoomBasicInfoListDto.Response response = participatingRoomsUseCase.getParticipationRoomList(tokenPayload.userId());
+        RoomBasicInfoListDto.Response response = participatingRoomsUseCase.getChattingRoomList(tokenPayload.userId());
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }

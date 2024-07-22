@@ -1,17 +1,15 @@
 package com.smallchat.backend.room.application.outputport;
 
-import com.smallchat.backend.room.domain.model.Room;
-import com.smallchat.backend.room.domain.model.vo.ChatBasic;
-import com.smallchat.backend.room.domain.model.vo.ChatModel;
+import com.smallchat.backend.room.domain.model.vo.Chat;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface ChatOutputPort {
-    void save(ChatModel chatModel);
+    void save(Chat chat);
 
-    List<ChatModel> getChatModelList(UUID roomID);
+    List<Chat> getChatList(UUID roomID);
 
-    List<ChatBasic> getLastChatInfo(List<Room> roomList);
+    List<Chat> getLastChatInfo(List<UUID> roomIdList);
 
 }

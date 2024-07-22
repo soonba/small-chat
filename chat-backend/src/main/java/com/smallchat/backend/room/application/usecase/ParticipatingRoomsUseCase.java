@@ -5,5 +5,5 @@ import com.smallchat.backend.room.framework.web.dto.RoomBasicInfoListDto;
 import java.util.UUID;
 
 public interface ParticipatingRoomsUseCase {
-    RoomBasicInfoListDto.Response getParticipationRoomList(UUID userId);
+    RoomBasicInfoListDto.Response getChattingRoomList(UUID userId);
 }
