@@ -21,7 +21,7 @@ export default function Login() {
 
     const handleLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loginMutation.mutate({id, password});
+        loginMutation.mutate({ id, password });
     };
 
     const handleRegister = () => {
@@ -53,14 +53,8 @@ export default function Login() {
                     onChange={setPassword}
                 />
                 <div className="mt-4 flex flex-col gap-2">
-                    <Button
-                        type="submit"
-                        disabled={!id && !password}
-                        text="로그인"
-                        variant="contained"
-                        size="large"
-                    />
-                    <Button type="button" onClick={handleRegister} text="회원가입" variant="outlined" size="large"/>
+                    <Button type="submit" disabled={!id && !password} text="로그인" variant="contained" size="large" />
+                    <Button type="button" onClick={handleRegister} text="회원가입" variant="outlined" size="large" />
                 </div>
             </form>
         </div>

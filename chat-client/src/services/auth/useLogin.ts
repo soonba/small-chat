@@ -23,7 +23,7 @@ interface Props {
     onError?: (error: Error) => void;
 }
 
-const useLogin = ({onSuccess, onError}: Props) => {
+const useLogin = ({ onSuccess, onError }: Props) => {
     const loginMutation = useMutation({
         mutationFn: login,
         onSuccess: ({tokens}) => {
