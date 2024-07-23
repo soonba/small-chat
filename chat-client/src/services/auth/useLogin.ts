@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { postData } from 'libs/axios';
-import { IResponseData } from 'libs/axios/types';
 
 interface IRequestBody {
     id: string;
@@ -16,7 +15,7 @@ interface IResponseBody {
 }
 
 const login = async (body: IRequestBody) => {
-    return postData<IResponseData<IResponseBody>, IRequestBody>('/v2/users/login', body).then((res) => res.data);
+    return postData<IResponseBody, IRequestBody>('/v2/users/login', body).then((res) => res.data);
 };
 
 interface Props {

@@ -11,7 +11,7 @@ interface IResponseBody {
 }
 
 const createChat = async (body: IRequestBody) => {
-    return postData<IResponseBody, IRequestBody>('/v2/rooms', body);
+    return postData<IResponseBody, IRequestBody>('/v2/rooms', body).then((res) => res.data);
 };
 
 interface Props {

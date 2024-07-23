@@ -13,7 +13,7 @@ interface IResponseBody {
 }
 
 const getMyInfo = async (): Promise<IResponseBody> => {
-    return getData<IResponseBody, void>('/v2/users');
+    return getData<IResponseBody, void>('/v2/users').then((res) => res.data);
 };
 
 const useGetMyInfo = () => {
