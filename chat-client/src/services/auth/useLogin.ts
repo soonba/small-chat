@@ -26,9 +26,10 @@ interface Props {
 const useLogin = ({ onSuccess, onError }: Props) => {
     const loginMutation = useMutation({
         mutationFn: login,
-        onSuccess: ({ tokens }) => {
+        onSuccess: (data) => {
+            console.log(data);
             if (onSuccess) {
-                onSuccess({ tokens });
+                // onSuccess({ tokens });
             }
         },
         onError: (error) => {
