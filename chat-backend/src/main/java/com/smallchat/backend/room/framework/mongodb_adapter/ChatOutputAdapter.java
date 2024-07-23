@@ -15,18 +15,19 @@ public class ChatOutputAdapter implements ChatOutputPort {
 
     @Override
     public void save(Chat chat) {
-        //todo
-        System.out.println("todo");
+        chatRepository.save(chat);
     }
 
     @Override
     public List<Chat> getChatList(UUID roomID) {
-        //todo
-        return List.of();
+        return chatRepository.findByRoomId(roomID);
     }
 
     @Override
     public List<Chat> getLastChatInfo(List<UUID> roomIdList) {
+//        Aggregation.newAggregation(Chat.class, Aggregation.sort(Aggregation.sort(Aggregation..DESC, "timestamp")),
+//                Aggregation.group("roomId")
+//                        .first(Aggregation.ROOT).as("lastChat"));
         //todo
         return List.of();
     }

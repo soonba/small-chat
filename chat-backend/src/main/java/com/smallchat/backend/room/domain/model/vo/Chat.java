@@ -24,6 +24,18 @@ public class Chat {
         this.chatType = ChatType.USER;
     }
 
+    public Chat(SystemMessage message, String messageValue, UUID roomId) {
+        this.message = message.getSystemMessage(messageValue);
+        this.roomId = roomId;
+        this.sender = null;
+        this.createdAt = LocalDateTime.now();
+        this.chatType = ChatType.SYSTEM;
+    }
+
+    public static Chat systemMessage(SystemMessage systemMessage, String messageValue, UUID roomId) {
+        return new Chat(systemMessage, messageValue, roomId);
+    }
+
     public ChatBasicInfo toChatBasicInfo() {
         return new ChatBasicInfo(sender, createdAt, message, chatType);
     }
