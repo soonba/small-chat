@@ -46,7 +46,7 @@ public class Room extends BaseTime {
     }
 
     public RoomBasicInfo toRoomBasicInfo(List<Chat> chatList) {
-        Chat chat = chatList.stream().filter(el -> el.getRoomId().equals(this.roomId)).findFirst().orElseThrow(() -> new RuntimeException("찾을 수 없는 방"));
+        Chat chat = chatList.stream().filter(el -> el.getRoomId().equals(this.roomId.toString())).findFirst().orElseThrow(() -> new RuntimeException("찾을 수 없는 방"));
         return new RoomBasicInfo(getRoomId(), getName(), chat.getMessage(), chat.getCreatedAt());
     }
 }

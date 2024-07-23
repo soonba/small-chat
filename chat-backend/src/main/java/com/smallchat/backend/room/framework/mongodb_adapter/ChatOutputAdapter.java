@@ -3,7 +3,6 @@ package com.smallchat.backend.room.framework.mongodb_adapter;
 import com.smallchat.backend.room.application.outputport.ChatOutputPort;
 import com.smallchat.backend.room.domain.model.vo.Chat;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
@@ -32,11 +31,16 @@ public class ChatOutputAdapter implements ChatOutputPort {
 
     @Override
     public List<Chat> getLastChatInfo(List<UUID> roomIdList) {
+        System.out.println("????");
+        System.out.println(roomIdList.get(0));
+//        MatchOperation matchStage = Aggregation.match(Criteria.where("roomId").is("139ee7ba-40b7-40ed-a5d8-3a36a44bdb57"));
         MatchOperation matchStage = Aggregation.match(Criteria.where("roomId").in(roomIdList));
-        Aggregation aggregation = Aggregation.newAggregation(matchStage,
-                Aggregation.sort(Sort.Direction.DESC, "createAt"),
-                Aggregation.group("roomId").first(Aggregation.ROOT).as("lastChat"));
-        AggregationResults<Chat> aggregate = mongoTemplate.aggregate(aggregation, Chat.class, Chat.class);
-        return aggregate.getMappedResults();
+        Aggregation aggregation = Aggregation.newAggregation(matchStage);
+        AggregationResults<Chat> results = mongoTemplate.aggregate(aggregation, "chat", Chat.class);
+        List<Chat> mappedResults = results.getMappedResults();
+        System.out.println("======");
+        System.out.println(mappedResults);
+        System.out.println("======");
+        return mappedResults;
     }
 }
