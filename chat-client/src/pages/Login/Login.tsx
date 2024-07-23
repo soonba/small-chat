@@ -13,7 +13,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const loginMutation = useLogin({
-        onSuccess({ data: { tokens } }) {
+        onSuccess({ tokens }) {
             setTokens(tokens);
             navigate('/', {replace: true});
         }

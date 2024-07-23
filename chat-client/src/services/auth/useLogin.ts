@@ -1,6 +1,7 @@
 import {useMutation} from '@tanstack/react-query';
 
-import {postData} from 'libs/axios';
+import { postData } from 'libs/axios';
+import { IResponseData } from 'libs/axios/types';
 
 interface IRequestBody {
     id: string;
@@ -8,16 +9,14 @@ interface IRequestBody {
 }
 
 interface IResponseBody {
-    data: {
-        tokens: {
-            accessToken: string;
-            refreshToken: string;
-        };
+    tokens: {
+        accessToken: string;
+        refreshToken: string;
     };
 }
 
 const login = async (body: IRequestBody) => {
-    return postData<IResponseBody, IRequestBody>('/v2/users/login', body);
+    return postData<IResponseData<IResponseBody>, IRequestBody>('/v2/users/login', body).then((res) => res.data);
 };
 
 interface Props {
@@ -29,7 +28,6 @@ const useLogin = ({ onSuccess, onError }: Props) => {
     const loginMutation = useMutation({
         mutationFn: login,
         onSuccess: (data) => {
-            console.log(data);
             if (onSuccess) {
                 onSuccess(data);
             }
