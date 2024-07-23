@@ -8,9 +8,11 @@ interface IRequestBody {
 }
 
 interface IResponseBody {
-    tokens: {
-        accessToken: string;
-        refreshToken: string;
+    data: {
+        tokens: {
+            accessToken: string;
+            refreshToken: string;
+        };
     };
 }
 
@@ -26,10 +28,10 @@ interface Props {
 const useLogin = ({ onSuccess, onError }: Props) => {
     const loginMutation = useMutation({
         mutationFn: login,
-        onSuccess: ({ tokens }) => {
-            console.log(tokens);
+        onSuccess: (data) => {
+            console.log(data);
             if (onSuccess) {
-                onSuccess({ tokens });
+                onSuccess(data);
             }
         },
         onError: (error) => {
