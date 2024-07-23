@@ -16,7 +16,7 @@ interface IResponseBody {
 }
 
 const register = async (body: IRequestBody) => {
-    return postData<IResponseBody, IRequestBody>('/v2/users', body);
+    return postData<IResponseBody, IRequestBody>('/v2/users', body).then((res) => res.data);
 };
 
 interface Props {
@@ -26,9 +26,9 @@ interface Props {
 const useRegister = ({ onSuccess, onError }: Props) => {
     const joinMutation = useMutation({
         mutationFn: register,
-        onSuccess: ({ tokens }) => {
+        onSuccess: (data) => {
             if (onSuccess) {
-                onSuccess({ tokens });
+                onSuccess(data);
             }
         },
         onError: (error) => {

@@ -13,13 +13,15 @@ interface IResponseBody {
 }
 
 const checkId = async ({ accountId }: IRequestBody) => {
-    return getData<IResponseBody, void>(`/v2/users/${accountId}/exists`).then((el) => ({
-        status: 200,
-        message: el.isUsed ? '사용중인 아이디입니다.' : '사용 가능한 아이디입니다.',
-        data: {
-            isUsed: el.isUsed
-        }
-    }));
+    return getData<IResponseBody, void>(`/v2/users/${accountId}/exists`)
+        .then((res) => res.data)
+        .then((el) => ({
+            status: 200,
+            message: el.isUsed ? '사용중인 아이디입니다.' : '사용 가능한 아이디입니다.',
+            data: {
+                isUsed: el.isUsed
+            }
+        }));
 };
 
 const useCheckId = (accountId: string) => {
