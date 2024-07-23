@@ -16,7 +16,7 @@ public class ChatListInputPort implements ChatListUseCase {
     private final ChatOutputPort chatOutputPort;
 
     @Override
-    public ChatListDto.Response getChatList(UUID roomID) {
+    public ChatListDto.Response getChattingList(UUID roomID) {
         List<Chat> list = chatOutputPort.getChatList(roomID);
         return new ChatListDto.Response(list.stream().map(Chat::toChatBasicInfo).toList());
     }

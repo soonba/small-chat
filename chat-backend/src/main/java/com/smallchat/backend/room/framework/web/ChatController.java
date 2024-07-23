@@ -19,7 +19,7 @@ public class ChatController {
     @GetMapping("/{roomId}/chats")
     public ResponseEntity<ChatListDto.Response> getChatHistory(@RequestHeader("Authorization") String authorization, @PathVariable String roomId) {
         jwtProvider.parseFromBearer(authorization);
-        ChatListDto.Response chatList = chatListUseCase.getChatList(UUID.fromString(roomId));
+        ChatListDto.Response chatList = chatListUseCase.getChattingList(UUID.fromString(roomId));
         return ResponseEntity.ok(chatList);
     }
 }
