@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios';
-
 import instance from './setup';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
