@@ -3,10 +3,9 @@ package com.smallchat.backend.room.framework.mongodb_adapter;
 import com.smallchat.backend.room.application.outputport.ChatOutputPort;
 import com.smallchat.backend.room.domain.model.vo.Chat;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
@@ -26,21 +25,25 @@ public class ChatOutputAdapter implements ChatOutputPort {
 
     @Override
     public List<Chat> getChatList(UUID roomID) {
-        return chatRepository.findByRoomId(roomID);
+        String string = roomID.toString();
+        MatchOperation condition = Aggregation.match(Criteria.where("roomId").is(string));
+        SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
+        Aggregation aggregation = Aggregation.newAggregation(condition, sort);
+        return mongoTemplate.aggregate(aggregation, "chat", Chat.class).getMappedResults();
     }
 
     @Override
     public List<Chat> getLastChatInfo(List<UUID> roomIdList) {
-        System.out.println("????");
-        System.out.println(roomIdList.get(0));
-//        MatchOperation matchStage = Aggregation.match(Criteria.where("roomId").is("139ee7ba-40b7-40ed-a5d8-3a36a44bdb57"));
-        MatchOperation matchStage = Aggregation.match(Criteria.where("roomId").in(roomIdList));
-        Aggregation aggregation = Aggregation.newAggregation(matchStage);
+        List<String> list = roomIdList.stream().map(UUID::toString).toList();
+        MatchOperation condition = Aggregation.match(Criteria.where("roomId").in(list));
+        SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
+        GroupOperation group = Aggregation.group("roomId")
+                .first("message").as("message")
+                .first("createdAt").as("createdAt")
+                .first("roomId").as("roomId")
+                .first("chatType").as("chatType");
+        Aggregation aggregation = Aggregation.newAggregation(condition, sort, group);
         AggregationResults<Chat> results = mongoTemplate.aggregate(aggregation, "chat", Chat.class);
-        List<Chat> mappedResults = results.getMappedResults();
-        System.out.println("======");
-        System.out.println(mappedResults);
-        System.out.println("======");
-        return mappedResults;
+        return results.getMappedResults();
     }
 }

@@ -29,6 +29,7 @@ public class UserOutputAdapter implements UserOutputPort {
 
     @Override
     public boolean isExistID(String loginId) {
+        //todo 정상 동작안함?
         return userRepository.existsByLoginId(loginId);
     }
 
