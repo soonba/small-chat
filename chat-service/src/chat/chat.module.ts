@@ -1,10 +1,23 @@
 import { Module } from '@nestjs/common';
-import { ChatService } from './domain/chat.service';
+import { EventsGateway } from './web/events.gateway';
+import { ChatKafkaProducer } from './web/chat.kafka.producer';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
-    // MongooseModule.forFeature([{ name: Message.name, schema: MessageSchema }]),
+    ClientsModule.register([
+      {
+        name: 'KAFKA_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            //todo docker-compose 수정
+            brokers: ['localhost:9092'],
+          },
+        },
+      },
+    ]),
   ],
-  providers: [ChatService],
+  providers: [EventsGateway, ChatKafkaProducer],
 })
 export class ChatModule {}
