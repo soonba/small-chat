@@ -29,7 +29,7 @@ public class MessageOutputAdapter implements MessageOutputPort {
         MatchOperation condition = Aggregation.match(Criteria.where("chatId").is(string));
         SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
         Aggregation aggregation = Aggregation.newAggregation(condition, sort);
-        return mongoTemplate.aggregate(aggregation, "chat", Message.class).getMappedResults();
+        return mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
     }
 
     @Override

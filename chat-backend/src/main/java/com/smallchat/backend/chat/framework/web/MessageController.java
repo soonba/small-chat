@@ -1,8 +1,8 @@
 package com.smallchat.backend.chat.framework.web;
 
-import com.smallchat.backend.global.utils.JwtProvider;
 import com.smallchat.backend.chat.application.usecase.MessageListUseCase;
 import com.smallchat.backend.chat.framework.web.dto.MessageListDto;
+import com.smallchat.backend.global.utils.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v2/messages")
+@RequestMapping("/api/v2/chats")
 public class MessageController {
     private final MessageListUseCase messageListUseCase;
     private final JwtProvider jwtProvider;
