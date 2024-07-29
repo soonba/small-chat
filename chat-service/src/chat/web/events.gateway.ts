@@ -9,7 +9,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { Chat } from '../domain/model/chat';
+import { Message } from '../domain/model/message';
 import { EventType } from '../domain/model/event.type';
 import * as console from 'node:console';
 import { ChatKafkaProducer } from './chat.kafka.producer';
@@ -34,25 +34,25 @@ export class EventsGateway
 
   @SubscribeMessage(EventType.SUBSCRIBE)
   async subscribe(
-    @MessageBody('roomIds') roomIds: string[],
+    @MessageBody('chatIds') chatIds: string[],
     @ConnectedSocket() client: Socket,
   ) {
-    await client.join(roomIds);
+    await client.join(chatIds);
   }
 
-  @SubscribeMessage(EventType.CHAT)
-  async send(@MessageBody('chat') chat: Chat) {
-    const { roomId, ...rest } = chat;
-    await this.server.to(roomId).emit(EventType.CHAT, rest);
-    await this.chatKafkaProducer.send(chat);
+  @SubscribeMessage(EventType.MESSAGE)
+  async send(@MessageBody('message') message: Message) {
+    const { chatId, ...rest } = message;
+    await this.server.to(chatId).emit(EventType.MESSAGE, rest);
+    await this.chatKafkaProducer.send(message);
   }
 
   @SubscribeMessage(EventType.UN_SUBSCRIBE)
   async leave(
-    @MessageBody('roomId') roomId: string,
+    @MessageBody('chatId') chatId: string,
     @ConnectedSocket() client: Socket,
   ) {
-    await client.leave(roomId);
+    await client.leave(chatId);
   }
 
   handleConnection(client: any, ...args: any[]): any {

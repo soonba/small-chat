@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
-import { Chat } from '../domain/model/chat';
+import { Message } from '../domain/model/message';
 
 @Injectable()
 export class ChatKafkaProducer implements OnModuleInit {
@@ -15,7 +15,7 @@ export class ChatKafkaProducer implements OnModuleInit {
     await this.kafkaService.connect();
   }
 
-  async send(chat: Chat) {
-    await this.kafkaService.emit(this.TOPIC, chat);
+  async send(message: Message) {
+    await this.kafkaService.emit(this.TOPIC, message);
   }
 }
