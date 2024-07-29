@@ -4,14 +4,14 @@ import { getData } from 'libs/axios';
 import { chatKeys } from 'utils/queryKey';
 
 interface IResponseBody {
-    chatBasicInfoList: {
+    messageBasicInfoList: {
         sender: {
             userId: string;
             nickname: string;
         } | null;
         createdAt: string;
         message: string;
-        chatType: 'SYSTEM' | 'USER';
+        messageType: 'SYSTEM' | 'USER';
     }[];
 }
 
@@ -23,7 +23,7 @@ const useGetChatHistory = (id: string) => {
     const data = useQuery({
         queryKey: chatKeys.detail(id),
         queryFn: () => getChat(id),
-        select: (data) => data.chatBasicInfoList
+        select: (data) => data.messageBasicInfoList
     });
 
     return data;
