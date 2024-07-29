@@ -27,6 +27,7 @@
     "graphql": "^16.8.1",
     "graphql-redis-subscriptions": "^2.6.0",
     "ioredis": "^5.4.1",
+    "kafkajs": "^2.2.4",
     "mongoose": "^8.0.4",
     "redis": "^4.6.15",
     "reflect-metadata": "^0.1.13",

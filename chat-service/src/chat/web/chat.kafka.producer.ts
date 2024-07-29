@@ -16,6 +16,6 @@ export class ChatKafkaProducer implements OnModuleInit {
   }
 
   async send(chat: Chat) {
-    this.kafkaService.emit(this.TOPIC, chat);
+    await this.kafkaService.emit(this.TOPIC, chat);
   }
 }
