@@ -20,10 +20,10 @@ export default function Chat() {
                 )}
                 {data?.map((item) => (
                     <li
-                        key={item.roomId}
+                        key={item.chatId}
                         className="group rounded-lg border border-primary-900 px-4 py-2.5 hover:border-primary-950 hover:bg-primary-50/50 active:border-primary-950 active:bg-primary-100/50 dark:border-primary-100/20 dark:hover:border-primary-100/40 dark:hover:bg-current dark:active:border-primary-100/60 dark:active:bg-current"
                     >
-                        <Link to={`/room/${item.roomId}`}>
+                        <Link to={`/chat/${item.chatId}`}>
                             <div className="flex items-center gap-4">
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary-900 dark:bg-primary-100">
                                     <UserIcon className="h-6 w-6 text-primary-100 dark:text-primary-900" />
@@ -31,7 +31,7 @@ export default function Chat() {
                                 <div className="w-full">
                                     <div className="flex w-full items-center justify-between">
                                         <p className="text-base font-semibold text-primary-900 group-hover:font-bold dark:text-primary-100">
-                                            {item.roomName}
+                                            {item.chatName}
                                         </p>
                                         <time className="text-xs font-light text-primary-950/50 dark:text-primary-50/50">
                                             {getFormatChatTime(item.lastMessageTime)}

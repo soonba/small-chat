@@ -4,9 +4,9 @@ import { getData } from 'libs/axios';
 import { chatKeys } from 'utils/queryKey';
 
 interface IResponseBody {
-    roomBasicInfos: {
-        roomId: string;
-        roomName: string;
+    chatBasicInfos: {
+        chatId: string;
+        chatName: string;
         lastMessage: string;
         lastMessageTime: string;
     }[];
@@ -20,7 +20,7 @@ const useGetChatList = () => {
     const data = useQuery({
         queryKey: chatKeys.lists(),
         queryFn: getChatList,
-        select: (data) => data.roomBasicInfos
+        select: (data) => data.chatBasicInfos
     });
 
     return data;

@@ -24,10 +24,10 @@ type EmojiDataType = {
 // TODO: UI 완료
 export default function Chat() {
     const { id } = useParams();
-    const roomId = id || '';
+    const chatId = id || '';
     const { accountId } = useAccount();
 
-    const { data } = useGetChatHistory(roomId);
+    const { data } = useGetChatHistory(chatId);
 
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -37,8 +37,8 @@ export default function Chat() {
     const [bottom, setBottom] = useState(50);
 
     const handleCopy = () => {
-        if (roomId) {
-            navigator.clipboard.writeText(roomId);
+        if (chatId) {
+            navigator.clipboard.writeText(chatId);
             // eslint-disable-next-line no-alert
             alert('채팅방 코드가 복사되었습니다.');
         }
@@ -127,7 +127,7 @@ export default function Chat() {
                 />
                 {!message ? (
                     <IconButton
-                        aria-label="copy room id"
+                        aria-label="copy chat id"
                         title="코드 공유하기"
                         variant="text"
                         size="small"
