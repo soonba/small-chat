@@ -43,7 +43,7 @@ public class MessageOutputAdapter implements MessageOutputPort {
                 .first("chatId").as("chatId")
                 .first("messageType").as("messageType");
         Aggregation aggregation = Aggregation.newAggregation(condition, sort, group);
-        AggregationResults<Message> results = mongoTemplate.aggregate(aggregation, "chat", Message.class);
+        AggregationResults<Message> results = mongoTemplate.aggregate(aggregation, "message", Message.class);
         return results.getMappedResults();
     }
 }
