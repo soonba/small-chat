@@ -30,7 +30,6 @@ public class ChatController {
                                                         @RequestBody CreateChatDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
         UUID chatId = createChatUseCase.createChat(tokenPayload, request);
-        //todo chatId
         return ResponseEntity.status(201).body(new ApiResponse<>(chatId));
     }
 
