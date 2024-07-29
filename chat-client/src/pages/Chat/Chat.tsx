@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import emojiData from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 
 import { ClipboardIcon, FaceSmileIcon, PaperAirplaneIcon, UserIcon } from '@heroicons/react/20/solid';
 import { IconButton } from 'components';
 
 import useAccount from 'hooks/useAccount';
+import { useGetChatHistory } from 'services/chat';
 import { getFormatChatTime } from 'utils/date';
 import { getStorageItem, LOCAL_STORAGE_KEYS } from 'utils/storage';
-
-import { useGetHistoryByRoomIdQuery, useSendMutation, useSubscribeRoomSubscription } from 'generated/graphql';
 
 type EmojiDataType = {
     id: string;
@@ -25,7 +25,9 @@ type EmojiDataType = {
 export default function Chat() {
     const { id } = useParams();
     const roomId = id || '';
-    const { accountId, nickname } = useAccount();
+    const { accountId } = useAccount();
+
+    const { data } = useGetChatHistory(id || '');
 
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -33,23 +35,6 @@ export default function Chat() {
 
     const [message, setMessage] = useState('');
     const [bottom, setBottom] = useState(50);
-
-    // TODO: REST API
-    const { data } = useGetHistoryByRoomIdQuery({
-        fetchPolicy: 'no-cache',
-        variables: { input: { roomId } }
-    });
-    const messages = useMemo(() => data?.getHistoryByRoomId?.messages || [], [data]);
-
-    // TODO: refactor
-    useSubscribeRoomSubscription({
-        variables: { input: { roomIds: [`chat_${roomId}`] } },
-        onData({ data: { data } }) {
-            if (data) {
-                //  TODO: subscription
-            }
-        }
-    });
 
     const handleCopy = () => {
         if (roomId) {
@@ -59,23 +44,9 @@ export default function Chat() {
         }
     };
 
-    const [sendMutation, { loading }] = useSendMutation({
-        onCompleted() {
-            setMessage('');
-        }
-    });
-
     const handleSubmit = () => {
-        sendMutation({
-            variables: {
-                input: {
-                    roomId,
-                    userId: accountId || '',
-                    message,
-                    nickname: nickname || ''
-                }
-            }
-        });
+        // TODO:
+        setMessage('');
     };
 
     useEffect(() => {
@@ -97,10 +68,18 @@ export default function Chat() {
     return (
         <div className="relative h-full w-full">
             <ul className="space-y-5 p-10">
-                {messages.map((message) => {
-                    const isSender = message.sender.userId === accountId;
-                    return (
-                        <div key={message.messageId} className={`${isSender ? 'ml-auto' : 'mr-auto'} w-max`}>
+                {data?.map((message, index) => {
+                    const isSender = message.sender === null ? false : message.sender.userId === accountId;
+
+                    return message.sender === null ? (
+                        <p
+                            key={index}
+                            className="w-full text-center text-sm font-bold text-primary-950 dark:text-primary-100"
+                        >
+                            {message.message}
+                        </p>
+                    ) : (
+                        <div key={index} className={`${isSender ? 'ml-auto' : 'mr-auto'} w-max`}>
                             <div className={`${isSender ? 'flex-row-reverse' : 'flex-row'} flex items-start gap-x-2.5`}>
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary-900 dark:bg-primary-100">
                                     <UserIcon className="h-6 w-6 text-primary-100 dark:text-primary-900" />
@@ -159,7 +138,7 @@ export default function Chat() {
                     <IconButton
                         aria-label="submit"
                         title="메시지 보내기"
-                        disabled={!message || loading}
+                        disabled={!message}
                         variant="text"
                         size="small"
                         icon={<PaperAirplaneIcon />}
@@ -170,7 +149,7 @@ export default function Chat() {
             {isOpen && (
                 <div style={{ bottom }} className="fixed bottom-0 right-0">
                     <Picker
-                        data={data}
+                        data={emojiData}
                         locale="ko"
                         previewPosition="none"
                         theme={getStorageItem(LOCAL_STORAGE_KEYS.MODE) === 'light' ? 'light' : 'dark'}
