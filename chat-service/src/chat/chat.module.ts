@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { EventsGateway } from './web/events.gateway';
 import { ChatKafkaProducer } from './web/chat.kafka.producer';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ChatController } from './web/chat.controller';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     ]),
   ],
+  controllers: [ChatController],
   providers: [EventsGateway, ChatKafkaProducer],
 })
 export class ChatModule {}
