@@ -7,7 +7,7 @@ interface IRequestBody {
 }
 
 const joinChat = async ({ roomId }: IRequestBody): Promise<void> => {
-    return postData<void, IRequestBody>('/v2/rooms/participants', { roomId }).then((res) => res.data);
+    return postData<void, IRequestBody>('/v2/chats/participants', { roomId }).then((res) => res.data);
 };
 
 interface Props {

@@ -34,7 +34,7 @@ export default function App() {
                             element: <Register />
                         },
                         {
-                            path: 'room/:id',
+                            path: 'chat/:id',
                             element: (
                                 <ProtectedRoute>
                                     <Chat />
