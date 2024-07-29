@@ -3,7 +3,6 @@
     "version": "2.0.0",
     "private": true,
     "dependencies": {
-        "@apollo/client": "^3.8.9",
         "@emoji-mart/data": "^1.2.1",
         "@emoji-mart/react": "^1.1.1",
         "@heroicons/react": "^2.1.1",
@@ -12,8 +11,6 @@
         "axios": "^1.6.8",
         "dayjs": "^1.11.10",
         "emoji-mart": "^5.6.0",
-        "graphql": "^16.8.1",
-        "graphql-ws": "^5.14.3",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-redux": "^9.1.2",
@@ -52,9 +49,6 @@
     },
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-        "@graphql-codegen/cli": "^5.0.0",
-        "@graphql-codegen/typescript-operations": "^4.0.1",
-        "@graphql-codegen/typescript-react-apollo": "^3.3.7",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
