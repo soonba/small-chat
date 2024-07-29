@@ -1,6 +1,8 @@
 export const chatKeys = {
     all: ['chats'] as const,
-    lists: () => [...chatKeys.all, 'list'] as const
+    lists: () => [...chatKeys.all, 'list'] as const,
+    details: () => [...chatKeys.all, 'detail'] as const,
+    detail: (id: string) => [...chatKeys.details(), id] as const
 };
 
 export const usersKeys = {
@@ -8,7 +10,7 @@ export const usersKeys = {
     lists: () => [...usersKeys.all, 'list'] as const,
     list: (filters: string) => [...usersKeys.lists(), { filters }] as const,
     details: () => [...usersKeys.all, 'detail'] as const,
-    detail: (id: number) => [...usersKeys.details(), id] as const,
+    detail: (id: string) => [...usersKeys.details(), id] as const,
     my: () => [...usersKeys.all, 'my'] as const
 };
 
