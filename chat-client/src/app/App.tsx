@@ -5,6 +5,7 @@ import Chat from 'pages/Chat';
 import ChatList from 'pages/ChatList';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
+import Test from 'pages/Test';
 
 import ProtectedRoute from './ProtectedRoute';
 
@@ -37,6 +38,14 @@ export default function App() {
                             element: (
                                 <ProtectedRoute>
                                     <Chat />
+                                </ProtectedRoute>
+                            )
+                        },
+                        {
+                            path: 'test',
+                            element: (
+                                <ProtectedRoute>
+                                    <Test />
                                 </ProtectedRoute>
                             )
                         }
