@@ -27,7 +27,7 @@ export default function Chat() {
     const roomId = id || '';
     const { accountId } = useAccount();
 
-    const { data } = useGetChatHistory(id || '');
+    const { data } = useGetChatHistory(roomId);
 
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
