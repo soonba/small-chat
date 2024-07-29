@@ -13,7 +13,7 @@ interface IResponseBody {
 }
 
 const getChatList = async (): Promise<IResponseBody> => {
-    return getData<IResponseBody, void>(`/v2/rooms`).then((res) => res.data);
+    return getData<IResponseBody, void>(`/v2/chats`).then((res) => res.data);
 };
 
 const useGetChatList = () => {

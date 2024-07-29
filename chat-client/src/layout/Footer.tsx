@@ -12,7 +12,7 @@ export default function Footer() {
 
     const createRoomMutation = useCreateChat({
         onSuccess(roomId) {
-            navigate(`/room/${roomId}`);
+            navigate(`/chat/${roomId}`);
         }
     });
 
