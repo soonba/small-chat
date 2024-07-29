@@ -16,7 +16,7 @@ interface IResponseBody {
 }
 
 const getChat = async (id: string): Promise<IResponseBody> => {
-    return getData<IResponseBody, void>(`/v2/rooms/${id}/chats`).then((res) => res.data);
+    return getData<IResponseBody, void>(`/v2/chats/${id}/messages`).then((res) => res.data);
 };
 
 const useGetChatHistory = (id: string) => {
