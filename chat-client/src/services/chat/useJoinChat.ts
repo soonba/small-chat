@@ -3,15 +3,15 @@ import { useMutation } from '@tanstack/react-query';
 import { postData } from 'libs/axios';
 
 interface IRequestBody {
-    roomId: string;
+    chatId: string;
 }
 
-const joinChat = async ({ roomId }: IRequestBody): Promise<void> => {
-    return postData<void, IRequestBody>('/v2/chats/participants', { roomId }).then((res) => res.data);
+const joinChat = async ({ chatId }: IRequestBody): Promise<void> => {
+    return postData<void, IRequestBody>('/v2/chats/participants', { chatId }).then((res) => res.data);
 };
 
 interface Props {
-    onSuccess?: (roomId: IRequestBody) => void;
+    onSuccess?: (chatId: IRequestBody) => void;
     onError?: (error: Error) => void;
 }
 const useJoinChat = ({ onSuccess, onError }: Props) => {

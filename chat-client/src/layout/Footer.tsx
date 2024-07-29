@@ -10,29 +10,29 @@ export default function Footer() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    const createRoomMutation = useCreateChat({
-        onSuccess(roomId) {
-            navigate(`/chat/${roomId}`);
+    const createChatMutation = useCreateChat({
+        onSuccess(chatId) {
+            navigate(`/chat/${chatId}`);
         }
     });
 
     const createModal = useModal({
         onSubmit(data) {
-            const roomName = data as string;
-            createRoomMutation.mutate({ roomName });
+            const chatName = data as string;
+            createChatMutation.mutate({ chatName });
         }
     });
 
     const joinChatMutation = useJoinChat({
-        onSuccess(roomId) {
-            navigate(`/chat/${roomId}`);
+        onSuccess(chatId) {
+            navigate(`/chat/${chatId}`);
         }
     });
 
     const joinModal = useModal({
         onSubmit(data) {
-            const roomId = data as string;
-            joinChatMutation.mutate({ roomId });
+            const chatId = data as string;
+            joinChatMutation.mutate({ chatId });
         }
     });
 
@@ -68,7 +68,7 @@ export default function Footer() {
                                     type="button"
                                     variant="contained"
                                     size="large"
-                                    aria-label="create room"
+                                    aria-label="create chat"
                                     title="채팅 생성하기"
                                     onClick={handleCreate}
                                     icon={<PlusIcon />}
