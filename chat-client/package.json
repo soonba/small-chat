@@ -26,8 +26,7 @@
         "eject": "react-scripts eject",
         "prettier": "prettier --write --config ./.prettierrc \"**/*.{ts,tsx}\"",
         "lint": "eslint \"**/*.{ts,tsx}\"",
-        "lint:fix": "eslint --fix \"**/*.{ts,tsx}\"",
-        "gen-dev": "graphql-codegen -r --config codegen.yml"
+        "lint:fix": "eslint --fix \"**/*.{ts,tsx}\""
     },
     "eslintConfig": {
         "extends": [
