@@ -1,7 +1,7 @@
 package com.smallchat.backend.room.framework.mongodb_adapter;
 
-import com.smallchat.backend.room.application.outputport.ChatOutputPort;
-import com.smallchat.backend.room.domain.model.vo.Chat;
+import com.smallchat.backend.room.application.outputport.MessageOutputPort;
+import com.smallchat.backend.room.domain.model.vo.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -14,26 +14,26 @@ import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class ChatOutputAdapter implements ChatOutputPort {
-    private final ChatRepository chatRepository;
+public class MessageOutputAdapter implements MessageOutputPort {
+    private final MessageRepository messageRepository;
     private final MongoTemplate mongoTemplate;
 
     @Override
-    public void save(Chat chat) {
-        chatRepository.save(chat);
+    public void save(Message chat) {
+        messageRepository.save(chat);
     }
 
     @Override
-    public List<Chat> getChatList(UUID roomID) {
+    public List<Message> getMessageList(UUID roomID) {
         String string = roomID.toString();
         MatchOperation condition = Aggregation.match(Criteria.where("roomId").is(string));
         SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
         Aggregation aggregation = Aggregation.newAggregation(condition, sort);
-        return mongoTemplate.aggregate(aggregation, "chat", Chat.class).getMappedResults();
+        return mongoTemplate.aggregate(aggregation, "chat", Message.class).getMappedResults();
     }
 
     @Override
-    public List<Chat> getLastChatInfo(List<UUID> roomIdList) {
+    public List<Message> getLastMessageInfo(List<UUID> roomIdList) {
         List<String> list = roomIdList.stream().map(UUID::toString).toList();
         MatchOperation condition = Aggregation.match(Criteria.where("roomId").in(list));
         SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
@@ -41,9 +41,9 @@ public class ChatOutputAdapter implements ChatOutputPort {
                 .first("message").as("message")
                 .first("createdAt").as("createdAt")
                 .first("roomId").as("roomId")
-                .first("chatType").as("chatType");
+                .first("messageType").as("messageType");
         Aggregation aggregation = Aggregation.newAggregation(condition, sort, group);
-        AggregationResults<Chat> results = mongoTemplate.aggregate(aggregation, "chat", Chat.class);
+        AggregationResults<Message> results = mongoTemplate.aggregate(aggregation, "chat", Message.class);
         return results.getMappedResults();
     }
 }

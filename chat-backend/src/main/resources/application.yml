@@ -25,14 +25,14 @@ auth:
 producers:
   bootstrap-servers: localhost:9092
   topic1:
-    name: create_room
+    name: create_chat
   topic2:
-    name: publish_chat
+    name: publish_message
 
 consumer:
   topic1:
-    name: create_room
+    name: create_chat
   topic2:
-    name: publish_chat
+    name: publish_message
   groupid:
-    name: room
+    name: chat

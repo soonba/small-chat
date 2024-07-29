@@ -9,7 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class ChatPublished {
+public class MessagePublished {
     private UUID roomId;
     private UUID userId;
     private String nickname;
