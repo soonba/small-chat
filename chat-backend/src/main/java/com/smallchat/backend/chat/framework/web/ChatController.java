@@ -26,19 +26,20 @@ public class ChatController {
     private final JwtProvider jwtProvider;
 
     @PostMapping()
-    public ResponseEntity<ApiResponse<UUID>> createChat(@RequestHeader("Authorization") String authorization,
-                                                        @RequestBody CreateChatDto.Request request) {
+    public ResponseEntity<ApiResponse<CreateChatDto.Response>> createChat(@RequestHeader("Authorization") String authorization,
+                                                                          @RequestBody CreateChatDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
         UUID chatId = createChatUseCase.createChat(tokenPayload, request);
-        return ResponseEntity.status(201).body(new ApiResponse<>(chatId));
+        return ResponseEntity.status(201).body(new ApiResponse<>(new CreateChatDto.Response(chatId)));
     }
 
     @PostMapping("/participants")
-    public ResponseEntity<ApiResponse<String>> joinChat(@RequestHeader("Authorization") String authorization,
-                                                        @RequestBody JoinChatDto.Request request) {
+    public ResponseEntity<ApiResponse<JoinChatDto.Response>> joinChat(@RequestHeader("Authorization") String authorization,
+                                                                      @RequestBody JoinChatDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
-        joinChatUseCase.join(tokenPayload.userId(), UUID.fromString(request.chatId()));
-        return ResponseEntity.ok(new ApiResponse<>("joined"));
+        UUID chatId = UUID.fromString(request.chatId());
+        joinChatUseCase.join(tokenPayload.userId(), chatId);
+        return ResponseEntity.ok(new ApiResponse<>(new JoinChatDto.Response(chatId)));
     }
 
     @GetMapping()
