@@ -4,7 +4,7 @@ import com.smallchat.backend.room.application.outputport.RoomOutputPort;
 import com.smallchat.backend.room.application.usecase.LastChatMessageUseCase;
 import com.smallchat.backend.room.application.usecase.ParticipatingRoomsUseCase;
 import com.smallchat.backend.room.domain.model.Room;
-import com.smallchat.backend.room.domain.model.vo.Chat;
+import com.smallchat.backend.room.domain.model.vo.Message;
 import com.smallchat.backend.room.framework.web.dto.RoomBasicInfoListDto;
 import com.smallchat.backend.user.application.usecase.UserRoomListUseCase;
 import com.smallchat.backend.user.domain.model.ParticipatingRoom;
@@ -30,7 +30,7 @@ public class ParticipatingRoomsInputPort implements ParticipatingRoomsUseCase {
         List<UUID> userJoinedRoomIdList = userJoinedRooms.stream().map(ParticipatingRoom::getRoomId).toList();
 
         List<Room> roomList = roomOutputPort.findRoomBasicByIds(userJoinedRoomIdList);
-        List<Chat> lastMessageList = lastChatMessageUseCase.getLastMessageListByRoomIdList(userJoinedRoomIdList);
+        List<Message> lastMessageList = lastChatMessageUseCase.getLastMessageList(userJoinedRoomIdList);
 
         return new RoomBasicInfoListDto.Response(roomList.stream().map(el -> el.toRoomBasicInfo(lastMessageList)).toList());
     }

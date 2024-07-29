@@ -1,7 +1,7 @@
 package com.smallchat.backend.room.domain.model;
 
 import com.smallchat.backend.global.framework.jpa.BaseTime;
-import com.smallchat.backend.room.domain.model.vo.Chat;
+import com.smallchat.backend.room.domain.model.vo.Message;
 import com.smallchat.backend.room.domain.model.vo.Participant;
 import com.smallchat.backend.room.framework.web.dto.RoomBasicInfo;
 import jakarta.persistence.*;
@@ -45,8 +45,8 @@ public class Room extends BaseTime {
         return this;
     }
 
-    public RoomBasicInfo toRoomBasicInfo(List<Chat> chatList) {
-        Chat chat = chatList.stream().filter(el -> el.getRoomId().equals(this.roomId.toString())).findFirst().orElseThrow(() -> new RuntimeException("찾을 수 없는 방"));
+    public RoomBasicInfo toRoomBasicInfo(List<Message> chatList) {
+        Message chat = chatList.stream().filter(el -> el.getRoomId().equals(this.roomId.toString())).findFirst().orElseThrow(() -> new RuntimeException("찾을 수 없는 방"));
         return new RoomBasicInfo(getRoomId(), getName(), chat.getMessage(), chat.getCreatedAt());
     }
 }

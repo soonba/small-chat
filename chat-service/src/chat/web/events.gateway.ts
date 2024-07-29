@@ -16,6 +16,7 @@ import { ChatKafkaProducer } from './chat.kafka.producer';
 
 @WebSocketGateway({
   cors: {
+    //todo: fix
     origin: '*',
   },
 })
