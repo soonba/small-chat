@@ -5,5 +5,5 @@ import com.smallchat.backend.chat.domain.model.vo.Sender;
 
 import java.time.LocalDateTime;
 
-public record MessageBasicInfo(Sender sender, LocalDateTime createdAt, String message, MessageType chatType) {
+public record MessageBasicInfo(Sender sender, LocalDateTime createdAt, String message, MessageType messageType) {
 }
