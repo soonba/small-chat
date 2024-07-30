@@ -31,10 +31,6 @@ export default function Chat() {
     const { data } = useGetChatHistory(chatId);
     const { onMessageSend, onMessageReceive } = useSocket();
 
-    useEffect(() => {
-        onMessageReceive();
-    }, [onMessageReceive]);
-
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -54,6 +50,10 @@ export default function Chat() {
         onMessageSend({ messageBody: { chatId, userId: accountId || '', nickname: nickname || '', message } });
         setMessage('');
     };
+
+    useEffect(() => {
+        onMessageReceive();
+    }, [message]);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
