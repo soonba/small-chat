@@ -31,7 +31,7 @@ const useGetMyInfo = () => {
         if (data?.data) {
             onSetAccount({ accountId: data.data.userId });
         }
-    }, [data, onSetAccount]);
+    }, [data?.data]);
 
     return data;
 };

@@ -53,7 +53,7 @@ export default function Chat() {
 
     useEffect(() => {
         onMessageReceive();
-    }, [onMessageReceive]);
+    }, []);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
