@@ -3,15 +3,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ChatBubbleOvalLeftIcon, EnvelopeIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { CreateChatModal, IconButton, JoinChatModal } from 'components';
 
+import { useSocket } from 'hooks';
 import useModal from 'hooks/useModal';
 import { useCreateChat, useJoinChat } from 'services/chat';
 
 export default function Footer() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const { onRoomJoin } = useSocket();
 
     const createChatMutation = useCreateChat({
         onSuccess(chatId) {
+            onRoomJoin(chatId);
             navigate(`/chat/${chatId}`);
         }
     });
@@ -25,6 +28,7 @@ export default function Footer() {
 
     const joinChatMutation = useJoinChat({
         onSuccess(chatId) {
+            onRoomJoin(chatId);
             navigate(`/chat/${chatId}`);
         }
     });
