@@ -15,6 +15,10 @@ type MessageType = {
     message: string;
 };
 
+type MessageBodyType = {
+    messageBody: MessageType;
+};
+
 const useSocket = () => {
     const [isConnected, setIsConnected] = useState(false);
     const [message, setMessage] = useState<Omit<MessageType, 'chatId'> | null>(null);
@@ -38,7 +42,7 @@ const useSocket = () => {
         };
     }, []);
 
-    const onMessageSend = useCallback((message: MessageType) => {
+    const onMessageSend = useCallback((message: MessageBodyType) => {
         // 이벤트 보낼 때는 emit 사용
         socket.emit(EventType.MESSAGE, message);
     }, []);
