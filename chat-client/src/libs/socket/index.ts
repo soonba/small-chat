@@ -1,6 +1,12 @@
 import { io } from 'socket.io-client';
 
-// ref : https://socket.io/how-to/use-with-react
-const URL = 'http://localhost:3010';
+import appConfig from 'config';
 
-export const socket = io(URL);
+// ref : https://socket.io/how-to/use-with-react
+const URL = appConfig.socketApiUrl;
+
+export const socket = io(`${URL}`, {
+    reconnection: false,
+    path: '/socket.io/',
+    transports: ['websocket']
+});
