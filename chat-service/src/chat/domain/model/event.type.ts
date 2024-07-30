@@ -1,4 +1,4 @@
-//이 파일 이름변경?
+//todo 이 파일 이름변경?
 export enum EventType {
   SUBSCRIBE = 'subscribe',
   UN_SUBSCRIBE = 'unSubscribe',

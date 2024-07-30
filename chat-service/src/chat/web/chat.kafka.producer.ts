@@ -4,7 +4,7 @@ import { Message } from '../domain/model/message';
 
 @Injectable()
 export class ChatKafkaProducer implements OnModuleInit {
-  private readonly TOPIC = 'publish_chat';
+  private readonly TOPIC = 'publish_message';
 
   constructor(
     @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
