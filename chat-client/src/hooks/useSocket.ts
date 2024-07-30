@@ -57,7 +57,7 @@ const useSocket = () => {
     }, [socket]);
 
     const onRoomJoin = useCallback((chatId: string) => {
-        socket.emit('join', chatId);
+        socket.emit(EventType.SUBSCRIBE, { chatIds: [chatId] });
     }, []);
 
     return { isConnected, message, onRoomJoin, onMessageSend, onMessageReceive };
