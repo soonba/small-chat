@@ -65,7 +65,7 @@
                         "position": "before"
                     },
                     {
-                        "pattern": "{@tanstack*,@tanstack/**,@apollo*,@apollo/**,graphql-ws,}",
+                        "pattern": "{@tanstack*,@tanstack/**}",
                         "group": "internal",
                         "position": "before"
                     },
