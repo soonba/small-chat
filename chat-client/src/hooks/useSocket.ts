@@ -54,9 +54,13 @@ const useSocket = () => {
             setMessage(message);
             console.log('==================on message receive==================');
         });
+    }, [socket]);
+
+    const onRoomJoin = useCallback((chatId: string) => {
+        socket.emit('join', chatId);
     }, []);
 
-    return { isConnected, message, onMessageSend, onMessageReceive };
+    return { isConnected, message, onRoomJoin, onMessageSend, onMessageReceive };
 };
 
 export default useSocket;
