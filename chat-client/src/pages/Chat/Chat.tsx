@@ -47,7 +47,7 @@ export default function Chat() {
     };
 
     const handleSubmit = () => {
-        onMessageSend({ chatId, userId: accountId || '', nickname: nickname || '', message });
+        onMessageSend({ messageBody: { chatId, userId: accountId || '', nickname: nickname || '', message } });
         setMessage('');
     };
 
