@@ -11,15 +11,15 @@ const joinChat = async ({ chatId }: IRequestBody): Promise<void> => {
 };
 
 interface Props {
-    onSuccess?: (chatId: IRequestBody) => void;
+    onSuccess?: (chatId: string) => void;
     onError?: (error: Error) => void;
 }
 const useJoinChat = ({ onSuccess, onError }: Props) => {
     const joinChatMutation = useMutation({
         mutationFn: joinChat,
-        onSuccess: (_, variables) => {
+        onSuccess: (_, { chatId }) => {
             if (onSuccess) {
-                onSuccess(variables);
+                onSuccess(chatId);
             }
         },
         onError: (error) => {
