@@ -29,7 +29,7 @@ const useGetMyInfo = () => {
 
     useEffect(() => {
         if (data?.data) {
-            onSetAccount({ accountId: data.data.userId });
+            onSetAccount({ nickname: data.data.nickname, accountId: data.data.userId });
         }
     }, [data?.data]);
 
