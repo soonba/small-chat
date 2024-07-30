@@ -7,6 +7,7 @@ import Picker from '@emoji-mart/react';
 import { ClipboardIcon, FaceSmileIcon, PaperAirplaneIcon, UserIcon } from '@heroicons/react/20/solid';
 import { IconButton } from 'components';
 
+import { useSocket } from 'hooks';
 import useAccount from 'hooks/useAccount';
 import { useGetChatHistory } from 'services/chat';
 import { getFormatChatTime } from 'utils/date';
@@ -25,9 +26,10 @@ type EmojiDataType = {
 export default function Chat() {
     const { id } = useParams();
     const chatId = id || '';
-    const { accountId } = useAccount();
+    const { accountId, nickname } = useAccount();
 
     const { data } = useGetChatHistory(chatId);
+    const { onMessageSend } = useSocket();
 
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -45,8 +47,10 @@ export default function Chat() {
     };
 
     const handleSubmit = () => {
-        // TODO:
-        setMessage('');
+        if (accountId && nickname) {
+            onMessageSend({ chatId, userId: accountId, nickname, message });
+            setMessage('');
+        }
     };
 
     useEffect(() => {
