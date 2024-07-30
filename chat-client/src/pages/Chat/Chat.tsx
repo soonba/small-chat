@@ -29,7 +29,11 @@ export default function Chat() {
     const { accountId, nickname } = useAccount();
 
     const { data } = useGetChatHistory(chatId);
-    const { onMessageSend } = useSocket();
+    const { onMessageSend, onMessageReceive } = useSocket();
+
+    useEffect(() => {
+        onMessageReceive();
+    }, [onMessageReceive]);
 
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
