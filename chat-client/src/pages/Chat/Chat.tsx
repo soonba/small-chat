@@ -47,10 +47,8 @@ export default function Chat() {
     };
 
     const handleSubmit = () => {
-        if (accountId && nickname) {
-            onMessageSend({ chatId, userId: accountId, nickname, message });
-            setMessage('');
-        }
+        onMessageSend({ chatId, userId: accountId || '', nickname: nickname || '', message });
+        setMessage('');
     };
 
     useEffect(() => {
