@@ -1,13 +1,12 @@
-import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import BaseLayout from 'layout/BaseLayout';
-
-import AddRoom from 'pages/AddRoom';
+import BaseLayout from 'layout';
 import Chat from 'pages/Chat';
-import JoinRoom from 'pages/JoinRoom/JoinRoom';
+import ChatList from 'pages/ChatList';
 import Login from 'pages/Login';
-import Signup from 'pages/Signup';
+import Register from 'pages/Register';
+
+import ProtectedRoute from './ProtectedRoute';
 
 export default function App() {
     return (
@@ -15,29 +14,33 @@ export default function App() {
             router={createBrowserRouter([
                 {
                     path: '/',
-                    element: <Login />
-                },
-                {
-                    path: '/chat',
                     element: <BaseLayout />,
                     children: [
                         {
-                            path: '',
-                            element: <Chat />
+                            index: true,
+                            element: (
+                                <ProtectedRoute>
+                                    <ChatList />
+                                </ProtectedRoute>
+                            )
+                        },
+                        {
+                            path: 'login',
+                            element: <Login />
+                        },
+                        {
+                            path: 'register',
+                            element: <Register />
+                        },
+                        {
+                            path: 'chat/:id',
+                            element: (
+                                <ProtectedRoute>
+                                    <Chat />
+                                </ProtectedRoute>
+                            )
                         }
                     ]
-                },
-                {
-                    path: '/add',
-                    element: <AddRoom />
-                },
-                {
-                    path: '/join',
-                    element: <JoinRoom />
-                },
-                {
-                    path: '/signup',
-                    element: <Signup />
                 }
             ])}
         />

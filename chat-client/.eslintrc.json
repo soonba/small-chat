@@ -33,9 +33,17 @@
     },
     "rules": {
         "prettier/prettier": "off",
+        "no-shadow": "off",
+        "no-param-reassign": "off",
         "import/extensions": "off",
         "react/no-array-index-key": "off",
         "import/prefer-default-export": "off",
+        "react/require-default-props": "off",
+        "react/jsx-props-no-spreading": "off",
+        "no-nested-ternary": "off",
+        "react/jsx-no-useless-fragment": "off",
+        "import/no-extraneous-dependencies": "off",
+        "react-hooks/exhaustive-deps": "off",
         "react/jsx-filename-extension": [
             "warn",
             {
@@ -53,13 +61,18 @@
                         "position": "before"
                     },
                     {
-                        "pattern": "{components*,components/**,layout/**,styles/**,@heroicons/**}",
-                        "group": "external",
+                        "pattern": "{assets/**,components*,components/**,layout/**,styles/**,@heroicons/**}",
+                        "group": "internal",
                         "position": "before"
                     },
                     {
-                        "pattern": "{utils*,utils/**,constants*,constants/**}",
-                        "group": "external",
+                        "pattern": "{@tanstack*,@tanstack/**}",
+                        "group": "internal",
+                        "position": "before"
+                    },
+                    {
+                        "pattern": "{libs*,libs/**,hooks*,hooks/**,services*,services/**,utils*,utils/**,constants*,constants/**}",
+                        "group": "internal",
                         "position": "before"
                     },
                     {

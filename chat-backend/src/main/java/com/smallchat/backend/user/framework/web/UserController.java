@@ -4,7 +4,6 @@ package com.smallchat.backend.user.framework.web;
 import com.smallchat.backend.global.framework.web.dto.ApiResponse;
 import com.smallchat.backend.global.utils.JwtProvider;
 import com.smallchat.backend.global.utils.TokenPayload;
-import com.smallchat.backend.room.application.usecase.ParticipatingRoomsUseCase;
 import com.smallchat.backend.user.application.usecase.AuthUseCase;
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase;
 import com.smallchat.backend.user.application.usecase.TokenUseCase;
@@ -22,7 +21,6 @@ public class UserController {
     private final TokenUseCase tokenUseCase;
     private final AuthUseCase authUseCase;
     private final ValidateUserUseCase validateUserUseCase;
-    private final ParticipatingRoomsUseCase participatingRoomsUseCase;
     private final JwtProvider jwtProvider;
 
     @PostMapping()
