@@ -16,8 +16,8 @@ public class MessageListInputPort implements MessageListUseCase {
     private final MessageOutputPort messageOutputPort;
 
     @Override
-    public MessageListDto.Response getMessageList(UUID chatID) {
-        List<Message> list = messageOutputPort.getMessageList(chatID);
+    public MessageListDto.Response getMessageList(UUID chatID, Long page) {
+        List<Message> list = messageOutputPort.getMessageList(chatID, page);
         return new MessageListDto.Response(list.stream().map(Message::toMessageBasicInfo).toList());
     }
 }

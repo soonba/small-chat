@@ -24,11 +24,13 @@ public class MessageOutputAdapter implements MessageOutputPort {
     }
 
     @Override
-    public List<Message> getMessageList(UUID chatID) {
+    public List<Message> getMessageList(UUID chatID, Long page) {
         String string = chatID.toString();
         MatchOperation condition = Aggregation.match(Criteria.where("chatId").is(string));
-        SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
-        Aggregation aggregation = Aggregation.newAggregation(condition, sort);
+        SortOperation sort = Aggregation.sort(Sort.Direction.ASC, "createdAt");
+        SkipOperation skip = Aggregation.skip(page);
+        LimitOperation limit = Aggregation.limit(10);
+        Aggregation aggregation = Aggregation.newAggregation(condition, sort, skip, limit);
         return mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
     }
 
