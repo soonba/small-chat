@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,9 +23,8 @@ public class MessageOutputAdapter implements MessageOutputPort {
     }
 
     @Override
-    public List<Message> getMessageList(UUID chatID, Long page) {
-        String string = chatID.toString();
-        MatchOperation condition = Aggregation.match(Criteria.where("chatId").is(string));
+    public List<Message> getMessageList(String chatID, Long page) {
+        MatchOperation condition = Aggregation.match(Criteria.where("chatId").is(chatID));
         SortOperation sort = Aggregation.sort(Sort.Direction.ASC, "createdAt");
         SkipOperation skip = Aggregation.skip(page);
         LimitOperation limit = Aggregation.limit(10);
@@ -35,9 +33,8 @@ public class MessageOutputAdapter implements MessageOutputPort {
     }
 
     @Override
-    public List<Message> getLastMessageInfo(List<UUID> chatIdList) {
-        List<String> list = chatIdList.stream().map(UUID::toString).toList();
-        MatchOperation condition = Aggregation.match(Criteria.where("chatId").in(list));
+    public List<Message> getLastMessageInfo(List<String> chatIdList) {
+        MatchOperation condition = Aggregation.match(Criteria.where("chatId").in(chatIdList));
         SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
         GroupOperation group = Aggregation.group("chatId")
                 .first("message").as("message")

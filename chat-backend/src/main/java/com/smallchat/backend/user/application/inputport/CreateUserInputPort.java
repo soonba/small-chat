@@ -25,7 +25,7 @@ public class CreateUserInputPort implements CreateUserUseCase {
         Password password = new Password(request.password(), request.password());
         String nickname = request.nickname();
 
-        User savedUser = userOutputPort.createUser(User.createUser(nickname, id, password));
+        User savedUser = userOutputPort.createUser(User.of(nickname, id, password));
 
         Tokens tokens = jwtProvider.createTokens(savedUser.getUserId(), savedUser.getNickname());
         userOutputPort.saveRefreshToken(savedUser.getUserId(), tokens.refreshToken());

@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ public class ParticipatingChatOutputAdapter implements ParticipatingChatOutputPo
     private final ParticipatingChatRepository participatingChatRepository;
 
     @Override
-    public void joinChat(User user, UUID chatId) {
+    public void joinChat(User user, String chatId) {
         participatingChatRepository.save(new ParticipatingChat(user, chatId));
     }
 

@@ -6,8 +6,6 @@ import com.smallchat.backend.user.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
 @RequiredArgsConstructor
 public class UserOutputAdapter implements UserOutputPort {
@@ -16,13 +14,13 @@ public class UserOutputAdapter implements UserOutputPort {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
-    public void validateRefreshToken(UUID id, String rt) {
+    public void validateRefreshToken(String id, String rt) {
         RefreshToken refreshToken = refreshTokenRepository.findById(id).orElseThrow(RuntimeException::new);
         refreshToken.verifying(rt);
     }
 
     @Override
-    public void saveRefreshToken(UUID id, String rt) {
+    public void saveRefreshToken(String id, String rt) {
         RefreshToken refreshToken = new RefreshToken(id, rt);
         refreshTokenRepository.save(refreshToken);
     }
@@ -34,7 +32,7 @@ public class UserOutputAdapter implements UserOutputPort {
     }
 
     @Override
-    public User loadUser(UUID userId) {
+    public User loadUser(String userId) {
         return userRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 

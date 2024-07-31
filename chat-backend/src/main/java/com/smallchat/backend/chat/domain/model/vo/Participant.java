@@ -5,16 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
 public class Participant {
-    private UUID userId;
+    private String userId;
 
 
-    public static Participant of(UUID userId) {
+    public static Participant of(String userId) {
         return new Participant(userId);
     }
 

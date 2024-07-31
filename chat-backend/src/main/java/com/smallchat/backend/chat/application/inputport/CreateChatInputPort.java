@@ -13,8 +13,6 @@ import com.smallchat.backend.global.utils.TokenPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class CreateChatInputPort implements CreateChatUseCase {
@@ -24,9 +22,9 @@ public class CreateChatInputPort implements CreateChatUseCase {
     private final MessageOutputPort messageOutputPort;
 
     @Override
-    public UUID createChat(TokenPayload tokenPayload, CreateChatDto.Request request) {
+    public String createChat(TokenPayload tokenPayload, CreateChatDto.Request request) {
         Chat chat = Chat.createChat(tokenPayload.userId(), request.chatName());
-        UUID chatId = chatOutputPort.save(chat).getChatId();
+        String chatId = chatOutputPort.save(chat).getChatId();
         messageOutputPort.save(Message.systemMessage(SystemMessage.CHAT_CREATED, chat.getName(), chatId));
         try {
             eventOutputPort.occurJoinChatEvent(new ChatJoined(tokenPayload.userId(), chatId));

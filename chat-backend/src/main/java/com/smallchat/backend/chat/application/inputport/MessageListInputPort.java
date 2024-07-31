@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ public class MessageListInputPort implements MessageListUseCase {
     private final MessageOutputPort messageOutputPort;
 
     @Override
-    public MessageListDto.Response getMessageList(UUID chatID, Long page) {
+    public MessageListDto.Response getMessageList(String chatID, Long page) {
         List<Message> list = messageOutputPort.getMessageList(chatID, page);
         return new MessageListDto.Response(list.stream().map(Message::toMessageBasicInfo).toList());
     }
