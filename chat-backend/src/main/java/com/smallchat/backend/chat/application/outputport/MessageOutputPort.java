@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface MessageOutputPort {
     void save(Message chat);
 
-    List<Message> getMessageList(UUID chatID);
+    List<Message> getMessageList(UUID chatID, Long page);
 
     List<Message> getLastMessageInfo(List<UUID> chatIdList);
 

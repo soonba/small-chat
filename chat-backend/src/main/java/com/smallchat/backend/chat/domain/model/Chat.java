@@ -45,10 +45,13 @@ public class Chat extends BaseTime {
         return this;
     }
 
+    public Chat removeParticipant(UUID userId) {
+        participants.removeParticipant(Participant.of(userId));
+        return this;
+    }
+
     public ChatBasicInfo toChatBasicInfo(List<Message> chatList) {
         Message chat = chatList.stream().filter(el -> el.getChatId().equals(this.chatId.toString())).findFirst().orElseThrow(() -> new RuntimeException("찾을 수 없는 챗"));
         return new ChatBasicInfo(getChatId(), getName(), chat.getMessage(), chat.getCreatedAt());
     }
 }
-
-

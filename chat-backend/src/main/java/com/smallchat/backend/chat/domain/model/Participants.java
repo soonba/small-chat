@@ -27,7 +27,7 @@ public class Participants {
         return this;
     }
 
-    public Participants leaveParticipant(Participant participant) {
+    public Participants removeParticipant(Participant participant) {
         participants.remove(participant);
         return this;
     }
