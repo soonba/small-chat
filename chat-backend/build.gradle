@@ -35,6 +35,10 @@ dependencies {
 
     // kafka
     implementation 'org.springframework.kafka:spring-kafka'
+
+    // Spring Data MongoDB
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
 }
 
 tasks.named('test') {

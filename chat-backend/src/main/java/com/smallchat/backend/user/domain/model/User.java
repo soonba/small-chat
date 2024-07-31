@@ -27,23 +27,13 @@ public class User extends BaseTime {
     @Embedded
     private Password password;
 
-    @Embedded
-    private ParticipatingRooms participatingRooms;
-
     public User(String nickname, String loginId, Password password) {
         this.nickname = nickname;
         this.loginId = loginId;
         this.password = password;
-        this.participatingRooms = ParticipatingRooms.init();
     }
 
     public static User createUser(String nickname, String loginId, Password password) {
         return new User(nickname, loginId, password);
-    }
-
-
-    public User joinParticipatingRoom(UUID participatingRoom) {
-        participatingRooms.joinRoom(participatingRoom);
-        return this;
     }
 }

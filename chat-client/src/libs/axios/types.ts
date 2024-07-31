@@ -1,23 +1,7 @@
-export interface IResponseBodyWithoutDataProperty {
-    statusCode: number;
-    message: string;
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-export interface IResponseBody<T> {
+export interface IResponseData<T = Record<string, any>> {
     statusCode: number;
     message: string;
     data: T;
-}
-
-export interface IConfig {
-    originalRequest: any;
-    headers: { Authorization: string };
-    url: string;
-    method: string;
-    params: string;
-}
-
-export interface IError {
-    config: IConfig;
-    response?: { status: number } | null;
 }

@@ -21,6 +21,7 @@ public class AuthInputPort implements AuthUseCase {
         User user = userOutputPort.loadUserById(request.id());
         user.getPassword().verifying(request.password());
         Tokens tokens = jwtProvider.createTokens(user.getUserId(), user.getNickname());
+        userOutputPort.saveRefreshToken(user.getUserId(), tokens.refreshToken());
         return new LoginDto.Response(tokens);
     }
 }
