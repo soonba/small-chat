@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v2/chats")
@@ -20,7 +18,7 @@ public class MessageController {
     @GetMapping("/{chatId}/messages/{page}")
     public ResponseEntity<ApiResponse<MessageListDto.Response>> getMessageList(@RequestHeader("Authorization") String authorization, @PathVariable String chatId, @PathVariable Long page) {
         jwtProvider.parseFromBearer(authorization);
-        MessageListDto.Response messageList = messageListUseCase.getMessageList(UUID.fromString(chatId), page);
+        MessageListDto.Response messageList = messageListUseCase.getMessageList(chatId, page);
         return ResponseEntity.ok(new ApiResponse<>(messageList));
     }
 }

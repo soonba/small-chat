@@ -2,11 +2,9 @@ package com.smallchat.backend.user.application.outputport;
 
 import com.smallchat.backend.user.domain.model.User;
 
-import java.util.UUID;
-
 public interface UserOutputPort {
 
-    User loadUser(UUID userId);
+    User loadUser(String userId);
 
     User loadUserById(String loginId);
 
@@ -14,9 +12,9 @@ public interface UserOutputPort {
 
     User saveUser(User user);
 
-    void saveRefreshToken(UUID id, String rt);
+    void saveRefreshToken(String id, String rt);
 
-    void validateRefreshToken(UUID id, String rt);
+    void validateRefreshToken(String id, String rt);
 
     boolean isExistID(String loginId);
 }

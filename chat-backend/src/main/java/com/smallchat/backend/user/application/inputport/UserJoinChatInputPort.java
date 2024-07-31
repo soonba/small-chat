@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class UserJoinChatInputPort implements UserJoinChatUseCase {
@@ -19,7 +17,7 @@ public class UserJoinChatInputPort implements UserJoinChatUseCase {
 
     @Override
     @Transactional
-    public void joinChat(UUID userId, UUID chatId) {
+    public void joinChat(String userId, String chatId) {
         User user = userOutputPort.loadUser(userId);
         participatingChatOutputPort.joinChat(user, chatId);
     }

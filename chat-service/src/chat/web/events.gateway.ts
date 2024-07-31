@@ -39,8 +39,6 @@ export class EventsGateway
   ) {
     for (let i = 0; i < chatIds.length; i++) {
       const chat = chatIds[i];
-      console.log(chat);
-      console.log('조인');
       await client.join(chat);
     }
     // await client.join(chatIds);
