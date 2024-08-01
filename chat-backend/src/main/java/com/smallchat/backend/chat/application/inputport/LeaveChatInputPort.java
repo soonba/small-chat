@@ -14,6 +14,9 @@ public class LeaveChatInputPort implements LeaveChatUseCase {
     @Override
     public void leave(String userId, String chatId) {
         Chat chat = chatOutputPort.load(chatId);
-        chat.removeParticipant(userId);
+        Chat removedChat = chat.removeParticipant(userId);
+        if (removedChat.getParticipants().isEmpty()) {
+            chatOutputPort.delete(removedChat);
+        }
     }
 }
