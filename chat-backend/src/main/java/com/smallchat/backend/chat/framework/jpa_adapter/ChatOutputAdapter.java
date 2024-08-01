@@ -27,4 +27,9 @@ public class ChatOutputAdapter implements ChatOutputPort {
     public List<Chat> findChatBasicByIds(List<String> chatIds) {
         return chatRepository.findByChatIdIn(chatIds);
     }
+
+    @Override
+    public void delete(Chat chat) {
+        chatRepository.delete(chat);
+    }
 }

@@ -10,4 +10,6 @@ public interface ChatOutputPort {
     Chat load(String chatId);
 
     List<Chat> findChatBasicByIds(List<String> chatIds);
+
+    void delete(Chat chat);
 }
