@@ -7,8 +7,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -16,7 +14,7 @@ import java.util.UUID;
 public class RefreshToken {
     @Id
     @Column(name = "user_id", nullable = false)
-    private UUID userId;
+    private String userId;
 
     @Column(name = "value", nullable = false)
     private String value;

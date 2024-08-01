@@ -13,8 +13,6 @@ import com.smallchat.backend.user.framework.web.dto.RefreshDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class TokenInputPort implements TokenUseCase {
@@ -32,7 +30,7 @@ public class TokenInputPort implements TokenUseCase {
         String rt = refreshDto.refreshToken();
         TokenPayload tokenPayload = jwtProvider.parseToken(rt);
 
-        UUID id = tokenPayload.userId();
+        String id = tokenPayload.userId();
         String nickname = tokenPayload.nickname();
         userOutputPort.validateRefreshToken(id, rt);
 

@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,16 +14,16 @@ public class ParticipatingChat {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "participating_chat_id", nullable = false)
-    private UUID participatingChatId;
+    private String participatingChatId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "chat_id", nullable = false)
-    private UUID chatId;
+    private String chatId;
 
-    public ParticipatingChat(User user, UUID chatId) {
+    public ParticipatingChat(User user, String chatId) {
         this.user = user;
         this.chatId = chatId;
     }

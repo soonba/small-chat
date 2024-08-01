@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -19,10 +18,10 @@ public class Chat extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "chat_id", nullable = false)
-    private UUID chatId;
+    private String chatId;
 
     @Column(name = "owner_id", nullable = false)
-    private UUID ownerId;
+    private String ownerId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -30,22 +29,22 @@ public class Chat extends BaseTime {
     @Embedded
     private Participants participants;
 
-    public Chat(UUID ownerId, String name, Participants participants) {
+    public Chat(String ownerId, String name, Participants participants) {
         this.ownerId = ownerId;
         this.name = name;
         this.participants = participants;
     }
 
-    public static Chat createChat(UUID ownerId, String name) {
+    public static Chat of(String ownerId, String name) {
         return new Chat(ownerId, name, Participants.init());
     }
 
-    public Chat addParticipant(UUID userId) {
+    public Chat addParticipant(String userId) {
         participants.addParticipant(Participant.of(userId));
         return this;
     }
 
-    public Chat removeParticipant(UUID userId) {
+    public Chat removeParticipant(String userId) {
         participants.removeParticipant(Participant.of(userId));
         return this;
     }

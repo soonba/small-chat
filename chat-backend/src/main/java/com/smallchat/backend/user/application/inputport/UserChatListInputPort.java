@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ public class UserChatListInputPort implements UserChatListUseCase {
     private final UserOutputPort userOutputPort;
     private final ParticipatingChatOutputPort participatingChatOutputPort;
 
-    public List<ParticipatingChat> getUserJoinedChats(UUID userId) {
+    public List<ParticipatingChat> getUserJoinedChats(String userId) {
         User user = userOutputPort.loadUser(userId);
         return participatingChatOutputPort.getParticipatingChats(user);
     }

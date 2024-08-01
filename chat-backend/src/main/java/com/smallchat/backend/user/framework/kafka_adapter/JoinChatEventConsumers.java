@@ -20,6 +20,11 @@ public class JoinChatEventConsumers {
     @KafkaListener(topics = "${consumer.topic1.name}", groupId = "${consumer.groupid.name}")
     public void consume(ConsumerRecord<String, String> record) throws IOException {
         ChatJoined chatJoined = objectMapper.readValue(record.value(), ChatJoined.class);
-        userJoinChatUseCase.joinChat(chatJoined.getUserId(), chatJoined.getChatId());
+        //todo saga 여기서부터 시작
+        try {
+            userJoinChatUseCase.joinChat(chatJoined.getUserId(), chatJoined.getChatId());
+        } catch (Exception e) {
+
+        }
     }
 }

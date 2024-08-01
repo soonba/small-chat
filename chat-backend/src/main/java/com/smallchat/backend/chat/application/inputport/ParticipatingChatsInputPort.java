@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +24,9 @@ public class ParticipatingChatsInputPort implements ParticipatingChatsUseCase {
 
     @Override
     @Transactional
-    public ChatBasicInfoListDto.Response getChatList(UUID userId) {
+    public ChatBasicInfoListDto.Response getChatList(String userId) {
         List<ParticipatingChat> userJoinedChats = userChatListUseCase.getUserJoinedChats(userId);
-        List<UUID> userJoinedChatIdList = userJoinedChats.stream().map(ParticipatingChat::getChatId).toList();
+        List<String> userJoinedChatIdList = userJoinedChats.stream().map(ParticipatingChat::getChatId).toList();
 
         List<Chat> chatList = chatOutputPort.findChatBasicByIds(userJoinedChatIdList);
         List<Message> lastMessageList = lastChatMessageUseCase.getLastMessageList(userJoinedChatIdList);

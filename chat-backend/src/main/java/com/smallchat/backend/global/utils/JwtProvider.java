@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class JwtProvider {
@@ -18,7 +17,7 @@ public class JwtProvider {
     }
 
 
-    public Tokens createTokens(UUID id, String nickname) {
+    public Tokens createTokens(String id, String nickname) {
         String at = createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
         String rt = createToken(new TokenPayload(TokenType.REFRESH_TOKEN, id, nickname));
         return new Tokens(at, rt);
@@ -49,6 +48,6 @@ public class JwtProvider {
         String tokenType = Optional.ofNullable(payload.get("type", String.class)).orElseThrow(RuntimeException::new);
         String userId = Optional.ofNullable(payload.get("userId", String.class)).orElse("");
         String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
-        return new TokenPayload(TokenType.getTokenType(tokenType), UUID.fromString(userId), nickname);
+        return new TokenPayload(TokenType.getTokenType(tokenType), userId, nickname);
     }
 }

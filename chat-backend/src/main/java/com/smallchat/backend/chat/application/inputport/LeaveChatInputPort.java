@@ -6,16 +6,17 @@ import com.smallchat.backend.chat.domain.model.Chat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class LeaveChatInputPort implements LeaveChatUseCase {
     private final ChatOutputPort chatOutputPort;
 
     @Override
-    public void leave(UUID userId, UUID chatId) {
+    public void leave(String userId, String chatId) {
         Chat chat = chatOutputPort.load(chatId);
-        chat.removeParticipant(userId);
+        Chat removedChat = chat.removeParticipant(userId);
+        if (removedChat.getParticipants().isEmpty()) {
+            chatOutputPort.delete(removedChat);
+        }
     }
 }
