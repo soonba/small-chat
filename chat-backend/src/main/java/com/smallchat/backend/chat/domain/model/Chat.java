@@ -35,7 +35,7 @@ public class Chat extends BaseTime {
         this.participants = participants;
     }
 
-    public static Chat createChat(String ownerId, String name) {
+    public static Chat of(String ownerId, String name) {
         return new Chat(ownerId, name, Participants.init());
     }
 

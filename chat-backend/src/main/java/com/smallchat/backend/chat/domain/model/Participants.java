@@ -31,4 +31,8 @@ public class Participants {
         participants.remove(participant);
         return this;
     }
+
+    public boolean isEmpty() {
+        return participants.isEmpty();
+    }
 }
