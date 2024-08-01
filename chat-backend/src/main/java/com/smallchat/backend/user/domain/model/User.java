@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Getter
 @NoArgsConstructor
 @Table(name = "tb_user")
@@ -16,7 +14,7 @@ public class User extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id", nullable = false)
-    private UUID userId;
+    private String userId;
 
     @Column(name = "nickname", nullable = false)
     private String nickname;
@@ -33,7 +31,7 @@ public class User extends BaseTime {
         this.password = password;
     }
 
-    public static User createUser(String nickname, String loginId, Password password) {
+    public static User of(String nickname, String loginId, Password password) {
         return new User(nickname, loginId, password);
     }
 }

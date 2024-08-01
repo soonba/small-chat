@@ -15,8 +15,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v2/chats")
@@ -32,7 +30,7 @@ public class ChatController {
     public ResponseEntity<ApiResponse<CreateChatDto.Response>> createChat(@RequestHeader("Authorization") String authorization,
                                                                           @RequestBody CreateChatDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
-        UUID chatId = createChatUseCase.createChat(tokenPayload, request);
+        String chatId = createChatUseCase.createChat(tokenPayload, request);
         return ResponseEntity.status(201).body(new ApiResponse<>(new CreateChatDto.Response(chatId)));
     }
 
@@ -40,7 +38,7 @@ public class ChatController {
     public ResponseEntity<ApiResponse<JoinChatDto.Response>> joinChat(@RequestHeader("Authorization") String authorization,
                                                                       @RequestBody JoinChatDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
-        UUID chatId = UUID.fromString(request.chatId());
+        String chatId = request.chatId();
         joinChatUseCase.join(tokenPayload.userId(), chatId);
         return ResponseEntity.ok(new ApiResponse<>(new JoinChatDto.Response(chatId)));
     }
@@ -49,9 +47,9 @@ public class ChatController {
     public ResponseEntity<ApiResponse> leaveChat(@RequestHeader("Authorization") String authorization,
                                                  @RequestBody LeaveChatDto.Request request) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
-        UUID chatId = UUID.fromString(request.chatId());
+        String chatId = request.chatId();
         leaveChatUseCase.leave(tokenPayload.userId(), chatId);
-        return ResponseEntity.ok(new ApiResponse<>(null));
+        return ResponseEntity.ok(new ApiResponse<>(200, "OK"));
     }
 
     @GetMapping()

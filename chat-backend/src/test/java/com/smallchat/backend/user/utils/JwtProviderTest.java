@@ -32,7 +32,7 @@ public class JwtProviderTest {
 
     @Test
     public void testCreateToken() {
-        TokenPayload payload = new TokenPayload(TokenType.ACCESS_TOKEN, UUID.randomUUID(), "김철수");
+        TokenPayload payload = new TokenPayload(TokenType.ACCESS_TOKEN, UUID.randomUUID().toString(), "김철수");
         String token = jwtProvider.createToken(payload);
 
         assertNotNull(token);

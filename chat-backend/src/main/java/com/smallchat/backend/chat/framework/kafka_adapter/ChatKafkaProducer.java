@@ -16,12 +16,6 @@ import java.util.concurrent.CompletableFuture;
 public class ChatKafkaProducer implements EventOutputPort {
     @Value(value = "${producers.topic1.name}")
     private String TOPIC_CREATE_CHAT;
-//    @Value(value = "${producers.topic2.name}")
-//    private String TOPIC_RETURN;
-//    @Value(value = "${producers.topic3.name}")
-//    private String TOPIC_CLEAR;
-//    @Value(value = "${producers.topic4.name}")
-//    private String TOPIC_POINT;
 
     private final KafkaTemplate<String, ChatJoined> kafkaTemplate1;
 

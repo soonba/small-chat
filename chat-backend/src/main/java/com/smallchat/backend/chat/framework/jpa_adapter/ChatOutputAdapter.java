@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,12 +19,17 @@ public class ChatOutputAdapter implements ChatOutputPort {
     }
 
     @Override
-    public Chat load(UUID chatId) {
+    public Chat load(String chatId) {
         return chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("찾을 수 없음"));
     }
 
     @Override
-    public List<Chat> findChatBasicByIds(List<UUID> chatIds) {
+    public List<Chat> findChatBasicByIds(List<String> chatIds) {
         return chatRepository.findByChatIdIn(chatIds);
+    }
+
+    @Override
+    public void delete(Chat chat) {
+        chatRepository.delete(chat);
     }
 }
