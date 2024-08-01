@@ -13,7 +13,8 @@ import { ChatController } from './web/chat.controller';
         options: {
           client: {
             //todo docker-compose 수정
-            brokers: ['localhost:9092'],
+            // brokers: ['localhost:9092'],
+            brokers: ['kafka-1:29092'],
           },
         },
       },

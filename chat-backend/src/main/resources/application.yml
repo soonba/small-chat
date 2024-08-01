@@ -2,6 +2,10 @@ server:
   port: 8080
 
 spring:
+  kafka:
+    bootstrap-servers: kafka-1:29092
+  profiles:
+    active: local
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:15432/small_chat
@@ -23,7 +27,7 @@ auth:
 
 
 producers:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: kafka-1:29092
   topic1:
     name: create_chat
   topic2:
