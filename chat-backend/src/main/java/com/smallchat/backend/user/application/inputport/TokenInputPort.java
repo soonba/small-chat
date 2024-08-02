@@ -2,7 +2,6 @@ package com.smallchat.backend.user.application.inputport;
 
 
 import com.smallchat.backend.global.utils.JwtProvider;
-import com.smallchat.backend.global.utils.Token;
 import com.smallchat.backend.global.utils.TokenPayload;
 import com.smallchat.backend.global.utils.Tokens;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
@@ -19,11 +18,6 @@ public class TokenInputPort implements TokenUseCase {
 
     private final UserOutputPort userOutputPort;
     private final JwtProvider jwtProvider;
-
-    @Override
-    public Token generateToken(TokenPayload tokenPayload) {
-        return null;
-    }
 
     @Override
     public RefreshDto.Response refresh(RefreshDto.Request refreshDto) {

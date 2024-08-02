@@ -28,15 +28,10 @@ public class CreateChatInputPort implements CreateChatUseCase {
     public String createChat(TokenPayload tokenPayload, CreateChatDto.Request request) {
         String ownerId = tokenPayload.userId();
         validateUserUseCase.hasReachedMaxChatLimit(ownerId);
-        //todo of로 바꿀까
         Chat chat = Chat.of(ownerId, request.chatName());
         String chatId = chatOutputPort.save(chat).getChatId();
         messageOutputPort.save(Message.systemMessage(SystemMessage.CHAT_CREATED, chat.getName(), chatId));
-        try {
-            eventOutputPort.occurJoinChatEvent(new ChatJoined(ownerId, chatId));
-        } catch (Exception e) {
-            throw new RuntimeException("이벤트 발행 실패");
-        }
+        eventOutputPort.occurJoinChatEvent(new ChatJoined(ownerId, chatId));
         return chatId;
     }
 }

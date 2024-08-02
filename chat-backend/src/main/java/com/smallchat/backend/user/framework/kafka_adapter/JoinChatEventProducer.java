@@ -1,7 +1,6 @@
-package com.smallchat.backend.chat.framework.kafka_adapter;
+package com.smallchat.backend.user.framework.kafka_adapter;
 
-import com.smallchat.backend.chat.application.outputport.EventOutputPort;
-import com.smallchat.backend.chat.domain.event.ChatJoined;
+import com.smallchat.backend.global.domain.event.EventResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,15 +11,14 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
-public class ChatKafkaProducer implements EventOutputPort {
-    @Value(value = "${producers.topic1.name}")
-    private String TOPIC_CREATE_CHAT;
+public class JoinChatEventProducer {
+    @Value(value = "${producers.topic3.name}")
+    private String TOPIC_JOIN_CHAT_RETURN;
 
-    private final KafkaTemplate<String, ChatJoined> kafkaTemplate1;
+    private final KafkaTemplate<String, EventResult> kafkaTemplate;
 
-    @Override
-    public void occurJoinChatEvent(ChatJoined chatJoined) {
-        CompletableFuture<SendResult<String, ChatJoined>> future = kafkaTemplate1.send(TOPIC_CREATE_CHAT, chatJoined);
+    public void occurEvent(EventResult eventResult) {
+        CompletableFuture<SendResult<String, EventResult>> future = kafkaTemplate.send(TOPIC_JOIN_CHAT_RETURN, eventResult);
         future.whenComplete((result, throwable) -> {
             if (throwable != null) {
                 System.err.println("Failure: " + throwable.getMessage());

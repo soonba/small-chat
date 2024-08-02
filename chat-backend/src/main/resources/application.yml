@@ -32,11 +32,15 @@ producers:
     name: create_chat
   topic2:
     name: publish_message
+  topic3:
+    name: join_chat_return
 
 consumer:
   topic1:
     name: create_chat
   topic2:
     name: publish_message
+  topic3:
+    name: join_chat_return
   groupid:
     name: chat

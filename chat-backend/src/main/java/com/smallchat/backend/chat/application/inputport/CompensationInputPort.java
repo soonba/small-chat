@@ -1,22 +1,23 @@
 package com.smallchat.backend.chat.application.inputport;
 
 import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
-import com.smallchat.backend.chat.application.usecase.LeaveChatUseCase;
+import com.smallchat.backend.chat.application.usecase.CompensationUseCase;
 import com.smallchat.backend.chat.domain.model.Chat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LeaveChatInputPort implements LeaveChatUseCase {
+public class CompensationInputPort implements CompensationUseCase {
+
     private final ChatOutputPort chatOutputPort;
 
     @Override
-    public void leave(String userId, String chatId) {
+    public void cancelJoinChat(String chatId, String userId) {
         Chat chat = chatOutputPort.load(chatId);
-        Chat removedChat = chat.removeParticipant(userId);
-        if (removedChat.isEmptyChat()) {
-            chatOutputPort.delete(removedChat);
+        Chat removed = chat.removeParticipant(userId);
+        if (removed.isEmptyChat()) {
+            chatOutputPort.delete(removed);
         }
     }
 }
