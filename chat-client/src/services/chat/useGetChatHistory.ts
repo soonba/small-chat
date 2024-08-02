@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 
-import { getData } from 'libs/axios';
-import { chatKeys } from 'utils/queryKey';
+import {getData} from 'libs/axios';
+import {chatKeys} from 'utils/queryKey';
 
 interface IResponseBody {
     messageBasicInfoList: {
@@ -16,7 +16,8 @@ interface IResponseBody {
 }
 
 const getChat = async (id: string): Promise<IResponseBody> => {
-    return getData<IResponseBody, void>(`/v2/chats/${id}/messages`).then((res) => res.data);
+    // todo temporary
+    return getData<IResponseBody, void>(`/v2/chats/${id}/messages?page=0`).then((res) => res.data);
 };
 
 const useGetChatHistory = (id: string) => {
