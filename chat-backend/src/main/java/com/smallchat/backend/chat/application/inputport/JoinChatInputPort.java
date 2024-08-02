@@ -26,10 +26,6 @@ public class JoinChatInputPort implements JoinChatUseCase {
         Chat loadedChat = chatOutputPort.load(chatId);
         Chat chat = loadedChat.addParticipant(userId);
         chatOutputPort.save(chat);
-        try {
-            eventOutputPort.occurJoinChatEvent(new ChatJoined(userId, chatId));
-        } catch (Exception e) {
-            throw new RuntimeException("이벤트 발행 실패");
-        }
+        eventOutputPort.occurJoinChatEvent(new ChatJoined(userId, chatId));
     }
 }

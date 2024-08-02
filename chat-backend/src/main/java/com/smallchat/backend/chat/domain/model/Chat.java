@@ -53,4 +53,8 @@ public class Chat extends BaseTime {
         Message chat = chatList.stream().filter(el -> el.getChatId().equals(this.chatId.toString())).findFirst().orElseThrow(() -> new RuntimeException("찾을 수 없는 챗"));
         return new ChatBasicInfo(getChatId(), getName(), chat.getMessage(), chat.getCreatedAt());
     }
+
+    public boolean isEmptyChat() {
+        return participants.isEmpty();
+    }
 }
