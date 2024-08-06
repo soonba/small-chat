@@ -1,31 +1,49 @@
-import {useQuery} from '@tanstack/react-query';
+import { useEffect } from 'react';
 
-import {getData} from 'libs/axios';
-import {chatKeys} from 'utils/queryKey';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-interface IResponseBody {
-    messageBasicInfoList: {
-        sender: {
-            userId: string;
-            nickname: string;
-        } | null;
-        createdAt: string;
-        message: string;
-        messageType: 'SYSTEM' | 'USER';
-    }[];
+import { useSocket } from 'hooks';
+import { getData } from 'libs/axios';
+import { chatKeys } from 'utils/queryKey';
+
+interface IRequestBody {
+    nextCursor: string | null;
 }
 
-const getChat = async (id: string): Promise<IResponseBody> => {
-    // todo temporary
-    return getData<IResponseBody, void>(`/v2/chats/${id}/messages?page=0`).then((res) => res.data);
+export type MessageListType = {
+    sender: { userId: string; nickname: string } | null;
+    createdAt: string;
+    message: string;
+    messageType: 'SYSTEM' | 'USER';
+}[];
+
+interface IResponseBody {
+    data: MessageListType;
+    nextCursor: string;
+}
+
+const getChat = async (id: string, nextCursor: string): Promise<IResponseBody> => {
+    return getData<IResponseBody, IRequestBody>(`/v2/chats/${id}/messages`, { nextCursor: nextCursor || null }).then(
+        (res) => res.data
+    );
 };
 
-const useGetChatHistory = (id: string) => {
-    const data = useQuery({
-        queryKey: chatKeys.detail(id),
-        queryFn: () => getChat(id),
-        select: (data) => data.messageBasicInfoList
+const useGetChatHistory = (chatId: string) => {
+    const { onChatJoin } = useSocket();
+
+    const data = useInfiniteQuery({
+        queryKey: chatKeys.detail(chatId),
+        queryFn: ({ pageParam }) => getChat(chatId, pageParam),
+        initialPageParam: '',
+        select: ({ pageParams, pages }) => ({ pages, pageParams }),
+        getNextPageParam: (lastPage) => lastPage.nextCursor
     });
+
+    useEffect(() => {
+        if (data?.data) {
+            onChatJoin([chatId]);
+        }
+    }, [data?.data]);
 
     return data;
 };

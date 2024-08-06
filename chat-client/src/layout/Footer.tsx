@@ -10,11 +10,11 @@ import { useCreateChat, useJoinChat } from 'services/chat';
 export default function Footer() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { onRoomJoin } = useSocket();
+    const { onChatJoin } = useSocket();
 
     const createChatMutation = useCreateChat({
         onSuccess(chatId) {
-            onRoomJoin(chatId);
+            onChatJoin([chatId]);
             navigate(`/chat/${chatId}`);
         }
     });
@@ -28,7 +28,7 @@ export default function Footer() {
 
     const joinChatMutation = useJoinChat({
         onSuccess(chatId) {
-            onRoomJoin(chatId);
+            onChatJoin([chatId]);
             navigate(`/chat/${chatId}`);
         }
     });

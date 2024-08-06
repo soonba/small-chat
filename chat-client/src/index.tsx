@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import SocketProvider from 'context/SocketProvider';
 import { store } from 'libs/redux/store';
 
 import App from 'app/App';
-
 import 'styles/index.css';
 
 const queryClient = new QueryClient();
@@ -16,7 +16,9 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <QueryClientProvider client={queryClient}>
-                <App />
+                <SocketProvider>
+                    <App />
+                </SocketProvider>
             </QueryClientProvider>
         </Provider>
     </React.StrictMode>

@@ -1,13 +1,15 @@
-import {FormEvent, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import {Button, TextField} from 'components';
+import { Button, TextField } from 'components';
 
+import { useSocket } from 'hooks';
 import useLogin from 'services/auth/useLogin';
-import {clearToken, setTokens} from 'utils/storage';
+import { clearToken, setTokens } from 'utils/storage';
 
 export default function Login() {
     const navigate = useNavigate();
+    const { onSocketConnect } = useSocket();
 
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
@@ -15,7 +17,8 @@ export default function Login() {
     const loginMutation = useLogin({
         onSuccess({ tokens }) {
             setTokens(tokens);
-            navigate('/', {replace: true});
+            onSocketConnect();
+            navigate('/', { replace: true });
         }
     });
 

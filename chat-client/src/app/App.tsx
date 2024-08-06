@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import BaseLayout from 'layout';
+import { AuthLayout, BaseLayout } from 'layout';
 import Chat from 'pages/Chat';
 import ChatList from 'pages/ChatList';
 import Login from 'pages/Login';
@@ -25,20 +25,32 @@ export default function App() {
                             )
                         },
                         {
-                            path: 'login',
-                            element: <Login />
-                        },
-                        {
-                            path: 'register',
-                            element: <Register />
-                        },
-                        {
                             path: 'chat/:id',
                             element: (
                                 <ProtectedRoute>
                                     <Chat />
                                 </ProtectedRoute>
                             )
+                        }
+                    ]
+                },
+                {
+                    path: '/login',
+                    element: <AuthLayout />,
+                    children: [
+                        {
+                            index: true,
+                            element: <Login />
+                        }
+                    ]
+                },
+                {
+                    path: '/register',
+                    element: <AuthLayout />,
+                    children: [
+                        {
+                            index: true,
+                            element: <Register />
                         }
                     ]
                 }
