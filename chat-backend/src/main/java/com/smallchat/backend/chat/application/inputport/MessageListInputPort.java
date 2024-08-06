@@ -18,6 +18,7 @@ public class MessageListInputPort implements MessageListUseCase {
     @Override
     public MessageListDto.Response getMessageList(String chatID, Long nextCursor) {
         List<Message> list = messageOutputPort.getMessageList(chatID, nextCursor);
+        //todo 페이지 끝까지 못 채운 경우
         long newNextCursor = list.isEmpty() ? 0L : list.get(list.size() - 1).getCreatedAt().toEpochSecond(ZoneOffset.UTC);
         return new MessageListDto.Response(list.stream().map(Message::toMessageBasicInfo).toList()
                 , newNextCursor);
