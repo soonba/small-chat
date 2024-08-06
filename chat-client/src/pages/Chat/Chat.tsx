@@ -12,23 +12,32 @@ export default function Chat() {
     const chatId = id || '';
     const { accountId, nickname } = useAccount();
 
-    const { isFetching, data, fetchPreviousPage, hasPreviousPage } = useGetChatHistory(chatId);
-    const { isConnected, message: socketMessages, onMessageSend } = useSocket();
+    const { isFetching, data, fetchPreviousPage, isFetchingPreviousPage, hasPreviousPage } = useGetChatHistory(chatId);
+    const { message: socketMessages, onMessageSend } = useSocket();
 
-    const [observe, unobserve] = useIntersectionObserver(() => fetchPreviousPage());
+    const [isLoading, setIsLoading] = useState(false);
+    const [observe, unobserve] = useIntersectionObserver(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+            fetchPreviousPage();
+        }, 1000);
+    });
     const intersectionRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
     const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {
-        if (hasScrolled && !isFetching && hasPreviousPage) {
-            observe(intersectionRef.current as Element);
-        }
+        if (intersectionRef.current) {
+            if (!isLoading && hasScrolled && hasPreviousPage) {
+                setIsLoading(true);
+                observe(intersectionRef.current as Element);
+            }
 
-        if (!hasPreviousPage) {
-            unobserve(intersectionRef.current as Element);
+            if (!hasPreviousPage) {
+                unobserve(intersectionRef.current as Element);
+            }
         }
-    }, [hasScrolled, isFetching, data?.pages, hasPreviousPage]);
+    }, [hasScrolled, isLoading, isFetchingPreviousPage, hasPreviousPage]);
 
     const handleSubmit = (message: string) => {
         if (accountId && nickname) {
@@ -52,12 +61,31 @@ export default function Chat() {
     }, [hasScrolled, data?.pages, socketMessages]);
 
     return (
-        <div className="relative h-full w-full">
-            {isConnected ? 'Connected' : 'Disconnected'}
-            <div ref={intersectionRef} className="h-px w-full" />
-            <MessageList data={data?.pages?.flatMap((data) => data.data) || []} socketMessages={socketMessages || []} />
-            <div ref={scrollRef} className="h-px w-full" />
-            <MessageTextarea onSubmit={handleSubmit} />
+        <div className="flex h-full w-full flex-col justify-between overflow-auto">
+            {isFetching ? (
+                <div className="flex h-[calc(100vh-56px)] w-full items-center justify-center">Loading...!</div>
+            ) : (
+                <>
+                    <div
+                        className="flex w-full flex-col-reverse overflow-y-auto"
+                        style={{
+                            height: window.innerHeight - 44 - 56,
+                            overflowAnchor: 'none'
+                        }}
+                    >
+                        <MessageList
+                            data={data?.pages?.flatMap((data) => data.data) || []}
+                            socketMessages={socketMessages || []}
+                        />
+                        {(isLoading || isFetchingPreviousPage) && (
+                            <div className="flex h-[200px] w-full items-center justify-center">Loading...!</div>
+                        )}
+                        <div ref={intersectionRef} className="h-px w-full" />
+                    </div>
+                    <div ref={scrollRef} className="h-px w-full" />
+                    <MessageTextarea onSubmit={handleSubmit} />
+                </>
+            )}
         </div>
     );
 }

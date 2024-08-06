@@ -69,7 +69,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
         <>
             <div
                 ref={containerRef}
-                className="fixed bottom-0 left-0 right-0 flex w-full flex-row items-end gap-5 bg-[#f7fbff] py-2.5 pl-2.5 pr-5 dark:bg-[#02101c]"
+                className="flex w-full flex-row gap-5 bg-[#f7fbff] py-2.5 pl-2.5 pr-5 dark:bg-[#02101c]"
             >
                 <textarea
                     ref={textareaRef}
@@ -80,34 +80,36 @@ export default function MessageTextarea({ onSubmit }: Props) {
                         setBottom(72 + 26);
                     }}
                     maxLength={140}
-                    className="h-6 w-full resize-none bg-transparent text-base font-medium text-primary-950 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-50 dark:placeholder:text-primary-50/30"
+                    className="h-6 flex-1 resize-none bg-transparent text-base font-medium text-primary-950 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-50 dark:placeholder:text-primary-50/30"
                 />
-                <IconButton
-                    variant="text"
-                    size="small"
-                    icon={<FaceSmileIcon />}
-                    onClick={() => setIsOpen((prev) => !prev)}
-                />
-                {!message ? (
+                <div className="flex shrink-0 items-center gap-x-5">
                     <IconButton
-                        aria-label="copy chat id"
-                        title="코드 공유하기"
                         variant="text"
                         size="small"
-                        icon={<ClipboardIcon />}
-                        onClick={handleCopy}
+                        icon={<FaceSmileIcon />}
+                        onClick={() => setIsOpen((prev) => !prev)}
                     />
-                ) : (
-                    <IconButton
-                        aria-label="submit"
-                        title="메시지 보내기"
-                        disabled={!message}
-                        variant="text"
-                        size="small"
-                        icon={<PaperAirplaneIcon />}
-                        onClick={handleSubmit}
-                    />
-                )}
+                    {!message ? (
+                        <IconButton
+                            aria-label="copy chat id"
+                            title="코드 공유하기"
+                            variant="text"
+                            size="small"
+                            icon={<ClipboardIcon />}
+                            onClick={handleCopy}
+                        />
+                    ) : (
+                        <IconButton
+                            aria-label="submit"
+                            title="메시지 보내기"
+                            disabled={!message}
+                            variant="text"
+                            size="small"
+                            icon={<PaperAirplaneIcon />}
+                            onClick={handleSubmit}
+                        />
+                    )}
+                </div>
             </div>
             {isOpen && (
                 <div style={{ bottom }} className="fixed bottom-0 right-0">

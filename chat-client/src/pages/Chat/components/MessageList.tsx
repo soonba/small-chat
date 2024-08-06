@@ -14,7 +14,7 @@ export default function ChatList({ data, socketMessages }: Props) {
     const { accountId } = useAccount();
 
     return (
-        <ul className="space-y-5 p-10">
+        <ul className="h-full space-y-5 p-10">
             {data.map((message, index) => {
                 const isSender = message.sender === null ? false : message.sender.userId === accountId;
 
