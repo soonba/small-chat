@@ -16,9 +16,9 @@ public class MessageController {
     private final JwtProvider jwtProvider;
 
     @GetMapping("/{chatId}/messages")
-    public ResponseEntity<ApiResponse<MessageListDto.Response>> getMessageList(@RequestHeader("Authorization") String authorization, @PathVariable String chatId, @RequestParam("page") Long page) {
+    public ResponseEntity<ApiResponse<MessageListDto.Response>> getMessageList(@RequestHeader("Authorization") String authorization, @PathVariable String chatId, @RequestParam(value = "nextCursor", required = false) Long nextCursor) {
         jwtProvider.parseFromBearer(authorization);
-        MessageListDto.Response messageList = messageListUseCase.getMessageList(chatId, page);
+        MessageListDto.Response messageList = messageListUseCase.getMessageList(chatId, nextCursor);
         return ResponseEntity.ok(new ApiResponse<>(messageList));
     }
 }
