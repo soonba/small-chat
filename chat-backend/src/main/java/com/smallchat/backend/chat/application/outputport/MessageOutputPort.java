@@ -7,7 +7,7 @@ import java.util.List;
 public interface MessageOutputPort {
     void save(Message chat);
 
-    List<Message> getMessageList(String chatID, Long page);
+    List<Message> getMessageList(String chatID, Long nextCursor);
 
     List<Message> getLastMessageInfo(List<String> chatIdList);
 

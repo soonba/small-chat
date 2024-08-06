@@ -9,11 +9,16 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class MessageOutputAdapter implements MessageOutputPort {
+    private static final int LIMIT = 30;
+
     private final MessageRepository messageRepository;
     private final MongoTemplate mongoTemplate;
 
@@ -23,12 +28,16 @@ public class MessageOutputAdapter implements MessageOutputPort {
     }
 
     @Override
-    public List<Message> getMessageList(String chatID, Long page) {
-        MatchOperation condition = Aggregation.match(Criteria.where("chatId").is(chatID));
+    public List<Message> getMessageList(String chatID, Long nextCursor) {
+        Criteria criteria = Criteria.where("chatId").is(chatID);
+        if (nextCursor != null) {
+            criteria.and("createdAt").gt(LocalDateTime.ofInstant(Instant.ofEpochSecond(nextCursor + 1),
+                    ZoneOffset.UTC));
+        }
+        MatchOperation condition = Aggregation.match(criteria);
         SortOperation sort = Aggregation.sort(Sort.Direction.ASC, "createdAt");
-        SkipOperation skip = Aggregation.skip(page);
-        LimitOperation limit = Aggregation.limit(10);
-        Aggregation aggregation = Aggregation.newAggregation(condition, sort, skip, limit);
+        LimitOperation limit = Aggregation.limit(LIMIT);
+        Aggregation aggregation = Aggregation.newAggregation(condition, sort, limit);
         return mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
     }
 
