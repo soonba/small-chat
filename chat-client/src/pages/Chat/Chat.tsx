@@ -54,8 +54,8 @@ export default function Chat() {
     return (
         <div className="relative h-full w-full">
             {isConnected ? 'Connected' : 'Disconnected'}
-            <MessageList data={data?.pages?.flatMap((data) => data.data) || []} socketMessages={socketMessages || []} />
             <div ref={intersectionRef} className="h-px w-full" />
+            <MessageList data={data?.pages?.flatMap((data) => data.data) || []} socketMessages={socketMessages || []} />
             <div ref={scrollRef} className="h-px w-full" />
             <MessageTextarea onSubmit={handleSubmit} />
         </div>
