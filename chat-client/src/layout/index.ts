@@ -1,3 +1,2 @@
-import BaseLayout from './BaseLayout';
-
-export default BaseLayout;
+export { default as AuthLayout } from './AuthLayout';
+export { default as BaseLayout } from './BaseLayout';

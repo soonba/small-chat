@@ -1,9 +1,16 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import isYesterday from 'dayjs/plugin/isYesterday';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 
 dayjs.locale('ko');
 dayjs.extend(isYesterday);
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.tz.setDefault('Asia/Seoul');
 
 export const getFormatDate = (targetDate: string | number | Date | dayjs.Dayjs, format: string) => {
     return dayjs(targetDate).format(format);

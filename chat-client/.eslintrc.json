@@ -71,7 +71,7 @@
                         "position": "before"
                     },
                     {
-                        "pattern": "{libs*,libs/**,hooks*,hooks/**,services*,services/**,utils*,utils/**,constants*,constants/**}",
+                        "pattern": "{libs*,libs/**,hooks*,hooks/**,context*,context/**,services*,services/**,utils*,utils/**,constants*,constants/**}",
                         "group": "internal",
                         "position": "before"
                     },

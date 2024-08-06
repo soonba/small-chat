@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
+
 import { useQuery } from '@tanstack/react-query';
 
+import { useSocket } from 'hooks';
 import { getData } from 'libs/axios';
 import { chatKeys } from 'utils/queryKey';
 
@@ -17,11 +20,19 @@ const getChatList = async (): Promise<IResponseBody> => {
 };
 
 const useGetChatList = () => {
+    const { onChatJoin } = useSocket();
+
     const data = useQuery({
         queryKey: chatKeys.lists(),
         queryFn: getChatList,
         select: (data) => data.chatBasicInfos
     });
+
+    useEffect(() => {
+        if (data?.data) {
+            onChatJoin(data?.data.map((val) => val.chatId));
+        }
+    }, [data?.data]);
 
     return data;
 };

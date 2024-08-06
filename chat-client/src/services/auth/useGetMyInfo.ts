@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAccount from 'hooks/useAccount';
 import { getData } from 'libs/axios';
 import { usersKeys } from 'utils/queryKey';
+import { getTokens } from 'utils/storage';
 
 interface IResponseBody {
     userId: string;
@@ -19,10 +20,11 @@ const getMyInfo = async (): Promise<IResponseBody> => {
 const useGetMyInfo = () => {
     const { pathname } = useLocation();
     const { onSetAccount } = useAccount();
+    const { accessToken } = getTokens();
 
     const data = useQuery({
         queryKey: usersKeys.my(),
-        enabled: !['/login', '/register'].includes(pathname),
+        enabled: !!(!['/login', '/register'].includes(pathname) && accessToken),
         queryFn: getMyInfo,
         initialData: () => ({ userId: '', nickname: '' })
     });
