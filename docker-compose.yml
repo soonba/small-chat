@@ -72,7 +72,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/small_chat
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/small_chat
     restart: always
     depends_on:
