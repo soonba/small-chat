@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push docker image
-        uses: docker/build-push-action@5
+        uses: docker/build-push-action@v5
         with:
           context: ./chat-backend
           platform: linux/amd64
