@@ -9,6 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class BackendApplication {
     public static void main(String[] args) {
+        System.out.println("최신버전");
+        System.out.println("최신버전");
+        System.out.println("최신버전");
+        System.out.println("최신버전");
+        System.out.println("최신버전");
         SpringApplication.run(BackendApplication.class, args);
     }
 
