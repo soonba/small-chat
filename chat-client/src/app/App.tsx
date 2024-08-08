@@ -1,6 +1,6 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {createHashRouter, RouterProvider} from 'react-router-dom';
 
-import { AuthLayout, BaseLayout } from 'layout';
+import {AuthLayout, BaseLayout} from 'layout';
 import Chat from 'pages/Chat';
 import ChatList from 'pages/ChatList';
 import Login from 'pages/Login';
@@ -11,16 +11,16 @@ import ProtectedRoute from './ProtectedRoute';
 export default function App() {
     return (
         <RouterProvider
-            router={createBrowserRouter([
+            router={createHashRouter([
                 {
                     path: '/',
-                    element: <BaseLayout />,
+                    element: <BaseLayout/>,
                     children: [
                         {
                             index: true,
                             element: (
                                 <ProtectedRoute>
-                                    <ChatList />
+                                    <ChatList/>
                                 </ProtectedRoute>
                             )
                         },
@@ -28,7 +28,7 @@ export default function App() {
                             path: 'chat/:id',
                             element: (
                                 <ProtectedRoute>
-                                    <Chat />
+                                    <Chat/>
                                 </ProtectedRoute>
                             )
                         }
@@ -36,21 +36,21 @@ export default function App() {
                 },
                 {
                     path: '/login',
-                    element: <AuthLayout />,
+                    element: <AuthLayout/>,
                     children: [
                         {
                             index: true,
-                            element: <Login />
+                            element: <Login/>
                         }
                     ]
                 },
                 {
                     path: '/register',
-                    element: <AuthLayout />,
+                    element: <AuthLayout/>,
                     children: [
                         {
                             index: true,
-                            element: <Register />
+                            element: <Register/>
                         }
                     ]
                 }
