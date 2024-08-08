@@ -19,10 +19,12 @@ jobs:
           distribution: 'zulu'
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./chat-backend/gradlew
+        run: chmod +x gradlew
+        working-directory: chat-backend
 
       - name: Build with Gradle
-        run: ./chat-backend/gradlew clean build
+        run: ./gradlew clean build
+        working-directory: chat-backend
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
