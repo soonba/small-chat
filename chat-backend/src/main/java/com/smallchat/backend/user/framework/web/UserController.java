@@ -53,4 +53,12 @@ public class UserController {
         FetchMeDto.Response response = tokenUseCase.fetchMe(tokenPayload);
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
+    
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse> logout(@RequestHeader("Authorization") String authorization) {
+        TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
+        this.authUseCase.logout(tokenPayload);
+        return ResponseEntity.ok(new ApiResponse<>(200, "OK"));
+    }
+
 }
