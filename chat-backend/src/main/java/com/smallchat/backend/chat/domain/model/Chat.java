@@ -40,6 +40,9 @@ public class Chat extends BaseTime {
     }
 
     public Chat addParticipant(String userId) {
+        if (participants.isFull()) {
+            throw new RuntimeException("정원이 다 찼습니다.");
+        }
         participants.addParticipant(Participant.of(userId));
         return this;
     }

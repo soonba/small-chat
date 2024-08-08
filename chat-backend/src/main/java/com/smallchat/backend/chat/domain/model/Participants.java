@@ -35,4 +35,8 @@ public class Participants {
     public boolean isEmpty() {
         return participants.isEmpty();
     }
+
+    public boolean isFull() {
+        return participants.size() >= 10;
+    }
 }
