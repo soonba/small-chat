@@ -17,4 +17,6 @@ public interface UserOutputPort {
     void validateRefreshToken(String id, String rt);
 
     boolean isExistID(String loginId);
+
+    void deleteRefreshToken(String userId);
 }
