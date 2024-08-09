@@ -17,7 +17,16 @@ export default function App() {
                     ? [
                           {
                               path: '/',
-                              element: <Guide />
+                              children: [
+                                  {
+                                      index: true,
+                                      element: <Guide />
+                                  },
+                                  {
+                                      path: '*',
+                                      element: <Guide />
+                                  }
+                              ]
                           }
                       ]
                     : [
