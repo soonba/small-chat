@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class MessageOutputAdapter implements MessageOutputPort {
-    private static final int LIMIT = 30;
+    public static final int MESSAGE_PAGE_LIMIT = 30;
 
     private final MessageRepository messageRepository;
     private final MongoTemplate mongoTemplate;
@@ -35,8 +35,8 @@ public class MessageOutputAdapter implements MessageOutputPort {
                     ZoneOffset.UTC));
         }
         MatchOperation condition = Aggregation.match(criteria);
-        SortOperation sort = Aggregation.sort(Sort.Direction.ASC, "createdAt");
-        LimitOperation limit = Aggregation.limit(LIMIT);
+        SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
+        LimitOperation limit = Aggregation.limit(MESSAGE_PAGE_LIMIT);
         Aggregation aggregation = Aggregation.newAggregation(condition, sort, limit);
         return mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
     }

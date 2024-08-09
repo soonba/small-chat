@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.time.ZoneOffset;
 import java.util.List;
 
+import static com.smallchat.backend.chat.framework.mongodb_adapter.MessageOutputAdapter.MESSAGE_PAGE_LIMIT;
+
 @Service
 @RequiredArgsConstructor
 public class MessageListInputPort implements MessageListUseCase {
@@ -18,8 +20,7 @@ public class MessageListInputPort implements MessageListUseCase {
     @Override
     public MessageListDto.Response getMessageList(String chatID, Long nextCursor) {
         List<Message> list = messageOutputPort.getMessageList(chatID, nextCursor);
-        //todo 페이지 끝까지 못 채운 경우
-        long newNextCursor = list.isEmpty() ? 0L : list.get(list.size() - 1).getCreatedAt().toEpochSecond(ZoneOffset.UTC);
+        long newNextCursor = list.isEmpty() || list.size() <= MESSAGE_PAGE_LIMIT ? 0L : list.get(list.size() - 1).getCreatedAt().toEpochSecond(ZoneOffset.UTC);
         return new MessageListDto.Response(list.stream().map(Message::toMessageBasicInfo).toList()
                 , newNextCursor);
     }
