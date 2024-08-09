@@ -7,7 +7,7 @@ import Picker from '@emoji-mart/react';
 import { ClipboardIcon, FaceSmileIcon, PaperAirplaneIcon } from '@heroicons/react/20/solid';
 import { IconButton } from 'components';
 
-import { getStorageItem, LOCAL_STORAGE_KEYS } from 'utils/storage';
+import { getStorageItem, SESSION_STORAGE_KEYS } from 'utils/storage';
 
 type EmojiDataType = {
     id: string;
@@ -45,6 +45,8 @@ export default function MessageTextarea({ onSubmit }: Props) {
         onSubmit(message);
         setMessage('');
         if (textareaRef.current) {
+            const container = document.getElementById('chat-container');
+            container?.style.setProperty('height', `${window.innerHeight - 56 - 44}px`);
             textareaRef.current.style.setProperty('height', '24px');
         }
     };
@@ -55,6 +57,8 @@ export default function MessageTextarea({ onSubmit }: Props) {
                 if (textareaRef.current) {
                     const element = textareaRef.current as HTMLTextAreaElement;
                     element.style.setProperty('height', '24px');
+                    const container = document.getElementById('chat-container');
+                    container?.style.setProperty('height', `${window.innerHeight - 56 - 44}px`);
                 }
             }
         }
@@ -69,18 +73,20 @@ export default function MessageTextarea({ onSubmit }: Props) {
         <>
             <div
                 ref={containerRef}
-                className="flex w-full flex-row gap-5 bg-[#f7fbff] py-2.5 pl-2.5 pr-5 dark:bg-[#02101c]"
+                className="dark:bg-layout-dark bg-layout-light fixed bottom-0 left-0 right-0 flex w-full flex-row gap-5 py-2.5 pl-2.5 pr-5"
             >
                 <textarea
                     ref={textareaRef}
                     value={message}
                     onChange={(e) => setMessage(e.currentTarget.value)}
                     onFocus={(e) => {
+                        const container = document.getElementById('chat-container');
+                        container?.style.setProperty('height', `${window.innerHeight - 56 - 72}px`);
                         e.currentTarget.style.height = '72px';
                         setBottom(72 + 26);
                     }}
                     maxLength={140}
-                    className="h-6 flex-1 resize-none bg-transparent text-base font-medium text-primary-950 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-50 dark:placeholder:text-primary-50/30"
+                    className="text-16-M-24 h-6 flex-1 resize-none bg-transparent text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-100 dark:placeholder:text-primary-100/30"
                 />
                 <div className="flex shrink-0 items-center gap-x-5">
                     <IconButton
@@ -117,7 +123,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
                         data={emojiData}
                         locale="ko"
                         previewPosition="none"
-                        theme={getStorageItem(LOCAL_STORAGE_KEYS.MODE) === 'light' ? 'light' : 'dark'}
+                        theme={getStorageItem(SESSION_STORAGE_KEYS.MODE) === 'light' ? 'light' : 'dark'}
                         onEmojiSelect={(data: EmojiDataType) => setMessage((prev) => prev + data.native)}
                     />
                 </div>

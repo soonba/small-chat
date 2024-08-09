@@ -2,9 +2,9 @@ import { FormEvent, useState } from 'react';
 
 import useModal from 'hooks/useModal';
 
-import Button from './Button';
 import Modal from './Modal';
-import TextField from './TextField';
+import Button from '../Button/Button';
+import TextField from '../Input/TextField';
 
 type ModalType = ReturnType<typeof useModal>;
 
@@ -25,8 +25,8 @@ export default function JoinChatModal({ isOpen, onSubmit, onClose }: ModalType) 
                     labelText="Chat Invitation Code"
                     placeholder="채팅방 코드를 입력해 주세요."
                     helperText="공유받은 채팅방 코드를 입력해 주세요."
-                    minLength={3}
-                    maxLength={20}
+                    minLength={36}
+                    maxLength={36}
                     value={code}
                     onChange={setCode}
                 />

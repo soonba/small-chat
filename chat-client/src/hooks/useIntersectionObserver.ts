@@ -10,7 +10,7 @@ const useIntersectionObserver = (callback: () => void) => {
                     }
                 });
             },
-            { threshold: 1 }
+            { threshold: 0.8, root: document.getElementById('chat-container') }
         )
     );
 

@@ -1,4 +1,4 @@
-import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 
 import { useGetMyInfo } from 'services/auth';
 
@@ -6,15 +6,12 @@ import Footer from './Footer';
 import Header from './Header';
 
 export default function BaseLayout() {
-    const { pathname } = useLocation();
     useGetMyInfo();
 
     return (
         <div className="min-h-full w-full">
             <Header />
-            <main
-                className={`${pathname === '/' ? 'pb-48' : ''} relative mx-auto h-full w-full bg-primary-50/10  pt-14 dark:bg-black/10`}
-            >
+            <main className="relative mx-auto w-full bg-primary-50/10 pt-14 dark:bg-black/10">
                 <Outlet />
             </main>
             <Footer />

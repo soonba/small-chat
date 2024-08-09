@@ -32,11 +32,14 @@ const useGetChatHistory = (chatId: string) => {
     const { onChatJoin } = useSocket();
 
     const data = useInfiniteQuery({
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
         queryKey: chatKeys.detail(chatId),
         queryFn: ({ pageParam }) => getChat(chatId, pageParam),
         initialPageParam: '',
         select: ({ pageParams, pages }) => ({ pages, pageParams }),
-        getNextPageParam: (lastPage) => lastPage.nextCursor
+        getNextPageParam: (lastPage) => (Number(lastPage.nextCursor) > 0 ? lastPage.nextCursor : undefined)
     });
 
     useEffect(() => {

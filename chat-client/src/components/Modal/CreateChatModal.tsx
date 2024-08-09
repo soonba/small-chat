@@ -2,9 +2,9 @@ import { FormEvent, useState } from 'react';
 
 import useModal from 'hooks/useModal';
 
-import Button from './Button';
 import Modal from './Modal';
-import TextField from './TextField';
+import Button from '../Button/Button';
+import TextField from '../Input/TextField';
 
 type ModalType = ReturnType<typeof useModal>;
 

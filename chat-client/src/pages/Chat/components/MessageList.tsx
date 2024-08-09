@@ -1,83 +1,68 @@
-import { UserIcon } from '@heroicons/react/20/solid';
+import { forwardRef, RefObject, useEffect, useImperativeHandle, useRef } from 'react';
+
+import { EmptyText } from 'components';
 
 import { SocketMessageType } from 'context/SocketProvider';
 import { useAccount } from 'hooks';
 import { MessageListType } from 'services/chat/useGetChatHistory';
-import { getFormatChatTime } from 'utils/date';
+
+import MessageListItem from './MessageListItem';
+import SystemMessage from './SystemMessage';
 
 interface Props {
+    isLoading: boolean;
     data: MessageListType;
     socketMessages: SocketMessageType[];
 }
 
-export default function ChatList({ data, socketMessages }: Props) {
+export interface RefHandler {
+    intersectionRef: RefObject<HTMLLIElement>;
+}
+
+const MessageList = forwardRef<RefHandler, Props>(({ isLoading, data, socketMessages }, ref) => {
     const { accountId } = useAccount();
 
+    const intersectionRef = useRef<HTMLLIElement>(null);
+    useImperativeHandle(ref, () => ({ intersectionRef }), []);
+
+    const scrollRef = useRef<HTMLLIElement>(null);
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: 'instant' as ScrollBehavior });
+    }, []);
+
     return (
-        <ul className="h-full space-y-5 p-10">
+        <ul
+            id="chat-container"
+            className="flex w-full flex-col-reverse gap-y-5 overflow-y-auto p-10"
+            style={{
+                height: window.innerHeight - 56 - 44,
+                overflowAnchor: 'none'
+            }}
+        >
+            <li ref={scrollRef} className="h-px w-full" />
+            {socketMessages?.map((message, index) => (
+                <MessageListItem key={index} isSender={message.userId === accountId} data={message} />
+            ))}
             {data.map((message, index) => {
                 const isSender = message.sender === null ? false : message.sender.userId === accountId;
-
                 return message.sender === null ? (
-                    <p
-                        key={index}
-                        className="w-full text-center text-sm font-bold text-primary-950 dark:text-primary-100"
-                    >
-                        {message.message}
-                    </p>
+                    <SystemMessage key={index} text={message.message} />
                 ) : (
-                    <div key={index} className={`${isSender ? 'ml-auto' : 'mr-auto'} w-max`}>
-                        <div className={`${isSender ? 'flex-row-reverse' : 'flex-row'} flex items-start gap-x-2.5`}>
-                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary-900 dark:bg-primary-100">
-                                <UserIcon className="h-6 w-6 text-primary-100 dark:text-primary-900" />
-                            </div>
-                            <p className="text-sm font-bold text-primary-900 dark:text-primary-100">
-                                {message.sender.nickname}
-                            </p>
-                        </div>
-                        <div
-                            className={`${isSender ? 'mr-2.5 flex-row-reverse' : 'ml-2.5 flex-row'} -mt-2.5 flex items-end gap-x-2.5`}
-                        >
-                            <div
-                                className={`${isSender ? 'mr-[50px] rounded-tr-none' : 'ml-[50px] rounded-tl-none'}  min-w-80 max-w-md whitespace-pre-wrap break-all rounded-3xl  bg-primary-50 p-5 text-sm`}
-                            >
-                                {message.message}
-                            </div>
-                            <time className="text-xs font-light text-primary-950/50 dark:text-primary-50/50">
-                                {getFormatChatTime(message.createdAt)}
-                            </time>
-                        </div>
-                    </div>
+                    <MessageListItem
+                        key={index}
+                        isSender={isSender}
+                        data={{ ...message, userId: message.sender.userId, nickname: message.sender.nickname }}
+                    />
                 );
             })}
-            {socketMessages?.map((message, index) => {
-                const isSender = message.userId === accountId;
-
-                return (
-                    <div key={index} className={`${isSender ? 'ml-auto' : 'mr-auto'} w-max`}>
-                        <div className={`${isSender ? 'flex-row-reverse' : 'flex-row'} flex items-start gap-x-2.5`}>
-                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary-900 dark:bg-primary-100">
-                                <UserIcon className="h-6 w-6 text-primary-100 dark:text-primary-900" />
-                            </div>
-                            <p className="text-sm font-bold text-primary-900 dark:text-primary-100">
-                                {message.nickname}
-                            </p>
-                        </div>
-                        <div
-                            className={`${isSender ? 'mr-2.5 flex-row-reverse' : 'ml-2.5 flex-row'} -mt-2.5 flex items-end gap-x-2.5`}
-                        >
-                            <div
-                                className={`${isSender ? 'mr-[50px] rounded-tr-none' : 'ml-[50px] rounded-tl-none'}  min-w-80 max-w-md whitespace-pre-wrap break-all rounded-3xl  bg-primary-50 p-5 text-sm`}
-                            >
-                                {message.message}
-                            </div>
-                            <time className="text-xs font-light text-primary-950/50 dark:text-primary-50/50">
-                                {getFormatChatTime(message.createdAt || new Date())}
-                            </time>
-                        </div>
-                    </div>
-                );
-            })}
+            {isLoading && (
+                <li className="flex h-[200px] w-full items-center justify-center">
+                    <EmptyText text="Loading...!" />
+                </li>
+            )}
+            <li ref={intersectionRef} className="h-px w-full" />
         </ul>
     );
-}
+});
+
+export default MessageList;

@@ -34,11 +34,11 @@ const getIconSizeStyle = (size: SizeType) => {
 const getIconVariantStyle = (variant: VariantType) => {
     switch (variant) {
         case 'outlined':
-            return 'text-primary-900 dark:text-primary-50';
+            return 'text-primary-900 dark:text-primary-100';
         case 'contained':
-            return 'text-primary-50 dark:text-primary-900';
+            return 'text-primary-100 dark:text-primary-900';
         default:
-            return 'text-primary-900 dark:text-primary-50 hover:opacity-80';
+            return 'text-primary-900 dark:text-primary-100 hover:opacity-80';
     }
 };
 

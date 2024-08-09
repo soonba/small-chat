@@ -96,16 +96,12 @@ export default function SocketProvider({ children }: Props) {
 
     const onMessageReceive = useCallback(() => {
         socket.on(EventType.MESSAGE, (message: SocketMessageType) => {
-            console.log('===================== on Message receive =====================');
-            console.log(JSON.stringify(message, null, 2));
-            console.log('===================== on Message receive =====================');
             setMessage((prev) => [...prev, message]);
         });
     }, []);
 
     const onChatLeave = useCallback((chatIds: string[]) => {
         chatIds.forEach((chatId) => {
-            console.log('leaving room Id : ', chatId);
             socket.emit(EventType.UN_SUBSCRIBE, { chatId });
         });
         socket.disconnect();
