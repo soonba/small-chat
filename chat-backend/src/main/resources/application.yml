@@ -25,6 +25,7 @@ spring:
 auth:
   key: my-small-chat-applications-jwt-sign-key
 
+client-origin: http://localhost:3000
 
 producers:
   bootstrap-servers: kafka-1:29092
