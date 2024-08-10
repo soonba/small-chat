@@ -4,10 +4,7 @@ import com.smallchat.backend.chat.application.usecase.CreateChatUseCase;
 import com.smallchat.backend.chat.application.usecase.JoinChatUseCase;
 import com.smallchat.backend.chat.application.usecase.LeaveChatUseCase;
 import com.smallchat.backend.chat.application.usecase.ParticipatingChatsUseCase;
-import com.smallchat.backend.chat.framework.web.dto.ChatBasicInfoListDto;
-import com.smallchat.backend.chat.framework.web.dto.CreateChatDto;
-import com.smallchat.backend.chat.framework.web.dto.JoinChatDto;
-import com.smallchat.backend.chat.framework.web.dto.LeaveChatDto;
+import com.smallchat.backend.chat.framework.web.dto.*;
 import com.smallchat.backend.global.framework.web.dto.ApiResponse;
 import com.smallchat.backend.global.utils.JwtProvider;
 import com.smallchat.backend.global.utils.TokenPayload;
@@ -56,6 +53,13 @@ public class ChatController {
     public ResponseEntity<ApiResponse<ChatBasicInfoListDto.Response>> getChattingChatList(@RequestHeader("Authorization") String authorization) {
         TokenPayload tokenPayload = jwtProvider.parseFromBearer(authorization);
         ChatBasicInfoListDto.Response response = participatingChatsUseCase.getChatList(tokenPayload.userId());
+        return ResponseEntity.ok(new ApiResponse<>(response));
+    }
+
+    @GetMapping("/{chatId}")
+    public ResponseEntity<ApiResponse<ChatDetail.Response>> getChattingChatList(@RequestHeader("Authorization") String authorization, @PathVariable String chatId) {
+        jwtProvider.parseFromBearer(authorization);
+        ChatDetail.Response response = participatingChatsUseCase.getChatDetail(chatId);
         return ResponseEntity.ok(new ApiResponse<>(response));
     }
 }

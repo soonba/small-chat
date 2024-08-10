@@ -6,6 +6,7 @@ import com.smallchat.backend.chat.application.usecase.ParticipatingChatsUseCase;
 import com.smallchat.backend.chat.domain.model.Chat;
 import com.smallchat.backend.chat.domain.model.vo.Message;
 import com.smallchat.backend.chat.framework.web.dto.ChatBasicInfoListDto;
+import com.smallchat.backend.chat.framework.web.dto.ChatDetail;
 import com.smallchat.backend.user.application.usecase.UserChatListUseCase;
 import com.smallchat.backend.user.domain.model.ParticipatingChat;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,11 @@ public class ParticipatingChatsInputPort implements ParticipatingChatsUseCase {
         List<Message> lastMessageList = lastChatMessageUseCase.getLastMessageList(userJoinedChatIdList);
 
         return new ChatBasicInfoListDto.Response(chatList.stream().map(el -> el.toChatBasicInfo(lastMessageList)).toList());
+    }
+
+    @Override
+    public ChatDetail.Response getChatDetail(String chatId) {
+        Chat chat = chatOutputPort.load(chatId);
+        return new ChatDetail.Response(chatId,chat.getName());
     }
 }
