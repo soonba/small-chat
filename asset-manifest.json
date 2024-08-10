@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.7dd5957e.css",
-    "main.js": "/static/js/main.87bac65c.js",
-    "index.html": "/index.html"
+    "main.css": "/small-chat/static/css/main.7dd5957e.css",
+    "main.js": "/small-chat/static/js/main.87bac65c.js",
+    "index.html": "/small-chat/index.html"
   },
   "entrypoints": [
     "static/css/main.7dd5957e.css",
