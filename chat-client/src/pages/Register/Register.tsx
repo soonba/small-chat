@@ -56,7 +56,7 @@ export default function Register() {
     return (
         <div className="mt-10 flex w-full items-start justify-center">
             <form onSubmit={handleSubmit} className="flex w-full max-w-screen-md flex-col gap-5 px-5">
-                <h1 className="text-36-B-40 mb-5 text-center text-primary-900 dark:text-primary-100">회원가입</h1>
+                <h1 className="mb-5 text-center text-36-B-40 text-primary-900 dark:text-primary-100">회원가입</h1>
                 <TextField
                     labelText="Nickname"
                     type="text"

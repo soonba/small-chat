@@ -17,8 +17,8 @@ export default function Component() {
                 <h2 className="text-30-B-36">Component</h2>
             </div>
             <div className="flex flex-wrap gap-10">
-                <div className="dark:bg-layout-dark bg-layout-light flex flex-col self-start rounded p-5 shadow-md shadow-primary-100 dark:shadow-primary-950">
-                    <h3 className="text-16-B-24 mb-2.5 text-gray-900 dark:text-gray-100">Icon Button</h3>
+                <div className="flex flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+                    <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Icon Button</h3>
                     <div className="flex items-center gap-x-2.5">
                         <IconButton
                             aria-label="change to light mode"
@@ -75,8 +75,8 @@ export default function Component() {
                         />
                     </div>
                 </div>
-                <div className="dark:bg-layout-dark bg-layout-light min-w-96 max-w-lg flex-1 flex-col rounded p-5 shadow-md shadow-primary-100 dark:shadow-primary-950">
-                    <h3 className="text-16-B-24 mb-2.5 text-gray-900 dark:text-gray-100">Button</h3>
+                <div className="min-w-96 max-w-lg flex-1 flex-col rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+                    <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Button</h3>
                     <div className="flex w-full flex-col items-start gap-y-2.5">
                         <Button text="로그아웃" variant="text" size="small" />
                         <Button text="참여하기" type="submit" variant="contained" size="medium" />
@@ -85,8 +85,8 @@ export default function Component() {
                         <Button type="button" text="회원가입" variant="outlined" size="large" />
                     </div>
                 </div>
-                <div className="dark:bg-layout-dark bg-layout-light flex min-w-80 flex-1 flex-col self-start rounded p-5 shadow-md shadow-primary-100 dark:shadow-primary-950">
-                    <h3 className="text-16-B-24 mb-2.5 text-gray-900 dark:text-gray-100">TextField</h3>
+                <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+                    <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">TextField</h3>
                     <div className="flex flex-col gap-y-2.5">
                         <TextField placeholder="안녕하세요." />
                         <TextField disabled defaultValue="비활성화 상태입니다." />

@@ -10,8 +10,8 @@ export default function Chat() {
                 <h2 className="text-30-B-36">Chat / Message</h2>
             </div>
             <div className="flex flex-col gap-10">
-                <div className="dark:bg-layout-dark bg-layout-light flex w-full flex-col self-start rounded p-5 shadow-md shadow-primary-100 dark:shadow-primary-950">
-                    <h3 className="text-16-B-24 mb-2.5 text-gray-900 dark:text-gray-100">Chat</h3>
+                <div className="flex w-full flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+                    <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Chat</h3>
                     <div className="flex flex-col gap-y-2.5">
                         <ul>
                             <ChatListItem
@@ -25,8 +25,8 @@ export default function Chat() {
                         </ul>
                     </div>
                 </div>
-                <div className="dark:bg-layout-dark bg-layout-light flex w-full flex-col self-start rounded p-5 shadow-md shadow-primary-100 dark:shadow-primary-950">
-                    <h3 className="text-16-B-24 mb-2.5 text-gray-900 dark:text-gray-100">Message</h3>
+                <div className="flex w-full flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+                    <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Message</h3>
                     <div className="flex flex-col gap-y-2.5">
                         <ul className="gap-y-5">
                             <SystemMessage text="작은대화방이 생성되었습니다." />

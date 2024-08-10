@@ -29,7 +29,7 @@ export default function ChatListItem({ data }: Props) {
                                 {getFormatChatTime(data.lastMessageTime)}
                             </time>
                         </div>
-                        <p className="text-14-R-20 line-clamp-2 text-primary-900 dark:text-primary-100">
+                        <p className="line-clamp-2 text-14-R-20 text-primary-900 dark:text-primary-100">
                             {data.lastMessage}
                         </p>
                     </div>

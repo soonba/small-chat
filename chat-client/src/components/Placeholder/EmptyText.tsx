@@ -3,5 +3,5 @@ interface Props {
 }
 
 export default function EmptyText({ text }: Props) {
-    return <p className="text-24-BL-32 text-center text-primary-900 dark:text-primary-100">{text}</p>;
+    return <p className="text-center text-24-BL-32 text-primary-900 dark:text-primary-100">{text}</p>;
 }

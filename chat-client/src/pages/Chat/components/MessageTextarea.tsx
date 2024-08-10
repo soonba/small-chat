@@ -73,7 +73,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
         <>
             <div
                 ref={containerRef}
-                className="dark:bg-layout-dark bg-layout-light fixed bottom-0 left-0 right-0 flex w-full flex-row gap-5 py-2.5 pl-2.5 pr-5"
+                className="fixed bottom-0 left-0 right-0 flex w-full flex-row gap-5 bg-layout-light py-2.5 pl-2.5 pr-5 dark:bg-layout-dark"
             >
                 <textarea
                     ref={textareaRef}
@@ -86,7 +86,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
                         setBottom(72 + 26);
                     }}
                     maxLength={140}
-                    className="text-16-M-24 h-6 flex-1 resize-none bg-transparent text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-100 dark:placeholder:text-primary-100/30"
+                    className="h-6 flex-1 resize-none bg-transparent text-16-M-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-100 dark:placeholder:text-primary-100/30"
                 />
                 <div className="flex shrink-0 items-center gap-x-5">
                     <IconButton

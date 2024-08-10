@@ -38,10 +38,10 @@ export default function Header() {
     };
 
     return (
-        <header className="dark:bg-layout-dark bg-layout-light fixed left-0 right-0 top-0 z-10 rounded-b-md shadow-sm shadow-primary-100 dark:shadow-primary-950">
+        <header className="fixed left-0 right-0 top-0 z-10 rounded-b-md bg-layout-light shadow-sm shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
             <div className="mx-auto flex h-14 w-full items-center justify-between rounded-b-md p-5">
                 <Link reloadDocument to="/">
-                    <h1 className="font-jua text-24-R-32 text-center text-primary-900 dark:text-primary-100">
+                    <h1 className="text-center font-jua text-24-R-32 text-primary-900 dark:text-primary-100">
                         작은 대화
                     </h1>
                 </Link>

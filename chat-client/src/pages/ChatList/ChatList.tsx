@@ -15,7 +15,7 @@ export default function Chat() {
                     <EmptyText text="Loading...!" />
                 </div>
             ) : (
-                <ul className="min-h-inherit mb-28 h-full space-y-2.5">
+                <ul className="mb-28 h-full min-h-inherit space-y-2.5">
                     {!data || data.length === 0 ? (
                         <li className="flex h-80 w-full items-center justify-center">
                             <EmptyText text="채팅에 참여해 보세요." />

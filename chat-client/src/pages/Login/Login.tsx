@@ -38,7 +38,7 @@ export default function Login() {
     return (
         <div className="mt-10 flex w-full items-start justify-center">
             <form onSubmit={handleLogin} className="flex w-full max-w-screen-md flex-col gap-5 px-5">
-                <h1 className="text-36-B-40 mb-10 text-center text-primary-900 dark:text-primary-100">작은 대화</h1>
+                <h1 className="mb-10 text-center text-36-B-40 text-primary-900 dark:text-primary-100">작은 대화</h1>
                 <TextField
                     labelText="Id"
                     type="text"

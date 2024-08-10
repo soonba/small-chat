@@ -54,7 +54,7 @@ export default function Chat() {
     return (
         <div className="flex h-full w-full flex-col justify-between">
             {isFetching ? (
-                <div className="text-24-BL-32 flex h-[calc(100vh-56px)] w-full items-center justify-center text-primary-900 dark:text-primary-100">
+                <div className="flex h-[calc(100vh-56px)] w-full items-center justify-center text-24-BL-32 text-primary-900 dark:text-primary-100">
                     Loading...!
                 </div>
             ) : (

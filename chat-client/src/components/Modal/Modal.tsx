@@ -36,7 +36,7 @@ export default function Modal({ isOpen, title, children, onClose }: Props) {
                         >
                             <XMarkIcon className="h-8 w-8 text-primary-900 hover:opacity-80 dark:text-primary-100" />
                         </button>
-                        <h2 className="text-20-B-28 mb-10 text-primary-900 dark:text-primary-100">{title}</h2>
+                        <h2 className="mb-10 text-20-B-28 text-primary-900 dark:text-primary-100">{title}</h2>
                         {children}
                     </div>
                 </div>

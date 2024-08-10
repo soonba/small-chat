@@ -30,14 +30,14 @@ const background: Record<string, Record<string, string>> = {
 export default function Color() {
     return (
         <section id="color" className="scroll-m-16 text-primary-900 dark:text-primary-100">
-            <h2 className="text-30-B-36 mb-10">Color</h2>
-            <div className="dark:bg-layout-dark bg-layout-light space-y-5 rounded p-5 shadow-md shadow-primary-100 dark:shadow-primary-950">
+            <h2 className="mb-10 text-30-B-36">Color</h2>
+            <div className="space-y-5 rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
                 <h3 className="text-16-B-24 text-gray-900 dark:text-gray-100">Primary</h3>
                 <ul className="flex w-full items-center gap-x-5 rounded">
                     {Object.keys(primary).map((key) => (
                         <li key={key} className="w-full">
                             <div style={{ backgroundColor: primary[Number(key)] }} className="h-14 w-full" />
-                            <p className="text-14-B-20 font-jua">
+                            <p className="font-jua text-14-B-20">
                                 <small className="font-inherit">{key}</small>
                                 <br />
                                 {primary[Number(key)]}
@@ -59,7 +59,7 @@ export default function Color() {
                                             }}
                                             className="h-14 w-full"
                                         />
-                                        <p className="text-14-B-20 font-jua">
+                                        <p className="font-jua text-14-B-20">
                                             <small className="font-inherit">
                                                 <span className="capitalize">{color}</span> - {key}
                                             </small>
@@ -76,7 +76,7 @@ export default function Color() {
                 <ul className="flex w-full items-center gap-x-5 rounded">
                     <li className="w-full max-w-36">
                         <div style={{ backgroundColor: primary[900] }} className="h-14 w-full" />
-                        <p className="text-14-B-20 font-jua">
+                        <p className="font-jua text-14-B-20">
                             <small className="font-inherit">Light</small>
                             <br />
                             {primary[900]}
@@ -84,7 +84,7 @@ export default function Color() {
                     </li>
                     <li className="w-full max-w-36">
                         <div style={{ backgroundColor: primary[900], opacity: 0.5 }} className="h-14 w-full" />
-                        <p className="text-14-B-20 font-jua">
+                        <p className="font-jua text-14-B-20">
                             <small className="font-inherit">Light / 50%</small>
                             <br />
                             {primary[900]}, opacity 50
@@ -92,7 +92,7 @@ export default function Color() {
                     </li>
                     <li className="w-full max-w-36">
                         <div style={{ backgroundColor: primary[100] }} className="h-14 w-full" />
-                        <p className="text-14-B-20 font-jua">
+                        <p className="font-jua text-14-B-20">
                             <small className="font-inherit">Dark</small>
                             <br />
                             {primary[100]}
@@ -100,7 +100,7 @@ export default function Color() {
                     </li>
                     <li className="w-full max-w-36">
                         <div style={{ backgroundColor: primary[100], opacity: 0.5 }} className="h-14 w-full" />
-                        <p className="text-14-B-20 font-jua">
+                        <p className="font-jua text-14-B-20">
                             <small className="font-inherit">Dark / 50%</small>
                             <br />
                             {primary[100]}, opacity 50

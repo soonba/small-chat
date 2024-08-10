@@ -1,4 +1,4 @@
-import { createHashRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import { AuthLayout, BaseLayout } from 'layout';
 import Chat from 'pages/Chat';
@@ -20,6 +20,10 @@ export default function App() {
                               children: [
                                   {
                                       index: true,
+                                      element: <Navigate to="/guide" replace />
+                                  },
+                                  {
+                                      path: 'guide',
                                       element: <Guide />
                                   },
                                   {
