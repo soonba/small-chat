@@ -9,7 +9,7 @@ interface Props {
 }
 export default function MessageListItem({ data, isSender }: Props) {
     return (
-        <li className={`${isSender ? 'ml-auto' : 'mr-auto'} w-max `}>
+        <li className={`${isSender ? 'ml-auto' : 'mr-auto'} w-max`}>
             <div className={`${isSender ? 'flex-row-reverse' : 'flex-row'} flex items-start gap-x-2.5`}>
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary-900 dark:bg-primary-100">
                     <UserIcon className="h-6 w-6 text-primary-100 dark:text-primary-900" />

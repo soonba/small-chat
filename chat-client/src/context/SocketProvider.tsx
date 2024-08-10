@@ -28,6 +28,7 @@ interface SocketContextType {
     onChatJoin: (chatIds: string[]) => void;
     onMessageSend: (message: MessageBodyType) => void;
     onMessageReceive: () => void;
+    onCurrentChatLeave: (chatId: string) => void;
     onChatLeave: (chatIds: string[]) => void;
 }
 
@@ -100,6 +101,10 @@ export default function SocketProvider({ children }: Props) {
         });
     }, []);
 
+    const onCurrentChatLeave = useCallback((chatId: string) => {
+        socket.emit(EventType.UN_SUBSCRIBE, { chatId });
+    }, []);
+
     const onChatLeave = useCallback((chatIds: string[]) => {
         chatIds.forEach((chatId) => {
             socket.emit(EventType.UN_SUBSCRIBE, { chatId });
@@ -123,9 +128,19 @@ export default function SocketProvider({ children }: Props) {
             onChatJoin,
             onMessageSend,
             onMessageReceive,
+            onCurrentChatLeave,
             onChatLeave
         }),
-        [isConnected, message, onSocketConnect, onChatJoin, onMessageSend, onMessageReceive, onChatLeave]
+        [
+            isConnected,
+            message,
+            onSocketConnect,
+            onChatJoin,
+            onMessageSend,
+            onMessageReceive,
+            onCurrentChatLeave,
+            onChatLeave
+        ]
     );
 
     return <SocketContext.Provider value={context}>{children}</SocketContext.Provider>;

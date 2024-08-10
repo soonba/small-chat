@@ -1,4 +1,4 @@
-import { FocusEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { FocusEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import emojiData from '@emoji-mart/data';
@@ -51,14 +51,14 @@ export default function MessageTextarea({ onSubmit }: Props) {
         }
     };
 
-    const handleEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    // ref : https://minjung-jeon.github.io/IME-keyCode-229-issue/
+    const handleEnter = (e: KeyboardEvent) => {
         if (e.shiftKey && e.key === 'Enter') {
             setMessage((prev) => `${prev}\n`.trim());
-        } else if (e.key === 'Enter') {
+        } else if (!e.isComposing && e.key === 'Enter') {
             e.preventDefault();
             if (message.trim().length > 0) {
                 handleSubmit();
-                e.currentTarget.blur();
             } else {
                 // eslint-disable-next-line no-alert
                 alert('메시지를 입력해 주세요!');
@@ -101,13 +101,15 @@ export default function MessageTextarea({ onSubmit }: Props) {
                     ref={textareaRef}
                     value={message}
                     onChange={(e) => setMessage(e.currentTarget.value)}
-                    onKeyDown={handleEnter}
+                    onKeyDown={(e) => handleEnter(e.nativeEvent)}
                     onFocus={handleFocus}
                     maxLength={140}
                     className="h-6 flex-1 resize-none bg-transparent text-16-M-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-100 dark:placeholder:text-primary-100/30"
                 />
                 <div className="flex shrink-0 items-center gap-x-5">
                     <IconButton
+                        aria-label="open emoji picker"
+                        title="이모티콘 보기"
                         variant="text"
                         size="small"
                         icon={<FaceSmileIcon />}
@@ -124,7 +126,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
                         />
                     ) : (
                         <IconButton
-                            aria-label="submit"
+                            aria-label="send message"
                             title="메시지 보내기"
                             disabled={!message || message.trim().length === 0}
                             variant="text"

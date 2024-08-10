@@ -2,7 +2,8 @@ export const chatKeys = {
     all: ['chats'] as const,
     lists: () => [...chatKeys.all, 'list'] as const,
     details: () => [...chatKeys.all, 'detail'] as const,
-    detail: (id: string) => [...chatKeys.details(), id] as const
+    detail: (id: string) => [...chatKeys.details(), id] as const,
+    history: (id: string) => [...chatKeys.details(), 'history', id] as const
 };
 
 export const usersKeys = {

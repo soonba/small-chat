@@ -1,6 +1,6 @@
-import { forwardRef, RefObject, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, RefObject, useImperativeHandle, useRef } from 'react';
 
-import { EmptyText } from 'components';
+import { Loader } from 'components';
 
 import { SocketMessageType } from 'context/SocketProvider';
 import { useAccount } from 'hooks';
@@ -25,21 +25,15 @@ const MessageList = forwardRef<RefHandler, Props>(({ isLoading, data, socketMess
     const intersectionRef = useRef<HTMLLIElement>(null);
     useImperativeHandle(ref, () => ({ intersectionRef }), []);
 
-    const scrollRef = useRef<HTMLLIElement>(null);
-    useEffect(() => {
-        scrollRef.current?.scrollIntoView({ behavior: 'instant' as ScrollBehavior });
-    }, []);
-
     return (
         <ul
             id="chat-container"
-            className="flex w-full flex-col-reverse gap-y-5 overflow-y-auto p-10"
+            className="flex w-full flex-col-reverse gap-y-5 overflow-auto p-5"
             style={{
                 height: window.innerHeight - 56 - 44,
                 overflowAnchor: 'none'
             }}
         >
-            <li ref={scrollRef} className="h-px w-full" />
             {socketMessages?.map((message, index) => (
                 <MessageListItem key={index} isSender={message.userId === accountId} data={message} />
             ))}
@@ -55,12 +49,12 @@ const MessageList = forwardRef<RefHandler, Props>(({ isLoading, data, socketMess
                     />
                 );
             })}
+            <li ref={intersectionRef} className="h-px w-full" />
             {isLoading && (
-                <li className="flex h-[200px] w-full items-center justify-center">
-                    <EmptyText text="Loading...!" />
+                <li className="flex h-32 w-full items-center justify-center">
+                    <Loader />
                 </li>
             )}
-            <li ref={intersectionRef} className="h-px w-full" />
         </ul>
     );
 });
