@@ -23,7 +23,7 @@ public class BackendApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins(origin)
+                        .allowedOrigins(origin,"http://localhost:3000")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
                                 HttpMethod.HEAD.name(),
