@@ -1,14 +1,14 @@
 version: "3.8"
 services:
-  api-gateway:
-    build:
-      context: api-gateway/
-    image: seonba/api-gateway
-    container_name: api-gateway
-    ports:
-      - "80:80"
-    networks:
-      - small-chat
+#  api-gateway:
+#    build:
+#      context: api-gateway/
+#    image: seonba/api-gateway
+#    container_name: api-gateway
+#    ports:
+#      - "80:80"
+#    networks:
+#      - small-chat
   mongodb:
     image: mongo
     networks:
@@ -36,68 +36,69 @@ services:
   #      - mongodb
   #    depends_on:
   #      - mongodb
-  #  chat-client:
-  #    build:
-  #      context: chat-client/
-  #    container_name: chat-client
-  #    image: seonba/chat-client
-  #    ports:
-  #      - "3000:3000"
-  #    networks:
-  #      - small-chat
-  #    restart: always
-  #    depends_on:
-  #      - chat-service
-  chat-service:
-    build:
-      context: chat-service/
-    image: seonba/chat-service
-    container_name: chat-service
-    ports:
-      - "3010:3010"
-    networks:
-      - small-chat
-    restart: always
-  chat-backend:
-    platform: linux/arm64
-    build:
-      context: chat-backend/
-    image: seonba/chat-backend
-    container_name: chat-backend
-    ports:
-      - "8080:8080"
-    networks:
-      - small-chat
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/small_chat
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/small_chat
-    restart: always
-    depends_on:
-      - postgres
-  postgres:
-    container_name: postgres
-    image: postgres:14-alpine
-    ports:
-      - "5434:5432"
-    restart: always
-    networks:
-      - small-chat
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=small_chat
-  pubsub:
-    image: redis:6.2.4-alpine
-    container_name: redis_pubsub
-    networks:
-      - small-chat
-    hostname: redis
-    ports:
-      - "6379:6379"
-    restart: always
+#  chat-client:
+#    container_name: chat-client
+#    image: seonba/chat-client
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - small-chat
+#    restart: always
+#    environment:
+#      - REACT_APP_API_URL:http://api-gateway/api
+#      - REACT_APP_SOCKET_API_URL:http://api-gateway
+#    depends_on:
+#      - chat-service
+#  chat-service:
+#    build:
+#      context: chat-service/
+#    image: seonba/chat-service
+#    container_name: chat-service
+#    ports:
+#      - "3010:3010"
+#    networks:
+#      - small-chat
+#    restart: always
+#  chat-backend:
+##    platform: linux/arm64
+#    build:
+#      context: chat-backend/
+#    image: seonba/chat-backend
+#    container_name: chat-backend
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - small-chat
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/small_chat
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+#      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/small_chat
+#    restart: always
+#    depends_on:
+#      - postgres
+#  postgres:
+#    container_name: postgres
+#    image: postgres:14-alpine
+#    ports:
+#      - "5434:5432"
+#    restart: always
+#    networks:
+#      - small-chat
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=small_chat
+#  pubsub:
+#    image: redis:6.2.4-alpine
+#    container_name: redis_pubsub
+#    networks:
+#      - small-chat
+#    hostname: redis
+#    ports:
+#      - "6379:6379"
+#    restart: always
   zookeeper-1:
     # arm- 5.5.1 amd- latest
     image: confluentinc/cp-zookeeper:latest
@@ -115,7 +116,7 @@ services:
     #    image: confluentinc/cp-kafka:5.5.1
     networks:
       - small-chat
-    container_name: kafka-1
+    container_name: kafka
     ports:
       - '9092:9092'
     depends_on:
