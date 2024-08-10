@@ -24,7 +24,7 @@ export default function AuthLayout() {
                     </div>
                 </div>
             </header>
-            <main className="relative mx-auto h-full w-full bg-primary-50/10 pb-48 pt-14 dark:bg-black/10">
+            <main className="h-full w-full bg-primary-50/10 pb-48 pt-14 dark:bg-black/10">
                 <Outlet />
             </main>
             <ScrollRestoration />

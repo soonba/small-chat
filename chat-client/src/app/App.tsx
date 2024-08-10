@@ -1,6 +1,6 @@
 import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom';
 
-import { AuthLayout, BaseLayout } from 'layout';
+import { AuthLayout, BaseLayout, ChatLayout } from 'layout';
 import Chat from 'pages/Chat';
 import ChatList from 'pages/ChatList';
 import Guide from 'pages/Guide';
@@ -45,9 +45,15 @@ export default function App() {
                                               <ChatList />
                                           </ProtectedRoute>
                                       )
-                                  },
+                                  }
+                              ]
+                          },
+                          {
+                              path: '/chat',
+                              element: <ChatLayout />,
+                              children: [
                                   {
-                                      path: 'chat/:id',
+                                      path: ':id',
                                       element: (
                                           <ProtectedRoute>
                                               <Chat />

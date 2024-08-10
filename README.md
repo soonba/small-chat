@@ -1,3 +1,8 @@
+24.08 현재 v3.0 리팩토링 진행 중입니다.
+
+</br></br></br></br>
+### ↓과거 문서(v2.0)
+</br>
 # 작은 대화 (small-chat)
 
 small-chat은 [graphql subscription](https://www.apollographql.com/docs/react/data/subscriptions) 기술을 기반으로 하는 다대다 프라이빗 채팅

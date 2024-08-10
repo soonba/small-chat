@@ -34,7 +34,13 @@ export default function Component() {
                             size="small"
                             icon={<SunIcon />}
                         />
-                        <IconButton variant="text" size="small" icon={<FaceSmileIcon />} />
+                        <IconButton
+                            aria-label="open emoji picker"
+                            title="이모티콘 보기"
+                            variant="text"
+                            size="small"
+                            icon={<FaceSmileIcon />}
+                        />
                         <IconButton
                             aria-label="copy chat id"
                             title="코드 공유하기"
@@ -43,7 +49,7 @@ export default function Component() {
                             icon={<ClipboardIcon />}
                         />
                         <IconButton
-                            aria-label="submit"
+                            aria-label="send message"
                             title="메시지 보내기"
                             variant="text"
                             size="small"

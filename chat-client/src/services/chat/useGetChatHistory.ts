@@ -35,11 +35,12 @@ const useGetChatHistory = (chatId: string) => {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-        queryKey: chatKeys.detail(chatId),
+        queryKey: chatKeys.history(chatId),
         queryFn: ({ pageParam }) => getChat(chatId, pageParam),
         initialPageParam: '',
         select: ({ pageParams, pages }) => ({ pages, pageParams }),
-        getNextPageParam: (lastPage) => (Number(lastPage.nextCursor) > 0 ? lastPage.nextCursor : undefined)
+        getNextPageParam: () => undefined,
+        getPreviousPageParam: (lastPage) => (Number(lastPage.nextCursor) > 0 ? lastPage.nextCursor : undefined)
     });
 
     useEffect(() => {
