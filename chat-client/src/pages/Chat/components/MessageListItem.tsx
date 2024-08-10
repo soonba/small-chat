@@ -20,7 +20,7 @@ export default function MessageListItem({ data, isSender }: Props) {
                 className={`${isSender ? 'mr-2.5 flex-row-reverse' : 'ml-2.5 flex-row'} -mt-2.5 flex items-end gap-x-2.5`}
             >
                 <p
-                    className={`${isSender ? 'mr-[50px] rounded-tr-none' : 'ml-[50px] rounded-tl-none'} min-w-80 max-w-md whitespace-pre-wrap break-all rounded-3xl bg-primary-50 p-5 text-14-R-20 text-primary-900`}
+                    className={`${isSender ? 'mr-[50px] rounded-tr-none' : 'ml-[50px] rounded-tl-none'} w-max max-w-md whitespace-pre-wrap break-all rounded-3xl bg-primary-50 p-5 text-14-R-20 text-primary-900`}
                 >
                     {data.message}
                 </p>

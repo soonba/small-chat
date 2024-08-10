@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { FocusEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import emojiData from '@emoji-mart/data';
@@ -42,13 +42,35 @@ export default function MessageTextarea({ onSubmit }: Props) {
     };
 
     const handleSubmit = () => {
-        onSubmit(message);
+        onSubmit(message.trim());
         setMessage('');
         if (textareaRef.current) {
             const container = document.getElementById('chat-container');
             container?.style.setProperty('height', `${window.innerHeight - 56 - 44}px`);
             textareaRef.current.style.setProperty('height', '24px');
         }
+    };
+
+    const handleEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.shiftKey && e.key === 'Enter') {
+            setMessage((prev) => `${prev}\n`.trim());
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (message.trim().length > 0) {
+                handleSubmit();
+                e.currentTarget.blur();
+            } else {
+                // eslint-disable-next-line no-alert
+                alert('메시지를 입력해 주세요!');
+            }
+        }
+    };
+
+    const handleFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
+        const container = document.getElementById('chat-container');
+        container?.style.setProperty('height', `${window.innerHeight - 56 - 72}px`);
+        e.currentTarget.style.height = '72px';
+        setBottom(72 + 26);
     };
 
     useEffect(() => {
@@ -79,12 +101,8 @@ export default function MessageTextarea({ onSubmit }: Props) {
                     ref={textareaRef}
                     value={message}
                     onChange={(e) => setMessage(e.currentTarget.value)}
-                    onFocus={(e) => {
-                        const container = document.getElementById('chat-container');
-                        container?.style.setProperty('height', `${window.innerHeight - 56 - 72}px`);
-                        e.currentTarget.style.height = '72px';
-                        setBottom(72 + 26);
-                    }}
+                    onKeyDown={handleEnter}
+                    onFocus={handleFocus}
                     maxLength={140}
                     className="h-6 flex-1 resize-none bg-transparent text-16-M-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-100 dark:placeholder:text-primary-100/30"
                 />
@@ -108,7 +126,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
                         <IconButton
                             aria-label="submit"
                             title="메시지 보내기"
-                            disabled={!message}
+                            disabled={!message || message.trim().length === 0}
                             variant="text"
                             size="small"
                             icon={<PaperAirplaneIcon />}

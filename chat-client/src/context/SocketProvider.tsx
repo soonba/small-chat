@@ -96,7 +96,7 @@ export default function SocketProvider({ children }: Props) {
 
     const onMessageReceive = useCallback(() => {
         socket.on(EventType.MESSAGE, (message: SocketMessageType) => {
-            setMessage((prev) => [...prev, message]);
+            setMessage((prev) => [message, ...prev]);
         });
     }, []);
 
