@@ -8,5 +8,7 @@ import java.util.List;
 public interface ParticipatingChatOutputPort {
     void joinChat(User user, String chatId);
 
+    void leave(User user, String chatId);
+
     List<ParticipatingChat> getParticipatingChats(User user);
 }

@@ -20,6 +20,12 @@ public class ParticipatingChatOutputAdapter implements ParticipatingChatOutputPo
     }
 
     @Override
+    public void leave(User user, String chatId) {
+        participatingChatRepository.findByUserAndChatId(user, chatId)
+                .ifPresent((el) -> participatingChatRepository.deleteById(el.getParticipatingChatId()));
+    }
+
+    @Override
     public List<ParticipatingChat> getParticipatingChats(User user) {
         return participatingChatRepository.findByUser(user);
     }

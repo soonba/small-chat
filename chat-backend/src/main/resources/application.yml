@@ -37,6 +37,8 @@ producers:
     name: publish_message
   topic3:
     name: join_chat_return
+  topic4:
+    name: leave_chat
 
 consumer:
   topic1:
@@ -45,5 +47,7 @@ consumer:
     name: publish_message
   topic3:
     name: join_chat_return
+  topic4:
+    name: leave_chat
   groupid:
     name: chat
