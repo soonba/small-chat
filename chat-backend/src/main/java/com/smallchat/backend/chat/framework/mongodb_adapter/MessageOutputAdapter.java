@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -31,14 +33,17 @@ public class MessageOutputAdapter implements MessageOutputPort {
     public List<Message> getMessageList(String chatID, Long nextCursor) {
         Criteria criteria = Criteria.where("chatId").is(chatID);
         if (nextCursor != null) {
-            criteria.and("createdAt").gt(LocalDateTime.ofInstant(Instant.ofEpochSecond(nextCursor + 1),
+            criteria.and("createdAt").lt(LocalDateTime.ofInstant(Instant.ofEpochSecond(nextCursor - 1),
                     ZoneOffset.UTC));
         }
         MatchOperation condition = Aggregation.match(criteria);
         SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
         LimitOperation limit = Aggregation.limit(MESSAGE_PAGE_LIMIT);
         Aggregation aggregation = Aggregation.newAggregation(condition, sort, limit);
-        return mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
+        List<Message> result = mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
+        List<Message> messages = new ArrayList<>(result);
+        Collections.reverse(messages);
+        return messages;
     }
 
     @Override

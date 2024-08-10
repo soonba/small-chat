@@ -22,6 +22,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/small_chat
+  jackson:
+    time-zone: UTC
 auth:
   key: my-small-chat-applications-jwt-sign-key
 

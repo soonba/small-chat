@@ -20,7 +20,7 @@ public class MessageListInputPort implements MessageListUseCase {
     @Override
     public MessageListDto.Response getMessageList(String chatID, Long nextCursor) {
         List<Message> list = messageOutputPort.getMessageList(chatID, nextCursor);
-        long newNextCursor = list.isEmpty() || list.size() <= MESSAGE_PAGE_LIMIT ? 0L : list.get(list.size() - 1).getCreatedAt().toEpochSecond(ZoneOffset.UTC);
+        long newNextCursor = list.isEmpty() || list.size() < MESSAGE_PAGE_LIMIT ? 0L : list.get(0).getCreatedAt().toEpochSecond(ZoneOffset.UTC);
         return new MessageListDto.Response(list.stream().map(Message::toMessageBasicInfo).toList()
                 , newNextCursor);
     }
