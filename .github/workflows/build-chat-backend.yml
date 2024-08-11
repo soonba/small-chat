@@ -42,5 +42,5 @@ jobs:
           context: ./chat-backend
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/chat-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/chat-backend:1.1
 
