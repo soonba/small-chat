@@ -70,7 +70,7 @@ const useSocket = () => {
     const onMessageReceive = useCallback(() => {
         socket.on(EventType.MESSAGE, (message: MessageType & { createdAt: string }) => {
             console.log(dayjs().toDate());
-            if (message.chatId.startsWith('list:')) {
+            if (message.chatId.startsWith('list_')) {
                 console.log('list message');
             } else {
                 console.log('chat message');
