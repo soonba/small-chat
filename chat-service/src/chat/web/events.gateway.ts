@@ -25,6 +25,8 @@ export class EventsGateway
   @WebSocketServer()
   server: Server;
 
+  private readonly LIST_PREFIX = 'list_';
+
   constructor(private readonly chatKafkaProducer: ChatKafkaProducer) {}
 
   afterInit(server: any): any {
@@ -45,8 +47,11 @@ export class EventsGateway
 
   @SubscribeMessage(EventType.MESSAGE)
   async send(@MessageBody(PropertyKey.MESSAGE) messageBody: Message) {
-    const { chatId, ...rest } = messageBody;
-    await this.server.to(chatId).emit(EventType.MESSAGE, rest);
+    const { chatId } = messageBody;
+    await this.server.to(chatId).emit(EventType.MESSAGE, messageBody);
+    await this.server
+      .to(this.LIST_PREFIX + chatId)
+      .emit(EventType.MESSAGE, messageBody);
     await this.chatKafkaProducer.send(messageBody);
   }
 
