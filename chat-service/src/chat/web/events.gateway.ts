@@ -47,11 +47,11 @@ export class EventsGateway
 
   @SubscribeMessage(EventType.MESSAGE)
   async send(@MessageBody(PropertyKey.MESSAGE) messageBody: Message) {
-    const { chatId } = messageBody;
+    const { chatId, ...rest } = messageBody;
     await this.server.to(chatId).emit(EventType.MESSAGE, messageBody);
     await this.server
       .to(this.LIST_PREFIX + chatId)
-      .emit(EventType.MESSAGE, messageBody);
+      .emit(EventType.MESSAGE, { ...rest, chatId: this.LIST_PREFIX + chatId });
     await this.chatKafkaProducer.send(messageBody);
   }
 
