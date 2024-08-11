@@ -23,13 +23,17 @@ public class BackendApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(origin, "http://localhost:3000")
+//                        .allowedOrigins(origin, "http://localhost:3000")
+                        .allowedOrigins("*")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
                                 HttpMethod.HEAD.name(),
                                 HttpMethod.POST.name(),
                                 HttpMethod.PUT.name(),
-                                HttpMethod.DELETE.name());
+                                HttpMethod.DELETE.name())
+                        .allowedHeaders("*")
+                        .allowCredentials(true)
+                        .maxAge(3600);
             }
         };
     }
