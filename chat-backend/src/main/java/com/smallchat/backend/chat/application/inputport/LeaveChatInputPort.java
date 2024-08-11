@@ -21,6 +21,7 @@ public class LeaveChatInputPort implements LeaveChatUseCase {
         Chat chat = chatOutputPort.load(chatId);
         Chat removedChat = chat.removeParticipant(userId);
         if (removedChat.isEmptyChat()) {
+            System.out.println("이즈엠티");
             chatOutputPort.delete(removedChat);
         }
         eventOutputPort.occurLeaveChatEvent(new ChatLeaved(userId, chatId));

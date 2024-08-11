@@ -20,3 +20,4 @@ public class ChatEventConsumers {
         compensationUseCase.cancelJoinChat(eventResult.getChatId(), eventResult.getUserId());
     }
 }
+

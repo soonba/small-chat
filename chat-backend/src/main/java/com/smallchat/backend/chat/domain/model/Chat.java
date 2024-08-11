@@ -36,7 +36,7 @@ public class Chat extends BaseTime {
     }
 
     public static Chat of(String ownerId, String name) {
-        return new Chat(ownerId, name, Participants.init());
+        return new Chat(ownerId, name, Participants.init(ownerId));
     }
 
     public Chat addParticipant(String userId) {
@@ -59,5 +59,9 @@ public class Chat extends BaseTime {
 
     public boolean isEmptyChat() {
         return participants.isEmpty();
+    }
+
+    public void validateUserId(String userId) {
+        participants.validateUserId(userId);
     }
 }

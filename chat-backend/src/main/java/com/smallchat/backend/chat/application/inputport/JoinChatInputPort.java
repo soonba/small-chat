@@ -24,6 +24,7 @@ public class JoinChatInputPort implements JoinChatUseCase {
     public void join(String userId, String chatId) {
         validateUserUseCase.hasReachedMaxChatLimit(userId);
         Chat loadedChat = chatOutputPort.load(chatId);
+        loadedChat.validateUserId(userId);
         Chat chat = loadedChat.addParticipant(userId);
         chatOutputPort.save(chat);
         eventOutputPort.occurJoinChatEvent(new ChatJoined(userId, chatId));

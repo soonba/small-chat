@@ -17,8 +17,10 @@ public class Participants {
     @ElementCollection
     private List<Participant> participants = new ArrayList<>();
 
-    public static Participants init() {
-        return new Participants();
+    public static Participants init(String ownerId) {
+        Participants participants1 = new Participants();
+        participants1.participants.add(new Participant(ownerId));
+        return participants1;
     }
 
 
@@ -38,5 +40,12 @@ public class Participants {
 
     public boolean isFull() {
         return participants.size() >= 10;
+    }
+    
+    public void validateUserId(String userId) {
+        Participant target = new Participant(userId);
+        if (participants.contains(target)) {
+            throw new RuntimeException("이미 방에 존재하는 유저");
+        }
     }
 }
