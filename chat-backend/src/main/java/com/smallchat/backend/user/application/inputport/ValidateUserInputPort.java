@@ -22,13 +22,7 @@ public class ValidateUserInputPort implements ValidateUserUseCase {
     public CheckUserDuplicationDto.Response isExistId(String id) {
         return new CheckUserDuplicationDto.Response(userOutputPort.isExistID(id));
     }
-
-    //todo
-    @Override
-    public boolean isExistNickname(String nickname) {
-        return false;
-    }
-
+    
     @Override
     public void hasReachedMaxChatLimit(String userId) {
         User user = userOutputPort.loadUser(userId);

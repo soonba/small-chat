@@ -1,8 +1,21 @@
 24.08 현재 v3.0 리팩토링 진행 중입니다.
 
-</br></br></br></br>
+<br>
+
+v3.1 todo
+
+- 입장 퇴장 시스템 메시지
+- 링크로 초대하기
+- 방에서 사람 초대하기
+- 비밀번호 암호화
+- 예외처리
+- chat-service kafka configuration 관련 docker-compose.yml 수정
+
+<br><br><br><br>
+
 ### ↓과거 문서(v2.0)
-</br>
+
+<br>
 # 작은 대화 (small-chat)
 
 small-chat은 [graphql subscription](https://www.apollographql.com/docs/react/data/subscriptions) 기술을 기반으로 하는 다대다 프라이빗 채팅
@@ -44,6 +57,7 @@ docker-compose up -d
 ![git_채팅](https://github.com/soonba/small-chat/assets/74886848/294a7a11-d84b-44ec-b97a-179a68a176d4)
 
 ### 적용 기술
+
 ```
 frontend
 ㄴ React

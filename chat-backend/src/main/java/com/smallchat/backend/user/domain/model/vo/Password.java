@@ -19,13 +19,12 @@ public class Password {
     }
 
     public static Password encrypt(String rawString) {
-        // todo encrypt
+        // todo
         String encrypt = rawString;
         return new Password(encrypt, encrypt);
     }
 
     public void verifying(String password) {
-        // todo verify password
         if (!this.presentPassword.equals(password)) {
             throw new RuntimeException("비밀번호 불일치");
         }

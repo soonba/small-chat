@@ -27,7 +27,6 @@ public class UserOutputAdapter implements UserOutputPort {
 
     @Override
     public boolean isExistID(String loginId) {
-        //todo 정상 동작안함?
         return userRepository.existsByLoginId(loginId);
     }
 
@@ -53,7 +52,7 @@ public class UserOutputAdapter implements UserOutputPort {
     public User loadUserById(String loginId) {
         return userRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
     }
-    
+
     @Override
     public void deleteRefreshToken(String userId) {
         refreshTokenRepository.deleteById(userId);
