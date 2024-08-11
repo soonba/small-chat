@@ -27,6 +27,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
 
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.2'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'

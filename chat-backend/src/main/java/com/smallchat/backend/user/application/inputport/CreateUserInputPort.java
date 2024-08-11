@@ -22,10 +22,10 @@ public class CreateUserInputPort implements CreateUserUseCase {
     @Transactional
     public CreateUserDto.Response createUser(CreateUserDto.Request request) {
         String id = request.id();
-        Password password = new Password(request.password(), request.password());
+        Password encrypt = Password.encrypt(request.password());
         String nickname = request.nickname();
 
-        User savedUser = userOutputPort.createUser(User.of(nickname, id, password));
+        User savedUser = userOutputPort.createUser(User.of(nickname, id, encrypt));
 
         Tokens tokens = jwtProvider.createTokens(savedUser.getUserId(), savedUser.getNickname());
         userOutputPort.saveRefreshToken(savedUser.getUserId(), tokens.refreshToken());
