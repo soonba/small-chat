@@ -41,6 +41,7 @@ public class MessageOutputAdapter implements MessageOutputPort {
         LimitOperation limit = Aggregation.limit(MESSAGE_PAGE_LIMIT);
         Aggregation aggregation = Aggregation.newAggregation(condition, sort, limit);
         List<Message> result = mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
+        System.out.println(result.get(0).getCreatedAt());
         List<Message> messages = new ArrayList<>(result);
         Collections.reverse(messages);
         return messages;

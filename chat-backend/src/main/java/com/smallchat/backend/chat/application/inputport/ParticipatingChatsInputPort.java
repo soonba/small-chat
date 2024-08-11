@@ -31,6 +31,7 @@ public class ParticipatingChatsInputPort implements ParticipatingChatsUseCase {
 
         List<Chat> chatList = chatOutputPort.findChatBasicByIds(userJoinedChatIdList);
         List<Message> lastMessageList = lastChatMessageUseCase.getLastMessageList(userJoinedChatIdList);
+        System.out.println(lastMessageList.get(0).getCreatedAt());
 
         return new ChatBasicInfoListDto.Response(chatList.stream().map(el -> el.toChatBasicInfo(lastMessageList)).toList());
     }
@@ -38,6 +39,6 @@ public class ParticipatingChatsInputPort implements ParticipatingChatsUseCase {
     @Override
     public ChatDetail.Response getChatDetail(String chatId) {
         Chat chat = chatOutputPort.load(chatId);
-        return new ChatDetail.Response(chatId,chat.getName());
+        return new ChatDetail.Response(chatId, chat.getName());
     }
 }

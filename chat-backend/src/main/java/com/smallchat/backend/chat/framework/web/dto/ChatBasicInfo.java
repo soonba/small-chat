@@ -1,8 +1,8 @@
 package com.smallchat.backend.chat.framework.web.dto;
 
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
-public record ChatBasicInfo(String chatId, String chatName, String lastMessage, LocalDateTime lastMessageTime) {
+public record ChatBasicInfo(String chatId, String chatName, String lastMessage, ZonedDateTime lastMessageTime) {
 }
 

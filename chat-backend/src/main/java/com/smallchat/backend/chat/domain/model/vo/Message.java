@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -16,14 +16,14 @@ public class Message {
     private String message;
     private String chatId;
     private Sender sender; //optional, can be nullable if messageType is SYSTEM...
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
     private MessageType messageType;
 
     public Message(String message, String chatId, Sender sender) {
         this.message = message;
         this.chatId = chatId;
         this.sender = sender;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = ZonedDateTime.now();
         this.messageType = MessageType.USER;
     }
 
@@ -31,7 +31,7 @@ public class Message {
         this.message = message.getSystemMessage(messageValue);
         this.chatId = chatId;
         this.sender = null;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = ZonedDateTime.now();
         this.messageType = MessageType.SYSTEM;
     }
 
