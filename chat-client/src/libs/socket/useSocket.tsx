@@ -74,10 +74,9 @@ const useSocket = () => {
                 console.log('list message');
             } else {
                 console.log('chat message');
+                setMessage((prev) => [message, ...prev]);
             }
-
             console.log(message);
-            setMessage((prev) => [message, ...prev]);
         });
     }, []);
 
