@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useMemo, useCallback, useEffect, useState, useContext } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import dayjs from 'dayjs';
 
 import { socket } from './setup';
 
@@ -21,34 +23,7 @@ type MessageBodyType = {
     messageBody: MessageType;
 };
 
-interface SocketContextType {
-    isConnected: boolean;
-    message: SocketMessageType[];
-    onSocketConnect: () => void;
-    onChatJoin: (chatIds: string[]) => void;
-    onMessageSend: (message: MessageBodyType) => void;
-    onMessageReceive: () => void;
-    onCurrentChatLeave: (chatId: string) => void;
-    onChatLeave: (chatIds: string[]) => void;
-}
-
-const SocketContext = createContext<SocketContextType | undefined>(undefined);
-
-export const useSocket = () => {
-    const context = useContext(SocketContext);
-
-    if (!context) {
-        throw new Error('should use Socket inside `SocketProvider`!');
-    }
-
-    return context;
-};
-
-interface Props {
-    children: ReactNode;
-}
-
-export default function SocketProvider({ children }: Props) {
+const useSocket = () => {
     const [isConnected, setIsConnected] = useState(socket.connected);
     const [message, setMessage] = useState<SocketMessageType[]>([]);
 
@@ -75,17 +50,14 @@ export default function SocketProvider({ children }: Props) {
         setIsConnected(socket.connected);
     }, []);
 
-    const onChatJoin = useCallback(
-        (chatIds: string[]) => {
-            if (socket.disconnected) {
-                onSocketConnect();
-                socket.emit(EventType.SUBSCRIBE, { chatIds });
-            } else {
-                socket.emit(EventType.SUBSCRIBE, { chatIds });
-            }
-        },
-        [onSocketConnect]
-    );
+    const onChatJoin = useCallback((chatIds: string[]) => {
+        if (socket.disconnected) {
+            onSocketConnect();
+            socket.emit(EventType.SUBSCRIBE, { chatIds });
+        } else {
+            socket.emit(EventType.SUBSCRIBE, { chatIds });
+        }
+    }, []);
 
     const onMessageSend = useCallback(
         (message: MessageBodyType) => {
@@ -96,7 +68,15 @@ export default function SocketProvider({ children }: Props) {
     );
 
     const onMessageReceive = useCallback(() => {
-        socket.on(EventType.MESSAGE, (message: SocketMessageType) => {
+        socket.on(EventType.MESSAGE, (message: MessageType & { createdAt: string }) => {
+            console.log(dayjs().toDate());
+            if (message.chatId.startsWith('list:')) {
+                console.log('list message');
+            } else {
+                console.log('chat message');
+            }
+
+            console.log(message);
             setMessage((prev) => [message, ...prev]);
         });
     }, []);
@@ -120,28 +100,16 @@ export default function SocketProvider({ children }: Props) {
         };
     }, []);
 
-    const context: SocketContextType = useMemo(
-        () => ({
-            isConnected,
-            message,
-            onSocketConnect,
-            onChatJoin,
-            onMessageSend,
-            onMessageReceive,
-            onCurrentChatLeave,
-            onChatLeave
-        }),
-        [
-            isConnected,
-            message,
-            onSocketConnect,
-            onChatJoin,
-            onMessageSend,
-            onMessageReceive,
-            onCurrentChatLeave,
-            onChatLeave
-        ]
-    );
+    return {
+        isConnected,
+        message,
+        onSocketConnect,
+        onChatJoin,
+        onMessageSend,
+        onMessageReceive,
+        onCurrentChatLeave,
+        onChatLeave
+    };
+};
 
-    return <SocketContext.Provider value={context}>{children}</SocketContext.Provider>;
-}
+export default useSocket;

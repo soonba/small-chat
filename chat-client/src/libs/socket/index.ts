@@ -1,1 +1,2 @@
-export * from './SocketProvider';
+export * from './useSocket';
+export { default as useSocket } from './useSocket';
