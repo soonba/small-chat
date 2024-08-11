@@ -22,8 +22,8 @@ public class BackendApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins(origin,"http://localhost:3000")
+                registry.addMapping("/**")
+                        .allowedOrigins(origin, "http://localhost:3000")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
                                 HttpMethod.HEAD.name(),

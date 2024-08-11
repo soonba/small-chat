@@ -11,7 +11,6 @@ import Register from 'pages/Register';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function App() {
-    //
     return (
         <RouterProvider
             router={createHashRouter(
