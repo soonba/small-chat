@@ -6,7 +6,7 @@ export default function Guide() {
     return (
         <div className="min-h-full w-full min-w-laptop">
             <GuideHeader />
-            <main className="relative mx-auto mt-14 min-h-screen w-full bg-primary-50/10 p-5 bg-grid dark:bg-black/10 dark:bg-grid-light">
+            <main className="min-h-screen w-full bg-primary-50/10 p-5 bg-grid dark:bg-black/10 dark:bg-grid-light">
                 <div className="space-y-10">
                     <Typography />
                     <Color />

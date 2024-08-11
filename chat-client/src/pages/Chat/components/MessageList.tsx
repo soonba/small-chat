@@ -2,8 +2,8 @@ import { forwardRef, RefObject, useImperativeHandle, useRef } from 'react';
 
 import { Loader } from 'components';
 
-import { SocketMessageType } from 'context/SocketProvider';
 import { useAccount } from 'hooks';
+import { SocketMessageType } from 'libs/socket';
 import { MessageListType } from 'services/chat/useGetChatHistory';
 
 import MessageListItem from './MessageListItem';
@@ -28,7 +28,7 @@ const MessageList = forwardRef<RefHandler, Props>(({ isLoading, data, socketMess
     return (
         <ul
             id="chat-container"
-            className="flex w-full flex-col-reverse gap-y-5 overflow-auto p-5"
+            className="flex w-full flex-col-reverse gap-y-5 overflow-auto p-5 scrollbar-hide"
             style={{
                 height: window.innerHeight - 56 - 44,
                 overflowAnchor: 'none'

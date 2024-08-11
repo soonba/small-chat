@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useMemo, useCallback, useEffect, useState, useContext } from 'react';
 
-import { socket } from 'libs/socket';
+import { socket } from './setup';
 
 export enum EventType {
     SUBSCRIBE = 'subscribe',

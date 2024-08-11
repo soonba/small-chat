@@ -1,6 +1,7 @@
 import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import { AuthLayout, BaseLayout, ChatLayout } from 'layout';
+
 import Chat from 'pages/Chat';
 import ChatList from 'pages/ChatList';
 import Guide from 'pages/Guide';

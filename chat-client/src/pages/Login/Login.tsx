@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField } from 'components';
 
-import { useSocket } from 'hooks';
-import useLogin from 'services/auth/useLogin';
+import { useSocket } from 'libs/socket';
+import { useLogin } from 'services/auth';
 import { clearToken, setTokens } from 'utils/storage';
 
 export default function Login() {
@@ -38,7 +38,7 @@ export default function Login() {
     return (
         <div className="mt-10 flex w-full items-start justify-center">
             <form onSubmit={handleLogin} className="flex w-full max-w-screen-md flex-col gap-5 px-5">
-                <h1 className="mb-10 text-center font-jua text-36-B-40 text-primary-900 dark:text-primary-100">
+                <h1 className="mb-10 text-center font-jua text-36-R-40 text-primary-900 dark:text-primary-100">
                     작은 대화
                 </h1>
                 <TextField

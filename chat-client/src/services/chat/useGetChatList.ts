@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { useSocket } from 'hooks';
 import { getData } from 'libs/axios';
+import { useSocket } from 'libs/socket';
 import { chatKeys } from 'utils/queryKey';
 
 interface IResponseBody {

@@ -1,5 +1,5 @@
-export { default as useAccount } from './useAccount';
-export { default as useIntersectionObserver } from './useIntersectionObserver';
-export { default as useModal } from './useModal';
-export { default as useMode } from './useMode';
-export { useSocket } from 'context/SocketProvider';
+export { default as useAccount } from './redux/useAccount';
+
+export { default as useIntersectionObserver } from './utils/useIntersectionObserver';
+export { default as useModal } from './utils/useModal';
+export { default as useMode } from './utils/useMode';

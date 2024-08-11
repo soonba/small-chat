@@ -19,6 +19,7 @@ function getFontWeight(weight: string) {
     }
 }
 
+const TITLE = ['text-36-R-40', 'text-24-R-32'];
 const HEADING = ['text-36-B-40', 'text-30-B-36', 'text-30-M-36', 'text-16-SB-24'];
 const BODY = [
     'text-24-BL-32',
@@ -38,7 +39,7 @@ export default function Typography() {
     return (
         <section id="typography" className="scroll-m-16 text-primary-900 dark:text-primary-100">
             <h2 className="mb-10 text-30-B-36">Typography</h2>
-            <div className="space-y-10 rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+            <div className="w-full space-y-10 rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
                 <div className="grid grid-cols-2 gap-y-5">
                     <div className="flex items-center gap-x-2.5">
                         <h3 className="text-16-B-24 text-gray-900 dark:text-gray-100">System Font</h3>
@@ -128,67 +129,38 @@ export default function Typography() {
                         </p>
                     </div>
                 </div>
-                <div className="flex items-start justify-between">
-                    <div>
-                        <h3 className="mb-5 text-16-B-24 text-gray-900 dark:text-gray-100">Heading</h3>
-                        <ul className="space-y-5">
-                            {HEADING.map((variant) => (
-                                <li key={variant} className="flex items-center gap-x-10">
-                                    <p className="flex w-28 flex-col gap-1 text-16-SB-24 text-gray-900 dark:text-gray-100">
-                                        {`${variant.split('-')[1]}-${variant.split('-')[2]}`}
-                                        <small className="text-12-L-16">
-                                            Pretendard&nbsp;
-                                            {getFontWeight(variant.split('-')[2])}
-                                        </small>
-                                        <small className="text-12-L-16">
-                                            {`${variant.split('-')[1]}px / ${variant.split('-')[3]}px`}
-                                        </small>
-                                    </p>
-                                    <p className={variant}>가나다라마바사 abcdefg 0123456789</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 className="mb-5 text-16-B-24 text-gray-900 dark:text-gray-100">Body</h3>
-                        <ul className="space-y-5">
-                            {BODY.map((variant) => (
-                                <li key={variant} className="flex items-center gap-x-10">
-                                    <p className="flex w-28 flex-col gap-1 text-16-SB-24 text-gray-900 dark:text-gray-100">
-                                        {`${variant.split('-')[1]}-${variant.split('-')[2]}`}
-                                        <small className="text-12-L-16">
-                                            Pretendard&nbsp;
-                                            {getFontWeight(variant.split('-')[2])}
-                                        </small>
-                                        <small className="text-12-L-16">
-                                            {`${variant.split('-')[1]}px / ${variant.split('-')[3]}px`}
-                                        </small>
-                                    </p>
-                                    <p className={variant}>가나다라마바사 abcdefg 0123456789</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 className="mb-5 text-16-B-24 text-gray-900 dark:text-gray-100">Caption</h3>
-                        <ul className="space-y-5">
-                            {CAPTION.map((variant) => (
-                                <li key={variant} className="flex items-center gap-x-10">
-                                    <p className="flex w-28 flex-col gap-1 text-16-SB-24 text-gray-900 dark:text-gray-100">
-                                        {`${variant.split('-')[1]}-${variant.split('-')[2]}`}
-                                        <small className="text-12-L-16">
-                                            Pretendard&nbsp;
-                                            {getFontWeight(variant.split('-')[2])}
-                                        </small>
-                                        <small className="text-12-L-16">
-                                            {`${variant.split('-')[1]}px / ${variant.split('-')[3]}px`}
-                                        </small>
-                                    </p>
-                                    <p className={variant}>가나다라마바사 abcdefg 0123456789</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                <div className="flex flex-wrap items-start justify-between gap-5">
+                    {[
+                        { name: 'Title', list: TITLE },
+                        { name: 'Heading', list: HEADING },
+                        { name: 'Body', list: BODY },
+                        { name: 'Caption', list: CAPTION }
+                    ].map((data) => (
+                        <div key={data.name}>
+                            <h3 className="mb-5 text-16-B-24 text-gray-900 dark:text-gray-100">{data.name}</h3>
+                            <ul className="space-y-5">
+                                {data.list.map((variant) => (
+                                    <li key={variant} className="flex items-center gap-x-10">
+                                        <p className="flex w-28 shrink-0 flex-col gap-1 text-16-SB-24 text-gray-900 dark:text-gray-100">
+                                            {`${variant.split('-')[1]}-${variant.split('-')[2]}`}
+                                            <small className="text-12-B-16">
+                                                Pretendard&nbsp;
+                                                {getFontWeight(variant.split('-')[2])}
+                                            </small>
+                                            <small className="text-12-L-16">
+                                                {`${variant.split('-')[1]}px / ${variant.split('-')[3]}px`}
+                                            </small>
+                                        </p>
+                                        <p className={`${variant} whitespace-nowrap`}>
+                                            가나다라마바사
+                                            <br /> abcdefg
+                                            <br /> 0123456789
+                                        </p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

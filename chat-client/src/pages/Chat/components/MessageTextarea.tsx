@@ -6,6 +6,7 @@ import Picker from '@emoji-mart/react';
 
 import { ClipboardIcon, FaceSmileIcon, PaperAirplaneIcon } from '@heroicons/react/20/solid';
 import { IconButton } from 'components';
+import { useToast } from 'components/Toast';
 
 import { getStorageItem, SESSION_STORAGE_KEYS } from 'utils/storage';
 
@@ -25,6 +26,7 @@ interface Props {
 export default function MessageTextarea({ onSubmit }: Props) {
     const { id } = useParams();
     const chatId = id || '';
+    const { onToast } = useToast();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -36,19 +38,13 @@ export default function MessageTextarea({ onSubmit }: Props) {
     const handleCopy = () => {
         if (chatId) {
             navigator.clipboard.writeText(chatId);
-            // eslint-disable-next-line no-alert
-            alert('채팅방 코드가 복사되었습니다.');
+            onToast('채팅방 코드가 복사되었습니다.', { canDismiss: true, delay: 3000 });
         }
     };
 
     const handleSubmit = () => {
         onSubmit(message.trim());
         setMessage('');
-        if (textareaRef.current) {
-            const container = document.getElementById('chat-container');
-            container?.style.setProperty('height', `${window.innerHeight - 56 - 44}px`);
-            textareaRef.current.style.setProperty('height', '24px');
-        }
     };
 
     // ref : https://minjung-jeon.github.io/IME-keyCode-229-issue/
@@ -60,8 +56,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
             if (message.trim().length > 0) {
                 handleSubmit();
             } else {
-                // eslint-disable-next-line no-alert
-                alert('메시지를 입력해 주세요!');
+                onToast('메시지를 입력해 주세요!', { canDismiss: true, delay: 5000 });
             }
         }
     };

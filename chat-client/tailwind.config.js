@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
-// eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-var-requires
+
 const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    future: {
+        hoverOnlyWhenSupported: true
+    },
     darkMode: 'selector',
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
@@ -14,6 +18,7 @@ module.exports = {
             },
             fontSize: {
                 /** Title */
+                '36-R-40': ['2.25rem', { lineHeight: '2.5rem', fontWeight: 400, letterSpacing: 'normal' }],
                 '24-R-32': ['1.5rem', { lineHeight: '2rem', fontWeight: 400, letterSpacing: 'normal' }],
 
                 /** Heading */
@@ -69,13 +74,40 @@ module.exports = {
                     900: '#0c436e',
                     950: '#082b49'
                 }
+            },
+            zIndex: {
+                1000: 1000
+            },
+            keyframes: {
+                fadeIn: {
+                    '0%': {
+                        bottom: 0,
+                        opacity: 0
+                    },
+                    '100%': {
+                        bottom: 30,
+                        opacity: 1
+                    }
+                },
+                fadeOut: {
+                    '0%': {
+                        bottom: 30,
+                        opacity: 1
+                    },
+                    '100%': {
+                        bottom: 0,
+                        opacity: 0
+                    }
+                }
+            },
+            animation: {
+                fadeInOut: 'fadeIn 0.5s, fadeOut 0.5s 4.5s forwards'
             }
         }
     },
     plugins: [
         require('tailwind-scrollbar-hide'),
-        // eslint-disable-next-line func-names
-        plugin(function ({ addUtilities }) {
+        plugin(function plugin({ addUtilities }) {
             addUtilities({
                 '.bg-grid': {
                     'background-position': 'center',

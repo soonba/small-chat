@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 
-import useModal from 'hooks/useModal';
+import useModal from 'hooks/utils/useModal';
 
 import Modal from './Modal';
 import Button from '../Button/Button';

@@ -61,7 +61,7 @@
                         "position": "before"
                     },
                     {
-                        "pattern": "{assets/**,components*,components/**,layout/**,styles/**,@heroicons/**}",
+                        "pattern": "{components*,components/**,layout*,layout/**,styles/**,@heroicons/**}",
                         "group": "internal",
                         "position": "before"
                     },
@@ -71,7 +71,7 @@
                         "position": "before"
                     },
                     {
-                        "pattern": "{libs*,libs/**,hooks*,hooks/**,context*,context/**,services*,services/**,utils*,utils/**,constants*,constants/**}",
+                        "pattern": "{hooks*,hooks/**,libs*,libs/**,services*,services/**,utils*,utils/**}",
                         "group": "internal",
                         "position": "before"
                     },
