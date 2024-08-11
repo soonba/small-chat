@@ -32,7 +32,7 @@ const useGetChatList = () => {
     useEffect(() => {
         if (!hasSubscribed.current && data && data.length > 0) {
             hasSubscribed.current = true;
-            onChatJoin(data.map((val) => `list:${val.chatId}`));
+            onChatJoin(data.map((val) => `list_${val.chatId}`));
         }
     }, [data]);
 
