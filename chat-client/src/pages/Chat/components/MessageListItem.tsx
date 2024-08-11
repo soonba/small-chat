@@ -1,6 +1,6 @@
 import { UserIcon } from '@heroicons/react/20/solid';
 
-import { SocketMessageType } from 'context';
+import { SocketMessageType } from 'libs/socket';
 import { getFormatChatTime } from 'utils/date';
 
 interface Props {

@@ -1,4 +1,5 @@
 import {
+    ArrowLeftEndOnRectangleIcon,
     ChatBubbleOvalLeftIcon,
     ClipboardIcon,
     EnvelopeIcon,
@@ -8,7 +9,7 @@ import {
     PlusIcon,
     SunIcon
 } from '@heroicons/react/20/solid';
-import { Button, IconButton, TextField } from 'components';
+import { Button, IconButton, Loader, TextField } from 'components';
 
 export default function Component() {
     return (
@@ -33,6 +34,13 @@ export default function Component() {
                             variant="text"
                             size="small"
                             icon={<SunIcon />}
+                        />
+                        <IconButton
+                            aria-label="leave chat"
+                            title="채팅방 나가기"
+                            variant="text"
+                            size="small"
+                            icon={<ArrowLeftEndOnRectangleIcon />}
                         />
                         <IconButton
                             aria-label="open emoji picker"
@@ -96,6 +104,12 @@ export default function Component() {
                     <div className="flex flex-col gap-y-2.5">
                         <TextField placeholder="안녕하세요." />
                         <TextField disabled defaultValue="비활성화 상태입니다." />
+                    </div>
+                </div>
+                <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+                    <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Loader</h3>
+                    <div className="flex h-80 items-center justify-center">
+                        <Loader />
                     </div>
                 </div>
             </div>

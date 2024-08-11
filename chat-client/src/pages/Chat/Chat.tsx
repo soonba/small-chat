@@ -1,21 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { ArrowLeftEndOnRectangleIcon, ChevronLeftIcon } from '@heroicons/react/20/solid';
+import { ArrowLeftEndOnRectangleIcon, ChevronLeftIcon, MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 import { IconButton, Loader } from 'components';
+import { useToast } from 'components/Toast';
 
-import { useAccount, useSocket, useIntersectionObserver } from 'hooks';
+import { useAccount, useIntersectionObserver, useMode } from 'hooks';
+import { useSocket } from 'libs/socket';
 import { useGetChatDetail, useGetChatHistory, useLeaveChat } from 'services/chat';
 
 import { MessageList, MessageTextarea } from './components';
 import { RefHandler } from './components/MessageList';
 
-// TODO: UI 완료
 export default function Chat() {
     const navigate = useNavigate();
     const { id } = useParams();
     const chatId = id || '';
+
     const { accountId, nickname } = useAccount();
+    const { mode, onModeChange } = useMode();
+    const { onToast } = useToast();
 
     const { data: detailData } = useGetChatDetail();
     const {
@@ -67,8 +71,7 @@ export default function Chat() {
                 messageBody: { chatId, userId: accountId, nickname, message }
             });
         } else {
-            // eslint-disable-next-line no-alert
-            alert('문제가 발생하였습니다. 잠시 후에 다시 시도해주세요.');
+            onToast(`문제가 발생하였습니다.\n잠시 후에 다시 시도해주세요.`, { delay: 5000 });
         }
     };
 
@@ -82,14 +85,24 @@ export default function Chat() {
                             {detailData?.chatName || ''}
                         </h1>
                     </Link>
-                    <IconButton
-                        aria-label="leave chat"
-                        title="채팅방 나가기"
-                        variant="text"
-                        size="small"
-                        icon={<ArrowLeftEndOnRectangleIcon />}
-                        onClick={handleLeave}
-                    />
+                    <div className="flex items-center gap-5">
+                        <IconButton
+                            aria-label="leave chat"
+                            title="채팅방 나가기"
+                            variant="text"
+                            size="small"
+                            icon={<ArrowLeftEndOnRectangleIcon />}
+                            onClick={handleLeave}
+                        />
+                        <IconButton
+                            aria-label={`change to ${mode === 'light' ? 'dark' : 'light'} mode`}
+                            title={`${mode === 'light' ? '다크' : '라이트'} 모드로 변경하기`}
+                            variant="text"
+                            size="small"
+                            onClick={onModeChange}
+                            icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
+                        />
+                    </div>
                 </div>
             </header>
             <main className="flex h-full w-full flex-col justify-between pt-14">

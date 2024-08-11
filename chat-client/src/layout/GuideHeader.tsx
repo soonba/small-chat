@@ -32,7 +32,7 @@ export default function GuideHeader() {
     );
 
     return (
-        <header className="fixed left-0 right-0 top-0 z-10 rounded-b-md bg-layout-light shadow-sm shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+        <header className="sticky left-0 right-0 top-0 z-10 rounded-b-md bg-layout-light shadow-sm shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
             <div className="mx-auto flex h-14 w-full items-center justify-between rounded-b-md p-5">
                 <Link reloadDocument to="/">
                     <h1 className="text-center font-jua text-24-R-32 text-primary-900 dark:text-primary-100">

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
-import useAccount from 'hooks/useAccount';
+import useAccount from 'hooks/redux/useAccount';
 import { getData } from 'libs/axios';
 import { usersKeys } from 'utils/queryKey';
 import { getTokens } from 'utils/storage';

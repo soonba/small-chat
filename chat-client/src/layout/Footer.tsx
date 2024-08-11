@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ChatBubbleOvalLeftIcon, EnvelopeIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { CreateChatModal, IconButton, JoinChatModal } from 'components';
 
-import { useSocket } from 'hooks';
-import useModal from 'hooks/useModal';
+import useModal from 'hooks/utils/useModal';
+import { useSocket } from 'libs/socket';
 import { useCreateChat, useJoinChat } from 'services/chat';
 
 export default function Footer() {

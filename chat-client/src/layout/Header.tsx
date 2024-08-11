@@ -5,8 +5,8 @@ import { Button, IconButton } from 'components';
 
 import { useQueryClient, UseQueryResult } from '@tanstack/react-query';
 
-import { useSocket } from 'hooks';
-import useMode from 'hooks/useMode';
+import useMode from 'hooks/utils/useMode';
+import { useSocket } from 'libs/socket';
 import { useLogout } from 'services/auth';
 import { chatKeys } from 'utils/queryKey';
 import { clearToken } from 'utils/storage';
@@ -59,7 +59,7 @@ export default function Header() {
                         작은 대화
                     </h1>
                 </Link>
-                <div className="ml-auto flex items-center gap-5">
+                <div className="flex items-center gap-5">
                     <Button text="로그아웃" variant="text" size="small" onClick={handleClick} />
                     <IconButton
                         aria-label={`change to ${mode === 'light' ? 'dark' : 'light'} mode`}
