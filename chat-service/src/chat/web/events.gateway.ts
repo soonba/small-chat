@@ -25,7 +25,7 @@ export class EventsGateway
   @WebSocketServer()
   server: Server;
 
-  private readonly LIST_PREFIX = 'list:';
+  private readonly LIST_PREFIX = 'list_';
 
   constructor(private readonly chatKafkaProducer: ChatKafkaProducer) {}
 
