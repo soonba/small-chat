@@ -7,7 +7,6 @@ v3.1 todo
 - 입장 퇴장 시스템 메시지
 - 링크로 초대하기
 - 방에서 사람 초대하기
-- 비밀번호 암호화
 - 예외처리
 - chat-service kafka configuration 관련 docker-compose.yml 수정
 
