@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.smallchat.backend.global.config.converter.ZoneDateTimeWriteConverter;
 import com.smallchat.backend.global.config.converter.ZonedDateTimeReadConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Value("${spring.data.mongodb.uri}")
     private String DATABASE_URL;
     private final ZonedDateTimeReadConverter zonedDateTimeReadConverter;
+    private final ZoneDateTimeWriteConverter zoneDateTimeWriteConverter;
 
 
     @Override
@@ -41,5 +43,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Override
     protected void configureConverters(MongoCustomConversions.MongoConverterConfigurationAdapter adapter) {
         adapter.registerConverter(zonedDateTimeReadConverter);
+        adapter.registerConverter(zoneDateTimeWriteConverter);
     }
 }
