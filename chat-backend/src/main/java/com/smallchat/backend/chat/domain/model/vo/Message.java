@@ -39,6 +39,10 @@ public class Message {
         return new Message(systemMessage, messageValue, chatId);
     }
 
+    public static Message notFoundMessage() {
+        return new Message("정보 없음", "", null);
+    }
+
     public MessageBasicInfo toMessageBasicInfo() {
         return new MessageBasicInfo(sender, createdAt, message, messageType);
     }
