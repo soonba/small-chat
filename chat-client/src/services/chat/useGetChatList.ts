@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -21,20 +21,22 @@ const getChatList = async (): Promise<IResponseBody> => {
 
 const useGetChatList = () => {
     const { onChatJoin } = useSocket();
+    const hasSubscribed = useRef(false);
 
-    const data = useQuery({
+    const { data, ...rest } = useQuery({
         queryKey: chatKeys.lists(),
         queryFn: getChatList,
         select: (data) => data.chatBasicInfos
     });
 
     useEffect(() => {
-        if (data?.data) {
-            onChatJoin(data?.data.map((val) => val.chatId));
+        if (!hasSubscribed.current && data && data.length > 0) {
+            hasSubscribed.current = true;
+            onChatJoin(data.map((val) => `list_${val.chatId}`));
         }
-    }, [data?.data]);
+    }, [data]);
 
-    return data;
+    return { data, ...rest };
 };
 
 export default useGetChatList;

@@ -7,7 +7,6 @@ import { ToastProvider } from 'components/Toast/ToastProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { store } from 'libs/redux/store';
-import SocketProvider from 'libs/socket/SocketProvider';
 
 import App from 'app/App';
 
@@ -19,11 +18,9 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <QueryClientProvider client={queryClient}>
-                <SocketProvider>
-                    <ToastProvider position="top-center">
-                        <App />
-                    </ToastProvider>
-                </SocketProvider>
+                <ToastProvider position="top-center">
+                    <App />
+                </ToastProvider>
             </QueryClientProvider>
         </Provider>
     </React.StrictMode>

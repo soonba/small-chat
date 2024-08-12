@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -30,9 +30,10 @@ const getChat = async (id: string, nextCursor: string): Promise<IResponseBody> =
 
 const useGetChatHistory = (chatId: string) => {
     const { onChatJoin } = useSocket();
+    const hasSubscribed = useRef(false);
 
-    const data = useInfiniteQuery({
-        refetchOnMount: false,
+    const { data, ...rest } = useInfiniteQuery({
+        refetchOnMount: true,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
         queryKey: chatKeys.history(chatId),
@@ -44,12 +45,13 @@ const useGetChatHistory = (chatId: string) => {
     });
 
     useEffect(() => {
-        if (data?.data) {
+        if (!hasSubscribed.current && chatId) {
+            hasSubscribed.current = true;
             onChatJoin([chatId]);
         }
-    }, [data?.data]);
+    }, [chatId]);
 
-    return data;
+    return { data, ...rest };
 };
 
 export default useGetChatHistory;
