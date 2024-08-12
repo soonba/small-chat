@@ -37,8 +37,19 @@ export default function MessageTextarea({ onSubmit }: Props) {
 
     const handleCopy = () => {
         if (chatId) {
-            navigator.clipboard.writeText(chatId);
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(chatId);
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = chatId;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
             onToast('채팅방 코드가 복사되었습니다.', { canDismiss: true, delay: 3000 });
+        } else {
+            onToast('문제가 발생하였습니다. 잠시 후에 다시 시도해 주세요.', { canDismiss: true, delay: 5000 });
         }
     };
 
