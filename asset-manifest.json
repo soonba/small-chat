@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/small-chat/static/css/main.dcd4c4af.css",
-    "main.js": "/small-chat/static/js/main.f1e3e09e.js",
+    "main.css": "/small-chat/static/css/main.d31b6aef.css",
+    "main.js": "/small-chat/static/js/main.386acb24.js",
     "index.html": "/small-chat/index.html"
   },
   "entrypoints": [
-    "static/css/main.dcd4c4af.css",
-    "static/js/main.f1e3e09e.js"
+    "static/css/main.d31b6aef.css",
+    "static/js/main.386acb24.js"
   ]
 }
