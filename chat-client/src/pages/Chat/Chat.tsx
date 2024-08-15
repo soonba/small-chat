@@ -58,6 +58,9 @@ export default function Chat() {
         onSuccess() {
             onCurrentChatLeave(chatId);
             navigate('/', { replace: true });
+        },
+        onError(error) {
+            onToast(error.message, { delay: 5000 });
         }
     });
 
@@ -78,7 +81,7 @@ export default function Chat() {
     return (
         <>
             <header className="fixed left-0 right-0 top-0 z-10 rounded-b-md bg-layout-light shadow-sm shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
-                <div className="flex h-14 w-full items-center justify-between rounded-b-md px-5">
+                <div className="flex h-14 w-full items-center justify-between rounded-b-md pl-2.5 pr-5">
                     <Link to="/" className="flex w-full items-center gap-1" onClick={() => onCurrentChatLeave(chatId)}>
                         <ChevronLeftIcon className="h-8 w-8 text-primary-900 dark:text-primary-100" />
                         <h1 className="text-center font-jua text-24-R-32 text-primary-900 dark:text-primary-100">

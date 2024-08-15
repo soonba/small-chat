@@ -29,7 +29,7 @@ export default function Toast({ message, options, onClose }: Props) {
     return (
         <div
             role="alert"
-            className="animate-fadeInOut flex min-h-12 w-max items-center justify-between whitespace-pre-wrap break-all rounded-xl bg-layout-light px-3 py-2 text-primary-900 dark:bg-layout-dark dark:text-primary-100"
+            className="flex min-h-12 w-max animate-fadeInOut items-center justify-between whitespace-pre-wrap break-all rounded-xl border border-primary-900 bg-layout-light px-3 py-2 text-primary-900 dark:border-primary-100 dark:bg-layout-dark dark:text-primary-100"
             style={{ animationDelay: options?.delay ? `${animationTime}s` : '4.5s' }}
         >
             <p className="pr-2.5 text-16-M-24 text-inherit">{message}</p>

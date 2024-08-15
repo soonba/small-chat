@@ -39,6 +39,18 @@ instance.interceptors.response.use(
     (res: AxiosResponse) => res,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (err: AxiosError<any>) => {
+        const errorObject = {
+            title: '일시적인 오류',
+            statusCode: err.response?.status || 500,
+            message:
+                err.response?.data?.message ||
+                '다시 시도해 주세요. \n동일한 오류가 지속된다면 관리자에게 문의해 주세요.'
+        };
+
+        if (err.message === 'Network Error') {
+            errorObject.title = '네트워크 오류';
+        }
+
         const originalRequest = err.config;
         if (originalRequest) {
             if (err.response?.status === 401 && !originalRequest.retry) {
@@ -69,7 +81,18 @@ instance.interceptors.response.use(
                                 axios(originalRequest)
                                     .then((res) => res)
                                     .catch((error) => {
-                                        return Promise.reject(error);
+                                        const errorObject = {
+                                            title: '일시적인 오류',
+                                            statusCode: error.response?.status || 500,
+                                            message:
+                                                error.response?.data?.message ||
+                                                '다시 시도해주세요. \n동일한 오류가 지속된다면 관리자에게 문의해주세요.'
+                                        };
+
+                                        if (error.message === 'Network Error') {
+                                            errorObject.title = '네트워크 오류';
+                                        }
+                                        return Promise.reject(errorObject);
                                     })
                             );
                         }
@@ -81,7 +104,7 @@ instance.interceptors.response.use(
             }
         }
 
-        return Promise.reject(err);
+        return Promise.reject(errorObject);
     }
 );
 

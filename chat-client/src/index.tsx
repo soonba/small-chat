@@ -18,7 +18,7 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <QueryClientProvider client={queryClient}>
-                <ToastProvider position="top-center">
+                <ToastProvider position="bottom-center">
                     <App />
                 </ToastProvider>
             </QueryClientProvider>

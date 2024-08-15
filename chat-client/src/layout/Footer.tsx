@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ChatBubbleOvalLeftIcon, EnvelopeIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { CreateChatModal, IconButton, JoinChatModal } from 'components';
+import { useToast } from 'components/Toast';
 
 import useModal from 'hooks/utils/useModal';
 import { useSocket } from 'libs/socket';
@@ -11,11 +12,15 @@ export default function Footer() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { onChatJoin } = useSocket();
+    const { onToast } = useToast();
 
     const createChatMutation = useCreateChat({
         onSuccess(chatId) {
             onChatJoin([chatId]);
             navigate(`/chat/${chatId}`);
+        },
+        onError(error) {
+            onToast(error.message, { delay: 5000 });
         }
     });
 
@@ -30,6 +35,9 @@ export default function Footer() {
         onSuccess(chatId) {
             onChatJoin([chatId]);
             navigate(`/chat/${chatId}`);
+        },
+        onError(error) {
+            onToast(error.message, { delay: 5000 });
         }
     });
 

@@ -30,7 +30,7 @@ const MessageList = forwardRef<RefHandler, Props>(({ isLoading, data, socketMess
             id="chat-container"
             className="flex w-full flex-col-reverse gap-y-5 overflow-auto p-5 scrollbar-hide"
             style={{
-                height: window.innerHeight - 56 - 44,
+                height: window.innerHeight - 56 - 100,
                 overflowAnchor: 'none'
             }}
         >

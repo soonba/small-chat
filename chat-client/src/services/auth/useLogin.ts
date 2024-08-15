@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { postData } from 'libs/axios';
+import { Error } from 'libs/axios/types';
 
 interface IRequestBody {
     id: string;
@@ -31,7 +32,7 @@ const useLogin = ({ onSuccess, onError }: Props) => {
                 onSuccess(data);
             }
         },
-        onError: (error) => {
+        onError: (error: Error) => {
             if (onError) {
                 onError(error);
             }

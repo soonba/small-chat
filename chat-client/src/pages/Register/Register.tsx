@@ -2,6 +2,7 @@ import { FormEvent, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField } from 'components';
+import { useToast } from 'components/Toast';
 
 import { useSocket } from 'libs/socket';
 import { useCheckId, useRegister } from 'services/auth';
@@ -11,6 +12,7 @@ import { setTokens } from 'utils/storage';
 export default function Register() {
     const navigate = useNavigate();
     const { onSocketConnect } = useSocket();
+    const { onToast } = useToast();
 
     const [accountId, setAccountId] = useState('');
     const [nickname, setNickname] = useState('');
@@ -23,6 +25,9 @@ export default function Register() {
             setTokens(tokens);
             onSocketConnect();
             navigate('/', { replace: true });
+        },
+        onError(error) {
+            onToast(error.message, { delay: 5000 });
         }
     });
 

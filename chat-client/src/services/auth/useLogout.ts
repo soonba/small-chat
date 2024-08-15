@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { postData } from 'libs/axios';
+import { Error } from 'libs/axios/types';
 
 const logout = async () => {
     return postData('/v2/users/logout').then((res) => res.data);
@@ -19,7 +20,7 @@ const useLogout = ({ onSuccess, onError }: Props) => {
                 onSuccess();
             }
         },
-        onError: (error) => {
+        onError: (error: Error) => {
             if (onError) {
                 onError(error);
             }

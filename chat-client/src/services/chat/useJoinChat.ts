@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { postData } from 'libs/axios';
+import { Error } from 'libs/axios/types';
 
 interface IRequestBody {
     chatId: string;
@@ -22,7 +23,7 @@ const useJoinChat = ({ onSuccess, onError }: Props) => {
                 onSuccess(chatId);
             }
         },
-        onError: (error) => {
+        onError: (error: Error) => {
             if (onError) {
                 onError(error);
             }

@@ -90,7 +90,7 @@ export function ToastProvider({ children, position }: Props) {
             {children}
             {modalElement
                 ? createPortal(
-                      <div className={`${getPositionStyle(position)} z-1000 absolute flex flex-col gap-2.5`}>
+                      <div className={`${getPositionStyle(position)} absolute z-1000 flex flex-col gap-2.5`}>
                           {messages.map((message) => (
                               <Toast
                                   key={message.id}

@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField } from 'components';
+import { useToast } from 'components/Toast';
 
 import { useSocket } from 'libs/socket';
 import { useLogin } from 'services/auth';
@@ -10,15 +11,19 @@ import { clearToken, setTokens } from 'utils/storage';
 export default function Login() {
     const navigate = useNavigate();
     const { onSocketConnect } = useSocket();
+    const { onToast } = useToast();
 
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
+    const [id, setId] = useState('test111');
+    const [password, setPassword] = useState('test111!');
 
     const loginMutation = useLogin({
         onSuccess({ tokens }) {
             setTokens(tokens);
             onSocketConnect();
             navigate('/', { replace: true });
+        },
+        onError(error) {
+            onToast(error.message, { delay: 5000 });
         }
     });
 
