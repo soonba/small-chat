@@ -1,6 +1,5 @@
 # Small Chat Front-End
 
-![Create React App](https://img.shields.io/badge/create_react_app-303846?style=for-the-badge&logo=createreactapp&logoColor=09D3AC)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
@@ -22,21 +21,21 @@ $ npm start
 
 ## Assets
 
--   [Heroicons - Icons](https://heroicons.com/)
--   [Pretendard - Font](https://github.com/orioncactus/pretendard)
--   [Jua - Font](https://fonts.google.com/specimen/Jua)
+- [Heroicons - Icons](https://heroicons.com/)
+- [Pretendard - Font](https://github.com/orioncactus/pretendard)
+- [Jua - Font](https://fonts.google.com/specimen/Jua)
 
 ## Features
 
--   Auth
+- Auth
 
-    -   Login
-    -   Register
-    -   Logout
+  - Login
+  - Register
+  - Logout
 
--   Chat
-    -   Chat List
-    -   Chat
-    -   Create Chat
-    -   Join Chat
-    -   Leave Chat
+- Chat
+  - Chat List
+  - Chat
+  - Create Chat
+  - Join Chat
+  - Leave Chat

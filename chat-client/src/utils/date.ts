@@ -12,18 +12,18 @@ dayjs.extend(timezone);
 
 dayjs.tz.setDefault('Asia/Seoul');
 
-export const getFormatDate = (targetDate: string | number | Date | dayjs.Dayjs, format: string) => {
-    return dayjs(targetDate).format(format);
+export const getFormatDate = (targetDate: number | string | Date | dayjs.Dayjs, format: string) => {
+  return dayjs(targetDate).format(format);
 };
 
-export const getIsYesterday = (targetDate: string | number | Date | dayjs.Dayjs) => {
-    return dayjs(targetDate).isYesterday();
+export const getIsYesterday = (targetDate: number | string | Date | dayjs.Dayjs) => {
+  return dayjs(targetDate).isYesterday();
 };
 
-export const getFormatChatTime = (targetDate: string | number | Date | dayjs.Dayjs) => {
-    return getIsYesterday(targetDate)
-        ? '어제'
-        : dayjs(targetDate).isBefore(dayjs(), 'date')
-          ? getFormatDate(targetDate, 'M월 D일')
-          : getFormatDate(targetDate, 'A h:mm');
+export const getFormatChatTime = (targetDate: number | string | Date | dayjs.Dayjs) => {
+  return getIsYesterday(targetDate)
+    ? '어제'
+    : dayjs(targetDate).isBefore(dayjs(), 'date')
+      ? getFormatDate(targetDate, 'M월 D일')
+      : getFormatDate(targetDate, 'A h:mm');
 };

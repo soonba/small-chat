@@ -1,45 +1,46 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { postData } from 'libs/axios';
-import { Error } from 'libs/axios/types';
+import { postData } from '@libs/axios';
+import { Error } from '@libs/axios/types';
 
 interface IRequestBody {
-    id: string;
-    password: string;
-    nickname: string;
+  id: string;
+  nickname: string;
+  password: string;
 }
 
 interface IResponseBody {
-    tokens: {
-        accessToken: string;
-        refreshToken: string;
-    };
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
 }
 
 const register = async (body: IRequestBody) => {
-    return postData<IResponseBody, IRequestBody>('/v2/users', body).then((res) => res.data);
+  return postData<IResponseBody, IRequestBody>('/v2/users', body).then((res) => res.data);
 };
 
 interface Props {
-    onSuccess?: (obj: IResponseBody) => void;
-    onError?: (error: Error) => void;
+  onError?: (error: Error) => void;
+  onSuccess?: (obj: IResponseBody) => void;
 }
-const useRegister = ({ onSuccess, onError }: Props) => {
-    const joinMutation = useMutation({
-        mutationFn: register,
-        onSuccess: (data) => {
-            if (onSuccess) {
-                onSuccess(data);
-            }
-        },
-        onError: (error: Error) => {
-            if (onError) {
-                onError(error);
-            }
-        }
-    });
 
-    return joinMutation;
+const useRegister = ({ onError, onSuccess }: Props) => {
+  const joinMutation = useMutation({
+    mutationFn: register,
+    onError: (error: Error) => {
+      if (onError) {
+        onError(error);
+      }
+    },
+    onSuccess: (data) => {
+      if (onSuccess) {
+        onSuccess(data);
+      }
+    },
+  });
+
+  return joinMutation;
 };
 
 export default useRegister;

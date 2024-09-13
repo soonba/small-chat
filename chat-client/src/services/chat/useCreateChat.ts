@@ -1,40 +1,41 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { postData } from 'libs/axios';
-import { Error } from 'libs/axios/types';
+import { postData } from '@libs/axios';
+import { Error } from '@libs/axios/types';
 
 interface IRequestBody {
-    chatName: string;
+  chatName: string;
 }
 
 interface IResponseBody {
-    chatId: string;
+  chatId: string;
 }
 
 const createChat = async (body: IRequestBody) => {
-    return postData<IResponseBody, IRequestBody>('/v2/chats', body).then((res) => res.data);
+  return postData<IResponseBody, IRequestBody>('/v2/chats', body).then((res) => res.data);
 };
 
 interface Props {
-    onSuccess?: (chatId: string) => void;
-    onError?: (error: Error) => void;
+  onError?: (error: Error) => void;
+  onSuccess?: (chatId: string) => void;
 }
-const useCreateChat = ({ onSuccess, onError }: Props) => {
-    const createChatMutation = useMutation({
-        mutationFn: createChat,
-        onSuccess: ({ chatId }) => {
-            if (onSuccess) {
-                onSuccess(chatId);
-            }
-        },
-        onError: (error: Error) => {
-            if (onError) {
-                onError(error);
-            }
-        }
-    });
 
-    return createChatMutation;
+const useCreateChat = ({ onError, onSuccess }: Props) => {
+  const createChatMutation = useMutation({
+    mutationFn: createChat,
+    onError: (error: Error) => {
+      if (onError) {
+        onError(error);
+      }
+    },
+    onSuccess: ({ chatId }) => {
+      if (onSuccess) {
+        onSuccess(chatId);
+      }
+    },
+  });
+
+  return createChatMutation;
 };
 
 export default useCreateChat;
