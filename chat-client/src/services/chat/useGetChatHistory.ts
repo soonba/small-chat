@@ -2,56 +2,55 @@ import { useEffect, useRef } from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { getData } from 'libs/axios';
-import { useSocket } from 'libs/socket';
-import { chatKeys } from 'utils/queryKey';
+import { useSocket } from '@hooks/utils';
+import { getData } from '@libs/axios';
+import { chatKeys } from '@utils/queryKey';
 
 interface IRequestBody {
-    nextCursor: string | null;
+  nextCursor: string | null;
 }
 
 export type MessageListType = {
-    sender: { userId: string; nickname: string } | null;
-    createdAt: string;
-    message: string;
-    messageType: 'SYSTEM' | 'USER';
+  createdAt: string;
+  message: string;
+  messageType: 'SYSTEM' | 'USER';
+  sender: { nickname: string; userId: string } | null;
 }[];
 
 interface IResponseBody {
-    data: MessageListType;
-    nextCursor: string;
+  data: MessageListType;
+  nextCursor: string;
 }
 
 const getChat = async (id: string, nextCursor: string): Promise<IResponseBody> => {
-    return getData<IResponseBody, IRequestBody>(`/v2/chats/${id}/messages`, { nextCursor: nextCursor || null }).then(
-        (res) => res.data
-    );
+  return getData<IResponseBody, IRequestBody>(`/v2/chats/${id}/messages`, { nextCursor: nextCursor || null }).then(
+    (res) => res.data,
+  );
 };
 
 const useGetChatHistory = (chatId: string) => {
-    const { onChatJoin } = useSocket();
-    const hasSubscribed = useRef(false);
+  const { onChatJoin } = useSocket();
+  const hasSubscribed = useRef(false);
 
-    const { data, ...rest } = useInfiniteQuery({
-        refetchOnMount: true,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
-        queryKey: chatKeys.history(chatId),
-        queryFn: ({ pageParam }) => getChat(chatId, pageParam),
-        initialPageParam: '',
-        select: ({ pageParams, pages }) => ({ pages, pageParams }),
-        getNextPageParam: () => undefined,
-        getPreviousPageParam: (lastPage) => (Number(lastPage.nextCursor) > 0 ? lastPage.nextCursor : undefined)
-    });
+  const { data, ...rest } = useInfiniteQuery<IResponseBody, Error>({
+    getNextPageParam: () => undefined,
+    getPreviousPageParam: (lastPage) => (Number(lastPage.nextCursor) > 0 ? lastPage.nextCursor : undefined),
+    initialPageParam: '',
+    queryFn: ({ pageParam }) => getChat(chatId, pageParam as string),
+    queryKey: chatKeys.history(chatId),
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
-    useEffect(() => {
-        if (!hasSubscribed.current && chatId) {
-            hasSubscribed.current = true;
-            onChatJoin([chatId]);
-        }
-    }, [chatId]);
+  useEffect(() => {
+    if (!hasSubscribed.current && chatId) {
+      hasSubscribed.current = true;
+      onChatJoin([chatId]);
+    }
+  }, [chatId]);
 
-    return { data, ...rest };
+  return { data, ...rest };
 };
 
 export default useGetChatHistory;

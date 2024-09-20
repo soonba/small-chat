@@ -1,8 +1,7 @@
 const appConfig = {
-    env: process.env.NODE_ENV,
-    appEnv: process.env.REACT_APP_ENV,
-    authApiUrl: process.env.REACT_APP_API_URL,
-    socketApiUrl: process.env.REACT_APP_SOCKET_API_URL
+  env: import.meta.env.MODE,
+  authApiUrl: import.meta.env.VITE_API_URL,
+  socketApiUrl: import.meta.env.VITE_SOCKET_API_URL,
 };
 
 export default appConfig;

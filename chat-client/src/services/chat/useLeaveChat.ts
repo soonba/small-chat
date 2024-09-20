@@ -1,36 +1,36 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { deleteData } from 'libs/axios';
-import { Error } from 'libs/axios/types';
+import { deleteData } from '@libs/axios';
+import { Error } from '@libs/axios/types';
 
 interface IRequestBody {
-    chatId: string;
+  chatId: string;
 }
 
 const leaveChat = async ({ chatId }: IRequestBody): Promise<void> => {
-    return deleteData<void, IRequestBody>('/v2/chats', { chatId }).then((res) => res.data);
+  return deleteData<void, IRequestBody>('/v2/chats', { chatId }).then((res) => res.data);
 };
 
 interface Props {
-    onSuccess?: () => void;
-    onError?: (error: Error) => void;
+  onError?: (error: Error) => void;
+  onSuccess?: () => void;
 }
-const useLeaveChat = ({ onSuccess, onError }: Props) => {
-    const leaveChatMutation = useMutation({
-        mutationFn: leaveChat,
-        onSuccess: () => {
-            if (onSuccess) {
-                onSuccess();
-            }
-        },
-        onError: (error: Error) => {
-            if (onError) {
-                onError(error);
-            }
-        }
-    });
+const useLeaveChat = ({ onError, onSuccess }: Props) => {
+  const leaveChatMutation = useMutation({
+    mutationFn: leaveChat,
+    onError: (error: Error) => {
+      if (onError) {
+        onError(error);
+      }
+    },
+    onSuccess: () => {
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
 
-    return leaveChatMutation;
+  return leaveChatMutation;
 };
 
 export default useLeaveChat;

@@ -1,33 +1,33 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { postData } from 'libs/axios';
-import { Error } from 'libs/axios/types';
+import { postData } from '@libs/axios';
+import { Error } from '@libs/axios/types';
 
 const logout = async () => {
-    return postData('/v2/users/logout').then((res) => res.data);
+  return postData('/v2/users/logout').then((res) => res.data);
 };
 
 interface Props {
-    onSuccess?: () => void;
-    onError?: (error: Error) => void;
+  onError?: (error: Error) => void;
+  onSuccess?: () => void;
 }
 
-const useLogout = ({ onSuccess, onError }: Props) => {
-    const logoutMutation = useMutation({
-        mutationFn: logout,
-        onSuccess: () => {
-            if (onSuccess) {
-                onSuccess();
-            }
-        },
-        onError: (error: Error) => {
-            if (onError) {
-                onError(error);
-            }
-        }
-    });
+const useLogout = ({ onError, onSuccess }: Props) => {
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onError: (error: Error) => {
+      if (onError) {
+        onError(error);
+      }
+    },
+    onSuccess: () => {
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
 
-    return logoutMutation;
+  return logoutMutation;
 };
 
 export default useLogout;
