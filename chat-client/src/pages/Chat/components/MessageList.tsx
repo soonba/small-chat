@@ -3,7 +3,7 @@ import { forwardRef, RefObject, useImperativeHandle, useRef } from 'react';
 import { Loader } from '@components/Loader';
 
 import { useAccount } from '@hooks/redux';
-import { SocketMessageType } from '@libs/socket';
+import { SocketMessageType } from '@hooks/utils/useSocket';
 import { MessageListType } from '@services/chat';
 
 import MessageListItem from './MessageListItem';
