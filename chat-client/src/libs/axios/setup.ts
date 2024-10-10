@@ -11,7 +11,7 @@ declare module 'axios' {
 
 const instance: AxiosInstance = axios.create({
   baseURL: appConfig.authApiUrl,
-  timeout: 5000,
+  timeout: 10000, // 10초
 });
 
 instance.defaults.headers.common.Accept = 'application/json';

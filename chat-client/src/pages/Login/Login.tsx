@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@components/Button';
 import { TextField } from '@components/Input';
+import { Loader } from '@components/Loader';
 import { useToast } from '@components/Toast';
 
 import { useSocket } from '@hooks/utils';
@@ -16,20 +17,24 @@ export default function Login() {
 
   const [id, setId] = useState('test111');
   const [password, setPassword] = useState('test111!');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const loginMutation = useLogin({
-    onError(error) {
-      onToast(error.message, { delay: 5000 });
-    },
     onSuccess({ tokens }) {
       setTokens(tokens);
       onSocketConnect();
+      setIsSubmitted(false);
       navigate('/', { replace: true });
+    },
+    onError(error) {
+      setIsSubmitted(false);
+      onToast(error.message, { delay: 5000 });
     },
   });
 
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitted(true);
     loginMutation.mutate({ id, password });
   };
 
@@ -43,6 +48,11 @@ export default function Login() {
 
   return (
     <div className="mt-10 flex w-full items-start justify-center">
+      {isSubmitted && (
+        <div className="fixed inset-0 z-1000 flex cursor-progress items-center justify-center bg-black/30">
+          <Loader />
+        </div>
+      )}
       <form className="flex w-full max-w-screen-md flex-col gap-5 px-5" onSubmit={handleLogin}>
         <h1 className="mb-10 text-center font-jua text-36-R-40 text-primary-900 dark:text-primary-100">작은 대화</h1>
         <TextField labelText="Id" placeholder="아이디를 입력해 주세요." type="text" value={id} onChange={setId} />
