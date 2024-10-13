@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { createHashRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 import { Loader } from '@components/Loader';
 import { AuthLayout, BaseLayout, ChatLayout } from '@layouts/index';
@@ -22,82 +22,60 @@ export default function App() {
       }
     >
       <RouterProvider
-        router={createHashRouter(
-          window.location.href.startsWith('https://')
-            ? [
-                {
-                  path: '/',
-                  children: [
-                    {
-                      index: true,
-                      element: <Navigate replace to="/guide" />,
-                    },
-                    {
-                      path: 'guide',
-                      element: <Guide />,
-                    },
-                    {
-                      path: '*',
-                      element: <Guide />,
-                    },
-                  ],
-                },
-              ]
-            : [
-                {
-                  path: '/',
-                  element: <BaseLayout />,
-                  children: [
-                    {
-                      index: true,
-                      element: (
-                        <ProtectedRoute>
-                          <ChatList />
-                        </ProtectedRoute>
-                      ),
-                    },
-                  ],
-                },
-                {
-                  path: '/chat',
-                  element: <ChatLayout />,
-                  children: [
-                    {
-                      path: ':id',
-                      element: (
-                        <ProtectedRoute>
-                          <Chat />
-                        </ProtectedRoute>
-                      ),
-                    },
-                  ],
-                },
-                {
-                  path: '/login',
-                  element: <AuthLayout />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Login />,
-                    },
-                  ],
-                },
-                {
-                  path: '/register',
-                  element: <AuthLayout />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Register />,
-                    },
-                  ],
-                },
-                {
-                  path: '/guide',
-                  element: <Guide />,
-                },
-              ],
-        )}
+        router={createHashRouter([
+          {
+            path: '/',
+            element: <BaseLayout />,
+            children: [
+              {
+                index: true,
+                element: (
+                  <ProtectedRoute>
+                    <ChatList />
+                  </ProtectedRoute>
+                ),
+              },
+            ],
+          },
+          {
+            path: '/chat',
+            element: <ChatLayout />,
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <ProtectedRoute>
+                    <Chat />
+                  </ProtectedRoute>
+                ),
+              },
+            ],
+          },
+          {
+            path: '/login',
+            element: <AuthLayout />,
+            children: [
+              {
+                index: true,
+                element: <Login />,
+              },
+            ],
+          },
+          {
+            path: '/register',
+            element: <AuthLayout />,
+            children: [
+              {
+                index: true,
+                element: <Register />,
+              },
+            ],
+          },
+          {
+            path: '/guide',
+            element: <Guide />,
+          },
+        ])}
       />
     </Suspense>
   );
