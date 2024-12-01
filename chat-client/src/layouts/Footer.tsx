@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ChatBubbleOvalLeftIcon, EnvelopeIcon, PlusIcon } from '@heroicons/react/20/solid';
 
 import { IconButton } from '@components/Button';
-import { CreateChatModal, JoinChatModal } from '@components/Modal';
+import { CreateChatModal, CreateChatModalType, JoinChatModal, JoinChatModalDataType } from '@components/Modal';
 import { useToast } from '@components/Toast';
 
 import { useModal, useSocket } from '@hooks/utils';
@@ -25,10 +25,12 @@ export default function Footer() {
     },
   });
 
-  const createModal = useModal({
-    onSubmit(data) {
-      const chatName = data as string;
-      createChatMutation.mutate({ chatName });
+  const createModal = useModal<CreateChatModalType>({
+    onConfirm(data) {
+      if (data) {
+        const { name } = data;
+        createChatMutation.mutate({ chatName: name });
+      }
     },
   });
 
@@ -42,10 +44,12 @@ export default function Footer() {
     },
   });
 
-  const joinModal = useModal({
-    onSubmit(data) {
-      const chatId = data as string;
-      joinChatMutation.mutate({ chatId });
+  const joinModal = useModal<JoinChatModalDataType>({
+    onConfirm(data) {
+      if (data) {
+        const { code } = data;
+        joinChatMutation.mutate({ chatId: code });
+      }
     },
   });
 
@@ -54,18 +58,18 @@ export default function Footer() {
   };
 
   const handleJoin = () => {
-    joinModal.onOpen();
+    joinModal.onOpen({ code: '' });
   };
 
   const handleCreate = () => {
-    createModal.onOpen();
+    createModal.onOpen({ name: '' });
   };
 
   return (
     <>
       {pathname === '/' && (
         <>
-          <footer className="fixed inset-x-0 bottom-0 rounded-t-md bg-layout-light shadow-inner shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+          <footer className="fixed inset-x-0 bottom-0 shadow-inner shadow-primary-200 dark:shadow-primary-950">
             <div className="flex h-20 w-full items-center justify-around rounded-t-md">
               <IconButton
                 aria-label="chat list"

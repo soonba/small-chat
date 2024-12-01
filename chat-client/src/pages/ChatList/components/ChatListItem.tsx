@@ -22,14 +22,12 @@ export default function ChatListItem({ data }: Props) {
           </div>
           <div className="w-full">
             <div className="flex w-full items-center justify-between">
-              <p className="text-16-SB-24 text-primary-900 group-hover:font-bold dark:text-primary-100">
-                {data.chatName}
-              </p>
-              <time className="text-12-L-16 text-primary-900/50 dark:text-primary-100/50">
+              <p className="text-16-SB-24 text-white group-hover:font-bold dark:text-primary-100">{data.chatName}</p>
+              <time className="text-12-L-16 text-white drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-primary-100/50 dark:[text-shadow:unset]">
                 {getFormatChatTime(data.lastMessageTime)}
               </time>
             </div>
-            <p className="line-clamp-2 text-14-R-20 text-primary-900 dark:text-primary-100">{data.lastMessage}</p>
+            <p className="line-clamp-2 text-14-R-20 text-white dark:text-primary-100">{data.lastMessage}</p>
           </div>
         </div>
       </Link>

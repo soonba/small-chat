@@ -1,45 +1,53 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-interface Props {
+interface Props<T> {
   onCancel?: () => void;
   onClose?: () => void;
-  onConfirm?: (data?: unknown) => void;
-  onSubmit?: (data?: unknown) => void;
+  onConfirm?: (data?: T) => void;
+  onSubmit?: (data?: T) => void;
 }
 
-const useModal = ({ onCancel, onClose, onConfirm, onSubmit }: Props) => {
+const useModal = <T>({ onCancel, onClose, onConfirm, onSubmit }: Props<T>) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [modalData, setModalData] = useState<unknown>();
+  const [modalData, setModalData] = useState<T>();
 
-  const handleOpen = (data?: unknown) => {
+  const handleOpen = useCallback((data: T) => {
     setIsOpen(true);
     setModalData(data);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsOpen(false);
     if (onClose) {
       onClose();
     }
-  };
+  }, [onClose]);
 
-  const handleConfirm = (data: unknown) => {
-    if (onConfirm) {
-      onConfirm(data);
-    }
-  };
+  const handleConfirm = useCallback(
+    (data: T) => {
+      setIsOpen(false);
+      if (onConfirm) {
+        onConfirm(data);
+      }
+    },
+    [onConfirm],
+  );
 
-  const handleSubmit = (data: unknown) => {
-    if (onSubmit) {
-      onSubmit(data);
-    }
-  };
+  const handleSubmit = useCallback(
+    (data: T) => {
+      if (onSubmit) {
+        onSubmit(data);
+      }
+    },
+    [onSubmit],
+  );
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
+    setIsOpen(false);
     if (onCancel) {
       onCancel();
     }
-  };
+  }, [onCancel]);
 
   return {
     isOpen,

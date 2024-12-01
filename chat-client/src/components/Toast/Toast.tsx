@@ -28,14 +28,14 @@ export default function Toast({ message, onClose, options }: Props) {
 
   return (
     <div
-      className="flex min-h-12 w-max animate-fadeInOut items-center justify-between whitespace-pre-wrap break-all rounded-xl border border-primary-900 bg-layout-light px-3 py-2 text-primary-900 dark:border-primary-100 dark:bg-layout-dark dark:text-primary-100"
+      className="[&_svg:text-primary-900] flex min-h-12 w-max animate-fadeInOut items-center justify-between whitespace-pre-wrap break-all rounded-xl bg-primary-900 px-3 py-2 text-white dark:bg-primary-100 dark:text-primary-900"
       role="alert"
       style={{ animationDelay: options?.delay ? `${animationTime}s` : '4.5s' }}
     >
       <p className="pr-2.5 text-16-M-24 text-inherit">{message}</p>
       {(options?.canDismiss === undefined || options?.canDismiss === true) && (
-        <div className="flex items-center">
-          <div className="mx-2.5 h-4 w-px bg-primary-900 dark:bg-primary-100" />
+        <div className="flex items-center dark:[&_svg]:text-primary-900">
+          <div className="mx-2.5 h-4 w-px bg-white dark:bg-primary-900" />
           <IconButton
             aria-label="dismiss toast"
             icon={<XMarkIcon />}

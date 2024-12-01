@@ -6,15 +6,18 @@ import Button from '../Button/Button';
 import TextField from '../Input/TextField';
 import Modal from './Modal';
 
-type ModalType = ReturnType<typeof useModal>;
+export type CreateChatModalType = {
+  name: string;
+};
 
-export default function CreateChatModal({ isOpen, onClose, onSubmit }: ModalType) {
+type ModalType = ReturnType<typeof useModal<CreateChatModalType>>;
+
+export default function CreateChatModal({ isOpen, onClose, onConfirm }: ModalType) {
   const [chatName, setChatName] = useState('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onClose();
-    onSubmit(chatName);
+    onConfirm({ name: chatName });
   };
 
   return (

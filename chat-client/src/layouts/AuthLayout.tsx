@@ -10,7 +10,7 @@ export default function AuthLayout() {
   const { mode, onModeChange } = useMode();
 
   return (
-    <div className="min-h-full w-full">
+    <div className="min-h-full w-full !bg-fixed bg-linear-gradient dark:bg-linear-gradient-dark">
       <header className="fixed inset-x-0 top-0 z-10 bg-inherit">
         <div className="mx-auto flex h-14 w-full items-center justify-between rounded-b-md p-5">
           <div className="ml-auto flex items-center gap-5">
@@ -25,7 +25,7 @@ export default function AuthLayout() {
           </div>
         </div>
       </header>
-      <main className="size-full bg-primary-50/10 pb-48 pt-14 dark:bg-black/10">
+      <main className="size-full pb-48 pt-14">
         <Outlet />
       </main>
       <ScrollRestoration />

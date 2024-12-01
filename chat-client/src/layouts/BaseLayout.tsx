@@ -9,9 +9,9 @@ export default function BaseLayout() {
   useGetMyInfo();
 
   return (
-    <div className="min-h-full w-full">
+    <div className="min-h-full w-full !bg-fixed bg-linear-gradient dark:bg-linear-gradient-dark">
       <Gnb />
-      <main className="relative mx-auto w-full bg-primary-50/10 pt-14 dark:bg-black/10">
+      <main className="relative mx-auto w-full pt-14">
         <Outlet />
       </main>
       <Footer />

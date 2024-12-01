@@ -54,7 +54,7 @@ export default function Login() {
         </div>
       )}
       <form className="flex w-full max-w-screen-md flex-col gap-5 px-5" onSubmit={handleLogin}>
-        <h1 className="mb-10 text-center font-jua text-36-R-40 text-primary-900 dark:text-primary-100">작은 대화</h1>
+        <h1 className="mb-10 text-center font-jua text-36-R-40 text-white dark:text-primary-100">작은 대화</h1>
         <TextField labelText="Id" placeholder="아이디를 입력해 주세요." type="text" value={id} onChange={setId} />
         <TextField
           labelText="Password"

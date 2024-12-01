@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { ArrowLeftEndOnRectangleIcon, ChevronLeftIcon, MoonIcon, SunIcon } from '@heroicons/react/20/solid';
+import { ChevronLeftIcon, Cog6ToothIcon, MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 
 import { IconButton } from '@components/Button';
 import { Loader } from '@components/Loader';
+import { LeaveChatModal, LeaveChatModalDataType } from '@components/Modal';
 import { useToast } from '@components/Toast';
 
 import { useAccount } from '@hooks/redux';
-import { useIntersectionObserver, useMode, useSocket } from '@hooks/utils';
+import { useIntersectionObserver, useModal, useMode, useSocket } from '@hooks/utils';
 import { useGetChatDetail, useGetChatHistory, useLeaveChat } from '@services/chat';
 
 import { MessageList, MessageTextarea, RefHandler } from './components';
@@ -30,7 +31,19 @@ export default function Chat() {
     isFetchingPreviousPage,
     isLoading: isFetching,
   } = useGetChatHistory(chatId);
+
+  const { mutate, isPending } = useLeaveChat({
+    onError(error) {
+      onToast(error.message, { delay: 5000 });
+    },
+    onSuccess() {
+      onCurrentChatLeave(chatId);
+      navigate('/', { replace: true });
+    },
+  });
+
   const list = useMemo(() => data?.pages?.flatMap((data) => data.data).reverse() || [], [data?.pages]);
+
   const { message: socketMessages, onCurrentChatLeave, onMessageSend } = useSocket();
 
   const ref = useRef<RefHandler>(null);
@@ -41,6 +54,28 @@ export default function Chat() {
       fetchPreviousPage();
     }, 1000);
   });
+
+  const leaveModal = useModal<LeaveChatModalDataType>({
+    onConfirm() {
+      mutate({ chatId });
+    },
+  });
+
+  const handleLeave = () => {
+    if (detailData?.chatName) {
+      leaveModal.onOpen({ name: detailData.chatName });
+    }
+  };
+
+  const handleSubmit = (message: string) => {
+    if (accountId && nickname) {
+      onMessageSend({
+        messageBody: { chatId, message, nickname, userId: accountId },
+      });
+    } else {
+      onToast(`문제가 발생하였습니다.\n잠시 후에 다시 시도해주세요.`, { delay: 5000 });
+    }
+  };
 
   useEffect(() => {
     if (ref.current) {
@@ -55,44 +90,20 @@ export default function Chat() {
     }
   }, [isLoading, isFetchingPreviousPage, hasPreviousPage]);
 
-  const leaveChatMutation = useLeaveChat({
-    onError(error) {
-      onToast(error.message, { delay: 5000 });
-    },
-    onSuccess() {
-      onCurrentChatLeave(chatId);
-      navigate('/', { replace: true });
-    },
-  });
-
-  const handleLeave = () => {
-    leaveChatMutation.mutate({ chatId });
-  };
-
-  const handleSubmit = (message: string) => {
-    if (accountId && nickname) {
-      onMessageSend({
-        messageBody: { chatId, message, nickname, userId: accountId },
-      });
-    } else {
-      onToast(`문제가 발생하였습니다.\n잠시 후에 다시 시도해주세요.`, { delay: 5000 });
-    }
-  };
-
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-10 rounded-b-md bg-layout-light shadow-sm shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+      <header className="fixed inset-x-0 top-0 z-10 shadow-sm shadow-primary-100 dark:shadow-primary-950">
         <div className="flex h-14 w-full items-center justify-between rounded-b-md pl-2.5 pr-5">
-          <Link className="flex w-full items-center gap-1" to="/" onClick={() => onCurrentChatLeave(chatId)}>
-            <ChevronLeftIcon className="size-8 text-primary-900 dark:text-primary-100" />
-            <h1 className="text-center font-jua text-24-R-32 text-primary-900 dark:text-primary-100">
+          <Link className="flex items-center gap-1" to="/" onClick={() => onCurrentChatLeave(chatId)}>
+            <ChevronLeftIcon className="size-8 text-white dark:text-primary-100" />
+            <h1 className="text-center font-jua text-24-R-32 text-white dark:text-primary-100">
               {detailData?.chatName || ''}
             </h1>
           </Link>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-1 items-center justify-end gap-5">
             <IconButton
               aria-label="leave chat"
-              icon={<ArrowLeftEndOnRectangleIcon />}
+              icon={<Cog6ToothIcon />}
               size="small"
               title="채팅방 나가기"
               variant="text"
@@ -110,7 +121,8 @@ export default function Chat() {
         </div>
       </header>
       <main className="flex size-full flex-col justify-between pt-14">
-        {isFetching ? (
+        <LeaveChatModal {...leaveModal} />
+        {isFetching || isPending ? (
           <div className="flex h-[calc(100vh-56px)] w-full items-center justify-center text-24-BL-32 text-primary-900 dark:text-primary-100">
             <Loader />
           </div>

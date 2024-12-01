@@ -15,9 +15,9 @@ const getStyle = (variant: VariantType) => {
     case 'contained':
       return 'rounded-md bg-primary-900 text-primary-100 hover:opacity-80 disabled:pointer-events-none disabled:opacity-50';
     case 'text':
-      return 'text-primary-900 hover:opacity-80 dark:text-primary-100';
+      return 'text-white hover:opacity-80 dark:text-primary-100';
     default:
-      return 'rounded-md border border-primary-600 text-primary-600 hover:opacity-80 dark:border-primary-100 dark:text-primary-100 disabled:pointer-events-none disabled:opacity-30';
+      return 'rounded-md border border-primary-600 bg-white dark:bg-transparent text-primary-600 hover:opacity-80 dark:border-primary-100 dark:text-primary-100 disabled:pointer-events-none disabled:opacity-30';
   }
 };
 

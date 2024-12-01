@@ -16,13 +16,18 @@ import { Loader } from '@components/Loader';
 
 export default function Component() {
   return (
-    <section className="scroll-m-16 text-primary-900 dark:text-primary-100" id="component">
-      <div className="mb-10 flex items-center gap-x-2.5">
-        <h2 className="text-30-B-36">Component</h2>
-      </div>
+    <section className="scroll-m-16" id="component">
+      <h2
+        className="mb-10 text-30-B-36 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:[text-shadow:unset]"
+        id="component"
+      >
+        Component
+      </h2>
       <div className="flex flex-wrap gap-10">
-        <div className="flex flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Icon Button</h3>
+        <div className="flex flex-col self-start rounded bg-transparent p-5">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+            Icon Button
+          </h3>
           <div className="flex items-center gap-x-2.5">
             <IconButton
               aria-label="change to light mode"
@@ -92,8 +97,10 @@ export default function Component() {
             />
           </div>
         </div>
-        <div className="min-w-96 max-w-lg flex-1 flex-col rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Button</h3>
+        <div className="min-w-96 max-w-lg flex-1 flex-col rounded bg-transparent p-5">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+            Button
+          </h3>
           <div className="flex w-full flex-col items-start gap-y-2.5">
             <Button size="small" text="로그아웃" variant="text" />
             <Button size="medium" text="참여하기" type="submit" variant="contained" />
@@ -102,15 +109,19 @@ export default function Component() {
             <Button size="large" text="회원가입" type="button" variant="outlined" />
           </div>
         </div>
-        <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">TextField</h3>
+        <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-transparent p-5">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+            TextField
+          </h3>
           <div className="flex flex-col gap-y-2.5">
             <TextField placeholder="안녕하세요." />
             <TextField disabled defaultValue="비활성화 상태입니다." />
           </div>
         </div>
-        <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-900 dark:text-gray-100">Loader</h3>
+        <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-transparent p-5">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+            Loader
+          </h3>
           <div className="flex h-80 items-center justify-center">
             <Loader />
           </div>

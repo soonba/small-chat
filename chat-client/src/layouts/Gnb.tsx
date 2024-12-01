@@ -52,10 +52,10 @@ export default function Gnb() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-10 rounded-b-md bg-layout-light shadow-sm shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
+    <header className="fixed inset-x-0 top-0 z-10 shadow-sm shadow-primary-100 dark:shadow-primary-950">
       <div className="flex h-14 w-full items-center justify-between rounded-b-md px-5">
         <Link reloadDocument to="/">
-          <h1 className="text-center font-jua text-24-R-32 text-primary-900 dark:text-primary-100">작은 대화</h1>
+          <h1 className="text-center font-jua text-24-R-32 text-white dark:text-primary-100">작은 대화</h1>
         </Link>
         <div className="flex items-center gap-5">
           <Button size="small" text="로그아웃" variant="text" onClick={handleClick} />

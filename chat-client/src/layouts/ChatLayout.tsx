@@ -6,7 +6,7 @@ export default function ChatLayout() {
   useGetMyInfo();
 
   return (
-    <div className="min-h-full w-full bg-primary-50/10 dark:bg-black/10">
+    <div className="min-h-full w-full !bg-fixed bg-linear-gradient dark:bg-linear-gradient-dark">
       <Outlet />
     </div>
   );

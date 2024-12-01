@@ -1,4 +1,5 @@
 const plugin = require('tailwindcss/plugin');
+const { transform } = require('typescript');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -75,6 +76,9 @@ module.exports = {
       zIndex: {
         1000: 1000,
       },
+      backgroundImage: {
+        'snowflake': "url('./src/assets/images/img_snowflake.png')",
+      },
       keyframes: {
         fadeIn: {
           '0%': {
@@ -106,6 +110,12 @@ module.exports = {
     require('tailwind-scrollbar-hide'),
     plugin(function plugin({ addUtilities }) {
       addUtilities({
+        '.bg-linear-gradient': {
+          background: 'linear-gradient(#0c436e, #ffffff)'
+        },
+        '.bg-linear-gradient-dark': {
+          background: 'linear-gradient(#000000, #0c436e)'
+        },
         '.bg-grid': {
           'background-position': 'center',
           'background-size': '20px 20px',

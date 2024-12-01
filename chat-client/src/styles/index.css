@@ -28,3 +28,16 @@ body,
     sans-serif;
   @apply bg-background-light scrollbar-hide dark:bg-background-dark;
 }
+
+@keyframes fall {
+  from {
+  }
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.snowflake {
+  @apply bg-snowflake absolute -top-10 bg-contain bg-center;
+}

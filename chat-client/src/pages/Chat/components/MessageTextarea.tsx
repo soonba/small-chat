@@ -88,7 +88,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-x-0 bottom-0 flex w-full flex-row gap-5 border-t-2 border-t-primary-100 bg-layout-light py-2.5 pl-2.5 pr-5 dark:border-t-primary-950 dark:bg-layout-dark"
+      className="fixed inset-x-0 bottom-0 flex w-full flex-row gap-5 border-t-2 border-t-primary-100 py-2.5 pl-2.5 pr-5 dark:border-t-primary-950"
     >
       <textarea
         ref={textareaRef}
@@ -98,7 +98,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
         onChange={(e) => setMessage(e.currentTarget.value)}
         onKeyDown={(e) => handleEnter(e.nativeEvent)}
       />
-      <div className="flex shrink-0 items-center gap-x-5">
+      <div className="flex shrink-0 items-center gap-x-5 [&_svg]:text-primary-900 dark:[&_svg]:text-primary-100">
         <IconButton
           aria-label="open emoji picker"
           icon={<FaceSmileIcon />}

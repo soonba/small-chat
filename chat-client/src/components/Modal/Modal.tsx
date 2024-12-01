@@ -23,7 +23,7 @@ export default function Modal({ children, isOpen, onClose, title }: Props) {
     createPortal(
       <div className="fixed inset-0 z-[10000] bg-black/60 dark:bg-transparent" role="presentation">
         <div className="flex min-h-full w-full items-center justify-center">
-          <div className="relative min-h-52 min-w-96 rounded-md bg-background-light px-8 py-10 shadow-lg dark:bg-background-dark">
+          <div className="relative min-h-52 min-w-96 rounded-md px-8 py-10 shadow-lg bg-linear-gradient dark:bg-linear-gradient-dark">
             <button
               aria-label="close modal"
               className="absolute right-5 top-5"
@@ -31,9 +31,9 @@ export default function Modal({ children, isOpen, onClose, title }: Props) {
               type="button"
               onClick={onClose}
             >
-              <XMarkIcon className="size-8 text-primary-900 hover:opacity-80 dark:text-primary-100" />
+              <XMarkIcon className="size-8 text-white hover:opacity-80 dark:text-primary-100" />
             </button>
-            <h2 className="mb-10 text-20-B-28 text-primary-900 dark:text-primary-100">{title}</h2>
+            <h2 className="mb-5 text-20-B-28 text-white dark:text-primary-100">{title}</h2>
             {children}
           </div>
         </div>

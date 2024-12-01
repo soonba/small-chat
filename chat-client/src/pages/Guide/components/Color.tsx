@@ -29,10 +29,12 @@ const background: Record<string, Record<string, string>> = {
 
 export default function Color() {
   return (
-    <section className="scroll-m-16 text-primary-900 dark:text-primary-100" id="color">
-      <h2 className="mb-10 text-30-B-36">Color</h2>
-      <div className="space-y-5 rounded bg-layout-light p-5 shadow-md shadow-primary-100 dark:bg-layout-dark dark:shadow-primary-950">
-        <h3 className="text-16-B-24 text-gray-900 dark:text-gray-100">Primary</h3>
+    <section className="scroll-m-16 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:[text-shadow:unset]" id="color">
+      <h2 className="mb-10 text-30-B-36" id="color">
+        Color
+      </h2>
+      <div className="space-y-5 rounded bg-transparent p-5">
+        <h3 className="text-16-B-24 text-gray-50 dark:text-gray-100">Primary</h3>
         <ul className="flex w-full items-center gap-x-5 rounded">
           {Object.keys(primary).map((key) => (
             <li key={key} className="w-full">
@@ -45,7 +47,7 @@ export default function Color() {
             </li>
           ))}
         </ul>
-        <h3 className="text-16-B-24 text-gray-900 dark:text-gray-100">Layouts</h3>
+        <h3 className="text-16-B-24 text-gray-50 dark:text-gray-100">Layouts</h3>
         <ul className="space-y-5">
           {Object.keys(background).map((color) => (
             <li key={color} className="w-full">
@@ -72,7 +74,7 @@ export default function Color() {
             </li>
           ))}
         </ul>
-        <h3 className="text-16-B-24 text-gray-900 dark:text-gray-100">Text</h3>
+        <h3 className="text-16-B-24 text-gray-50 dark:text-gray-100">Text</h3>
         <ul className="flex w-full items-center gap-x-5 rounded">
           <li className="w-full max-w-36">
             <div className="h-14 w-full" style={{ backgroundColor: primary[900] }} />

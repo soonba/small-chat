@@ -6,15 +6,18 @@ import Button from '../Button/Button';
 import TextField from '../Input/TextField';
 import Modal from './Modal';
 
-type ModalType = ReturnType<typeof useModal>;
+export type JoinChatModalDataType = {
+  code: string;
+};
 
-export default function JoinChatModal({ isOpen, onClose, onSubmit }: ModalType) {
+type ModalType = ReturnType<typeof useModal<JoinChatModalDataType>>;
+
+export default function JoinChatModal({ isOpen, onClose, onConfirm }: ModalType) {
   const [code, setCode] = useState('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onClose();
-    onSubmit(code);
+    onConfirm({ code });
   };
 
   return (
