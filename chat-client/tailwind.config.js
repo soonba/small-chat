@@ -77,7 +77,7 @@ module.exports = {
         1000: 1000,
       },
       backgroundImage: {
-        'snowflake': "url('./src/assets/images/img_snowflake.png')",
+        'snowflake': "url('/img_snowflake.png')",
       },
       keyframes: {
         fadeIn: {
