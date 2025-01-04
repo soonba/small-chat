@@ -24,9 +24,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: chat-client
 
       - name: Build Frontend
         run: npm run build
+        working-directory: chat-client
 
       - name: Upload Frontend to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -38,6 +40,7 @@ jobs:
 
       - name: Build Storybook
         run: npm run build-storybook
+        working-directory: chat-client
 
       - name: Update Storybook Base Path
         run: |
