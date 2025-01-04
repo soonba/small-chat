@@ -39,5 +39,5 @@ body,
 }
 
 .snowflake {
-  @apply bg-snowflake absolute -top-10 bg-contain bg-center;
+  @apply absolute -top-10 bg-snowflake bg-contain bg-center;
 }

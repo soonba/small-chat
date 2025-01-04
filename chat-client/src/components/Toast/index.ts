@@ -1,2 +1,3 @@
 export { default as Toast } from './Toast';
-export * from './ToastProvider';
+export { default as ToastProvider } from './ToastProvider';
+export { default as useToast } from './useToast';

@@ -10,9 +10,10 @@ import {
   SunIcon,
 } from '@heroicons/react/20/solid';
 
-import { Button, IconButton } from '@components/Button';
-import { TextField } from '@components/Input';
-import { Loader } from '@components/Loader';
+import Button from '@components/Button';
+import IconButton from '@components/IconButton';
+import Loader from '@components/Loader';
+import TextField from '@components/TextField';
 
 export default function Component() {
   return (
@@ -31,69 +32,69 @@ export default function Component() {
           <div className="flex items-center gap-x-2.5">
             <IconButton
               aria-label="change to light mode"
-              icon={<MoonIcon />}
               size="small"
               title="라이트 모드로 변경하기"
               variant="text"
+              icon={<MoonIcon />}
             />
             <IconButton
               aria-label="change to dark mode"
-              icon={<SunIcon />}
               size="small"
               title="다크 모드로 변경하기"
               variant="text"
+              icon={<SunIcon />}
             />
             <IconButton
               aria-label="leave chat"
-              icon={<ArrowLeftEndOnRectangleIcon />}
               size="small"
               title="채팅방 나가기"
               variant="text"
+              icon={<ArrowLeftEndOnRectangleIcon />}
             />
             <IconButton
               aria-label="open emoji picker"
-              icon={<FaceSmileIcon />}
               size="small"
               title="이모티콘 보기"
               variant="text"
+              icon={<FaceSmileIcon />}
             />
             <IconButton
               aria-label="copy chat id"
-              icon={<ClipboardIcon />}
               size="small"
               title="코드 공유하기"
               variant="text"
+              icon={<ClipboardIcon />}
             />
             <IconButton
               aria-label="send message"
-              icon={<PaperAirplaneIcon />}
               size="small"
               title="메시지 보내기"
               variant="text"
+              icon={<PaperAirplaneIcon />}
             />
             <IconButton
               aria-label="chat list"
-              icon={<ChatBubbleOvalLeftIcon />}
               size="medium"
               title="참여중인 채팅 리스트"
               type="button"
               variant="outlined"
+              icon={<ChatBubbleOvalLeftIcon />}
             />
             <IconButton
               aria-label="join chat"
-              icon={<EnvelopeIcon />}
               size="medium"
               title="채팅 참여하기"
               type="button"
               variant="outlined"
+              icon={<EnvelopeIcon />}
             />
             <IconButton
               aria-label="create chat"
-              icon={<PlusIcon />}
               size="large"
               title="채팅 생성하기"
               type="button"
               variant="contained"
+              icon={<PlusIcon />}
             />
           </div>
         </div>

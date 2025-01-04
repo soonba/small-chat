@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface Account {
-  accountId?: string;
   nickname?: string;
+  accountId?: string;
 }
 
 const initialState: Account = {

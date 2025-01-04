@@ -1,0 +1,54 @@
+name: client - publish frontend and storybook to github pages
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'chat-client/**'
+
+jobs:
+  build-chat-client:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Setup Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Frontend
+        run: npm run build
+
+      - name: Upload Frontend to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: .
+          keep_files: true
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Update Storybook Base Path
+        run: |
+          echo "Updating Storybook base path for /storybook"
+          sed -i 's|href="/|href="/storybook/|g' storybook/index.html
+          sed -i 's|src="/|src="/storybook/|g' storybook/index.html
+
+      - name: Upload Storybook to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./storybook
+          destination_dir: storybook
+          keep_files: true

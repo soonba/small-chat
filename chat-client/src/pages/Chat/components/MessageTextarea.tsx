@@ -6,18 +6,18 @@ import Picker from '@emoji-mart/react';
 
 import { ClipboardIcon, FaceSmileIcon, PaperAirplaneIcon } from '@heroicons/react/20/solid';
 
-import { IconButton } from '@components/Button';
+import IconButton from '@components/IconButton';
 import { useToast } from '@components/Toast';
 
 import { getStorageItem, SESSION_STORAGE_KEYS } from '@utils/storage';
 
 type EmojiDataType = {
   id: string;
-  keywords: string[];
   name: string;
   native: string;
-  shortcodes: string;
   unified: string;
+  keywords: string[];
+  shortcodes: string;
 };
 
 interface Props {
@@ -101,29 +101,29 @@ export default function MessageTextarea({ onSubmit }: Props) {
       <div className="flex shrink-0 items-center gap-x-5 [&_svg]:text-primary-900 dark:[&_svg]:text-primary-100">
         <IconButton
           aria-label="open emoji picker"
-          icon={<FaceSmileIcon />}
           size="medium"
           title="이모티콘 보기"
           variant="text"
+          icon={<FaceSmileIcon />}
           onClick={() => setIsOpen((prev) => !prev)}
         />
         {!message ? (
           <IconButton
             aria-label="copy chat id"
-            icon={<ClipboardIcon />}
             size="medium"
             title="코드 공유하기"
             variant="text"
+            icon={<ClipboardIcon />}
             onClick={handleCopy}
           />
         ) : (
           <IconButton
             aria-label="send message"
             disabled={!message || message.trim().length === 0}
-            icon={<PaperAirplaneIcon />}
             size="medium"
             title="메시지 보내기"
             variant="text"
+            icon={<PaperAirplaneIcon />}
             onClick={handleSubmit}
           />
         )}
@@ -132,10 +132,10 @@ export default function MessageTextarea({ onSubmit }: Props) {
         <div className="fixed bottom-28 right-0">
           <Picker
             data={emojiData}
-            locale="ko"
-            previewPosition="none"
             theme={getStorageItem(SESSION_STORAGE_KEYS.MODE) === 'light' ? 'light' : 'dark'}
+            locale="ko"
             onEmojiSelect={(data: EmojiDataType) => setMessage((prev) => prev + data.native)}
+            previewPosition="none"
           />
         </div>
       )}

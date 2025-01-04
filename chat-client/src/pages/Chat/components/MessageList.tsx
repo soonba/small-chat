@@ -1,6 +1,6 @@
 import { forwardRef, RefObject, useImperativeHandle, useRef } from 'react';
 
-import { Loader } from '@components/Loader';
+import Loader from '@components/Loader';
 
 import { useAccount } from '@hooks/redux';
 import { SocketMessageType } from '@hooks/utils/useSocket';

@@ -3,8 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { ChevronLeftIcon, Cog6ToothIcon, MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 
-import { IconButton } from '@components/Button';
-import { Loader } from '@components/Loader';
+import IconButton from '@components/IconButton';
+import Loader from '@components/Loader';
 import { LeaveChatModal, LeaveChatModalDataType } from '@components/Modal';
 import { useToast } from '@components/Toast';
 
@@ -32,7 +32,7 @@ export default function Chat() {
     isLoading: isFetching,
   } = useGetChatHistory(chatId);
 
-  const { mutate, isPending } = useLeaveChat({
+  const { isPending, mutate } = useLeaveChat({
     onError(error) {
       onToast(error.message, { delay: 5000 });
     },
@@ -94,7 +94,7 @@ export default function Chat() {
     <>
       <header className="fixed inset-x-0 top-0 z-10 shadow-sm shadow-primary-100 dark:shadow-primary-950">
         <div className="flex h-14 w-full items-center justify-between rounded-b-md pl-2.5 pr-5">
-          <Link className="flex items-center gap-1" to="/" onClick={() => onCurrentChatLeave(chatId)}>
+          <Link className="flex items-center gap-1" onClick={() => onCurrentChatLeave(chatId)} to="/">
             <ChevronLeftIcon className="size-8 text-white dark:text-primary-100" />
             <h1 className="text-center font-jua text-24-R-32 text-white dark:text-primary-100">
               {detailData?.chatName || ''}
@@ -103,18 +103,18 @@ export default function Chat() {
           <div className="flex flex-1 items-center justify-end gap-5">
             <IconButton
               aria-label="leave chat"
-              icon={<Cog6ToothIcon />}
               size="small"
               title="채팅방 나가기"
               variant="text"
+              icon={<Cog6ToothIcon />}
               onClick={handleLeave}
             />
             <IconButton
               aria-label={`change to ${mode === 'light' ? 'dark' : 'light'} mode`}
-              icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
               size="small"
               title={`${mode === 'light' ? '다크' : '라이트'} 모드로 변경하기`}
               variant="text"
+              icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
               onClick={onModeChange}
             />
           </div>

@@ -4,7 +4,8 @@ import { useQueryClient, UseQueryResult } from '@tanstack/react-query';
 
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 
-import { Button, IconButton } from '@components/Button';
+import Button from '@components/Button';
+import IconButton from '@components/IconButton';
 
 import { useMode, useSocket } from '@hooks/utils';
 import { useLogout } from '@services/auth';
@@ -61,10 +62,10 @@ export default function Gnb() {
           <Button size="small" text="로그아웃" variant="text" onClick={handleClick} />
           <IconButton
             aria-label={`change to ${mode === 'light' ? 'dark' : 'light'} mode`}
-            icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
             size="small"
             title={`${mode === 'light' ? '다크' : '라이트'} 모드로 변경하기`}
             variant="text"
+            icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
             onClick={onModeChange}
           />
         </div>

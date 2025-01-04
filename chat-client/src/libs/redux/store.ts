@@ -8,6 +8,7 @@ export const store = configureStore({
   reducer: {
     account: accountReducer,
   },
+  devTools: import.meta.env.DEV,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

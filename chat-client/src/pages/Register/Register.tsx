@@ -1,8 +1,9 @@
 import { FormEvent, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@components/Button';
-import { TextField } from '@components/Input';
+import Button from '@components/Button';
+import Loader from '@components/Loader';
+import TextField from '@components/TextField';
 import { useToast } from '@components/Toast';
 
 import { useSocket } from '@hooks/utils';
@@ -19,21 +20,25 @@ export default function Register() {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { data: isUsed } = useCheckId(accountId);
   const registerMutation = useRegister({
     onError(error) {
+      setIsSubmitted(false);
       onToast(error.message, { delay: 5000 });
     },
     onSuccess({ tokens }) {
       setTokens(tokens);
       onSocketConnect();
+      setIsSubmitted(false);
       navigate('/', { replace: true });
     },
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitted(true);
     registerMutation.mutate({ id: accountId, nickname, password });
   };
 
@@ -61,16 +66,21 @@ export default function Register() {
 
   return (
     <div className="mt-10 flex w-full items-start justify-center">
+      {isSubmitted && (
+        <div className="fixed inset-0 z-1000 flex cursor-progress items-center justify-center bg-black/30">
+          <Loader />
+        </div>
+      )}
       <form className="flex w-full max-w-screen-md flex-col gap-5 px-5" onSubmit={handleSubmit}>
         <h1 className="mb-5 text-center font-jua text-36-R-40 text-white dark:text-primary-100">회원가입</h1>
         <TextField
           labelText="Nickname"
           maxLength={20}
           minLength={3}
-          placeholder="닉네임을 입력해 주세요."
           type="text"
           value={nickname}
           onChange={setNickname}
+          placeholder="닉네임을 입력해 주세요."
           helperText={
             nickname.length < 3
               ? '최소 3자, 최대 20자까지 입력해 주세요.'
@@ -83,10 +93,10 @@ export default function Register() {
           labelText="Id"
           maxLength={20}
           minLength={6}
-          placeholder="아이디를 입력해 주세요."
           type="text"
           value={accountId}
           onChange={setAccountId}
+          placeholder="아이디를 입력해 주세요."
           helperText={
             isUsed
               ? '중복된 아이디입니다. 다른 아이디를 입력해 주세요.'
@@ -101,10 +111,10 @@ export default function Register() {
           labelText="Password"
           maxLength={16}
           minLength={8}
-          placeholder="비밀번호를 입력해 주세요."
           type="password"
           value={password}
           onChange={setPassword}
+          placeholder="비밀번호를 입력해 주세요."
           helperText={
             password.length < 8
               ? '최소 8자, 최대 16자까지 입력할 수 있습니다.'
@@ -117,10 +127,10 @@ export default function Register() {
           labelText="Password Check"
           maxLength={16}
           minLength={8}
-          placeholder="비밀번호 확인을 입력해 주세요."
           type="password"
           value={passwordCheck}
           onChange={setPasswordCheck}
+          placeholder="비밀번호 확인을 입력해 주세요."
           helperText={
             !passwordCheck
               ? '비밀번호 확인을 입력해 주세요.'

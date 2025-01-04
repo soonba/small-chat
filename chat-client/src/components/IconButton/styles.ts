@@ -1,15 +1,8 @@
-import { ButtonHTMLAttributes, cloneElement, ReactElement } from 'react';
+export type IconButtonVariantType = 'contained' | 'outlined' | 'text';
 
-type SizeType = 'large' | 'medium' | 'small';
-type VariantType = 'contained' | 'outlined' | 'text';
+export type IconButtonSizeType = 'large' | 'medium' | 'small';
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: ReactElement;
-  size: SizeType;
-  variant: VariantType;
-}
-
-const getVariantStyle = (variant: VariantType) => {
+export const getIconButtonVariant = (variant: IconButtonVariantType) => {
   switch (variant) {
     case 'outlined':
       return 'flex h-14 w-14 items-center justify-center rounded-full border border-primary-900 hover:border-primary-950 hover:bg-primary-100/50 active:border-primary-950 active:bg-primary-200/50 dark:border-primary-100/20 dark:hover:border-primary-100/40 dark:hover:bg-primary-800 dark:active:border-primary-100/60 dark:active:bg-primary-900 disabled:opacity-50 disabled:pointer-events-none';
@@ -20,7 +13,7 @@ const getVariantStyle = (variant: VariantType) => {
   }
 };
 
-const getIconSizeStyle = (size: SizeType) => {
+export const getIconSize = (size: IconButtonSizeType) => {
   switch (size) {
     case 'medium':
       return 'w-8 h-8';
@@ -31,7 +24,7 @@ const getIconSizeStyle = (size: SizeType) => {
   }
 };
 
-const getIconVariantStyle = (variant: VariantType) => {
+export const getIconVariant = (variant: IconButtonVariantType) => {
   switch (variant) {
     case 'outlined':
       return 'text-primary-900 dark:text-primary-100';
@@ -41,21 +34,3 @@ const getIconVariantStyle = (variant: VariantType) => {
       return 'text-white dark:text-primary-100 hover:opacity-80';
   }
 };
-
-export default function IconButton({ icon, onClick, size, type = 'button', variant, ...props }: Props) {
-  return (
-    <button
-      {...props}
-      className={getVariantStyle(variant)}
-      type={type}
-      onClick={(e) => {
-        e.currentTarget.blur();
-        if (onClick) {
-          onClick(e);
-        }
-      }}
-    >
-      {cloneElement(icon, { className: `${getIconSizeStyle(size)} ${getIconVariantStyle(variant)}` })}
-    </button>
-  );
-}

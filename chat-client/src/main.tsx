@@ -2,8 +2,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import App from '@app/App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import App from '@app/App';
 
 import { ToastProvider } from '@components/Toast';
 

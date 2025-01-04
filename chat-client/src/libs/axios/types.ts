@@ -8,6 +8,6 @@ export interface IResponseData<T = Record<string, any>> {
 
 export interface Error {
   message: string;
-  statusCode: number;
   title: string;
+  statusCode: number;
 }

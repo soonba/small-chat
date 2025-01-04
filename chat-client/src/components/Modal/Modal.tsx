@@ -13,7 +13,7 @@ interface Props {
 export default function Modal({ children, isOpen, onClose, title }: Props) {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.setProperty('overflow', 'hidden');
     } else {
       document.body.style.removeProperty('overflow');
     }

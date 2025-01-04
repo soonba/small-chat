@@ -1,8 +1,8 @@
-const plugin = require('tailwindcss/plugin');
-const { transform } = require('typescript');
+import plugin from 'tailwindcss/plugin';
+import scrollbarHide from 'tailwind-scrollbar-hide';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   future: {
     hoverOnlyWhenSupported: true,
   },
@@ -77,7 +77,7 @@ module.exports = {
         1000: 1000,
       },
       backgroundImage: {
-        'snowflake': "url('/img_snowflake.png')",
+        snowflake: "url('/img_snowflake.png')",
       },
       keyframes: {
         fadeIn: {
@@ -107,14 +107,14 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwind-scrollbar-hide'),
+    scrollbarHide,
     plugin(function plugin({ addUtilities }) {
       addUtilities({
         '.bg-linear-gradient': {
-          background: 'linear-gradient(#0c436e, #ffffff)'
+          background: 'linear-gradient(#0c436e, #ffffff)',
         },
         '.bg-linear-gradient-dark': {
-          background: 'linear-gradient(#000000, #0c436e)'
+          background: 'linear-gradient(#000000, #0c436e)',
         },
         '.bg-grid': {
           'background-position': 'center',

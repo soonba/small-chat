@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ChatBubbleOvalLeftIcon, EnvelopeIcon, PlusIcon } from '@heroicons/react/20/solid';
 
-import { IconButton } from '@components/Button';
+import IconButton from '@components/IconButton';
 import { CreateChatModal, CreateChatModalType, JoinChatModal, JoinChatModalDataType } from '@components/Modal';
 import { useToast } from '@components/Toast';
 
@@ -73,31 +73,31 @@ export default function Footer() {
             <div className="flex h-20 w-full items-center justify-around rounded-t-md">
               <IconButton
                 aria-label="chat list"
-                icon={<ChatBubbleOvalLeftIcon />}
                 size="medium"
                 title="참여중인 채팅 리스트"
                 type="button"
                 variant="outlined"
+                icon={<ChatBubbleOvalLeftIcon />}
                 onClick={handleChatList}
               />
               <div className="absolute -top-8 left-1/2 -translate-x-1/2">
                 <IconButton
                   aria-label="create chat"
-                  icon={<PlusIcon />}
                   size="large"
                   title="채팅 생성하기"
                   type="button"
                   variant="contained"
+                  icon={<PlusIcon />}
                   onClick={handleCreate}
                 />
               </div>
               <IconButton
                 aria-label="join chat"
-                icon={<EnvelopeIcon />}
                 size="medium"
                 title="채팅 참여하기"
                 type="button"
                 variant="outlined"
+                icon={<EnvelopeIcon />}
                 onClick={handleJoin}
               />
             </div>

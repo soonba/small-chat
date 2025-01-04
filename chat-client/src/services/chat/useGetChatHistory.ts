@@ -7,7 +7,7 @@ import { getData } from '@libs/axios';
 import { chatKeys } from '@utils/queryKey';
 
 interface IRequestBody {
-  nextCursor: string | null;
+  nextCursor: null | string;
 }
 
 export type MessageListType = {

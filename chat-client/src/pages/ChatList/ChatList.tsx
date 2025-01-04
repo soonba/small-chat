@@ -1,4 +1,4 @@
-import { Loader } from '@components/Loader';
+import Loader from '@components/Loader';
 import { EmptyText } from '@components/Placeholder';
 
 import { useGetChatList } from '@services/chat';

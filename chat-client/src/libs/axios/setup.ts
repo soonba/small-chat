@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import appConfig from 'config';
 
+import config from '@config/index';
 import { clearToken, getTokens } from '@utils/storage';
 
 declare module 'axios' {
@@ -10,7 +10,7 @@ declare module 'axios' {
 }
 
 const instance: AxiosInstance = axios.create({
-  baseURL: appConfig.authApiUrl,
+  baseURL: config.authApiUrl,
   timeout: 10000, // 10초
 });
 
@@ -55,7 +55,7 @@ instance.interceptors.response.use(
         if (isTokenRefreshing === false) {
           isTokenRefreshing = true;
           axios
-            .post(`${appConfig.authApiUrl}/auth/refresh`)
+            .post(`${config.authApiUrl}/auth/refresh`)
             .then((res) => res.data)
             .then(({ result }) => {
               const { accessToken } = result;

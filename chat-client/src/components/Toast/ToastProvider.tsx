@@ -1,62 +1,26 @@
-import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { v4 as uuid } from 'uuid';
 
+import { getToastPositionStyle, ToastPositionType } from './styles';
 import Toast from './Toast';
+import { OptionsType, ToastContext, ToastContextType } from './ToastContext';
 
-export type OptionsType = {
-  canDismiss?: boolean;
-  delay?: number;
-};
-
-interface ToastContextType {
-  onToast: (message: string, options?: OptionsType) => void;
-}
-
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
-export const useToast = () => {
-  const context = useContext(ToastContext);
-
-  if (!context) {
-    throw new Error('should use Toast within Toast Provider');
-  }
-
-  return context;
-};
-
-export function getPositionStyle(position?: string) {
-  switch (position) {
-    case 'top-right':
-      return 'top-20 right-20';
-    case 'top-left':
-      return 'top-20 left-20';
-    case 'top-center':
-      return 'top-20 left-1/2 -translate-x-1/2';
-    case 'bottom-left':
-      return 'bottom-20 left-20';
-    case 'bottom-center':
-      return 'bottom-20 left-1/2 -translate-x-1/2';
-    default:
-      return 'bottom-20 right-20';
-  }
-}
-
-type MessageType = {
-  content: string;
+type ToastMessageType = {
   id: string;
+  content: string;
   options?: OptionsType;
 };
 
 interface Props {
   children: ReactNode;
-  position?: 'bottom-center' | 'bottom-left' | 'bottom-right' | 'top-center' | 'top-left' | 'top-right';
+  position?: ToastPositionType;
 }
 
-export function ToastProvider({ children, position }: Props) {
+export default function ToastProvider({ children, position }: Props) {
   const [modalElement, setModalElement] = useState<HTMLElement>();
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [messages, setMessages] = useState<ToastMessageType[]>([]);
 
   const handleOpen = useCallback(
     (content: string, options?: OptionsType) => {
@@ -90,13 +54,13 @@ export function ToastProvider({ children, position }: Props) {
       {children}
       {modalElement
         ? createPortal(
-            <div className={`${getPositionStyle(position)} absolute z-1000 flex flex-col gap-2.5`}>
+            <div className={`${getToastPositionStyle(position)} absolute z-1000 flex flex-col gap-2.5`}>
               {messages.map((message) => (
                 <Toast
                   key={message.id}
                   message={message.content}
-                  options={message.options}
                   onClose={() => handleClose(message.id)}
+                  options={message.options}
                 />
               ))}
             </div>,

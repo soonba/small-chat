@@ -2,7 +2,7 @@ import { Outlet, ScrollRestoration } from 'react-router-dom';
 
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 
-import { IconButton } from '@components/Button';
+import IconButton from '@components/IconButton';
 
 import { useMode } from '@hooks/utils';
 
@@ -16,10 +16,10 @@ export default function AuthLayout() {
           <div className="ml-auto flex items-center gap-5">
             <IconButton
               aria-label={`change to ${mode === 'light' ? 'dark' : 'light'} mode`}
-              icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
               size="small"
               title={`${mode === 'light' ? '다크' : '라이트'} 모드로 변경하기`}
               variant="text"
+              icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
               onClick={onModeChange}
             />
           </div>

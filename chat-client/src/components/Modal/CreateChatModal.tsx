@@ -1,9 +1,9 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useCallback, useMemo, useState } from 'react';
 
 import useModal from '@hooks/utils/useModal';
 
-import Button from '../Button/Button';
-import TextField from '../Input/TextField';
+import Button from '../Button';
+import TextField from '../TextField';
 import Modal from './Modal';
 
 export type CreateChatModalType = {
@@ -15,31 +15,30 @@ type ModalType = ReturnType<typeof useModal<CreateChatModalType>>;
 export default function CreateChatModal({ isOpen, onClose, onConfirm }: ModalType) {
   const [chatName, setChatName] = useState('');
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onConfirm({ name: chatName });
-  };
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      onConfirm({ name: chatName });
+    },
+    [onConfirm, chatName],
+  );
+
+  const isDisabled = useMemo(() => !chatName || chatName.length < 3, [chatName]);
 
   return (
     <Modal isOpen={isOpen} title="채팅 생성하기" onClose={onClose}>
       <form className="space-y-8" onSubmit={handleSubmit}>
         <TextField
-          autoFocus
           helperText="최소 3자, 최대 20자까지 입력할 수 있습니다."
           labelText="Chat Name"
           maxLength={20}
           minLength={3}
-          placeholder="방 제목을 입력해 주세요."
           value={chatName}
+          autoFocus
           onChange={setChatName}
+          placeholder="방 제목을 입력해 주세요."
         />
-        <Button
-          disabled={!chatName || chatName.length < 3}
-          size="medium"
-          text="생성하기"
-          type="submit"
-          variant="contained"
-        />
+        <Button disabled={isDisabled} size="medium" text="생성하기" type="submit" variant="contained" />
       </form>
     </Modal>
   );
