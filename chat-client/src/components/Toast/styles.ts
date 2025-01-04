@@ -6,7 +6,7 @@ export type ToastPositionType =
   | 'top-left'
   | 'top-right';
 
-export const getToastPositionStyle = (position?: ToastPositionType) => {
+export const getToastPosition = (position?: ToastPositionType) => {
   switch (position) {
     case 'top-right':
       return 'top-20 right-20';

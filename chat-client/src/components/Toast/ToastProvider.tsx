@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { v4 as uuid } from 'uuid';
 
-import { getToastPositionStyle, ToastPositionType } from './styles';
+import { getToastPosition, ToastPositionType } from './styles';
 import Toast from './Toast';
 import { OptionsType, ToastContext, ToastContextType } from './ToastContext';
 
@@ -54,7 +54,7 @@ export default function ToastProvider({ children, position }: Props) {
       {children}
       {modalElement
         ? createPortal(
-            <div className={`${getToastPositionStyle(position)} absolute z-1000 flex flex-col gap-2.5`}>
+            <div className={`${getToastPosition(position)} absolute z-1000 flex flex-col gap-2.5`}>
               {messages.map((message) => (
                 <Toast
                   key={message.id}
