@@ -36,7 +36,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./chat-client/dist
           destination_dir: .
           keep_files: true
 
@@ -53,6 +53,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook
+          publish_dir: ./chat-client/storybook
           destination_dir: storybook
           keep_files: true
