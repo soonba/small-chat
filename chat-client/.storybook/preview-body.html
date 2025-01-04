@@ -19,10 +19,32 @@
       'Segoe UI Emoji',
       'Segoe UI Symbol',
       sans-serif;
-    @apply !bg-fixed scrollbar-hide bg-linear-gradient dark:bg-linear-gradient-dark;
+    background: linear-gradient(#0c436e, #ffffff);
+    background-attachment: fixed !important;
   }
+
   #storybook-root {
-    @apply flex min-h-full w-full items-center justify-center p-10;
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  html.dark,
+  html.dark body,
+  body.dark {
+    background: linear-gradient(#000000, #0c436e);
+    background-attachment: fixed !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html,
+    body {
+      background: linear-gradient(#000000, #0c436e);
+      background-attachment: fixed !important;
+    }
   }
 </style>
 <div id="portal"></div>
