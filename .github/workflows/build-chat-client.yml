@@ -47,6 +47,7 @@ jobs:
           echo "Updating Storybook base path for /storybook"
           sed -i 's|href="/|href="/storybook/|g' storybook/index.html
           sed -i 's|src="/|src="/storybook/|g' storybook/index.html
+        working-directory: chat-client
 
       - name: Upload Storybook to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
