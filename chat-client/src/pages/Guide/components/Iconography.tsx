@@ -19,10 +19,7 @@ import {
 
 export default function Iconography() {
   return (
-    <section
-      className="scroll-m-16 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:[text-shadow:unset]"
-      id="iconography"
-    >
+    <section className="scroll-m-16 drop-shadow-lg text-shadow dark:text-shadow-unset" id="iconography">
       <div className="mb-10 flex items-center gap-x-2.5">
         <h2 className="text-30-B-36" id="iconography">
           Iconography

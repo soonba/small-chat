@@ -18,15 +18,12 @@ import TextField from '@components/TextField';
 export default function Component() {
   return (
     <section className="scroll-m-16" id="component">
-      <h2
-        className="mb-10 text-30-B-36 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:[text-shadow:unset]"
-        id="component"
-      >
+      <h2 className="mb-10 text-30-B-36 drop-shadow-lg text-shadow dark:text-shadow-unset" id="component">
         Component
       </h2>
       <div className="flex flex-wrap gap-10">
         <div className="flex flex-col self-start rounded bg-transparent p-5">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Icon Button
           </h3>
           <div className="flex items-center gap-x-2.5">
@@ -99,7 +96,7 @@ export default function Component() {
           </div>
         </div>
         <div className="min-w-96 max-w-lg flex-1 flex-col rounded bg-transparent p-5">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Button
           </h3>
           <div className="flex w-full flex-col items-start gap-y-2.5">
@@ -111,7 +108,7 @@ export default function Component() {
           </div>
         </div>
         <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-transparent p-5">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             TextField
           </h3>
           <div className="flex flex-col gap-y-2.5">
@@ -120,7 +117,7 @@ export default function Component() {
           </div>
         </div>
         <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-transparent p-5">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Loader
           </h3>
           <div className="flex h-80 items-center justify-center">

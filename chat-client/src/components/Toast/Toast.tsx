@@ -43,7 +43,7 @@ export default function Toast({ message, onClose, options }: Props) {
       style={{ animationDelay: delay ? `${animationTime}s` : '4.5s' }}
       role="alert"
     >
-      <p className="pr-2.5 text-16-M-24 text-inherit">{message}</p>
+      <p className="pr-2.5 text-12-R-16 text-inherit sm:text-16-M-24">{message}</p>
       {(canDismiss === undefined || canDismiss === true) && (
         <div className="flex items-center dark:[&_svg]:text-primary-900">
           <div className="mx-2.5 h-4 w-px bg-white dark:bg-primary-900" />

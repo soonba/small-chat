@@ -9,7 +9,7 @@ export default function ChatList() {
   const { data, isFetching } = useGetChatList();
 
   return (
-    <div className="size-full min-h-[calc(100vh-176px)] p-5">
+    <div className="size-full min-h-[calc(100vh-176px)] p-2.5 sm:p-5">
       {isFetching ? (
         <div className="flex size-full min-h-inherit items-center justify-center">
           <Loader />

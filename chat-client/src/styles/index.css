@@ -38,6 +38,14 @@ body,
   }
 }
 
+#snow {
+  @apply pointer-events-none fixed inset-0;
+}
+
 .snowflake {
   @apply absolute -top-10 bg-snowflake bg-contain bg-center;
+}
+
+em-emoji-picker {
+  @apply w-full;
 }

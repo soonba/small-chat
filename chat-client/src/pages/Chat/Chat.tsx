@@ -92,15 +92,15 @@ export default function Chat() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-10 shadow-sm shadow-primary-100 dark:shadow-primary-950">
-        <div className="flex h-14 w-full items-center justify-between rounded-b-md pl-2.5 pr-5">
+      <header className="fixed inset-x-0 top-0 z-10 shadow-sm shadow-primary-50 dark:shadow-primary-100">
+        <div className="flex h-14 w-full items-center justify-between pl-2.5 pr-2.5 sm:pr-5">
           <Link className="flex items-center gap-1" onClick={() => onCurrentChatLeave(chatId)} to="/">
-            <ChevronLeftIcon className="size-8 text-white dark:text-primary-100" />
-            <h1 className="text-center font-jua text-24-R-32 text-white dark:text-primary-100">
+            <ChevronLeftIcon className="size-6 text-white sm:size-8 dark:text-primary-100" />
+            <h1 className="text-center font-jua text-18-R-28 text-white sm:text-24-R-32 dark:text-primary-100">
               {detailData?.chatName || ''}
             </h1>
           </Link>
-          <div className="flex flex-1 items-center justify-end gap-5">
+          <div className="flex flex-1 items-center justify-end gap-x-2.5 sm:gap-5">
             <IconButton
               aria-label="leave chat"
               size="small"
@@ -123,7 +123,7 @@ export default function Chat() {
       <main className="flex size-full flex-col justify-between pt-14">
         <LeaveChatModal {...leaveModal} />
         {isFetching || isPending ? (
-          <div className="flex h-[calc(100vh-56px)] w-full items-center justify-center text-24-BL-32 text-primary-900 dark:text-primary-100">
+          <div className="flex h-[calc(100vh-theme(spacing.14))] w-full items-center justify-center">
             <Loader />
           </div>
         ) : (

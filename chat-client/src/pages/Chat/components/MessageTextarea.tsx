@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import emojiData from '@emoji-mart/data';
@@ -35,7 +35,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [message, setMessage] = useState('');
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     if (chatId) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(chatId);
@@ -51,26 +51,34 @@ export default function MessageTextarea({ onSubmit }: Props) {
     } else {
       onToast('문제가 발생하였습니다. 잠시 후에 다시 시도해 주세요.', { canDismiss: true, delay: 5000 });
     }
-  };
+  }, [chatId, onToast]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     onSubmit(message.trim());
     setMessage('');
-  };
+  }, [onSubmit, message]);
 
   // ref : https://minjung-jeon.github.io/IME-keyCode-229-issue/
-  const handleEnter = (e: KeyboardEvent) => {
-    if (e.shiftKey && e.key === 'Enter') {
-      setMessage((prev) => `${prev}\n`.trim());
-    } else if (!e.isComposing && e.key === 'Enter') {
-      e.preventDefault();
-      if (message.trim().length > 0) {
-        handleSubmit();
-      } else {
-        onToast('메시지를 입력해 주세요!', { canDismiss: true, delay: 5000 });
+  const handleEnter = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.shiftKey && e.key === 'Enter') {
+        setMessage((prev) => `${prev}\n`.trim());
+      } else if (!e.isComposing && e.key === 'Enter') {
+        e.preventDefault();
+        if (message.trim().length > 0) {
+          handleSubmit();
+        } else {
+          onToast('메시지를 입력해 주세요!', { canDismiss: true, delay: 5000 });
+        }
       }
-    }
-  };
+    },
+    [message, handleSubmit, onToast],
+  );
+
+  const handleSelect = useCallback((data: EmojiDataType) => {
+    setIsOpen(false);
+    setMessage((prev) => prev + data.native);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -88,11 +96,11 @@ export default function MessageTextarea({ onSubmit }: Props) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-x-0 bottom-0 flex w-full flex-row gap-5 border-t-2 border-t-primary-100 py-2.5 pl-2.5 pr-5 dark:border-t-primary-950"
+      className="fixed inset-x-0 bottom-0 flex w-full flex-row gap-5 border-t border-t-primary-900 py-2.5 pl-2.5 pr-5 dark:border-t-primary-100"
     >
       <textarea
         ref={textareaRef}
-        className="h-20 flex-1 resize-none bg-transparent text-16-R-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-100 dark:placeholder:text-primary-100/30"
+        className="h-10 flex-1 resize-none bg-transparent text-16-R-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 md:h-20 dark:text-primary-100 dark:placeholder:text-primary-100/30"
         maxLength={140}
         value={message}
         onChange={(e) => setMessage(e.currentTarget.value)}
@@ -129,14 +137,17 @@ export default function MessageTextarea({ onSubmit }: Props) {
         )}
       </div>
       {isOpen && (
-        <div className="fixed bottom-28 right-0">
-          <Picker
-            data={emojiData}
-            theme={getStorageItem(SESSION_STORAGE_KEYS.MODE) === 'light' ? 'light' : 'dark'}
-            locale="ko"
-            onEmojiSelect={(data: EmojiDataType) => setMessage((prev) => prev + data.native)}
-            previewPosition="none"
-          />
+        <div className="fixed bottom-16 left-0 right-0 sm:bottom-28 sm:left-[unset] sm:right-5">
+          <div className="w-full *:mx-auto *:w-full *:max-w-[calc(100%-theme(spacing.10))] sm:*:max-w-full">
+            <Picker
+              dynamicWidth
+              data={emojiData}
+              theme={getStorageItem(SESSION_STORAGE_KEYS.MODE) === 'light' ? 'light' : 'dark'}
+              locale="ko"
+              onEmojiSelect={handleSelect}
+              previewPosition="none"
+            />
+          </div>
         </div>
       )}
     </div>

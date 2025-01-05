@@ -6,6 +6,7 @@ const customColors = ['background-dark', 'background-light', 'layout-dark', 'lay
 
 const typographyVariants = [
   '36-R-40',
+  '28-R-36',
   '24-R-32',
   '36-B-40',
   '30-B-36',
@@ -20,9 +21,15 @@ const typographyVariants = [
   '16-M-24',
   '16-R-24',
   '14-B-20',
+  '14-SB-20',
+  '14-M-20',
   '14-R-20',
   '12-B-16',
+  '12-SB-16',
+  '12-M-16',
+  '12-R-16',
   '12-L-16',
+  '10-L-12',
 ];
 
 // https://github.com/dcastil/tailwind-merge/blob/v2.2.2/src/lib/default-config.ts

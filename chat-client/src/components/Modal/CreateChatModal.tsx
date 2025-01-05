@@ -27,7 +27,7 @@ export default function CreateChatModal({ isOpen, onClose, onConfirm }: ModalTyp
 
   return (
     <Modal isOpen={isOpen} title="채팅 생성하기" onClose={onClose}>
-      <form className="space-y-8" onSubmit={handleSubmit}>
+      <form className="space-y-4 sm:space-y-8" onSubmit={handleSubmit}>
         <TextField
           helperText="최소 3자, 최대 20자까지 입력할 수 있습니다."
           labelText="Chat Name"
@@ -36,7 +36,7 @@ export default function CreateChatModal({ isOpen, onClose, onConfirm }: ModalTyp
           value={chatName}
           autoFocus
           onChange={setChatName}
-          placeholder="방 제목을 입력해 주세요."
+          placeholder="방 제목을 입력하세요."
         />
         <Button disabled={isDisabled} size="medium" text="생성하기" type="submit" variant="contained" />
       </form>

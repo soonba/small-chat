@@ -59,12 +59,12 @@ export default function Register() {
           type="text"
           value={nickname}
           onChange={setNickname}
-          placeholder="닉네임을 입력해 주세요."
+          placeholder="닉네임을 입력하세요."
           helperText={
             nickname.length < 3
-              ? '최소 3자, 최대 20자까지 입력해 주세요.'
+              ? '최소 3자, 최대 20자까지 입력하세요.'
               : !NICKNAME_REG_EXP.test(nickname)
-                ? '영문과 숫자 조합으로 입력해 주세요.'
+                ? '영문과 숫자 조합으로 입력하세요.'
                 : ''
           }
         />
@@ -75,14 +75,14 @@ export default function Register() {
           type="text"
           value={accountId}
           onChange={setAccountId}
-          placeholder="아이디를 입력해 주세요."
+          placeholder="아이디를 입력하세요."
           helperText={
             isUsed
-              ? '중복된 아이디입니다. 다른 아이디를 입력해 주세요.'
+              ? '중복된 아이디입니다. 다른 아이디를 입력하세요.'
               : accountId.length < 6
                 ? '최소 6자, 최대 20자까지 입력할 수 있습니다.'
                 : !ACCOUNT_ID_REG_EXP.test(accountId)
-                  ? '영문과 숫자 조합으로 입력해 주세요.'
+                  ? '영문과 숫자 조합으로 입력하세요.'
                   : ''
           }
         />
@@ -93,12 +93,12 @@ export default function Register() {
           type="password"
           value={password}
           onChange={setPassword}
-          placeholder="비밀번호를 입력해 주세요."
+          placeholder="비밀번호를 입력하세요."
           helperText={
             password.length < 8
               ? '최소 8자, 최대 16자까지 입력할 수 있습니다.'
               : !PASSWORD_REG_EXP.test(password)
-                ? '영문, 숫자, 특수문자 조합으로 입력해 주세요.'
+                ? '영문, 숫자, 특수문자 조합으로 입력하세요.'
                 : ''
           }
         />
@@ -109,10 +109,10 @@ export default function Register() {
           type="password"
           value={passwordCheck}
           onChange={setPasswordCheck}
-          placeholder="비밀번호 확인을 입력해 주세요."
+          placeholder="비밀번호 확인을 입력하세요."
           helperText={
             !passwordCheck
-              ? '비밀번호 확인을 입력해 주세요.'
+              ? '비밀번호 확인을 입력하세요.'
               : password !== passwordCheck
                 ? '비밀번호와 일치하지 않습니다.'
                 : ''

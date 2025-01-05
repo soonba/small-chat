@@ -16,10 +16,10 @@ export const getButtonVariant = (variant: ButtonVariantType) => {
 export const getButtonSize = (size: ButtonSizeType) => {
   switch (size) {
     case 'large':
-      return 'h-14 w-full text-18-B-28';
+      return 'h-12 text-16-B-24 sm:h-14 w-full sm:text-18-B-28';
     case 'small':
-      return 'text-16-M-24';
+      return 'text-14-M-20 sm:text-16-M-24';
     default:
-      return 'h-11 w-full text-14-B-20';
+      return 'h-11 w-full text-12-B-16 sm:text-14-B-20';
   }
 };

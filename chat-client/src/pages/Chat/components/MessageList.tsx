@@ -1,4 +1,4 @@
-import { forwardRef, RefObject, useImperativeHandle, useRef } from 'react';
+import { forwardRef, RefObject, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import Loader from '@components/Loader';
 
@@ -21,18 +21,34 @@ export interface RefHandler {
 
 const MessageList = forwardRef<RefHandler, Props>(function MessageList({ data, isLoading, socketMessages }, ref) {
   const { accountId } = useAccount();
+  const [height, setHeight] = useState(0);
 
   const intersectionRef = useRef<HTMLLIElement>(null);
   useImperativeHandle(ref, () => ({ intersectionRef }), []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        // header - textarea
+        setHeight(window.innerHeight - 56 - 102);
+      } else {
+        setHeight(window.innerHeight - 56 - 62);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <ul
       className="flex w-full flex-col-reverse gap-y-5 overflow-auto p-5 scrollbar-hide"
       id="chat-container"
-      style={{
-        height: window.innerHeight - 56 - 100,
-        overflowAnchor: 'none',
-      }}
+      style={{ height, overflowAnchor: 'none' }}
     >
       {socketMessages?.map((message, index) => (
         <MessageListItem key={index} data={message} isSender={message.userId === accountId} />

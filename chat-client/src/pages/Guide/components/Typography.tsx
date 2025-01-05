@@ -19,7 +19,7 @@ function getFontWeight(weight: string) {
   }
 }
 
-const TITLE = ['text-36-R-40', 'text-24-R-32'];
+const TITLE = ['text-36-R-40', 'text-28-R-36', 'text-24-R-32'];
 const HEADING = ['text-36-B-40', 'text-30-B-36', 'text-30-M-36', 'text-16-SB-24'];
 const BODY = [
   'text-24-BL-32',
@@ -31,16 +31,15 @@ const BODY = [
   'text-16-M-24',
   'text-16-R-24',
   'text-14-B-20',
+  'text-14-SB-20',
+  'text-14-M-20',
   'text-14-R-20',
 ];
-const CAPTION = ['text-12-B-16', 'text-12-L-16'];
+const CAPTION = ['text-12-B-16', 'text-12-SB-16', 'text-12-M-16', 'text-12-R-16', 'text-12-L-16', 'text-10-L-12'];
 
 export default function Typography() {
   return (
-    <section
-      className="scroll-m-16 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:[text-shadow:unset]"
-      id="typography"
-    >
+    <section className="scroll-m-16 drop-shadow-lg text-shadow dark:text-shadow-unset" id="typography">
       <h2 className="mb-10 text-30-B-36" id="typography">
         Typography
       </h2>

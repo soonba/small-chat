@@ -5,9 +5,9 @@ export type IconButtonSizeType = 'large' | 'medium' | 'small';
 export const getIconButtonVariant = (variant: IconButtonVariantType) => {
   switch (variant) {
     case 'outlined':
-      return 'flex h-14 w-14 items-center justify-center rounded-full border border-primary-900 hover:border-primary-950 hover:bg-primary-100/50 active:border-primary-950 active:bg-primary-200/50 dark:border-primary-100/20 dark:hover:border-primary-100/40 dark:hover:bg-primary-800 dark:active:border-primary-100/60 dark:active:bg-primary-900 disabled:opacity-50 disabled:pointer-events-none';
+      return 'flex h-10 w-10 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-primary-900 hover:border-primary-950 hover:bg-primary-100/50 active:border-primary-950 active:bg-primary-200/50 dark:border-primary-100/20 dark:hover:border-primary-100/40 dark:hover:bg-primary-800 dark:active:border-primary-100/60 dark:active:bg-primary-900 disabled:opacity-50 disabled:pointer-events-none';
     case 'contained':
-      return 'flex h-20 w-20 items-center justify-center rounded-full border bg-primary-900 shadow-md hover:bg-primary-800 active:bg-primary-900 active:scale-95 dark:bg-primary-50 dark:hover:bg-primary-100 dark:active:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none';
+      return 'flex h-14 w-14 sm:h-20 sm:w-20 items-center justify-center rounded-full border bg-primary-900 shadow-md hover:bg-primary-800 active:bg-primary-900 active:scale-95 dark:bg-primary-50 dark:hover:bg-primary-100 dark:active:bg-primary-200 disabled:opacity-50 disabled:pointer-events-none';
     default:
       return 'disabled:opacity-50 disabled:pointer-events-none';
   }
@@ -16,9 +16,9 @@ export const getIconButtonVariant = (variant: IconButtonVariantType) => {
 export const getIconSize = (size: IconButtonSizeType) => {
   switch (size) {
     case 'medium':
-      return 'w-8 h-8';
+      return 'h-6 w-6 sm:w-8 sm:h-8';
     case 'large':
-      return 'h-10 w-10';
+      return 'h-8 w-8 sm:h-10 sm:w-10';
     default:
       return 'w-5 h-5';
   }

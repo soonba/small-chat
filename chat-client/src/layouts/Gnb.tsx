@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQueryClient, UseQueryResult } from '@tanstack/react-query';
@@ -39,7 +40,7 @@ export default function Gnb() {
     window.location.reload();
   };
 
-  const logoutMutation = useLogout({
+  const { mutate } = useLogout({
     onError() {
       handleLogout();
     },
@@ -48,18 +49,19 @@ export default function Gnb() {
     },
   });
 
-  const handleClick = () => {
-    logoutMutation.mutate();
-  };
+  const handleClick = useCallback(() => {
+    mutate();
+  }, [mutate]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-10 shadow-sm shadow-primary-100 dark:shadow-primary-950">
-      <div className="flex h-14 w-full items-center justify-between rounded-b-md px-5">
+    <header className="fixed inset-x-0 top-0 z-10 shadow-sm shadow-primary-50 dark:shadow-primary-100">
+      <div className="flex h-14 w-full items-center justify-between px-5">
         <Link reloadDocument to="/">
-          <h1 className="text-center font-jua text-24-R-32 text-white dark:text-primary-100">작은 대화</h1>
+          <h1 className="text-center font-jua text-18-R-28 text-white sm:text-24-R-32 dark:text-primary-100">
+            작은 대화
+          </h1>
         </Link>
         <div className="flex items-center gap-5">
-          <Button size="small" text="로그아웃" variant="text" onClick={handleClick} />
           <IconButton
             aria-label={`change to ${mode === 'light' ? 'dark' : 'light'} mode`}
             size="small"
@@ -68,6 +70,7 @@ export default function Gnb() {
             icon={mode === 'light' ? <MoonIcon /> : <SunIcon />}
             onClick={onModeChange}
           />
+          <Button size="small" text="로그아웃" variant="text" onClick={handleClick} />
         </div>
       </div>
     </header>

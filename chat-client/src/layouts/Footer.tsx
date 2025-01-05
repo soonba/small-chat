@@ -69,8 +69,8 @@ export default function Footer() {
     <>
       {pathname === '/' && (
         <>
-          <footer className="fixed inset-x-0 bottom-0 shadow-inner shadow-primary-200 dark:shadow-primary-950">
-            <div className="flex h-20 w-full items-center justify-around rounded-t-md">
+          <footer className="fixed inset-x-0 bottom-0 border-t border-primary-900 dark:border-primary-100">
+            <div className="flex h-14 w-full items-center justify-between rounded-t-md px-10 sm:h-20 sm:justify-around sm:px-0">
               <IconButton
                 aria-label="chat list"
                 size="medium"
@@ -80,7 +80,7 @@ export default function Footer() {
                 icon={<ChatBubbleOvalLeftIcon />}
                 onClick={handleChatList}
               />
-              <div className="absolute -top-8 left-1/2 -translate-x-1/2">
+              <div className="absolute -top-7 left-1/2 -translate-x-1/2 sm:-top-8">
                 <IconButton
                   aria-label="create chat"
                   size="large"

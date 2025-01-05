@@ -29,7 +29,7 @@ const background: Record<string, Record<string, string>> = {
 
 export default function Color() {
   return (
-    <section className="scroll-m-16 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:[text-shadow:unset]" id="color">
+    <section className="scroll-m-16 drop-shadow-lg text-shadow dark:text-shadow-unset" id="color">
       <h2 className="mb-10 text-30-B-36" id="color">
         Color
       </h2>

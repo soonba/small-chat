@@ -6,15 +6,12 @@ import { ChatListItem } from '@pages/ChatList/components';
 export default function Chat() {
   return (
     <section className="scroll-m-16" id="chat">
-      <h2
-        className="mb-10 text-30-B-36 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:[text-shadow:unset]"
-        id="chat / message"
-      >
+      <h2 className="mb-10 text-30-B-36 drop-shadow-lg text-shadow dark:text-shadow-unset" id="chat / message">
         Chat / Message
       </h2>
       <div className="flex flex-col gap-10">
         <div className="flex w-full flex-col self-start rounded bg-transparent p-5">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Chat
           </h3>
           <div className="flex flex-col gap-y-2.5">
@@ -31,7 +28,7 @@ export default function Chat() {
           </div>
         </div>
         <div className="flex w-full flex-col self-start rounded bg-transparent p-5">
-          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg [text-shadow:0_0_2px_#0c436e] dark:text-gray-100 dark:[text-shadow:unset]">
+          <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Message
           </h3>
           <div className="flex flex-col gap-y-2.5">
