@@ -100,7 +100,7 @@ export default function MessageTextarea({ onSubmit }: Props) {
     >
       <textarea
         ref={textareaRef}
-        className="h-10 flex-1 resize-none bg-transparent text-16-R-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 md:h-20 dark:text-primary-100 dark:placeholder:text-primary-100/30"
+        className="h-10 flex-1 resize-none bg-transparent text-16-R-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 sm:h-20 dark:text-primary-100 dark:placeholder:text-primary-100/30"
         maxLength={140}
         value={message}
         onChange={(e) => setMessage(e.currentTarget.value)}

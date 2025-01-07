@@ -28,7 +28,7 @@ const MessageList = forwardRef<RefHandler, Props>(function MessageList({ data, i
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 425) {
         // header - textarea
         setHeight(window.innerHeight - 56 - 102);
       } else {
