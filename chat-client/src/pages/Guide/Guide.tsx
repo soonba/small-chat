@@ -49,7 +49,7 @@ export default function Guide() {
   }, []);
 
   return (
-    <div className="min-h-full w-full min-w-laptop !bg-fixed bg-linear-gradient dark:bg-linear-gradient-dark">
+    <div className="min-h-full w-full !bg-fixed bg-linear-gradient dark:bg-linear-gradient-dark">
       <GuideGnb />
       <main className="min-h-screen w-full p-5">
         <div ref={ref} className="space-y-10 text-white dark:text-primary-100">

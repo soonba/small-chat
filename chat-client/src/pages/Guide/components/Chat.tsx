@@ -10,7 +10,7 @@ export default function Chat() {
         Chat / Message
       </h2>
       <div className="flex flex-col gap-10">
-        <div className="flex w-full flex-col self-start rounded bg-transparent p-5">
+        <div className="flex w-full flex-col self-start rounded bg-transparent">
           <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Chat
           </h3>
@@ -27,7 +27,7 @@ export default function Chat() {
             </ul>
           </div>
         </div>
-        <div className="flex w-full flex-col self-start rounded bg-transparent p-5">
+        <div className="flex w-full flex-col self-start rounded bg-transparent">
           <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Message
           </h3>

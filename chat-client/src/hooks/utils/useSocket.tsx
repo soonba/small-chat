@@ -42,13 +42,13 @@ const useSocket = () => {
   const [message, setMessage] = useState<SocketMessageType[]>([]);
 
   useEffect(() => {
-    function onConnect() {
+    const onConnect = () => {
       setIsConnected(socket.connected);
-    }
+    };
 
-    function onDisconnect() {
+    const onDisconnect = () => {
       setIsConnected(socket.connected);
-    }
+    };
 
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);

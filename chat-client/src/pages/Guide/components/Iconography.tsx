@@ -28,7 +28,7 @@ export default function Iconography() {
           <LinkIcon className="size-5" />
         </Link>
       </div>
-      <div className="flex flex-col items-start gap-y-20 rounded bg-transparent p-5">
+      <div className="flex flex-col items-start gap-y-20 rounded bg-transparent">
         <div className="space-y-2.5">
           <h3 className="text-16-B-24 text-gray-50 dark:text-gray-100">16 x 16</h3>
           <div className="flex items-center gap-x-2.5">

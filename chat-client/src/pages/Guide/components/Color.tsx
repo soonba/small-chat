@@ -33,11 +33,11 @@ export default function Color() {
       <h2 className="mb-10 text-30-B-36" id="color">
         Color
       </h2>
-      <div className="space-y-5 rounded bg-transparent p-5">
+      <div className="space-y-5 rounded bg-transparent">
         <h3 className="text-16-B-24 text-gray-50 dark:text-gray-100">Primary</h3>
-        <ul className="flex w-full items-center gap-x-5 rounded">
+        <ul className="flex w-full flex-wrap items-center gap-5">
           {Object.keys(primary).map((key) => (
-            <li key={key} className="w-full">
+            <li key={key} className="w-full md:max-w-36">
               <div className="h-14 w-full" style={{ backgroundColor: primary[Number(key)] }} />
               <p className="font-jua text-14-B-20">
                 <small className="font-inherit">{key}</small>
@@ -48,12 +48,12 @@ export default function Color() {
           ))}
         </ul>
         <h3 className="text-16-B-24 text-gray-50 dark:text-gray-100">Layouts</h3>
-        <ul className="space-y-5">
+        <ul className="flex w-full flex-wrap items-center gap-5">
           {Object.keys(background).map((color) => (
             <li key={color} className="w-full">
-              <ul className="flex w-full items-center gap-x-5 rounded">
+              <ul className="flex w-full flex-wrap items-center gap-5">
                 {Object.keys(background[color]).map((key) => (
-                  <li key={key} className="w-full max-w-36">
+                  <li key={key} className="w-full md:max-w-36">
                     <div
                       className="h-14 w-full"
                       style={{
@@ -75,8 +75,8 @@ export default function Color() {
           ))}
         </ul>
         <h3 className="text-16-B-24 text-gray-50 dark:text-gray-100">Text</h3>
-        <ul className="flex w-full items-center gap-x-5 rounded">
-          <li className="w-full max-w-36">
+        <ul className="flex w-full flex-wrap items-center gap-5">
+          <li className="w-full md:max-w-36">
             <div className="h-14 w-full" style={{ backgroundColor: primary[900] }} />
             <p className="font-jua text-14-B-20">
               <small className="font-inherit">Light</small>
@@ -84,7 +84,7 @@ export default function Color() {
               {primary[900]}
             </p>
           </li>
-          <li className="w-full max-w-36">
+          <li className="w-full md:max-w-36">
             <div className="h-14 w-full" style={{ backgroundColor: primary[900], opacity: 0.5 }} />
             <p className="font-jua text-14-B-20">
               <small className="font-inherit">Light / 50%</small>
@@ -92,7 +92,7 @@ export default function Color() {
               {primary[900]}, opacity 50
             </p>
           </li>
-          <li className="w-full max-w-36">
+          <li className="w-full md:max-w-36">
             <div className="h-14 w-full" style={{ backgroundColor: primary[100] }} />
             <p className="font-jua text-14-B-20">
               <small className="font-inherit">Dark</small>
@@ -100,7 +100,7 @@ export default function Color() {
               {primary[100]}
             </p>
           </li>
-          <li className="w-full max-w-36">
+          <li className="w-full md:max-w-36">
             <div className="h-14 w-full" style={{ backgroundColor: primary[100], opacity: 0.5 }} />
             <p className="font-jua text-14-B-20">
               <small className="font-inherit">Dark / 50%</small>

@@ -38,12 +38,14 @@ export default function GuideGnb() {
       className="sticky inset-x-0 top-0 z-10 shadow-sm shadow-primary-100 backdrop-blur-sm dark:shadow-primary-950"
       id="gnb"
     >
-      <div className="mx-auto flex h-14 w-full items-center justify-between rounded-b-md p-5">
+      <div className="mx-auto flex h-14 w-full items-center justify-between rounded-b-md px-5">
         <Link reloadDocument to="/">
-          <h1 className="text-center font-jua text-24-R-32 text-white dark:text-primary-100">작은 대화</h1>
+          <h1 className="text-center font-jua text-18-R-28 text-white sm:text-24-R-32 dark:text-primary-100">
+            작은 대화
+          </h1>
         </Link>
         <div className="ml-auto flex items-center gap-5">
-          <nav className="w-auto">
+          <nav className="hidden w-auto md:block">
             <ul className="flex items-center gap-x-2.5">
               {HEADINGS.map((heading) => (
                 <li key={heading} id={`gnb-${heading}`}>

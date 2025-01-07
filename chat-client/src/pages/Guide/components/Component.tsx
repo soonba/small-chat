@@ -22,11 +22,11 @@ export default function Component() {
         Component
       </h2>
       <div className="flex flex-wrap gap-10">
-        <div className="flex flex-col self-start rounded bg-transparent p-5">
+        <div className="flex flex-col self-start rounded bg-transparent">
           <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Icon Button
           </h3>
-          <div className="flex items-center gap-x-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
             <IconButton
               aria-label="change to light mode"
               size="small"
@@ -95,7 +95,7 @@ export default function Component() {
             />
           </div>
         </div>
-        <div className="min-w-96 max-w-lg flex-1 flex-col rounded bg-transparent p-5">
+        <div className="min-w-full max-w-lg flex-1 flex-col rounded bg-transparent md:min-w-96">
           <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Button
           </h3>
@@ -107,7 +107,7 @@ export default function Component() {
             <Button size="large" text="회원가입" type="button" variant="outlined" />
           </div>
         </div>
-        <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-transparent p-5">
+        <div className="flex min-w-full flex-1 flex-col self-start rounded bg-transparent md:min-w-80">
           <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             TextField
           </h3>
@@ -116,7 +116,7 @@ export default function Component() {
             <TextField disabled defaultValue="비활성화 상태입니다." />
           </div>
         </div>
-        <div className="flex min-w-80 flex-1 flex-col self-start rounded bg-transparent p-5">
+        <div className="flex min-w-full flex-1 flex-col self-start rounded bg-transparent md:min-w-80">
           <h3 className="mb-2.5 text-16-B-24 text-gray-50 drop-shadow-lg text-shadow dark:text-gray-100 dark:text-shadow-unset">
             Loader
           </h3>
