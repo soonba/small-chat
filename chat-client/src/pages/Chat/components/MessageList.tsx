@@ -1,4 +1,4 @@
-import { forwardRef, RefObject, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Ref, useEffect, useState } from 'react';
 
 import Loader from '@components/Loader';
 
@@ -11,20 +11,14 @@ import SystemMessage from './SystemMessage';
 
 interface Props {
   data: MessageListType;
+  ref: Ref<HTMLLIElement>;
   isLoading: boolean;
   socketMessages: SocketMessageType[];
 }
 
-export interface RefHandler {
-  intersectionRef: RefObject<HTMLLIElement>;
-}
-
-const MessageList = forwardRef<RefHandler, Props>(function MessageList({ data, isLoading, socketMessages }, ref) {
+const MessageList = ({ data, isLoading, ref, socketMessages }: Props) => {
   const { accountId } = useAccount();
   const [height, setHeight] = useState(0);
-
-  const intersectionRef = useRef<HTMLLIElement>(null);
-  useImperativeHandle(ref, () => ({ intersectionRef }), []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,7 +59,7 @@ const MessageList = forwardRef<RefHandler, Props>(function MessageList({ data, i
           />
         );
       })}
-      <li ref={intersectionRef} className="h-px w-full" />
+      <li ref={ref} className="h-px w-full" />
       {isLoading && (
         <li className="flex h-32 w-full items-center justify-center">
           <Loader />
@@ -73,6 +67,6 @@ const MessageList = forwardRef<RefHandler, Props>(function MessageList({ data, i
       )}
     </ul>
   );
-});
+};
 
 export default MessageList;

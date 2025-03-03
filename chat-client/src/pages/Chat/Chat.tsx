@@ -12,7 +12,7 @@ import { useAccount } from '@hooks/redux';
 import { useIntersectionObserver, useModal, useMode, useSocket } from '@hooks/utils';
 import { useGetChatDetail, useGetChatHistory, useLeaveChat } from '@services/chat';
 
-import { MessageList, MessageTextarea, RefHandler } from './components';
+import { MessageList, MessageTextarea } from './components';
 
 export default function Chat() {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ export default function Chat() {
 
   const { message: socketMessages, onCurrentChatLeave, onMessageSend } = useSocket();
 
-  const ref = useRef<RefHandler>(null);
+  const ref = useRef<HTMLLIElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [observe, unobserve] = useIntersectionObserver(() => {
     setTimeout(() => {
@@ -81,11 +81,11 @@ export default function Chat() {
     if (ref.current) {
       if (!isLoading && !isFetchingPreviousPage && hasPreviousPage) {
         setIsLoading(true);
-        observe(ref.current.intersectionRef.current as HTMLLIElement);
+        observe(ref.current as HTMLLIElement);
       }
 
       if (!hasPreviousPage) {
-        unobserve(ref.current.intersectionRef.current as HTMLLIElement);
+        unobserve(ref.current as HTMLLIElement);
       }
     }
   }, [isLoading, isFetchingPreviousPage, hasPreviousPage]);

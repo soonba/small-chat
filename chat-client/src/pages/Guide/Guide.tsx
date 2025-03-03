@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-import { GuideGnb } from '@layouts/index';
-
 import { Chat, Color, Component, Iconography, Typography } from './components';
 
 export default function Guide() {
@@ -49,17 +47,12 @@ export default function Guide() {
   }, []);
 
   return (
-    <div className="min-h-full w-full !bg-fixed bg-linear-gradient dark:bg-linear-gradient-dark">
-      <GuideGnb />
-      <main className="min-h-screen w-full p-5">
-        <div ref={ref} className="space-y-10 text-white dark:text-primary-100">
-          <Typography />
-          <Color />
-          <Iconography />
-          <Component />
-          <Chat />
-        </div>
-      </main>
+    <div ref={ref} className="space-y-10 text-white dark:text-primary-100">
+      <Typography />
+      <Color />
+      <Iconography />
+      <Component />
+      <Chat />
     </div>
   );
 }

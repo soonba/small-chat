@@ -7,7 +7,7 @@ import { getIconButtonVariant, getIconSize, getIconVariant, IconButtonSizeType, 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: IconButtonSizeType;
   variant: IconButtonVariantType;
-  icon: ReactElement;
+  icon: ReactElement<SVGElement>;
 }
 
 export default function IconButton({ icon, onClick, size, type = 'button', variant, ...props }: Props) {

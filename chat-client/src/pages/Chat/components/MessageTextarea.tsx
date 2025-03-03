@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import emojiData from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 
 import { ClipboardIcon, FaceSmileIcon, PaperAirplaneIcon } from '@heroicons/react/20/solid';
 
@@ -10,15 +9,6 @@ import IconButton from '@components/IconButton';
 import { useToast } from '@components/Toast';
 
 import { getStorageItem, SESSION_STORAGE_KEYS } from '@utils/storage';
-
-type EmojiDataType = {
-  id: string;
-  name: string;
-  native: string;
-  unified: string;
-  keywords: string[];
-  shortcodes: string;
-};
 
 interface Props {
   onSubmit: (newMessage: string) => void;
@@ -75,10 +65,17 @@ export default function MessageTextarea({ onSubmit }: Props) {
     [message, handleSubmit, onToast],
   );
 
-  const handleSelect = useCallback((data: EmojiDataType) => {
+  const handleSelect = useCallback((data: EmojiClickData) => {
     setIsOpen(false);
-    setMessage((prev) => prev + data.native);
+    setMessage((prev) => prev + data.emoji);
   }, []);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [message]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -96,60 +93,58 @@ export default function MessageTextarea({ onSubmit }: Props) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-x-0 bottom-0 flex w-full flex-row gap-5 border-t border-t-primary-900 py-2.5 pl-2.5 pr-5 dark:border-t-primary-100"
+      className="fixed inset-x-0 bottom-0 w-full divide-y divide-primary-900 border-t border-t-primary-900 bg-white dark:divide-primary-100 dark:border-t-primary-100 dark:bg-black"
     >
-      <textarea
-        ref={textareaRef}
-        className="h-10 flex-1 resize-none bg-transparent text-16-R-24 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 sm:h-20 dark:text-primary-100 dark:placeholder:text-primary-100/30"
-        maxLength={140}
-        value={message}
-        onChange={(e) => setMessage(e.currentTarget.value)}
-        onKeyDown={(e) => handleEnter(e.nativeEvent)}
-      />
-      <div className="flex shrink-0 items-center gap-x-5 [&_svg]:text-primary-900 dark:[&_svg]:text-primary-100">
-        <IconButton
-          aria-label="open emoji picker"
-          size="medium"
-          title="이모티콘 보기"
-          variant="text"
-          icon={<FaceSmileIcon />}
-          onClick={() => setIsOpen((prev) => !prev)}
+      <div className="flex w-full items-center gap-5 py-2.5 pl-2.5 pr-5">
+        <textarea
+          ref={textareaRef}
+          className="h-6 flex-1 resize-none bg-transparent text-18-R-28 text-primary-900 outline-none ring-0 transition-all scrollbar-hide placeholder:text-primary-900/50 dark:text-primary-100 dark:placeholder:text-primary-100/30"
+          maxLength={140}
+          value={message}
+          onChange={(e) => setMessage(e.currentTarget.value)}
+          onKeyDown={(e) => handleEnter(e.nativeEvent)}
         />
-        {!message ? (
+        <div className="flex shrink-0 items-center gap-x-5 [&_svg]:text-primary-900 dark:[&_svg]:text-primary-100">
           <IconButton
-            aria-label="copy chat id"
+            aria-label="open emoji picker"
             size="medium"
-            title="코드 공유하기"
+            title="이모티콘 보기"
             variant="text"
-            icon={<ClipboardIcon />}
-            onClick={handleCopy}
+            icon={<FaceSmileIcon />}
+            onClick={() => setIsOpen((prev) => !prev)}
           />
-        ) : (
-          <IconButton
-            aria-label="send message"
-            disabled={!message || message.trim().length === 0}
-            size="medium"
-            title="메시지 보내기"
-            variant="text"
-            icon={<PaperAirplaneIcon />}
-            onClick={handleSubmit}
-          />
-        )}
-      </div>
-      {isOpen && (
-        <div className="fixed bottom-16 left-0 right-0 sm:bottom-28 sm:left-[unset] sm:right-5">
-          <div className="w-full *:mx-auto *:w-full *:max-w-[calc(100%-theme(spacing.10))] sm:*:max-w-full">
-            <Picker
-              dynamicWidth
-              data={emojiData}
-              theme={getStorageItem(SESSION_STORAGE_KEYS.MODE) === 'light' ? 'light' : 'dark'}
-              locale="ko"
-              onEmojiSelect={handleSelect}
-              previewPosition="none"
+          {!message ? (
+            <IconButton
+              aria-label="copy chat id"
+              size="medium"
+              title="코드 공유하기"
+              variant="text"
+              icon={<ClipboardIcon />}
+              onClick={handleCopy}
             />
-          </div>
+          ) : (
+            <IconButton
+              aria-label="send message"
+              disabled={!message || message.trim().length === 0}
+              size="medium"
+              title="메시지 보내기"
+              variant="text"
+              icon={<PaperAirplaneIcon />}
+              onClick={handleSubmit}
+            />
+          )}
         </div>
-      )}
+      </div>
+      <EmojiPicker
+        searchDisabled
+        height={300}
+        style={{ borderRadius: 0, border: 'none' }}
+        theme={getStorageItem(SESSION_STORAGE_KEYS.MODE)}
+        width="100%"
+        lazyLoadEmojis
+        onEmojiClick={handleSelect}
+        open={isOpen}
+      />
     </div>
   );
 }

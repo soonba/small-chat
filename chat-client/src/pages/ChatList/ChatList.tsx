@@ -11,7 +11,7 @@ export default function ChatList() {
   return (
     <div className="size-full min-h-[calc(100vh-176px)] p-2.5 sm:p-5">
       {isFetching ? (
-        <div className="flex size-full min-h-inherit items-center justify-center">
+        <div className="flex h-[calc(100vh-theme(spacing.14))] w-full items-center justify-center">
           <Loader />
         </div>
       ) : (

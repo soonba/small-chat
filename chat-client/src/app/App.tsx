@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 
-import { AuthLayout, BaseLayout, ChatLayout } from '@layouts/index';
+import { AuthLayout, BaseLayout, ChatLayout, GuideLayout } from '@layouts/index';
 
-import Chat from '@pages/Chat';
-import ChatList from '@pages/ChatList';
-import Guide from '@pages/Guide';
-import Login from '@pages/Login';
-import Register from '@pages/Register';
+const Login = lazy(() => import('@pages/Login/Login'));
+const Register = lazy(() => import('@pages/Register/Register'));
+const ChatList = lazy(() => import('@pages/ChatList/ChatList'));
+const Chat = lazy(() => import('@pages/Chat/Chat'));
+const Guide = lazy(() => import('@pages/Guide/Guide'));
 
+import Fallback from './Fallback';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function App() {
@@ -64,7 +65,9 @@ export default function App() {
               index: true,
               element: (
                 <ProtectedRoute>
-                  <ChatList />
+                  <Suspense fallback={<Fallback />}>
+                    <ChatList />
+                  </Suspense>
                 </ProtectedRoute>
               ),
             },
@@ -78,7 +81,9 @@ export default function App() {
               path: ':id',
               element: (
                 <ProtectedRoute>
-                  <Chat />
+                  <Suspense fallback={<Fallback />}>
+                    <Chat />
+                  </Suspense>
                 </ProtectedRoute>
               ),
             },
@@ -90,7 +95,11 @@ export default function App() {
           children: [
             {
               index: true,
-              element: <Login />,
+              element: (
+                <Suspense fallback={<Fallback />}>
+                  <Login />
+                </Suspense>
+              ),
             },
           ],
         },
@@ -100,13 +109,27 @@ export default function App() {
           children: [
             {
               index: true,
-              element: <Register />,
+              element: (
+                <Suspense fallback={<Fallback />}>
+                  <Register />
+                </Suspense>
+              ),
             },
           ],
         },
         {
           path: '/guide',
-          element: <Guide />,
+          element: <GuideLayout />,
+          children: [
+            {
+              index: true,
+              element: (
+                <Suspense fallback={<Fallback />}>
+                  <Guide />
+                </Suspense>
+              ),
+            },
+          ],
         },
       ])}
     />

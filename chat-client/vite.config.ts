@@ -16,7 +16,7 @@ export default defineConfig({
           if (id.includes('socket.io-client') || id.includes('axios')) {
             return '@networking-vendor';
           }
-          if (id.includes('emoji-mart')) {
+          if (id.includes('emoji-picker-react')) {
             return '@emoji-vendor';
           }
           if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
