@@ -48,7 +48,7 @@ const useGetChatHistory = (chatId: string) => {
       hasSubscribed.current = true;
       onChatJoin([chatId]);
     }
-  }, [chatId]);
+  }, [chatId, onChatJoin]);
 
   return { data, ...rest };
 };

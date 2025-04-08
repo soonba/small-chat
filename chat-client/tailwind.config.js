@@ -7,7 +7,7 @@ export default {
     hoverOnlyWhenSupported: true,
   },
   darkMode: 'selector',
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', '.storybook/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       screens: {
@@ -70,14 +70,53 @@ export default {
           dark: '#02101c',
           light: '#f7fbff',
         },
-        primary: {
+        pink: {
+          50: '#fff1f3',
+          100: '#ffe3e8',
+          200: '#ffb7c5', // main
+          300: '#ffa2b5',
+          400: '#fe6e8d',
+          500: '#f83b6a',
+          600: '#e51955',
+          700: '#c20e47',
+          800: '#a20f43',
+          900: '#8a113f',
+          950: '#4d041d',
+        },
+        'light-blue': {
+          50: '#ebffff',
+          100: '#cdfbff',
+          200: '#a2f6ff',
+          300: '#62ecfe',
+          400: '#0ad1f0', // main
+          500: '#00badc',
+          600: '#0295b8',
+          700: '#097795',
+          800: '#116079',
+          900: '#134f66',
+          950: '#063446',
+        },
+        orange: {
+          50: '#fff5ed',
+          100: '#ffe9d5',
+          200: '#fdceab',
+          300: '#fcac75',
+          400: '#f97f3e',
+          500: '#f75f1c', // main
+          600: '#e8420e',
+          700: '#c0300e',
+          800: '#992713',
+          900: '#7b2213',
+          950: '#420e08',
+        },
+        blue: {
           50: '#f0f8ff',
           100: '#e0f0fe',
           200: '#bae2fd',
           300: '#7dcbfc',
           400: '#38b0f8',
           500: '#0e96e9',
-          600: '#0277c7',
+          600: '#0277c7', // main
           700: '#035ea1',
           800: '#075185',
           900: '#0c436e',
@@ -90,6 +129,7 @@ export default {
       },
       backgroundImage: {
         snowflake: "url('/img_snowflake.png')",
+        'cherry-blossom': "url('/img_cherry_blossom.png')",
       },
       keyframes: {
         fadeIn: {
@@ -114,40 +154,51 @@ export default {
         },
       },
       animation: {
-        fadeInOut: 'fadeIn 0.5s, fadeOut 0.5s 4.5s forwards',
+        'fade-in-out': 'fadeIn 0.5s, fadeOut 0.5s 4.5s forwards',
       },
+    },
+  },
+  variants: {
+    extend: {
+      spring: ['spring'],
+      summer: ['summer'],
+      fall: ['fall'],
+      winter: ['winter'],
     },
   },
   plugins: [
     scrollbarHide,
-    plugin(function plugin({ addUtilities }) {
+    plugin(function plugin({ addUtilities, addVariant }) {
+      addVariant('spring', ({ modifySelectors }) => {
+        modifySelectors(() => `&:where([data-theme="spring"] *)`);
+      });
+      addVariant('summer', ({ modifySelectors }) => {
+        modifySelectors(() => `&:where([data-theme="summer"] *)`);
+      });
+      addVariant('fall', ({ modifySelectors }) => {
+        modifySelectors(() => `&:where([data-theme="fall"] *)`);
+      });
+      addVariant('winter', ({ modifySelectors }) => {
+        modifySelectors(() => `&:where([data-theme="winter"] *)`);
+      });
       addUtilities({
         '.text-shadow': {
-          'text-shadow': '0px 0px 2px #0c436e',
-        },
-        '.text-shadow-light': {
-          'text-shadow': '0px 0px 2px #e0f0fe',
+          'text-shadow': '0px 1px 2px #000000',
         },
         '.text-shadow-unset': {
           'text-shadow': 'unset',
         },
-        '.bg-linear-gradient': {
+        '.bg-pink-gradient': {
+          background: 'linear-gradient(#ffb7c5, #ffffff)',
+        },
+        '.bg-dark-pink-gradient': {
+          background: 'linear-gradient(#000000 20%, #ffb7c5)',
+        },
+        '.bg-blue-gradient': {
           background: 'linear-gradient(#0c436e, #e5e7eb)',
         },
-        '.bg-linear-gradient-dark': {
-          background: 'linear-gradient(#000000, #0c436e)',
-        },
-        '.bg-grid': {
-          'background-position': 'center',
-          'background-size': '20px 20px',
-          'background-image':
-            'linear-gradient(to right, #e0f0fe 1px, transparent 1px), linear-gradient(to bottom, #e0f0fe 1px, transparent 1px)',
-        },
-        '.bg-grid-light': {
-          'background-position': 'center',
-          'background-size': '20px 20px',
-          'background-image':
-            'linear-gradient(to right, #0c436e 1px, transparent 1px), linear-gradient(to bottom, #0c436e 1px, transparent 1px)',
+        '.bg-dark-blue-gradient': {
+          background: 'linear-gradient(#000000 20%, #0c436e)',
         },
       });
     }),

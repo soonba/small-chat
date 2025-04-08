@@ -1,9 +1,10 @@
-type SessionStorageType = 'ACCESS_TOKEN' | 'MODE' | 'REFRESH_TOKEN';
+type SessionStorageType = 'ACCESS_TOKEN' | 'MODE' | 'REFRESH_TOKEN' | 'THEME';
 
 export const SESSION_STORAGE_KEYS: Record<string, SessionStorageType> = {
   ACCESS_TOKEN: 'ACCESS_TOKEN',
-  MODE: 'MODE',
   REFRESH_TOKEN: 'REFRESH_TOKEN',
+  MODE: 'MODE',
+  THEME: 'THEME',
 };
 
 export const getStorageItem = (key: SessionStorageType) => {

@@ -8,13 +8,14 @@ export default defineConfig({
   base: '/small-chat/',
   server: {
     port: 3000,
+    open: true,
   },
   build: {
     rollupOptions: {
       output: {
         manualChunks(id: string) {
           if (id.includes('socket.io-client') || id.includes('axios')) {
-            return '@networking-vendor';
+            return '@network-vendor';
           }
           if (id.includes('emoji-picker-react')) {
             return '@emoji-vendor';

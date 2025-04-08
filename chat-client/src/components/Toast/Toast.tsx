@@ -27,7 +27,7 @@ export default function Toast({ message, onClose, options }: Props) {
       total = delay / 1000 - 0.5;
     }
     return total;
-  }, []);
+  }, [delay]);
 
   useEffect(() => {
     const timerId = setTimeout(onClose, delay);
@@ -39,14 +39,16 @@ export default function Toast({ message, onClose, options }: Props) {
 
   return (
     <div
-      className="[&_svg:text-primary-900] flex min-h-12 w-max animate-fadeInOut items-center justify-between whitespace-pre-wrap break-all rounded-xl bg-primary-900 px-3 py-2 text-white dark:bg-primary-100 dark:text-primary-900"
+      className="flex min-h-12 w-max animate-fade-in-out items-center justify-between rounded-xl px-3 py-2 spring:bg-pink-900 winter:bg-blue-900 spring:dark:bg-pink-100 winter:dark:bg-blue-100"
       style={{ animationDelay: delay ? `${animationTime}s` : '4.5s' }}
       role="alert"
     >
-      <p className="pr-2.5 text-12-R-16 text-inherit sm:text-16-M-24">{message}</p>
+      <p className="whitespace-pre-wrap break-all pr-2.5 text-12-R-16 text-inherit text-white sm:text-16-M-24 spring:dark:text-pink-950 winter:dark:text-blue-900">
+        {message}
+      </p>
       {(canDismiss === undefined || canDismiss === true) && (
-        <div className="flex items-center dark:[&_svg]:text-primary-900">
-          <div className="mx-2.5 h-4 w-px bg-white dark:bg-primary-900" />
+        <div className="flex items-center spring:[&_svg]:text-pink-50 winter:[&_svg]:text-blue-100 spring:dark:[&_svg]:text-pink-950 winter:dark:[&_svg]:text-blue-900">
+          <div className="mx-2.5 h-4 w-px bg-white spring:dark:bg-pink-900 winter:dark:bg-blue-900" />
           <IconButton
             aria-label="dismiss toast"
             size="small"

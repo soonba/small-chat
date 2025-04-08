@@ -1,28 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { StateCreator } from 'zustand';
 
-import type { PayloadAction } from '@reduxjs/toolkit';
-
-export interface Account {
+export interface AccountState {
   nickname?: string;
   accountId?: string;
 }
 
-const initialState: Account = {
+export interface AccountSlice extends AccountState {
+  initAccount: () => void;
+  setAccount: (payload: AccountState) => void;
+}
+
+const initialState: AccountState = {
   accountId: '',
   nickname: '',
 };
 
-export const accountSlice = createSlice({
+export const createAccountSlice: StateCreator<AccountState, [['zustand/devtools', never]], [], AccountState> = (
+  set,
+) => ({
   initialState,
-  name: 'account',
-  reducers: {
-    initAccount: () => initialState,
-    setAccount: (state, { payload }: PayloadAction<Account>) => {
-      return { ...state, ...payload };
-    },
-  },
+  initAccount: () => set(() => ({ ...initialState }), undefined, 'account/initAccount'),
+  setAccount: (payload: AccountState) => set((state) => ({ ...state, ...payload }), undefined, 'account/setAccount'),
 });
-
-export const { initAccount, setAccount } = accountSlice.actions;
-
-export default accountSlice.reducer;

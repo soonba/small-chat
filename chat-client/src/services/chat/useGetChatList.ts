@@ -34,7 +34,7 @@ const useGetChatList = () => {
       hasSubscribed.current = true;
       onChatJoin(data.map((val) => `list_${val.chatId}`));
     }
-  }, [data]);
+  }, [data, onChatJoin]);
 
   return { data, ...rest };
 };

@@ -42,46 +42,49 @@ const useSocket = () => {
   const [message, setMessage] = useState<SocketMessageType[]>([]);
 
   useEffect(() => {
-    const onConnect = () => {
+    const handleConnect = () => {
       setIsConnected(socket.connected);
     };
 
-    const onDisconnect = () => {
+    const handleDisconnect = () => {
       setIsConnected(socket.connected);
     };
 
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
+    socket.on('connect', handleConnect);
+    socket.on('disconnect', handleDisconnect);
 
     return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
+      socket.off('connect', handleConnect);
+      socket.off('disconnect', handleDisconnect);
     };
   }, []);
 
-  const onSocketConnect = useCallback(() => {
+  const handleSocketConnect = useCallback(() => {
     socket.connect();
     setIsConnected(socket.connected);
   }, []);
 
-  const onChatJoin = useCallback((chatIds: string[]) => {
-    if (socket.disconnected) {
-      onSocketConnect();
-      socket.emit(EventType.SUBSCRIBE, { chatIds });
-    } else {
-      socket.emit(EventType.SUBSCRIBE, { chatIds });
-    }
-  }, []);
-
-  const onMessageSend = useCallback(
-    (message: MessageBodyType) => {
-      onChatJoin([message.messageBody.chatId]);
-      socket.emit(EventType.MESSAGE, message);
+  const handleChatJoin = useCallback(
+    (chatIds: string[]) => {
+      if (socket.disconnected) {
+        handleSocketConnect();
+        socket.emit(EventType.SUBSCRIBE, { chatIds });
+      } else {
+        socket.emit(EventType.SUBSCRIBE, { chatIds });
+      }
     },
-    [onChatJoin],
+    [handleSocketConnect],
   );
 
-  const onMessageReceive = useCallback(() => {
+  const handleMessageSend = useCallback(
+    (message: MessageBodyType) => {
+      handleChatJoin([message.messageBody.chatId]);
+      socket.emit(EventType.MESSAGE, message);
+    },
+    [handleChatJoin],
+  );
+
+  const handleMessageReceive = useCallback(() => {
     socket.on(EventType.MESSAGE, (message: { createdAt: string } & MessageType) => {
       if (message.chatId.startsWith('list_')) {
         const chatId = message.chatId.replace('list_', '');
@@ -102,13 +105,13 @@ const useSocket = () => {
         setMessage((prev) => [message, ...prev]);
       }
     });
-  }, [id]);
+  }, [id, queryClient]);
 
-  const onCurrentChatLeave = useCallback((chatId: string) => {
+  const handleCurrentChatLeave = useCallback((chatId: string) => {
     socket.emit(EventType.UN_SUBSCRIBE, { chatId });
   }, []);
 
-  const onChatLeave = useCallback((chatIds: string[]) => {
+  const handleChatLeave = useCallback((chatIds: string[]) => {
     chatIds.forEach((chatId) => {
       socket.emit(EventType.UN_SUBSCRIBE, { chatId });
     });
@@ -116,22 +119,22 @@ const useSocket = () => {
   }, []);
 
   useEffect(() => {
-    onMessageReceive();
+    handleMessageReceive();
 
     return () => {
       socket.off(EventType.MESSAGE);
     };
-  }, []);
+  }, [handleMessageReceive]);
 
   return {
     isConnected,
     message,
-    onChatJoin,
-    onChatLeave,
-    onCurrentChatLeave,
-    onMessageReceive,
-    onMessageSend,
-    onSocketConnect,
+    onChatJoin: handleChatJoin,
+    onChatLeave: handleChatLeave,
+    onCurrentChatLeave: handleCurrentChatLeave,
+    onMessageReceive: handleMessageReceive,
+    onMessageSend: handleMessageSend,
+    onSocketConnect: handleSocketConnect,
   };
 };
 

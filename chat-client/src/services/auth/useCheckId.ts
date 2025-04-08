@@ -19,7 +19,7 @@ const checkId = async ({ accountId }: IRequestBody) => {
       data: {
         isUsed: el.isUsed,
       },
-      message: el.isUsed ? '사용중인 아이디입니다.' : '사용 가능한 아이디입니다.',
+      message: el.isUsed ? '사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.',
       status: 200,
     }));
 };

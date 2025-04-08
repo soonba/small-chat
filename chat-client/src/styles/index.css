@@ -38,7 +38,7 @@ body,
   }
 }
 
-#snow {
+#animation {
   @apply pointer-events-none fixed inset-0;
 }
 
@@ -46,6 +46,17 @@ body,
   @apply absolute -top-10 bg-snowflake bg-contain bg-center;
 }
 
+.cherry-blossom {
+  @apply absolute -top-10 bg-cherry-blossom bg-contain bg-center;
+}
+
 em-emoji-picker {
   @apply w-full;
+}
+
+input,
+textarea,
+button,
+a {
+  @apply outline-none ring-0 ring-offset-0;
 }

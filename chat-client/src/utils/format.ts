@@ -39,9 +39,27 @@ const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
       'font-size': [...typographyVariants.map((val) => `text-${val}`)],
-      'bg-color': [...colors.map((val) => `primary-${val}`), ...customColors],
-      'border-color': [...colors.map((val) => `primary-${val}`), ...customColors],
-      'text-color': [...colors.map((val) => `primary-${val}`), ...customColors],
+      'bg-color': [
+        ...colors.map((val) => `blue-${val}`),
+        ...colors.map((val) => `orange-${val}`),
+        ...colors.map((val) => `light-blue-${val}`),
+        ...colors.map((val) => `pink-${val}`),
+        ...customColors,
+      ],
+      'border-color': [
+        ...colors.map((val) => `blue-${val}`),
+        ...colors.map((val) => `orange-${val}`),
+        ...colors.map((val) => `light-blue-${val}`),
+        ...colors.map((val) => `pink-${val}`),
+        ...customColors,
+      ],
+      'text-color': [
+        ...colors.map((val) => `blue-${val}`),
+        ...colors.map((val) => `orange-${val}`),
+        ...colors.map((val) => `light-blue-${val}`),
+        ...colors.map((val) => `pink-${val}`),
+        ...customColors,
+      ],
     },
   },
 });

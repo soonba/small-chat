@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ChatBubbleOvalLeftIcon, EnvelopeIcon, PlusIcon } from '@heroicons/react/20/solid';
@@ -12,6 +13,7 @@ import { useCreateChat, useJoinChat } from '@services/chat';
 export default function Footer() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
   const { onChatJoin } = useSocket();
   const { onToast } = useToast();
 
@@ -33,6 +35,7 @@ export default function Footer() {
       }
     },
   });
+  const { onOpen: onCreateOpen } = createModal;
 
   const joinChatMutation = useJoinChat({
     onError(error) {
@@ -52,30 +55,30 @@ export default function Footer() {
       }
     },
   });
+  const { onOpen: onJoinOpen } = joinModal;
 
-  const handleChatList = () => {
+  const handleChatList = useCallback(() => {
     navigate('/');
-  };
+  }, [navigate]);
 
-  const handleJoin = () => {
-    joinModal.onOpen({ code: '' });
-  };
+  const handleJoin = useCallback(() => {
+    onJoinOpen({ code: '' });
+  }, [onJoinOpen]);
 
-  const handleCreate = () => {
-    createModal.onOpen({ name: '' });
-  };
+  const handleCreate = useCallback(() => {
+    onCreateOpen({ name: '' });
+  }, [onCreateOpen]);
 
   return (
     <>
       {pathname === '/' && (
         <>
-          <footer className="fixed inset-x-0 bottom-0 border-t border-primary-900 dark:border-primary-100">
+          <footer className="fixed inset-x-0 bottom-0 border-t spring:border-pink-900 winter:border-blue-900 spring:dark:border-pink-100 winter:dark:border-blue-100">
             <div className="flex h-14 w-full items-center justify-between rounded-t-md px-10 sm:h-20 sm:justify-around sm:px-0">
               <IconButton
-                aria-label="chat list"
+                aria-label="show chat list"
                 size="medium"
-                title="참여중인 채팅 리스트"
-                type="button"
+                title="참여중인 채팅 리스트 보기"
                 variant="outlined"
                 icon={<ChatBubbleOvalLeftIcon />}
                 onClick={handleChatList}
@@ -85,7 +88,6 @@ export default function Footer() {
                   aria-label="create chat"
                   size="large"
                   title="채팅 생성하기"
-                  type="button"
                   variant="contained"
                   icon={<PlusIcon />}
                   onClick={handleCreate}
@@ -95,7 +97,6 @@ export default function Footer() {
                 aria-label="join chat"
                 size="medium"
                 title="채팅 참여하기"
-                type="button"
                 variant="outlined"
                 icon={<EnvelopeIcon />}
                 onClick={handleJoin}

@@ -29,14 +29,14 @@ export default function JoinChatModal({ isOpen, onClose, onConfirm }: ModalType)
     <Modal isOpen={isOpen} title="채팅 참여하기" onClose={onClose}>
       <form className="space-y-4 sm:space-y-8" onSubmit={handleSubmit}>
         <TextField
-          helperText="공유받은 채팅방 코드를 입력하세요."
+          helperText="초대 코드를 입력하세요."
           labelText="Chat Invitation Code"
           maxLength={36}
           minLength={36}
           value={code}
           autoFocus
           onChange={setCode}
-          placeholder="채팅방 코드를 입력하세요."
+          placeholder="초대 코드를 입력하세요."
         />
         <Button disabled={isDisabled} size="medium" text="참여하기" type="submit" variant="contained" />
       </form>
