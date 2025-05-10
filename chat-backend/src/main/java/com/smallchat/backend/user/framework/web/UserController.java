@@ -1,6 +1,15 @@
 package com.smallchat.backend.user.framework.web;
 
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.smallchat.backend.global.framework.web.dto.ApiResponse;
 import com.smallchat.backend.global.utils.JwtProvider;
 import com.smallchat.backend.global.utils.TokenPayload;
@@ -8,10 +17,13 @@ import com.smallchat.backend.user.application.usecase.AuthUseCase;
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase;
 import com.smallchat.backend.user.application.usecase.TokenUseCase;
 import com.smallchat.backend.user.application.usecase.ValidateUserUseCase;
-import com.smallchat.backend.user.framework.web.dto.*;
+import com.smallchat.backend.user.framework.web.dto.CheckUserDuplicationDto;
+import com.smallchat.backend.user.framework.web.dto.CreateUserDto;
+import com.smallchat.backend.user.framework.web.dto.FetchMeDto;
+import com.smallchat.backend.user.framework.web.dto.LoginDto;
+import com.smallchat.backend.user.framework.web.dto.RefreshDto;
+
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController

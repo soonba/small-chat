@@ -1,16 +1,18 @@
 package com.smallchat.backend.user.framework.kafka_adapter;
 
+import java.io.IOException;
+
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smallchat.backend.global.domain.event.EventResult;
 import com.smallchat.backend.global.domain.event.EventType;
 import com.smallchat.backend.user.application.usecase.UserLeaveChatUseCase;
 import com.smallchat.backend.user.domain.event.ChatJoined;
-import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
