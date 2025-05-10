@@ -1,14 +1,5 @@
 package com.smallchat.backend.chat.framework.mongodb_adapter;
 
-import com.smallchat.backend.chat.application.outputport.MessageOutputPort;
-import com.smallchat.backend.chat.domain.model.vo.Message;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.*;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.stereotype.Repository;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -16,20 +7,33 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.LimitOperation;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.SortOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.stereotype.Repository;
+
+import com.smallchat.backend.chat.domain.model.vo.Message;
+
+import lombok.RequiredArgsConstructor;
+
 @Repository
 @RequiredArgsConstructor
-public class MessageOutputAdapter implements MessageOutputPort {
+public class MessageOutputAdapter  {
     public static final int MESSAGE_PAGE_LIMIT = 30;
 
     private final MessageRepository messageRepository;
     private final MongoTemplate mongoTemplate;
 
-    @Override
     public void save(Message chat) {
         messageRepository.save(chat);
     }
 
-    @Override
     public List<Message> getMessageList(String chatID, Long nextCursor) {
         Criteria criteria = Criteria.where("chatId").is(chatID);
         if (nextCursor != null) {
@@ -46,7 +50,6 @@ public class MessageOutputAdapter implements MessageOutputPort {
         return messages;
     }
 
-    @Override
     public List<Message> getLastMessageInfo(List<String> chatIdList) {
         MatchOperation condition = Aggregation.match(Criteria.where("chatId").in(chatIdList));
         SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
