@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-  title: 'Components/Message/MessageList',
+  title: 'Components/Message/List',
 } satisfies Meta<typeof MessageList>;
 
 export default meta;

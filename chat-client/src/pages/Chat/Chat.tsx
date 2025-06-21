@@ -107,11 +107,11 @@ export default function Chat() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-10 shadow-sm spring:shadow-pink-50 winter:shadow-blue-50 spring:dark:shadow-pink-100 winter:dark:shadow-blue-100">
+      <header className="fixed inset-x-0 top-0 z-10 shadow-sm spring:shadow-pink-50 winter:shadow-blue-50 dark:spring:shadow-pink-100 dark:winter:shadow-blue-100">
         <div className="flex h-14 w-full items-center justify-between pl-2.5 pr-2.5 sm:pr-5">
           <Link className="flex items-center gap-1" onClick={handleBack} to="/">
-            <ChevronLeftIcon className="size-6 spring:text-pink-950 winter:text-white sm:size-8 spring:dark:text-pink-50 winter:dark:text-blue-100" />
-            <h1 className="line-clamp-1 text-center font-jua text-18-R-28 spring:text-pink-950 winter:text-white sm:text-24-R-32 spring:dark:text-pink-50 winter:dark:text-blue-100">
+            <ChevronLeftIcon className="size-6 spring:text-pink-950 winter:text-white sm:size-8 dark:spring:text-pink-50 dark:winter:text-blue-100" />
+            <h1 className="line-clamp-1 text-center font-jua text-18-R-28 spring:text-pink-950 winter:text-white sm:text-24-R-32 dark:spring:text-pink-50 dark:winter:text-blue-100">
               {detailData?.chatName || ''}
             </h1>
           </Link>
@@ -130,7 +130,7 @@ export default function Chat() {
               title="테마 변경하기"
               variant="text"
               icon={
-                <PaintBrushIcon className="spring:text-blue-900 winter:text-pink-950 spring:dark:text-blue-100 winter:dark:text-pink-50" />
+                <PaintBrushIcon className="spring:text-blue-900 winter:text-pink-950 dark:spring:text-blue-100 dark:winter:text-pink-50" />
               }
               onClick={onThemeChange}
             />

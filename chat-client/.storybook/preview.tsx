@@ -26,7 +26,7 @@ export const decorators = [
 
     return (
       <MemoryRouter>
-        <div className="flex min-h-screen w-screen items-center justify-center !bg-fixed p-10 spring:bg-pink-gradient winter:bg-blue-gradient spring:dark:bg-dark-pink-gradient winter:dark:bg-dark-blue-gradient">
+        <div className="flex min-h-screen w-screen items-center justify-center !bg-fixed p-10 spring:bg-pink-gradient winter:bg-blue-gradient dark:spring:bg-dark-pink-gradient dark:winter:bg-dark-blue-gradient">
           <Story />
         </div>
       </MemoryRouter>
@@ -51,7 +51,7 @@ const preview: Preview = {
       storySort: {
         includeNames: true,
         method: 'alphabetical',
-        order: ['Base', 'Components'],
+        order: ['Introduction', 'Base', 'Components'],
       },
     },
   },

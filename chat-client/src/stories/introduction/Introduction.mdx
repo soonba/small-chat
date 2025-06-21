@@ -1,0 +1,56 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Introduction/1. 프로젝트 개요" />
+
+# 작은 대화 프로젝트
+
+## 프로젝트 개요
+
+### 프로젝트 소개
+
+**작은 대화** 는 웹소켓 기반의 N:N 채팅 서비스입니다.
+
+사용자가 채팅방을 생성하고 초대 코드를 통해 다른 유저를 초대할 수 있으며, 초대된 유저는 해당 채팅방에서 실시간으로 메시지를 주고받을 수 있습니다.
+
+각 채팅방은 개별적으로 입장 및 퇴장이 가능하며, 편리하고 감성적인 소통 환경을 제공합니다.
+
+### 주요 기능
+
+- 로그인 및 회원가입
+- 채팅방 리스트 조회
+- 채팅방 생성 및 초대 코드 발급
+- 초대 코드 입력을 통한 채팅방 입장
+- 실시간 메시지 송수신 (WebSocket)
+- 채팅방 퇴장
+
+### 프론트엔드 기술 스택
+
+- **Frontend**: React, Vite, Tailwind CSS
+- **Data Fetching**: TanStack Query (React Query)
+- **State Management** : Zustand
+- **Realtime**: WebSocket
+- **Documentation**: Storybook
+
+### 프론트엔드 폴더 구조
+
+```bash
+├── app         # 라우팅 및 페이지 진입점 관리
+├── components  # 재사용 가능한 UI 컴포넌트
+├── config      # 환경설정 및 전역 설정 파일
+├── hooks       # 커스텀 React Hooks
+├── layouts     # 페이지 레이아웃 컴포넌트
+├── libs        # 외부 라이브러리 설정
+├── pages       # 화면
+├── services    # API 통신 및 외부 서비스 로직
+├── slices      # 전역 상태 관리
+├── stories     # Storybook
+├── styles      # 전역 스타일 및 테마 관련 설정
+├── utils       # 범용 유틸리티 함수
+```
+
+### 프로젝트 현황
+
+- **v1.0** 2024.03
+- **v2.0** 2024.04
+- **v3.0** 2024.08
+- **유지보수 및 개선** (진행중)

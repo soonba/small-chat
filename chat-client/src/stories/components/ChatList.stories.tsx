@@ -11,7 +11,7 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-  title: 'Components/Chat/ChatList',
+  title: 'Components/Chat/List',
   render: function Render() {
     const [isLoading, setIsLoading] = useState(true);
 

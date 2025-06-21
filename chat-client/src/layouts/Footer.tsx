@@ -73,7 +73,7 @@ export default function Footer() {
     <>
       {pathname === '/' && (
         <>
-          <footer className="fixed inset-x-0 bottom-0 border-t spring:border-pink-900 winter:border-blue-900 spring:dark:border-pink-100 winter:dark:border-blue-100">
+          <footer className="fixed inset-x-0 bottom-0 border-t spring:border-pink-900 winter:border-blue-900 dark:spring:border-pink-100 dark:winter:border-blue-100">
             <div className="flex h-14 w-full items-center justify-between rounded-t-md px-10 sm:h-20 sm:justify-around sm:px-0">
               <IconButton
                 aria-label="show chat list"

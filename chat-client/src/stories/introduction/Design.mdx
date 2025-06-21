@@ -1,0 +1,123 @@
+import { Meta } from '@storybook/addon-docs';
+
+import SpringTheme from './spring_theme.png';
+import SpringDarkTheme from './spring_dark_theme.png';
+import WinterTheme from './winter_theme.png';
+import WinterDarkTheme from './winter_dark_theme.png';
+
+import SpringAnimation from './spring_flower_fall.gif';
+import WinterAnimation from './winter_snowflake_fall.gif';
+
+<Meta title="Introduction/3. 프로젝트 디자인" />
+
+# 작은 대화 프로젝트
+
+## 프로젝트 디자인
+
+### 🌸 봄 테마 미리보기
+
+<div className="image-wrapper">
+  <figure>
+    <img src={SpringTheme} alt="spring theme" />
+    <figcaption>라이트 모드</figcaption>
+  </figure>
+  <figure>
+    <img src={SpringDarkTheme} alt="spring dark theme" />
+    <figcaption>다크 모드</figcaption>
+  </figure>
+  <figure>
+    <img src={SpringAnimation} alt="spring animation" />
+    <figcaption>애니메이션</figcaption>
+  </figure>
+</div>
+
+### ❄️ 겨울 테마 미리보기
+
+<div className="image-wrapper">
+  <figure>
+    <img src={WinterTheme} alt="winter theme" />
+    <figcaption>라이트 모드</figcaption>
+  </figure>
+  <figure>
+    <img src={WinterDarkTheme} alt="winter dark theme" />
+    <figcaption>다크 모드</figcaption>
+  </figure>
+  <figure>
+    <img src={WinterAnimation} alt="winter animation" />
+    <figcaption>애니메이션</figcaption>
+  </figure>
+</div>
+
+### UI 스타일링 가이드
+
+- **Hover / Active 효과**
+  - `opacity` 조절로 부드러운 색상 전환 표현
+- **다크/라이트 모드 배경 처리 방식**
+  - 다크 모드에서는 `background: transparent`로 배경 그라디언트를 강조
+  - 라이트 모드에서는 `background-color`를 활용해 요소 간 구분 강조
+- **텍스트 가독성**
+  - 배경과 텍스트 컬러 간 대비가 부족할 경우를 대비해 `text-shadow` 적용
+  - 예: `text-white`가 밝은 배경 위에 있을 경우 윤곽이 흐려지는 문제를 방지
+
+### 🌸❄️ 테마별 컬러 & 스타일 명세
+
+<div className="image-wrapper">
+  <img src={SpringTheme} alt="spring theme" />
+  <div>
+    <h4>
+      🌸 <strong>봄 테마(Spring)</strong>
+    </h4>
+    <ul>
+      <li>
+        <strong>메인 컬러</strong>
+        <br />
+        벚꽃색 `#ffb7c5`
+      </li>
+      <li>
+        <strong>메인 텍스트 컬러</strong>
+        <ul>
+          <li>라이트 모드: `#4d041d`</li>
+          <li>다크 모드: `#fff1f3`</li>
+        </ul>
+      </li>
+      <li>
+        <strong>배경</strong>
+        <ul>
+          <li>라이트 모드: `linear-gradient(#ffb7c5, #ffffff)`</li>
+          <li>다크 모드: `linear-gradient(#000000 20%, #ffb7c5)`</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<br />
+<br />
+<div className="image-wrapper">
+  <img src={WinterTheme} alt="winter theme" />
+  <div>
+    <h4>
+      ❄️ <strong>겨울 테마(Winter)</strong>
+    </h4>
+    <ul>
+      <li>
+        <strong>메인 컬러</strong>
+        <br />
+        차가운 겨울 블루 `#0c436e`
+      </li>
+      <li>
+        <strong>메인 텍스트 컬러</strong>
+        <ul>
+          <li>라이트 모드: `#ffffff`</li>
+          <li>다크 모드: `#e0f0fe`</li>
+        </ul>
+      </li>
+      <li>
+        <strong>배경</strong>
+        <ul>
+          <li>라이트 모드: `linear-gradient(#0c436e, #e5e7eb)`</li>
+          <li>다크 모드: `linear-gradient(#000000 20%, #0c436e)`</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

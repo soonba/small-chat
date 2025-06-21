@@ -40,6 +40,7 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'storybook/no-renderer-packages': 'off',
       'perfectionist/sort-jsx-props': [
         'error',
         {

@@ -32,7 +32,7 @@ export default function LeaveChatModal({ isOpen, modalData, onClose, onConfirm }
     <Modal isOpen={isOpen} title="채팅방 삭제하기" onClose={onClose}>
       <form className="space-y-4 sm:space-y-8" onSubmit={handleSubmit}>
         <div>
-          <p className="mb-1 text-12-SB-16 spring:text-pink-950 winter:text-white sm:text-16-SB-24 spring:dark:text-pink-50 winter:dark:text-blue-100">
+          <p className="mb-1 text-12-SB-16 spring:text-pink-950 winter:text-white sm:text-16-SB-24 dark:spring:text-pink-50 dark:winter:text-blue-100">
             삭제하려는 채팅방 제목을 입력하세요.
           </p>
           <TextField maxLength={20} minLength={3} value={chatName} autoFocus onChange={setChatName} />

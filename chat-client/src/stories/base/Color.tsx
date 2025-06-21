@@ -62,7 +62,7 @@ export default function Color() {
         <h3 className="text-16-B-24 text-black">Spring Theme</h3>
         <ul className="flex w-full flex-wrap items-center gap-5">
           {Object.keys(pink).map((key) => (
-            <li key={key} className="w-full md:max-w-36">
+            <li key={key} className="w-36">
               <div className="h-14 w-full border border-black" style={{ backgroundColor: pink[Number(key)] }} />
               <p className="font-jua text-14-B-20">
                 <small className="font-inherit">{key}</small>
@@ -75,7 +75,7 @@ export default function Color() {
         <h3 className="text-16-B-24 text-black">Winter Theme</h3>
         <ul className="flex w-full flex-wrap items-center gap-5">
           {Object.keys(blue).map((key) => (
-            <li key={key} className="w-full md:max-w-36">
+            <li key={key} className="w-36">
               <div className="h-14 w-full border border-black" style={{ backgroundColor: blue[Number(key)] }} />
               <p className="font-jua text-14-B-20">
                 <small className="font-inherit">{key}</small>
@@ -91,7 +91,7 @@ export default function Color() {
             <li key={color} className="w-full">
               <ul className="flex w-full flex-wrap items-center gap-5">
                 {Object.keys(background[color]).map((key) => (
-                  <li key={key} className="w-full md:w-max md:min-w-36">
+                  <li key={key} className="w-36">
                     <div
                       className="h-14 w-full border border-black"
                       style={{
@@ -113,31 +113,29 @@ export default function Color() {
         </ul>
         <h3 className="text-16-B-24 text-black">Gradient</h3>
         <ul className="flex w-full flex-wrap items-center gap-5">
-          {Object.keys(gradient)
-            .filter((key) => key === document.documentElement.getAttribute('data-theme'))
-            .map((color) => (
-              <li key={color} className="w-full">
-                <ul className="flex w-full flex-wrap items-center gap-5">
-                  {Object.keys(gradient[color]).map((key) => (
-                    <li key={key} className="w-full md:w-max md:min-w-36">
-                      <div
-                        className="h-14 w-full border border-black"
-                        style={{
-                          background: gradient[color][key],
-                        }}
-                      />
-                      <p className="font-jua text-14-B-20">
-                        <small className="font-inherit capitalize">
-                          {color} - {key}
-                        </small>
-                        <br />
-                        {gradient[color][key]}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
+          {Object.keys(gradient).map((color) => (
+            <li key={color} className="w-full">
+              <ul className="flex w-full flex-wrap items-center gap-5">
+                {Object.keys(gradient[color]).map((key) => (
+                  <li key={key} className="w-36">
+                    <div
+                      className="h-14 w-full border border-black"
+                      style={{
+                        background: gradient[color][key],
+                      }}
+                    />
+                    <p className="font-jua text-14-B-20">
+                      <small className="font-inherit capitalize">
+                        {color} - {key}
+                      </small>
+                      <br />
+                      {gradient[color][key]}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

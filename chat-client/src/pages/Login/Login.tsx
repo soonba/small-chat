@@ -53,7 +53,7 @@ export default function Login() {
     <div className="flex h-full w-full items-start justify-center">
       {isSubmitted && <SubmitLoader />}
       <form className="flex w-full max-w-screen-md flex-col gap-5 px-5" onSubmit={handleSubmit}>
-        <h1 className="mb-5 text-center font-jua text-28-R-36 spring:text-pink-950 winter:text-white md:mb-10 md:text-36-R-40 spring:dark:text-pink-50 winter:dark:text-blue-100">
+        <h1 className="mb-5 text-center font-jua text-28-R-36 spring:text-pink-950 winter:text-white md:mb-10 md:text-36-R-40 dark:spring:text-pink-50 dark:winter:text-blue-100">
           작은 대화
         </h1>
         <TextField labelText="Id" type="text" value={id} onChange={setId} placeholder="아이디를 입력하세요." />

@@ -13,10 +13,10 @@ export default function MessageListItem({ createdAt, message, nickname, position
   return (
     <li className={`${position === 'right' ? 'ml-auto' : 'mr-auto'} w-max`}>
       <div className={`${position === 'right' ? 'flex-row-reverse' : 'flex-row'} flex items-start gap-x-2.5`}>
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg spring:border spring:border-pink-900 spring:bg-pink-900 winter:border winter:border-blue-900 winter:bg-blue-900 sm:size-12 spring:dark:bg-pink-100 winter:dark:bg-blue-100">
-          <UserIcon className="size-5 spring:text-pink-50 winter:text-blue-100 sm:size-6 spring:dark:text-pink-950 winter:dark:text-blue-900" />
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg spring:border spring:border-pink-900 spring:bg-pink-900 winter:border winter:border-blue-900 winter:bg-blue-900 sm:size-12 dark:spring:bg-pink-100 dark:winter:bg-blue-100">
+          <UserIcon className="size-5 spring:text-pink-50 winter:text-blue-100 sm:size-6 dark:spring:text-pink-950 dark:winter:text-blue-900" />
         </div>
-        <p className="text-12-B-16 spring:text-pink-950 winter:text-blue-100 winter:text-shadow sm:text-14-B-20 spring:dark:text-pink-50 winter:dark:text-blue-100">
+        <p className="text-12-B-16 spring:text-pink-950 winter:text-blue-100 winter:text-shadow sm:text-14-B-20 dark:spring:text-pink-50 dark:winter:text-blue-100">
           {nickname}
         </p>
       </div>
@@ -28,7 +28,7 @@ export default function MessageListItem({ createdAt, message, nickname, position
         >
           {message}
         </p>
-        <time className="text-10-L-12 spring:text-pink-950 winter:text-white winter:text-shadow sm:text-12-L-16 spring:dark:text-pink-50 spring:dark:text-shadow winter:dark:text-blue-100/50">
+        <time className="text-10-L-12 spring:text-pink-950 winter:text-white winter:text-shadow sm:text-12-L-16 dark:spring:text-pink-50 dark:spring:text-shadow dark:winter:text-blue-100/50">
           {getFormatChatTime(createdAt)}
         </time>
       </div>

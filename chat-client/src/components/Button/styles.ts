@@ -5,11 +5,11 @@ export type ButtonSizeType = 'large' | 'medium' | 'small';
 export const getButtonVariant = (variant: ButtonVariantType) => {
   switch (variant) {
     case 'contained':
-      return 'rounded-md winter:bg-blue-900 winter:text-blue-100 spring:bg-pink-900 spring:text-pink-50 hover:opacity-80 hover:spring:opacity-60 focus:opacity-80 spring:focus:opacity-60 disabled:pointer-events-none disabled:opacity-50';
+      return 'rounded-md winter:bg-blue-900 winter:text-blue-100 spring:bg-pink-900 spring:text-pink-50 hover:opacity-80 hover:spring:opacity-60 focus:opacity-80 focus:spring:opacity-60 disabled:pointer-events-none disabled:opacity-50';
     case 'text':
-      return 'winter:text-white spring:text-pink-950 hover:opacity-80 focus:opacity-80 winter:dark:text-blue-100 spring:dark:text-pink-50';
+      return 'winter:text-white spring:text-pink-950 hover:opacity-80 focus:opacity-80 dark:winter:text-blue-100 dark:spring:text-pink-50';
     default:
-      return 'rounded-md border winter:border-blue-600 spring:border-pink-600 bg-white dark:bg-transparent winter:text-blue-600 spring:text-pink-600 hover:opacity-80 hover:spring:opacity-60 focus:opacity-80 spring:focus:opacity-60 winter:dark:border-blue-100 spring:dark:border-pink-100 winter:dark:text-blue-100 spring:dark:text-pink-50 disabled:pointer-events-none disabled:opacity-30';
+      return 'rounded-md border winter:border-blue-600 spring:border-pink-600 bg-white dark:bg-transparent winter:text-blue-600 spring:text-pink-600 hover:opacity-80 hover:spring:opacity-60 focus:opacity-80 focus:spring:opacity-60 dark:winter:border-blue-100 dark:spring:border-pink-100 dark:winter:text-blue-100 dark:spring:text-pink-50 disabled:pointer-events-none disabled:opacity-30';
   }
 };
 

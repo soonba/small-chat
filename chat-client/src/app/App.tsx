@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 import { AuthLayout, BaseLayout, ChatLayout } from '@layouts/index';
@@ -16,6 +16,8 @@ import ErrorElement from './ErrorElement';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function App() {
+  const timeouts = useRef<NodeJS.Timeout[]>([]);
+
   useEffect(() => {
     const body = document.getElementById('animation');
     const theme =
@@ -27,42 +29,46 @@ export default function App() {
 
         const size = Math.floor(Math.random() * (30 - 10)) + 10;
         const opacity = Math.random();
-
         const delay = Math.random() * 10;
-        const duration = Math.floor(Math.random() * (20 - 10) + 10);
+        const duration = Math.floor(Math.random() * (20 - 10)) + 10;
         const rotation = Math.floor(Math.random() * (360 - 45)) + 45;
 
-        if (theme === 'spring') {
-          image.classList.add('cherry-blossom');
-        } else if (theme === 'winter') {
-          image.classList.add('snowflake');
-        }
+        const className = theme === 'spring' ? 'cherry-blossom' : 'snowflake';
+        image.classList.add(className);
 
-        image.style.width = `${size}px`;
-        image.style.height = `${size}px`;
-        image.style.opacity = `${opacity}`;
-
-        image.style.rotate = `${rotation}deg`;
-        image.style.position = 'absolute';
-        image.style.left = `${Math.random() * window.innerWidth}px`;
-
-        image.style.animation = `fall ${duration}s linear`;
-        image.style.animationDelay = `${delay}s`;
-
+        Object.assign(image.style, {
+          width: `${size}px`,
+          height: `${size}px`,
+          opacity: `${opacity}`,
+          rotate: `${rotation}deg`,
+          position: 'absolute',
+          left: `${Math.random() * window.innerWidth}px`,
+          animation: `fall ${duration}s linear`,
+          animationDelay: `${delay}s`,
+        });
         body.appendChild(image);
 
-        setTimeout(
+        const timerId = setTimeout(
           () => {
             body.removeChild(image);
             handleAnimation();
           },
           (duration + delay) * 1500,
         );
+
+        timeouts.current.push(timerId);
       };
 
       for (let i = 0; i < 1000; i++) {
-        setTimeout(handleAnimation, 500 * i);
+        const timerId = setTimeout(handleAnimation, 100 * i);
+        timeouts.current.push(timerId);
       }
+
+      return () => {
+        timeouts.current.forEach(clearTimeout);
+        timeouts.current = [];
+        body.innerHTML = '';
+      };
     }
   }, []);
 

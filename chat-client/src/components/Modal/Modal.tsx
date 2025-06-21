@@ -23,7 +23,7 @@ export default function Modal({ children, isOpen, onClose, title }: Props) {
     createPortal(
       <div className="fixed inset-0 z-10000 bg-black/60 dark:bg-black/30" role="presentation">
         <div className="mx-auto flex min-h-full w-full max-w-[calc(100%-theme(spacing.10))] items-center justify-center sm:max-w-full">
-          <div className="relative flex min-w-full flex-col rounded-md px-4 py-5 shadow-lg spring:bg-pink-gradient winter:bg-blue-gradient sm:min-h-52 sm:min-w-96 sm:px-8 sm:py-10 spring:dark:bg-dark-pink-gradient winter:dark:bg-dark-blue-gradient">
+          <div className="relative flex min-w-full flex-col rounded-md px-4 py-5 shadow-lg spring:bg-pink-gradient winter:bg-blue-gradient sm:min-h-52 sm:min-w-96 sm:px-8 sm:py-10 dark:spring:bg-dark-pink-gradient dark:winter:bg-dark-blue-gradient">
             <button
               aria-label="close modal"
               className="absolute right-4 top-4 sm:right-5 sm:top-5"
@@ -31,9 +31,9 @@ export default function Modal({ children, isOpen, onClose, title }: Props) {
               type="button"
               onClick={onClose}
             >
-              <XMarkIcon className="size-6 hover:opacity-80 spring:text-pink-950 winter:text-white sm:size-8 spring:dark:text-pink-50 winter:dark:text-blue-100" />
+              <XMarkIcon className="size-6 hover:opacity-80 spring:text-pink-950 winter:text-white sm:size-8 dark:spring:text-pink-50 dark:winter:text-blue-100" />
             </button>
-            <h2 className="mb-5 text-16-B-24 spring:text-pink-950 winter:text-white sm:text-20-B-28 spring:dark:text-pink-50 winter:dark:text-blue-100">
+            <h2 className="mb-5 text-16-B-24 spring:text-pink-950 winter:text-white sm:text-20-B-28 dark:spring:text-pink-50 dark:winter:text-blue-100">
               {title}
             </h2>
             {children}
