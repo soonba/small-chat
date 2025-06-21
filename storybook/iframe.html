@@ -47,7 +47,7 @@
       window.CHANNEL_OPTIONS = {};
       window.FEATURES = {"argTypeTargetsV7":true,"legacyDecoratorFileOrder":false,"disallowImplicitActionsInRenderV8":true};
       window.STORIES = [{"titlePrefix":"","directory":"./src/stories","files":"**/*.mdx","importPathMatcher":"^\\.[\\\\/](?:src\\/stories(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.mdx)$"},{"titlePrefix":"","directory":"./src/stories","files":"**/*.stories.@(js|jsx|mjs|ts|tsx)","importPathMatcher":"^\\.[\\\\/](?:src\\/stories(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(js|jsx|mjs|ts|tsx))$"}];
-      window.DOCS_OPTIONS = {"autodocs":true};
+      window.DOCS_OPTIONS = {"defaultName":"Docs","autodocs":false};
       window.TAGS_OPTIONS = {"dev-only":{"excludeFromDocsStories":true},"docs-only":{"excludeFromSidebar":true},"test-only":{"excludeFromSidebar":true,"excludeFromDocsStories":true}};
 
       
@@ -508,16 +508,34 @@
     console.warn('unable to connect to top frame for connecting dev tools');
   }
 </script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="anonymous" />
+<link
+  rel="preload"
+  as="style"
+  crossorigin="anonymous"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
+  crossorigin="anonymous"
+/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
 
-    <script type="module" crossorigin src="./assets/iframe-xbTc2OLn.js"></script>
+    <script type="module" crossorigin src="./assets/iframe-SdIk8FH4.js"></script>
   </head>
 
   <body>
     <style>
-  html,
-  body {
-    height: 100%;
-    min-height: 100%;
+  #storybook-root {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #storybook-docs * {
     font-family:
       'Pretendard Variable',
       Pretendard,
@@ -533,12 +551,62 @@
       'Apple Color Emoji',
       'Segoe UI Emoji',
       'Segoe UI Symbol',
-      sans-serif;
+      sans-serif !important;
   }
 
-  #storybook-root {
-    padding: 0 !important;
+  #storybook-docs h1 {
+    margin-bottom: 40px !important;
+  }
+
+  #storybook-docs h2 {
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+  }
+
+  #storybook-docs h3 {
+    font-weight: 600 !important;
+  }
+
+  #storybook-docs p {
     margin: 0 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 24px !important;
+  }
+
+  #storybook-docs ul {
+    margin: 0 !important;
+  }
+
+  #storybook-docs li {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 24px !important;
+  }
+
+  #storybook-docs .docblock-source {
+    margin: 0 !important;
+  }
+
+  #storybook-docs .image-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  #storybook-docs figcaption {
+    font-size: 16px;
+    margin: 16px 0px;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: #000000;
+    border-left: 4px solid #000000;
+    padding: 0px 15px;
+    color: #5c6870;
+  }
+
+  #storybook-docs h4 p {
+    font-size: 18px !important;
+    margin-bottom: 10px !important;
   }
 </style>
 <div id="portal"></div>
