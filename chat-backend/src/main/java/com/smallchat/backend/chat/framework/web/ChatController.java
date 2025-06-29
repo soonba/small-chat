@@ -1,9 +1,9 @@
 package com.smallchat.backend.chat.framework.web;
 
-import com.smallchat.backend.chat.application.usecase.CreateChatUseCase;
-import com.smallchat.backend.chat.application.usecase.JoinChatUseCase;
-import com.smallchat.backend.chat.application.usecase.LeaveChatUseCase;
-import com.smallchat.backend.chat.application.usecase.ParticipatingChatsUseCase;
+import com.smallchat.backend.chat.application.inputport.CreateChatInputPort;
+import com.smallchat.backend.chat.application.inputport.JoinChatInputPort;
+import com.smallchat.backend.chat.application.inputport.LeaveChatInputPort;
+import com.smallchat.backend.chat.application.inputport.ParticipatingChatsInputPort;
 import com.smallchat.backend.chat.framework.web.dto.*;
 import com.smallchat.backend.global.framework.web.dto.ApiResponse;
 import com.smallchat.backend.global.utils.JwtProvider;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v2/chats")
 public class ChatController {
-    private final CreateChatUseCase createChatUseCase;
-    private final JoinChatUseCase joinChatUseCase;
-    private final LeaveChatUseCase leaveChatUseCase;
-    private final ParticipatingChatsUseCase participatingChatsUseCase;
+    private final CreateChatInputPort createChatUseCase;
+    private final JoinChatInputPort joinChatUseCase;
+    private final LeaveChatInputPort leaveChatUseCase;
+    private final ParticipatingChatsInputPort participatingChatsUseCase;
 
     private final JwtProvider jwtProvider;
 
