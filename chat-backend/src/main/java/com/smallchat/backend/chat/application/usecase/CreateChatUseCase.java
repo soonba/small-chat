@@ -12,7 +12,7 @@ import com.smallchat.backend.chat.domain.model.vo.Message;
 import com.smallchat.backend.chat.domain.model.vo.SystemMessage;
 import com.smallchat.backend.chat.framework.web.dto.CreateChatDto;
 import com.smallchat.backend.global.utils.TokenPayload;
-import com.smallchat.backend.user.application.usecase.ValidateUserUseCase;
+import com.smallchat.backend.user.application.inputport.ValidateUserInputPort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,12 +24,13 @@ public class CreateChatUseCase implements CreateChatInputPort {
     private final EventOutputPort eventOutputPort;
     private final MessageOutputPort messageOutputPort;
 
-    private final ValidateUserUseCase validateUserUseCase;
+    //todo inputport 수정 필요
+    private final ValidateUserInputPort validateUserInputPort;
 
     @Override
     public String createChat(TokenPayload tokenPayload, CreateChatDto.Request request) {
         String ownerId = tokenPayload.userId();
-        validateUserUseCase.hasReachedMaxChatLimit(ownerId);
+        validateUserInputPort.hasReachedMaxChatLimit(ownerId);
         Chat chat = Chat.of(ownerId, request.chatName());
         String chatId = chatOutputPort.save(chat).getChatId();
         messageOutputPort.save(Message.systemMessage(SystemMessage.CHAT_CREATED, chat.getName(), chatId));

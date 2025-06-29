@@ -8,7 +8,7 @@ import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
 import com.smallchat.backend.chat.application.outputport.EventOutputPort;
 import com.smallchat.backend.chat.domain.event.ChatJoined;
 import com.smallchat.backend.chat.domain.model.Chat;
-import com.smallchat.backend.user.application.usecase.ValidateUserUseCase;
+import com.smallchat.backend.user.application.inputport.ValidateUserInputPort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,12 +19,13 @@ public class JoinChatUseCase implements JoinChatInputPort {
     private final ChatOutputPort chatOutputPort;
     private final EventOutputPort eventOutputPort;
 
-    private final ValidateUserUseCase validateUserUseCase;
+    //todo inputport 수정 필요
+    private final ValidateUserInputPort validateUserInputPort;
 
     @Override
     @Transactional
     public void join(String userId, String chatId) {
-        validateUserUseCase.hasReachedMaxChatLimit(userId);
+        validateUserInputPort.hasReachedMaxChatLimit(userId);
         Chat loadedChat = chatOutputPort.load(chatId);
         loadedChat.validateUserId(userId);
         Chat chat = loadedChat.addParticipant(userId);

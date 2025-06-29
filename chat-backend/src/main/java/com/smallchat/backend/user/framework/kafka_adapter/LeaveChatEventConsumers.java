@@ -3,7 +3,7 @@ package com.smallchat.backend.user.framework.kafka_adapter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smallchat.backend.global.domain.event.EventResult;
 import com.smallchat.backend.global.domain.event.EventType;
-import com.smallchat.backend.user.application.usecase.UserLeaveChatUseCase;
+import com.smallchat.backend.user.application.inputport.UserLeaveChatInputPort;
 import com.smallchat.backend.user.domain.event.ChatJoined;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -15,7 +15,7 @@ import java.io.IOException;
 @Service
 @RequiredArgsConstructor
 public class LeaveChatEventConsumers {
-    private final UserLeaveChatUseCase userLeaveChatUseCase;
+    private final UserLeaveChatInputPort userLeaveChatUseCase;
     private final JoinChatEventProducer joinChatEventProducer;
     private final ObjectMapper objectMapper = new ObjectMapper();
 

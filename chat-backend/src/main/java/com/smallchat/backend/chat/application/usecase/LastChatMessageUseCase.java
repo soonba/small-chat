@@ -1,12 +1,14 @@
 package com.smallchat.backend.chat.application.usecase;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.smallchat.backend.chat.application.inputport.LastChatMessageInputPort;
 import com.smallchat.backend.chat.application.outputport.MessageOutputPort;
 import com.smallchat.backend.chat.domain.model.vo.Message;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
