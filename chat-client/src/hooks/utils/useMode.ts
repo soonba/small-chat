@@ -11,7 +11,13 @@ const useMode = () => {
   useLayoutEffect(() => {
     const currentTheme =
       document.documentElement.getAttribute('data-theme') || getStorageItem(SESSION_STORAGE_KEYS.THEME);
-    if (currentTheme) {
+
+    // TODO: 임시 처리 삭제
+    if (currentTheme === 'summer') {
+      setTheme('winter');
+      document.documentElement.setAttribute('data-theme', 'winter');
+      setStorageItem(SESSION_STORAGE_KEYS.THEME, 'winter');
+    } else if (currentTheme) {
       setTheme(currentTheme);
       document.documentElement.setAttribute('data-theme', currentTheme);
       setStorageItem(SESSION_STORAGE_KEYS.THEME, currentTheme);
