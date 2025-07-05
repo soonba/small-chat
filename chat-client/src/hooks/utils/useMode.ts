@@ -20,11 +20,13 @@ const useMode = () => {
       const currentMonth = dayjs().get('M');
       if (currentMonth > 2 && currentMonth < 6) {
         season = 'spring';
-      } else if (currentMonth > 5 && currentMonth < 9) {
-        season = 'summer';
-      } else if (currentMonth > 8 && currentMonth < 12) {
-        season = 'fall';
       }
+      // TODO: Summer & Fall Theme
+      // else if (currentMonth > 5 && currentMonth < 9) {
+      //   season = 'summer';
+      // } else if (currentMonth > 8 && currentMonth < 12) {
+      //   season = 'fall';
+      // }
       setStorageItem(SESSION_STORAGE_KEYS.THEME, season);
       document.documentElement.setAttribute('data-theme', season);
     }
