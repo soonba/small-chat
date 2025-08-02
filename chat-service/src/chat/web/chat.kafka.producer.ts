@@ -1,5 +1,6 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
+import { KAFKA_SERVICE } from '../chat.module';
 import { Message } from '../domain/model/message';
 
 @Injectable()
@@ -7,7 +8,7 @@ export class ChatKafkaProducer implements OnModuleInit {
   private readonly TOPIC = 'publish_message';
 
   constructor(
-    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    @Inject(KAFKA_SERVICE) private readonly kafkaService: ClientKafka,
   ) {}
 
   async onModuleInit() {
