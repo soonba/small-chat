@@ -1,6 +1,6 @@
 package com.smallchat.backend.chat.domain.model.vo;
 
-import com.smallchat.backend.chat.framework.web.dto.MessageBasicInfo;
+import com.smallchat.backend.chat.interfaces.web.dto.MessageBasicInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

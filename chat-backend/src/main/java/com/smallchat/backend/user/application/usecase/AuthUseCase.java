@@ -1,7 +1,7 @@
 package com.smallchat.backend.user.application.usecase;
 
+import com.smallchat.backend.global.utils.AuthenticatedUser;
 import com.smallchat.backend.global.utils.JwtProvider;
-import com.smallchat.backend.global.utils.TokenPayload;
 import com.smallchat.backend.global.utils.Tokens;
 import com.smallchat.backend.user.application.inputport.AuthInputPort;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
@@ -27,8 +27,8 @@ public class AuthUseCase implements AuthInputPort {
     }
 
     @Override
-    public void logout(TokenPayload request) {
-        String userId = request.userId();
+    public void logout(AuthenticatedUser request) {
+        String userId = request.getUserId();
         this.userOutputPort.deleteRefreshToken(userId);
     }
 }

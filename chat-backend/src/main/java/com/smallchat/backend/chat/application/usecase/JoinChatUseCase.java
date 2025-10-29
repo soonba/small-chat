@@ -1,23 +1,19 @@
 package com.smallchat.backend.chat.application.usecase;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.smallchat.backend.chat.application.inputport.JoinChatInputPort;
 import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
-import com.smallchat.backend.chat.application.outputport.EventOutputPort;
-import com.smallchat.backend.chat.domain.event.ChatJoined;
 import com.smallchat.backend.chat.domain.model.Chat;
 import com.smallchat.backend.user.application.inputport.ValidateUserInputPort;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class JoinChatUseCase implements JoinChatInputPort {
 
     private final ChatOutputPort chatOutputPort;
-    private final EventOutputPort eventOutputPort;
+//    private final EventOutputPort eventOutputPort;
 
     //todo inputport 수정 필요
     private final ValidateUserInputPort validateUserInputPort;
@@ -30,6 +26,6 @@ public class JoinChatUseCase implements JoinChatInputPort {
         loadedChat.validateUserId(userId);
         Chat chat = loadedChat.addParticipant(userId);
         chatOutputPort.save(chat);
-        eventOutputPort.occurJoinChatEvent(new ChatJoined(userId, chatId));
+//        eventOutputPort.occurJoinChatEvent(new ChatJoined(userId, chatId));
     }
 }

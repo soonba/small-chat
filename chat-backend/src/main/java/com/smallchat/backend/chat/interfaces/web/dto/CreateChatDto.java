@@ -1,4 +1,4 @@
-package com.smallchat.backend.chat.framework.web.dto;
+package com.smallchat.backend.chat.interfaces.web.dto;
 
 public class CreateChatDto {
     public record Request(String chatName) {

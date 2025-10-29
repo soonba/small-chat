@@ -2,7 +2,7 @@ package com.smallchat.backend.chat.domain.model;
 
 import com.smallchat.backend.chat.domain.model.vo.Message;
 import com.smallchat.backend.chat.domain.model.vo.Participant;
-import com.smallchat.backend.chat.framework.web.dto.ChatBasicInfo;
+import com.smallchat.backend.chat.interfaces.web.dto.ChatBasicInfo;
 import com.smallchat.backend.global.framework.jpa.BaseTime;
 import jakarta.persistence.*;
 import lombok.Getter;

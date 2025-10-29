@@ -1,4 +1,4 @@
-package com.smallchat.backend.chat.framework.web.dto;
+package com.smallchat.backend.chat.interfaces.web.dto;
 
 import com.smallchat.backend.chat.domain.model.vo.MessageType;
 import com.smallchat.backend.chat.domain.model.vo.Sender;

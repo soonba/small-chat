@@ -3,7 +3,7 @@ package com.smallchat.backend.chat.application.usecase;
 import com.smallchat.backend.chat.application.inputport.MessageListInputPort;
 import com.smallchat.backend.chat.application.outputport.MessageOutputPort;
 import com.smallchat.backend.chat.domain.model.vo.Message;
-import com.smallchat.backend.chat.framework.web.dto.MessageListDto;
+import com.smallchat.backend.chat.interfaces.web.dto.MessageListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

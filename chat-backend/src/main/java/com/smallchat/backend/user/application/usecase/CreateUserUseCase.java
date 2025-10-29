@@ -28,6 +28,8 @@ public class CreateUserUseCase implements CreateUserInputPort {
         User savedUser = userOutputPort.createUser(User.of(nickname, id, encrypt));
 
         Tokens tokens = jwtProvider.createTokens(savedUser.getUserId(), savedUser.getNickname());
+        System.out.println(tokens.accessToken());
+        System.out.println(tokens.refreshToken());
         userOutputPort.saveRefreshToken(savedUser.getUserId(), tokens.refreshToken());
         return new CreateUserDto.Response(tokens);
     }

@@ -1,8 +1,8 @@
 package com.smallchat.backend.user.application.usecase;
 
 
+import com.smallchat.backend.global.utils.AuthenticatedUser;
 import com.smallchat.backend.global.utils.JwtProvider;
-import com.smallchat.backend.global.utils.TokenPayload;
 import com.smallchat.backend.global.utils.Tokens;
 import com.smallchat.backend.user.application.inputport.TokenInputPort;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
@@ -22,10 +22,10 @@ public class TokenUseCase implements TokenInputPort {
     @Override
     public RefreshDto.Response refresh(RefreshDto.Request refreshDto) {
         String rt = refreshDto.refreshToken();
-        TokenPayload tokenPayload = jwtProvider.parseToken(rt);
+        AuthenticatedUser authenticatedUser = jwtProvider.parseToken(rt);
 
-        String id = tokenPayload.userId();
-        String nickname = tokenPayload.nickname();
+        String id = authenticatedUser.getUserId();
+        String nickname = authenticatedUser.getNickname();
         userOutputPort.validateRefreshToken(id, rt);
 
         Tokens tokens = jwtProvider.createTokens(id, nickname);
@@ -35,8 +35,8 @@ public class TokenUseCase implements TokenInputPort {
     }
 
     @Override
-    public FetchMeDto.Response fetchMe(TokenPayload tokenPayload) {
-        User user = userOutputPort.loadUser(tokenPayload.userId());
+    public FetchMeDto.Response fetchMe(AuthenticatedUser authenticatedUser) {
+        User user = userOutputPort.loadUser(authenticatedUser.getUserId());
         return new FetchMeDto.Response(user.getUserId(), user.getNickname());
     }
 }

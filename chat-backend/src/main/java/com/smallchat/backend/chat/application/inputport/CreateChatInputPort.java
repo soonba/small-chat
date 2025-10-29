@@ -1,9 +1,9 @@
 package com.smallchat.backend.chat.application.inputport;
 
-import com.smallchat.backend.chat.framework.web.dto.CreateChatDto;
-import com.smallchat.backend.global.utils.TokenPayload;
+import com.smallchat.backend.chat.interfaces.web.dto.CreateChatDto;
+import com.smallchat.backend.global.utils.AuthenticatedUser;
 
 public interface CreateChatInputPort {
 
-    String createChat(TokenPayload tokenPayload, CreateChatDto.Request request);
+    String createChat(AuthenticatedUser tokenPayload, CreateChatDto.Request request);
 }

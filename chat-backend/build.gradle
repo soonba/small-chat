@@ -2,13 +2,13 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
 }
 
 group = 'com.smallchat'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
 }
 
 configurations {
@@ -22,26 +22,30 @@ repositories {
 }
 
 dependencies {
+    // Spring Boot AMQP (RabbitMQ)
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
+    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.2'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
-    // kafka
-    implementation 'org.springframework.kafka:spring-kafka'
-
     // Spring Data MongoDB
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(17)
 }

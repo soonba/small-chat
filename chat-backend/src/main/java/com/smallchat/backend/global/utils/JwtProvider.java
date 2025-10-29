@@ -18,36 +18,35 @@ public class JwtProvider {
 
 
     public Tokens createTokens(String id, String nickname) {
-        String at = createToken(new TokenPayload(TokenType.ACCESS_TOKEN, id, nickname));
-        String rt = createToken(new TokenPayload(TokenType.REFRESH_TOKEN, id, nickname));
+        String at = createToken(TokenType.ACCESS_TOKEN, new AuthenticatedUser(id, nickname));
+        String rt = createToken(TokenType.REFRESH_TOKEN,new AuthenticatedUser(id, nickname));
         return new Tokens(at, rt);
     }
 
-    public String createToken(TokenPayload payload) {
+    public String createToken(TokenType tokenType,AuthenticatedUser payload) {
         return Jwts.builder()
-                .claim("type", payload.tokenType())
-                .claim("userId", payload.userId())
-                .claim("nickname", payload.nickname())
-                .expiration(payload.tokenType().getExpDate())
+                .claim("type", tokenType)
+                .claim("userId", payload.getUserId())
+                .claim("nickname", payload.getNickname())
+                .expiration(tokenType.getExpDate())
                 .signWith(Keys.hmacShaKeyFor(key))
                 .compact();
     }
 
-    public TokenPayload parseFromBearer(String authorization) {
+    public AuthenticatedUser parseFromBearer(String authorization) {
         String accessToken = authorization.replace("Bearer ", "");
         return parseToken(accessToken);
     }
 
-    public TokenPayload parseToken(String token) {
+    public AuthenticatedUser parseToken(String token) {
         Claims payload = Jwts
                 .parser()
                 .verifyWith(Keys.hmacShaKeyFor(key))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        String tokenType = Optional.ofNullable(payload.get("type", String.class)).orElseThrow(RuntimeException::new);
         String userId = Optional.ofNullable(payload.get("userId", String.class)).orElse("");
         String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
-        return new TokenPayload(TokenType.getTokenType(tokenType), userId, nickname);
+        return new AuthenticatedUser(userId, nickname);
     }
 }

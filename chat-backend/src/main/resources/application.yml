@@ -2,8 +2,17 @@ server:
   port: 8080
 
 spring:
-  kafka:
-    bootstrap-servers: localhost:9092
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: auto
+        concurrency: 1
+        max-concurrency: 5
   profiles:
     active: local
   datasource:
@@ -22,32 +31,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/small_chat
-  jackson:
-    time-zone: UTC
 auth:
   key: my-small-chat-applications-jwt-sign-key
 
 client-origin: http://localhost:3000
-
-producers:
-  bootstrap-servers: kafka-1:29092
-  topic1:
-    name: create_chat
-  topic2:
-    name: publish_message
-  topic3:
-    name: join_chat_return
-  topic4:
-    name: leave_chat
-
-consumer:
-  topic1:
-    name: create_chat
-  topic2:
-    name: publish_message
-  topic3:
-    name: join_chat_return
-  topic4:
-    name: leave_chat
-  groupid:
-    name: chat
