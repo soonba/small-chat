@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.domain.repository
+package com.smallchat.backend.user.domain.interfaces
 
 import com.smallchat.backend.user.domain.model.User
 

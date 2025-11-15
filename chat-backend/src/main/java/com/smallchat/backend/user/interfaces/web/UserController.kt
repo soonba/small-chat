@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.framework.web
+package com.smallchat.backend.user.interfaces.web
 
 import com.smallchat.backend.global.framework.web.ApiResponse
 import com.smallchat.backend.global.utils.JwtProvider
@@ -6,7 +6,7 @@ import com.smallchat.backend.user.application.inputport.AuthInputPort
 import com.smallchat.backend.user.application.inputport.TokenInputPort
 import com.smallchat.backend.user.application.inputport.ValidateUserInputPort
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase
-import com.smallchat.backend.user.framework.web.dto.*
+import com.smallchat.backend.user.interfaces.web.dto.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -23,7 +23,6 @@ class UserController(
 
     @PostMapping
     fun join(@RequestBody request: CreateUserDto.Request): CreateUserDto.Response {
-        //todo usecase 개선시 같이 개선
         val (tokens) = createUserUseCase.createUser(request)
         return CreateUserDto.Response(tokens)
     }

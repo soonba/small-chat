@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.framework.database.jpa_adapter;
+package com.smallchat.backend.user.infrastructure.database.jpa_adapter;
 
 import com.smallchat.backend.user.domain.model.ParticipatingChat;
 import com.smallchat.backend.user.domain.model.User;

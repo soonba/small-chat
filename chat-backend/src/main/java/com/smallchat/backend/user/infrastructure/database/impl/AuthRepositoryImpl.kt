@@ -1,8 +1,8 @@
-package com.smallchat.backend.user.framework.database.impl
+package com.smallchat.backend.user.infrastructure.database.impl
 
+import com.smallchat.backend.user.domain.interfaces.AuthRepository
 import com.smallchat.backend.user.domain.model.RefreshToken
-import com.smallchat.backend.user.domain.repository.AuthRepository
-import com.smallchat.backend.user.framework.database.jpa_adapter.RefreshTokenRepository
+import com.smallchat.backend.user.infrastructure.database.jpa_adapter.RefreshTokenRepository
 import org.springframework.stereotype.Repository
 
 @Repository

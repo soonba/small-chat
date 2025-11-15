@@ -1,8 +1,8 @@
-package com.smallchat.backend.user.framework.database.impl
+package com.smallchat.backend.user.infrastructure.database.impl
 
+import com.smallchat.backend.user.domain.interfaces.UserRepository
 import com.smallchat.backend.user.domain.model.User
-import com.smallchat.backend.user.domain.repository.UserRepository
-import com.smallchat.backend.user.framework.database.jpa_adapter.UserJpaRepository
+import com.smallchat.backend.user.infrastructure.database.jpa_adapter.UserJpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
