@@ -7,8 +7,8 @@ import com.smallchat.backend.global.utils.Tokens;
 import com.smallchat.backend.user.application.inputport.TokenInputPort;
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.domain.model.User;
-import com.smallchat.backend.user.framework.web.dto.FetchMeDto;
-import com.smallchat.backend.user.framework.web.dto.RefreshDto;
+import com.smallchat.backend.user.interfaces.web.dto.FetchMeDto;
+import com.smallchat.backend.user.interfaces.web.dto.RefreshDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

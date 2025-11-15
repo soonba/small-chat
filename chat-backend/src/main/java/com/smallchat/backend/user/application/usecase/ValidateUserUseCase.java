@@ -5,7 +5,7 @@ import com.smallchat.backend.user.application.outputport.ParticipatingChatOutput
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.domain.model.ParticipatingChat;
 import com.smallchat.backend.user.domain.model.User;
-import com.smallchat.backend.user.framework.web.dto.CheckUserDuplicationDto;
+import com.smallchat.backend.user.interfaces.web.dto.CheckUserDuplicationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class ValidateUserUseCase implements ValidateUserInputPort {
     public CheckUserDuplicationDto.Response isExistId(String id) {
         return new CheckUserDuplicationDto.Response(userOutputPort.isExistID(id));
     }
-    
+
     @Override
     public void hasReachedMaxChatLimit(String userId) {
         User user = userOutputPort.loadUser(userId);
