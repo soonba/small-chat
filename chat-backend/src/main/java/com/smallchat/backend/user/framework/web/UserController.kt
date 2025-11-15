@@ -1,64 +1,64 @@
-package com.smallchat.backend.user.framework.web;
+package com.smallchat.backend.user.framework.web
+
+import com.smallchat.backend.global.framework.web.dto.ApiResponse
+import com.smallchat.backend.global.utils.JwtProvider
+import com.smallchat.backend.user.application.inputport.AuthInputPort
+import com.smallchat.backend.user.application.inputport.CreateUserInputPort
+import com.smallchat.backend.user.application.inputport.TokenInputPort
+import com.smallchat.backend.user.application.inputport.ValidateUserInputPort
+import com.smallchat.backend.user.framework.web.dto.*
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 
-import com.smallchat.backend.global.framework.web.dto.ApiResponse;
-import com.smallchat.backend.global.utils.AuthenticatedUser;
-import com.smallchat.backend.global.utils.JwtProvider;
-import com.smallchat.backend.user.application.inputport.AuthInputPort;
-import com.smallchat.backend.user.application.inputport.CreateUserInputPort;
-import com.smallchat.backend.user.application.inputport.TokenInputPort;
-import com.smallchat.backend.user.application.inputport.ValidateUserInputPort;
-import com.smallchat.backend.user.framework.web.dto.*;
-import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v2/users")
-public class UserController {
-    private final CreateUserInputPort createUserInputPort;
-    private final TokenInputPort tokenInputPort;
-    private final AuthInputPort authInputPort;
-    private final ValidateUserInputPort validateUserInputPort;
-    private final JwtProvider jwtProvider;
-
-    @PostMapping()
-    public ResponseEntity<ApiResponse<CreateUserDto.Response>> join(@RequestBody CreateUserDto.Request request) {
-        CreateUserDto.Response user = createUserInputPort.createUser(request);
-        return ResponseEntity.ok(new ApiResponse<>(user));
+class UserController(
+    private val createUserInputPort: CreateUserInputPort,
+    private val tokenInputPort: TokenInputPort,
+    private val authInputPort: AuthInputPort,
+    private val validateUserInputPort: ValidateUserInputPort,
+    private val jwtProvider: JwtProvider
+) {
+    @PostMapping
+    fun join(@RequestBody request: CreateUserDto.Request?): ResponseEntity<ApiResponse<CreateUserDto.Response?>?> {
+        val user = createUserInputPort.createUser(request)
+        return ResponseEntity.ok<ApiResponse<CreateUserDto.Response?>?>(ApiResponse<CreateUserDto.Response?>(user))
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginDto.Response>> login(@RequestBody LoginDto.Request request) {
-        LoginDto.Response login = authInputPort.login(request);
-        return ResponseEntity.ok(new ApiResponse<>(login));
+    fun login(@RequestBody request: LoginDto.Request?): ResponseEntity<ApiResponse<LoginDto.Response?>?> {
+        val login = authInputPort.login(request)
+        return ResponseEntity.ok<ApiResponse<LoginDto.Response?>?>(ApiResponse<LoginDto.Response?>(login))
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<ApiResponse<RefreshDto.Response>> refresh(@RequestBody RefreshDto.Request request) {
-        RefreshDto.Response refresh = tokenInputPort.refresh(request);
-        return ResponseEntity.ok(new ApiResponse<>(refresh));
+    fun refresh(@RequestBody request: RefreshDto.Request?): ResponseEntity<ApiResponse<RefreshDto.Response?>?> {
+        val refresh = tokenInputPort.refresh(request)
+        return ResponseEntity.ok<ApiResponse<RefreshDto.Response?>?>(ApiResponse<RefreshDto.Response?>(refresh))
     }
 
     @GetMapping("/{id}/exists")
-    public ResponseEntity<ApiResponse<CheckUserDuplicationDto.Response>> validateIDExists(@PathVariable String id) {
-        CheckUserDuplicationDto.Response existId = validateUserInputPort.isExistId(id);
-        return ResponseEntity.ok(new ApiResponse<>(existId));
+    fun validateIDExists(@PathVariable id: String?): ResponseEntity<ApiResponse<CheckUserDuplicationDto.Response?>?> {
+        val existId = validateUserInputPort.isExistId(id)
+        return ResponseEntity.ok<ApiResponse<CheckUserDuplicationDto.Response?>?>(
+            ApiResponse<CheckUserDuplicationDto.Response?>(
+                existId
+            )
+        )
     }
 
-    @GetMapping()
-    public ResponseEntity<ApiResponse<FetchMeDto.Response>> fetchMe(@RequestHeader("Authorization") String authorization) {
-        AuthenticatedUser authenticatedUser  = jwtProvider.parseFromBearer(authorization);
-        FetchMeDto.Response response = tokenInputPort.fetchMe(authenticatedUser);
-        return ResponseEntity.ok(new ApiResponse<>(response));
+    @GetMapping
+    fun fetchMe(@RequestHeader("Authorization") authorization: String): ResponseEntity<ApiResponse<FetchMeDto.Response?>?> {
+        val authenticatedUser = jwtProvider.parseFromBearer(authorization)
+        val response = tokenInputPort.fetchMe(authenticatedUser)
+        return ResponseEntity.ok<ApiResponse<FetchMeDto.Response?>?>(ApiResponse<FetchMeDto.Response?>(response))
     }
-    
+
     @PostMapping("/logout")
-    public ResponseEntity<ApiResponse> logout(@RequestHeader("Authorization") String authorization) {
-        AuthenticatedUser authenticatedUser = jwtProvider.parseFromBearer(authorization);
-        this.authInputPort.logout(authenticatedUser);
-        return ResponseEntity.ok(new ApiResponse<>(200, "OK"));
+    fun logout(@RequestHeader("Authorization") authorization: String): ResponseEntity<ApiResponse<*>?> {
+        val authenticatedUser = jwtProvider.parseFromBearer(authorization)
+        this.authInputPort.logout(authenticatedUser)
+        return ResponseEntity.ok<ApiResponse<*>?>(ApiResponse<Any?>(200, "OK"))
     }
-
 }
