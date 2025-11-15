@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.framework.jpa_adapter;
+package com.smallchat.backend.user.framework.database.jpa_adapter;
 
 import com.smallchat.backend.user.domain.model.ParticipatingChat;
 import com.smallchat.backend.user.domain.model.User;
@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface ParticipatingChatRepository extends JpaRepository<ParticipatingChat, String> {
 
     List<ParticipatingChat> findByUser(User user);
+
     Optional<ParticipatingChat> findByUserAndChatId(User user, String chatId);
 }

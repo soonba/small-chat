@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.framework.jpa_adapter;
+package com.smallchat.backend.user.framework.database.jpa_adapter;
 
 import com.smallchat.backend.user.application.outputport.ParticipatingChatOutputPort;
 import com.smallchat.backend.user.domain.model.ParticipatingChat;

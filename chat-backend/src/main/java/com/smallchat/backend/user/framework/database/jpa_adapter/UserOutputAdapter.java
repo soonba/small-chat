@@ -1,4 +1,4 @@
-package com.smallchat.backend.user.framework.jpa_adapter;
+package com.smallchat.backend.user.framework.database.jpa_adapter;
 
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
 import com.smallchat.backend.user.domain.model.RefreshToken;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class UserOutputAdapter implements UserOutputPort {
 
-    private final UserRepository userRepository;
+    private final UserJpaRepository userJpaRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
@@ -27,12 +27,12 @@ public class UserOutputAdapter implements UserOutputPort {
 
     @Override
     public boolean isExistID(String loginId) {
-        return userRepository.existsByLoginId(loginId);
+        return userJpaRepository.existsByLoginId(loginId);
     }
 
     @Override
     public User loadUser(String userId) {
-        return userRepository.findById(userId).orElseThrow(RuntimeException::new);
+        return userJpaRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -45,12 +45,12 @@ public class UserOutputAdapter implements UserOutputPort {
 
     @Override
     public User saveUser(User user) {
-        return userRepository.save(user);
+        return userJpaRepository.save(user);
     }
 
     @Override
     public User loadUserById(String loginId) {
-        return userRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
+        return userJpaRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
     }
 
     @Override

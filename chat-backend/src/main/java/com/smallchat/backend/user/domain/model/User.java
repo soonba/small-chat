@@ -3,10 +3,8 @@ package com.smallchat.backend.user.domain.model;
 import com.smallchat.backend.global.framework.jpa.BaseTime;
 import com.smallchat.backend.user.domain.model.vo.Password;
 import jakarta.persistence.*;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @NoArgsConstructor
 @Table(name = "tb_user")
 @Entity
@@ -33,5 +31,21 @@ public class User extends BaseTime {
 
     public static User of(String nickname, String loginId, Password password) {
         return new User(nickname, loginId, password);
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public Password getPassword() {
+        return password;
     }
 }

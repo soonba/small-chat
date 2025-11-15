@@ -1,11 +1,8 @@
-package com.smallchat.backend.user.framework.web.dto;
+package com.smallchat.backend.user.framework.web.dto
 
-import com.smallchat.backend.global.utils.Tokens;
+import com.smallchat.backend.global.utils.Tokens
 
-public class CreateUserDto {
-    public record Request(String id, String nickname, String password) {
-    }
-
-    public record Response(Tokens tokens) {
-    }
+class CreateUserDto {
+    data class Response(val tokens: Tokens)
+    data class Request(val id: String, val nickname: String, val password: String)
 }
