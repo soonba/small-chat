@@ -1,6 +1,6 @@
 package com.smallchat.backend.user.framework.web
 
-import com.smallchat.backend.global.framework.web.dto.ApiResponse
+import com.smallchat.backend.global.framework.web.ApiResponse
 import com.smallchat.backend.global.utils.JwtProvider
 import com.smallchat.backend.user.application.inputport.AuthInputPort
 import com.smallchat.backend.user.application.inputport.CreateUserInputPort
@@ -21,15 +21,15 @@ class UserController(
     private val jwtProvider: JwtProvider
 ) {
     @PostMapping
-    fun join(@RequestBody request: CreateUserDto.Request?): ResponseEntity<ApiResponse<CreateUserDto.Response?>?> {
+    fun join(@RequestBody request: CreateUserDto.Request?): CreateUserDto.Response {
         val user = createUserInputPort.createUser(request)
-        return ResponseEntity.ok<ApiResponse<CreateUserDto.Response?>?>(ApiResponse<CreateUserDto.Response?>(user))
+        return user
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginDto.Request?): ResponseEntity<ApiResponse<LoginDto.Response?>?> {
+    fun login(@RequestBody request: LoginDto.Request?): LoginDto.Response {
         val login = authInputPort.login(request)
-        return ResponseEntity.ok<ApiResponse<LoginDto.Response?>?>(ApiResponse<LoginDto.Response?>(login))
+        return login
     }
 
     @PostMapping("/refresh")

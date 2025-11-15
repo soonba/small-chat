@@ -1,5 +1,6 @@
-package com.smallchat.backend.global.framework.web.dto;
+package com.smallchat.backend.global.framework.web;
 
+@Deprecated
 public class ApiResponse<T> {
     private final int statusCode;
     private final String message;

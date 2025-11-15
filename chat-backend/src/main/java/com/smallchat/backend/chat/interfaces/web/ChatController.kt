@@ -5,7 +5,7 @@ import com.smallchat.backend.chat.application.inputport.JoinChatInputPort
 import com.smallchat.backend.chat.application.inputport.LeaveChatInputPort
 import com.smallchat.backend.chat.application.inputport.ParticipatingChatsInputPort
 import com.smallchat.backend.chat.interfaces.web.dto.*
-import com.smallchat.backend.global.framework.web.dto.ApiResponse
+import com.smallchat.backend.global.framework.web.ApiResponse
 import com.smallchat.backend.global.utils.JwtProvider
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

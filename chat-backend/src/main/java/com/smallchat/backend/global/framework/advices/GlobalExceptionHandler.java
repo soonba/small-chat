@@ -1,6 +1,6 @@
-package com.smallchat.backend.global.framework.exception;
+package com.smallchat.backend.global.framework.advices;
 
-import com.smallchat.backend.global.framework.web.dto.ApiResponse;
+import com.smallchat.backend.global.framework.web.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
