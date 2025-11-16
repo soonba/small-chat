@@ -23,7 +23,7 @@ jobs:
         working-directory: chat-backend
 
       - name: Build with Gradle
-        run: ./gradlew clean build -x
+        run: ./gradlew clean build -x test
         working-directory: chat-backend
 
       - name: Set up Docker Buildx
