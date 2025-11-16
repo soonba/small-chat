@@ -31,6 +31,6 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/small_chat
 auth:
-  key: my-small-chat-applications-jwt-sign-key
+  key: my-small-chat-applications-jwt-sign-key-2
 
 client-origin: http://localhost:3000
