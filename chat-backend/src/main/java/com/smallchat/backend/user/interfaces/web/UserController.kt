@@ -6,6 +6,7 @@ import com.smallchat.backend.user.application.inputport.AuthInputPort
 import com.smallchat.backend.user.application.inputport.TokenInputPort
 import com.smallchat.backend.user.application.inputport.ValidateUserInputPort
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase
+import com.smallchat.backend.user.application.usecase.LoginUseCase
 import com.smallchat.backend.user.interfaces.web.dto.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v2/users")
 class UserController(
     private val createUserUseCase: CreateUserUseCase,
+    private val loginUseCase: LoginUseCase,
     private val tokenInputPort: TokenInputPort,
     private val authInputPort: AuthInputPort,
     private val validateUserInputPort: ValidateUserInputPort,
@@ -23,14 +25,13 @@ class UserController(
 
     @PostMapping
     fun join(@RequestBody request: CreateUserDto.Request): CreateUserDto.Response {
-        val (tokens) = createUserUseCase.createUser(request)
+        val (tokens) = createUserUseCase.execute(request)
         return CreateUserDto.Response(tokens)
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginDto.Request?): LoginDto.Response {
-        val login = authInputPort.login(request)
-        return login
+    fun login(@RequestBody request: LoginDto.Request): LoginDto.Response {
+        return loginUseCase.execute(request)
     }
 
     @PostMapping("/refresh")

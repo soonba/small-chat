@@ -1,12 +1,8 @@
-package com.smallchat.backend.user.interfaces.web.dto;
+package com.smallchat.backend.user.interfaces.web.dto
 
+import com.smallchat.backend.global.utils.Tokens
 
-import com.smallchat.backend.global.utils.Tokens;
-
-public class LoginDto {
-    public record Request(String id, String password) {
-    }
-
-    public record Response(Tokens tokens) {
-    }
+class LoginDto {
+    data class Request(val id: String, val password: String)
+    data class Response(val tokens: Tokens)
 }

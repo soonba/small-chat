@@ -18,7 +18,7 @@ class CreateUserUseCase(
     private val passwordEncoder: BcryptPasswordEncoder,
 ) {
     @Transactional
-    fun createUser(req: CreateUserDto.Request): CreateUserDto.Response {
+    fun execute(req: CreateUserDto.Request): CreateUserDto.Response {
         val (id, nickname, password) = req
         val hashPwStr = passwordEncoder.encode(password)
         val hashPw = Password(presentPassword = hashPwStr)
