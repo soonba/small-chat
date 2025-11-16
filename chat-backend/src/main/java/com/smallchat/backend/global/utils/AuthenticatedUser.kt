@@ -1,6 +1,7 @@
 package com.smallchat.backend.global.utils
 
-data class AuthenticatedUser (
+data class AuthenticatedUser(
     val userId: String,
     val nickname: String,
+    val tokenType: TokenType,
 )

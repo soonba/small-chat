@@ -11,18 +11,18 @@ import org.springframework.stereotype.Repository;
 public class UserOutputAdapter implements UserOutputPort {
 
     private final UserJpaRepository userJpaRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenJpaRepository refreshTokenJpaRepository;
 
     @Override
     public void validateRefreshToken(String id, String rt) {
-        RefreshToken refreshToken = refreshTokenRepository.findById(id).orElseThrow(RuntimeException::new);
+        RefreshToken refreshToken = refreshTokenJpaRepository.findById(id).orElseThrow(RuntimeException::new);
         refreshToken.verifying(rt);
     }
 
     @Override
     public void saveRefreshToken(String id, String rt) {
         RefreshToken refreshToken = new RefreshToken(id, rt);
-        refreshTokenRepository.save(refreshToken);
+        refreshTokenJpaRepository.save(refreshToken);
     }
 
     @Override
@@ -55,6 +55,6 @@ public class UserOutputAdapter implements UserOutputPort {
 
     @Override
     public void deleteRefreshToken(String userId) {
-        refreshTokenRepository.deleteById(userId);
+        refreshTokenJpaRepository.deleteById(userId);
     }
 }

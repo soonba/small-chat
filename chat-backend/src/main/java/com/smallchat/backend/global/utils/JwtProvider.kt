@@ -1,52 +1,57 @@
-package com.smallchat.backend.global.utils;
+package com.smallchat.backend.global.utils
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 
-import java.util.Optional;
-
+/**
+ * jws sign key가 필요한 메서드 노출
+ * createTokens
+ * parseFromBearer
+ */
 @Component
-public class JwtProvider {
-    private final byte[] key;
+class JwtProvider(
+    @param:Value("\${auth.key}")
+    private val rawKey: ByteArray
+) {
 
-    public JwtProvider(@Value("${auth.key}") byte[] key) {
-        this.key = key;
+    private val key = Keys.hmacShaKeyFor(rawKey)
+    private val parser = Jwts.parser().verifyWith(key).build()
+
+    fun createTokens(id: String, nickname: String): TokensKt {
+        val at = buildToken(AuthenticatedUser(id, nickname, TokenType.ACCESS_TOKEN))
+        val rt = buildToken(AuthenticatedUser(id, nickname, TokenType.REFRESH_TOKEN))
+        return TokensKt(at, rt)
     }
 
-
-    public Tokens createTokens(String id, String nickname) {
-        String at = createToken(TokenType.ACCESS_TOKEN, new AuthenticatedUser(id, nickname));
-        String rt = createToken(TokenType.REFRESH_TOKEN,new AuthenticatedUser(id, nickname));
-        return new Tokens(at, rt);
-    }
-
-    public String createToken(TokenType tokenType,AuthenticatedUser payload) {
+    private fun buildToken(payload: AuthenticatedUser): String {
+        val (userId, nickname, tokenType) = payload
         return Jwts.builder()
-                .claim("type", tokenType)
-                .claim("userId", payload.getUserId())
-                .claim("nickname", payload.getNickname())
-                .expiration(tokenType.getExpDate())
-                .signWith(Keys.hmacShaKeyFor(key))
-                .compact();
+            .claim("type", tokenType)
+            .claim("userId", userId)
+            .claim("nickname", nickname)
+            .expiration(tokenType.expDate)
+            .signWith(key)
+            .compact()
     }
 
-    public AuthenticatedUser parseFromBearer(String authorization) {
-        String accessToken = authorization.replace("Bearer ", "");
-        return parseToken(accessToken);
+    fun parseFromBearer(authHeader: String): AuthenticatedUser {
+        val accessToken = authHeader.substringAfter("Bearer ").trim()
+        return parseToken(accessToken)
     }
 
-    public AuthenticatedUser parseToken(String token) {
-        Claims payload = Jwts
-                .parser()
-                .verifyWith(Keys.hmacShaKeyFor(key))
-                .build()
+    fun parseToken(token: String): AuthenticatedUser {
+        try {
+            val payload = parser
                 .parseSignedClaims(token)
-                .getPayload();
-        String userId = Optional.ofNullable(payload.get("userId", String.class)).orElse("");
-        String nickname = Optional.ofNullable(payload.get("nickname", String.class)).orElse("");
-        return new AuthenticatedUser(userId, nickname);
+                .getPayload()
+            val userId = payload["userId"] as String
+            val nickname = payload["nickname"] as String
+            val type = payload["type"] as TokenType
+            return AuthenticatedUser(userId, nickname, type)
+        } catch (error: Error) {
+            throw RuntimeException("parse token failed")
+        }
     }
 }
