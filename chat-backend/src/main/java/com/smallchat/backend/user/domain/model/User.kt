@@ -1,51 +1,29 @@
-package com.smallchat.backend.user.domain.model;
+package com.smallchat.backend.user.domain.model
 
-import com.smallchat.backend.global.framework.jpa.BaseTime;
-import com.smallchat.backend.user.domain.model.vo.Password;
-import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
+import com.smallchat.backend.global.framework.jpa.BaseTime
+import com.smallchat.backend.user.domain.model.vo.Password
+import jakarta.persistence.*
 
-@NoArgsConstructor
 @Table(name = "tb_user")
 @Entity
-public class User extends BaseTime {
+class User(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id", nullable = false)
-    private String userId;
+    val userId: String? = null,
 
     @Column(name = "nickname", nullable = false)
-    private String nickname;
+    val nickname: String = "",
 
     @Column(name = "login_id", nullable = false)
-    private String loginId;
+    val loginId: String = "",
 
     @Embedded
-    private Password password;
+    val password: Password = Password()
 
-    public User(String nickname, String loginId, Password password) {
-        this.nickname = nickname;
-        this.loginId = loginId;
-        this.password = password;
-    }
+) : BaseTime() {
+    
+    val userIdOrThrow: String
+        get() = userId ?: throw IllegalStateException("User ID is not assigned yet.")
 
-    public static User of(String nickname, String loginId, Password password) {
-        return new User(nickname, loginId, password);
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public String getLoginId() {
-        return loginId;
-    }
-
-    public Password getPassword() {
-        return password;
-    }
 }

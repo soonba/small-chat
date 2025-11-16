@@ -22,9 +22,9 @@ class CreateUserUseCase(
         val (id, nickname, password) = req
         val hashPwStr = passwordEncoder.encode(password)
         val hashPw = Password(presentPassword = hashPwStr)
-        val savedUser = userRepository.save(User.of(nickname, id, hashPw))
-        val tokens = jwtProvider.createTokens(savedUser.userId, savedUser.nickname)
-        authRepository.saveRefresh(savedUser.userId, tokens.refreshToken)
+        val savedUser = userRepository.save(User(nickname = nickname, loginId = id, password = hashPw))
+        val tokens = jwtProvider.createTokens(savedUser.userIdOrThrow, savedUser.nickname)
+        authRepository.saveRefresh(savedUser.userIdOrThrow, tokens.refreshToken)
         return CreateUserDto.Response(tokens)
     }
 }
