@@ -1,6 +1,5 @@
-package com.smallchat.backend.user.interfaces.web.dto;
+package com.smallchat.backend.user.interfaces.web.dto
 
-public class FetchMeDto {
-    public record Response(String userId, String nickname) {
-    }
+class FetchMeDto {
+    data class Response(val userId: String, val nickname: String)
 }

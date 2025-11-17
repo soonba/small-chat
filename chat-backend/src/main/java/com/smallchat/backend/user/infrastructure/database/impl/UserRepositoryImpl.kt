@@ -14,4 +14,10 @@ class UserRepositoryImpl(private val userJpaRepository: UserJpaRepository) : Use
     override fun findByLoginIdOrThrow(loginId: String): User {
         return userJpaRepository.findByLoginId(loginId).orElseThrow { RuntimeException("not found user") }
     }
+
+    override fun isExistByLoginId(loginId: String): Boolean {
+        return userJpaRepository.existsByLoginId(loginId)
+    }
+
+
 }

@@ -1,7 +1,7 @@
 package com.smallchat.backend.user.application.usecase
 
 import com.smallchat.backend.global.utils.JwtProvider
-import com.smallchat.backend.global.utils.TokensKt
+import com.smallchat.backend.global.utils.Tokens
 import com.smallchat.backend.user.domain.interfaces.RefreshRepository
 import com.smallchat.backend.user.domain.interfaces.UserRepository
 import com.smallchat.backend.user.domain.model.User
@@ -20,7 +20,7 @@ class LoginUseCase(
         val (id, password) = request
         val user: User = userRepository.findByLoginIdOrThrow(id)
         user.password.verifying(password, passwordEncoder)
-        val tokens: TokensKt = jwtProvider.createTokens(user.userIdOrThrow, user.nickname)
+        val tokens: Tokens = jwtProvider.createTokens(user.userIdOrThrow, user.nickname)
         refreshRepository.save(user.userIdOrThrow, tokens.refreshToken)
         return LoginDto.Response(tokens)
     }

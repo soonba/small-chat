@@ -19,10 +19,10 @@ class JwtProvider(
     private val key = Keys.hmacShaKeyFor(rawKey)
     private val parser = Jwts.parser().verifyWith(key).build()
 
-    fun createTokens(id: String, nickname: String): TokensKt {
+    fun createTokens(id: String, nickname: String): Tokens {
         val at = buildToken(AuthenticatedUser(id, nickname, TokenType.ACCESS_TOKEN))
         val rt = buildToken(AuthenticatedUser(id, nickname, TokenType.REFRESH_TOKEN))
-        return TokensKt(at, rt)
+        return Tokens(at, rt)
     }
 
     private fun buildToken(payload: AuthenticatedUser): String {
@@ -48,8 +48,8 @@ class JwtProvider(
                 .getPayload()
             val userId = payload["userId"] as String
             val nickname = payload["nickname"] as String
-            val type = payload["type"] as TokenType
-            return AuthenticatedUser(userId, nickname, type)
+            val type = payload["type"] as String
+            return AuthenticatedUser(userId, nickname, enumValueOf<TokenType>(type))
         } catch (error: Error) {
             throw RuntimeException("parse token failed")
         }

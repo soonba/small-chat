@@ -5,15 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.smallchat.backend.global.utils.JwtProvider
 import com.smallchat.backend.user.domain.interfaces.RefreshRepository
 import com.smallchat.backend.user.domain.interfaces.UserRepository
+import com.smallchat.backend.user.domain.model.User
+import com.smallchat.backend.user.domain.model.vo.Password
 import com.smallchat.backend.user.interfaces.web.dto.CreateUserDto
 import com.smallchat.backend.user.interfaces.web.dto.LoginDto
 import com.smallchat.backend.user.interfaces.web.dto.RefreshDto
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
 @SpringBootTest
@@ -108,6 +112,10 @@ class UserControllerTest(
         val refreshReq = RefreshDto.Request(refreshToken)
         val refreshBody = objectMapper.writeValueAsString(refreshReq)
 
+        println(refreshToken)
+        println(refreshReq)
+        println(refreshBody)
+
         mockMvc.post("/api/v2/users/refresh") {
             contentType = MediaType.APPLICATION_JSON
             content = refreshBody
@@ -117,5 +125,90 @@ class UserControllerTest(
                 jsonPath("$.data.tokens.accessToken") { exists() }
                 jsonPath("$.data.tokens.refreshToken") { exists() }
             }
+    }
+
+
+    @Test
+    fun `아이디 중복체크 - 이미 존재`() {
+        // given
+        val user = userRepository.save(
+            User(
+                loginId = "dupUser",
+                nickname = "Duplicated",
+                password = Password("password123")
+            )
+        )
+
+        // when & then
+        mockMvc.get("/api/v2/users/${user.loginId}/exists")
+            .andExpect {
+                status { isOk() }
+                jsonPath("$.data.used") { value(true) }
+            }
+    }
+
+    @Test
+    fun `아이디 중복체크 - 존재하지 않음`() {
+        mockMvc.get("/api/v2/users/notExistUser/exists")
+            .andExpect {
+                status { isOk() }
+                jsonPath("$.data.used") { value(false) }
+            }
+    }
+
+    @Test
+    fun `내 정보 조회 성공`() {
+        // given: 테스트용 유저 생성
+        val saved = userRepository.save(
+            User(
+                loginId = "meUser",
+                nickname = "나유저",
+                password = Password("password123")
+            )
+        )
+
+        // JWT 생성
+        val accessToken = jwtProvider.createTokens(saved.userId!!, saved.nickname).accessToken
+
+        // when & then
+        mockMvc.get("/api/v2/users") {
+            header("Authorization", "Bearer $accessToken")
+        }.andExpect {
+            status { isOk() }
+            jsonPath("$.data.userId") { value(saved.userId) }
+            jsonPath("$.data.nickname") { value(saved.nickname) }
+        }
+    }
+
+    @Test
+    fun `로그아웃 성공`() {
+        // given: 유저 + refresh token 생성
+        val saved = userRepository.save(
+            User(
+                loginId = "logoutUser",
+                nickname = "로그아웃유저",
+                password = Password("password123")
+            )
+        )
+
+        // JWT 생성
+        val id = saved.userId!!
+        requireNotNull(id) { "UserId must not be null" }
+        val createTokens = jwtProvider.createTokens(id, saved.nickname)
+        val refreshToken = createTokens.refreshToken
+        val accessToken = createTokens.accessToken
+
+        refreshRepository.save(id, refreshToken)
+
+        // when
+        mockMvc.post("/api/v2/users/logout") {
+            header("Authorization", "Bearer $accessToken")
+        }.andExpect {
+            status { isOk() }
+        }
+
+        assertThrows<RuntimeException> {
+            refreshRepository.findByIdOrElseThrow(id)
+        }
     }
 }

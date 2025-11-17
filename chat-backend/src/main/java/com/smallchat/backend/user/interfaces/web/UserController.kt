@@ -1,18 +1,13 @@
 package com.smallchat.backend.user.interfaces.web
 
-import com.smallchat.backend.global.framework.web.ApiResponse
-import com.smallchat.backend.global.utils.JwtProvider
-import com.smallchat.backend.user.application.inputport.AuthInputPort
-import com.smallchat.backend.user.application.inputport.TokenInputPort
+import com.smallchat.backend.global.framework.web.CurrentUser
+import com.smallchat.backend.global.utils.AuthenticatedUser
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase
 import com.smallchat.backend.user.application.usecase.LoginUseCase
 import com.smallchat.backend.user.application.usecase.RefreshTokenUseCase
+import com.smallchat.backend.user.domain.interfaces.RefreshRepository
 import com.smallchat.backend.user.domain.interfaces.UserRepository
-import com.smallchat.backend.user.interfaces.web.dto.CreateUserDto
-import com.smallchat.backend.user.interfaces.web.dto.FetchMeDto
-import com.smallchat.backend.user.interfaces.web.dto.LoginDto
-import com.smallchat.backend.user.interfaces.web.dto.RefreshDto
-import org.springframework.http.ResponseEntity
+import com.smallchat.backend.user.interfaces.web.dto.*
 import org.springframework.web.bind.annotation.*
 
 
@@ -22,11 +17,9 @@ class UserController(
     private val createUserUseCase: CreateUserUseCase,
     private val loginUseCase: LoginUseCase,
     private val refreshTokenUseCase: RefreshTokenUseCase,
-    private val tokenInputPort: TokenInputPort,
-    private val authInputPort: AuthInputPort,
 
     private val userRepository: UserRepository,
-    private val jwtProvider: JwtProvider
+    private val refreshRepository: RefreshRepository,
 ) {
 
     @PostMapping
@@ -44,28 +37,20 @@ class UserController(
         return refreshTokenUseCase.execute(request)
     }
 
-//    @GetMapping("/{id}/exists")
-//    fun validateIDExists(@PathVariable id: String?): ResponseEntity<ApiResponse<CheckUserDuplicationDto.Response?>?> {
-//        //todo repository
-//        val existId = userRepository.findByLoginIdOrThrow()
-//        return ResponseEntity.ok<ApiResponse<CheckUserDuplicationDto.Response?>?>(
-//            ApiResponse<CheckUserDuplicationDto.Response?>(
-//                existId
-//            )
-//        )
-//    }
+    @GetMapping("/{id}/exists")
+    fun validateIDExists(@PathVariable id: String): CheckUserDuplicationDto.Response {
+        val isUsed = userRepository.isExistByLoginId(id)
+        return CheckUserDuplicationDto.Response(isUsed)
+    }
 
     @GetMapping
-    fun fetchMe(@RequestHeader("Authorization") authorization: String): ResponseEntity<ApiResponse<FetchMeDto.Response?>?> {
-        val authenticatedUser = jwtProvider.parseFromBearer(authorization)
-        val response = tokenInputPort.fetchMe(authenticatedUser)
-        return ResponseEntity.ok<ApiResponse<FetchMeDto.Response?>?>(ApiResponse<FetchMeDto.Response?>(response))
+    fun fetchMe(@CurrentUser authUser: AuthenticatedUser): FetchMeDto.Response {
+        val (userId, nickname) = authUser
+        return FetchMeDto.Response(userId, nickname)
     }
 
     @PostMapping("/logout")
-    fun logout(@RequestHeader("Authorization") authorization: String): ResponseEntity<ApiResponse<*>?> {
-        val authenticatedUser = jwtProvider.parseFromBearer(authorization)
-        this.authInputPort.logout(authenticatedUser)
-        return ResponseEntity.ok<ApiResponse<*>?>(ApiResponse<Any?>(200, "OK"))
+    fun logout(@CurrentUser authUser: AuthenticatedUser): Unit {
+        refreshRepository.deleteById(authUser.userId)
     }
 }

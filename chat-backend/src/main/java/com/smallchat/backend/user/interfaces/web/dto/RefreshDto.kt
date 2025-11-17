@@ -1,9 +1,12 @@
 package com.smallchat.backend.user.interfaces.web.dto
 
-import com.smallchat.backend.global.utils.TokensKt
+import com.smallchat.backend.global.utils.Tokens
 
 
 class RefreshDto {
-    data class Request(val refreshToken: String)
-    data class Response(val tokens: TokensKt)
+    class Request(val refreshToken: String) {
+        constructor() : this("")
+    }
+
+    data class Response(val tokens: Tokens)
 }

@@ -1,6 +1,5 @@
-package com.smallchat.backend.user.interfaces.web.dto;
+package com.smallchat.backend.user.interfaces.web.dto
 
-public class CheckUserDuplicationDto {
-    public record Response(Boolean isUsed) {
-    }
+class CheckUserDuplicationDto {
+    data class Response(val isUsed: Boolean)
 }

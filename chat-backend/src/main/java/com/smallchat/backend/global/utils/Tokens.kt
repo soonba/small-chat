@@ -1,5 +1,3 @@
-package com.smallchat.backend.global.utils;
+package com.smallchat.backend.global.utils
 
-@Deprecated
-public record Tokens(String accessToken, String refreshToken) {
-}
+data class Tokens(val accessToken: String, val refreshToken: String)
