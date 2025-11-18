@@ -18,7 +18,6 @@ public class ValidateUserUseCase implements ValidateUserInputPort {
     private final UserOutputPort userOutputPort;
     private final ParticipatingChatOutputPort participatingChatOutputPort;
 
-    @Override
     public CheckUserDuplicationDto.Response isExistId(String id) {
         return new CheckUserDuplicationDto.Response(userOutputPort.isExistID(id));
     }

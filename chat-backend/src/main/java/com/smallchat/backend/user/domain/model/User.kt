@@ -4,7 +4,7 @@ import com.smallchat.backend.global.framework.jpa.BaseTime
 import com.smallchat.backend.user.domain.model.vo.Password
 import jakarta.persistence.*
 
-@Table(name = "tb_user")
+@Table(name = "users")
 @Entity
 class User(
     @Id
@@ -22,7 +22,7 @@ class User(
     val password: Password = Password()
 
 ) : BaseTime() {
-    
+
     val userIdOrThrow: String
         get() = userId ?: throw IllegalStateException("User ID is not assigned yet.")
 

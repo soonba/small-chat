@@ -13,13 +13,11 @@ public class UserOutputAdapter implements UserOutputPort {
     private final UserJpaRepository userJpaRepository;
     private final RefreshTokenJpaRepository refreshTokenJpaRepository;
 
-    @Override
     public void validateRefreshToken(String id, String rt) {
         RefreshToken refreshToken = refreshTokenJpaRepository.findById(id).orElseThrow(RuntimeException::new);
         refreshToken.verifying(rt);
     }
 
-    @Override
     public void saveRefreshToken(String id, String rt) {
         RefreshToken refreshToken = new RefreshToken(id, rt);
         refreshTokenJpaRepository.save(refreshToken);
@@ -35,7 +33,6 @@ public class UserOutputAdapter implements UserOutputPort {
         return userJpaRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 
-    @Override
     public User createUser(User user) {
         if (isExistID(user.getLoginId())) {
             throw new RuntimeException("이미 존재하는 아이디");
@@ -48,12 +45,10 @@ public class UserOutputAdapter implements UserOutputPort {
         return userJpaRepository.save(user);
     }
 
-    @Override
     public User loadUserById(String loginId) {
         return userJpaRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
     }
 
-    @Override
     public void deleteRefreshToken(String userId) {
         refreshTokenJpaRepository.deleteById(userId);
     }

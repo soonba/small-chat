@@ -1,84 +1,66 @@
 package com.smallchat.backend.chat.interfaces.web
 
-import com.smallchat.backend.chat.application.inputport.CreateChatInputPort
 import com.smallchat.backend.chat.application.inputport.JoinChatInputPort
 import com.smallchat.backend.chat.application.inputport.LeaveChatInputPort
 import com.smallchat.backend.chat.application.inputport.ParticipatingChatsInputPort
+import com.smallchat.backend.chat.application.usecase.CreateChatUseCase
 import com.smallchat.backend.chat.interfaces.web.dto.*
-import com.smallchat.backend.global.framework.web.ApiResponse
+import com.smallchat.backend.global.framework.web.CurrentUser
+import com.smallchat.backend.global.utils.AuthenticatedUser
 import com.smallchat.backend.global.utils.JwtProvider
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v2/chats")
 class ChatController(
-    private val createChatUseCase: CreateChatInputPort,
+    private val createChatUseCase: CreateChatUseCase,
     private val joinChatUseCase: JoinChatInputPort,
     private val leaveChatUseCase: LeaveChatInputPort,
     private val participatingChatsUseCase: ParticipatingChatsInputPort,
     private val jwtProvider: JwtProvider,
 ) {
-
-    // ====== 헬퍼 메서드 ======
-    private fun extractUserId(authorization: String): String =
-        jwtProvider.parseFromBearer(authorization).userId
-
-    // ====== 엔드포인트 ======
-
-    @GetMapping("/mytest")
-    fun test() {
-        println("테스트 엔드포인트 호출됨")
-    }
-
     @PostMapping
     fun createChat(
-        @RequestHeader("Authorization") authorization: String,
+        @CurrentUser authenticatedUser: AuthenticatedUser,
         @RequestBody request: CreateChatDto.Request
-    ): ResponseEntity<ApiResponse<CreateChatDto.Response>> {
-        val payload = jwtProvider.parseFromBearer(authorization)
-        val chatId = createChatUseCase.createChat(payload, request)
-        return ResponseEntity
-            .status(201)
-            .body(ApiResponse(CreateChatDto.Response(chatId)))
+    ): CreateChatDto.Response {
+        val chatId = createChatUseCase.createChat(authenticatedUser, request)
+        return CreateChatDto.Response(chatId)
     }
 
     @PostMapping("/participants")
     fun joinChat(
-        @RequestHeader("Authorization") authorization: String,
+        @CurrentUser authenticatedUser: AuthenticatedUser,
         @RequestBody request: JoinChatDto.Request
-    ): ResponseEntity<ApiResponse<JoinChatDto.Response>> {
-        val userId = extractUserId(authorization)
+    ): JoinChatDto.Response {
+        val userId = authenticatedUser.userId
         joinChatUseCase.join(userId, request.chatId)
-        return ResponseEntity.ok(ApiResponse(JoinChatDto.Response(request.chatId)))
+        return JoinChatDto.Response(request.chatId)
     }
 
     @DeleteMapping
     fun leaveChat(
-        @RequestHeader("Authorization") authorization: String,
+        @CurrentUser authenticatedUser: AuthenticatedUser,
         @RequestBody request: LeaveChatDto.Request
-    ): ResponseEntity<ApiResponse<Unit>> {
-        val userId = extractUserId(authorization)
+    ): Unit {
+        val userId = authenticatedUser.userId
         leaveChatUseCase.leave(userId, request.chatId)
-        return ResponseEntity.ok(ApiResponse(200, "OK"))
+        return
     }
 
     @GetMapping
     fun getParticipatingChats(
-        @RequestHeader("Authorization") authorization: String
-    ): ResponseEntity<ApiResponse<ChatBasicInfoListDto.Response>> {
-        val userId = extractUserId(authorization)
-        val response = participatingChatsUseCase.getChatList(userId)
-        return ResponseEntity.ok(ApiResponse(response))
+        @CurrentUser authenticatedUser: AuthenticatedUser,
+    ): ChatBasicInfoListDto.Response {
+        val userId = authenticatedUser.userId
+        return participatingChatsUseCase.getChatList(userId)
     }
 
     @GetMapping("/{chatId}")
     fun getChatDetail(
-        @RequestHeader("Authorization") authorization: String,
+        @CurrentUser authenticatedUser: AuthenticatedUser,
         @PathVariable chatId: String
-    ): ResponseEntity<ApiResponse<ChatDetail.Response>> {
-        jwtProvider.parseFromBearer(authorization) // 단순 인증 검증용
-        val response = participatingChatsUseCase.getChatDetail(chatId)
-        return ResponseEntity.ok(ApiResponse(response))
+    ): ChatDetail.Response {
+        return participatingChatsUseCase.getChatDetail(chatId)
     }
 }

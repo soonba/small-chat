@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.smallchat.backend.chat.framework.mongodb_adapter.MessageOutputAdapter.MESSAGE_PAGE_LIMIT;
+import static com.smallchat.backend.chat.infrastructure.mongodb_adapter.MessageOutputAdapter.MESSAGE_PAGE_LIMIT;
 
 @Service
 @RequiredArgsConstructor

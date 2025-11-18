@@ -1,67 +1,52 @@
-package com.smallchat.backend.chat.domain.model;
+package com.smallchat.backend.chat.domain.model
 
-import com.smallchat.backend.chat.domain.model.vo.Message;
-import com.smallchat.backend.chat.domain.model.vo.Participant;
-import com.smallchat.backend.chat.interfaces.web.dto.ChatBasicInfo;
-import com.smallchat.backend.global.framework.jpa.BaseTime;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.smallchat.backend.chat.domain.model.vo.Message
+import com.smallchat.backend.chat.interfaces.web.dto.ChatBasicInfo
+import com.smallchat.backend.global.framework.jpa.BaseTime
+import jakarta.persistence.*
+import java.time.ZonedDateTime
 
-import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@Table(name = "tb_chat")
 @Entity
-public class Chat extends BaseTime {
+@Table(name = "chats")
+class Chat(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "chat_id", nullable = false)
-    private String chatId;
-
-    @Column(name = "owner_id", nullable = false)
-    private String ownerId;
+    @Column(name = "id", nullable = false)
+    var id: String? = null,
 
     @Column(name = "name", nullable = false)
-    private String name;
+    val name: String
+) : BaseTime() {
 
-    @Embedded
-    private Participants participants;
+    val chatIdOrThrow: String
+        get() = id ?: throw IllegalStateException("Chat ID is not assigned yet.")
 
-    public Chat(String ownerId, String name, Participants participants) {
-        this.ownerId = ownerId;
-        this.name = name;
-        this.participants = participants;
+    fun addParticipant(userId: String?): Chat {
+//        if (participants.isFull()) {
+//            throw new RuntimeException("정원이 다 찼습니다.");
+//        }
+//        participants.addParticipant(Participant.of(userId));
+        return this
     }
 
-    public static Chat of(String ownerId, String name) {
-        return new Chat(ownerId, name, Participants.init(ownerId));
+    fun removeParticipant(userId: String?): Chat {
+//        participants.removeParticipant(Participant.of(userId));
+        return this
     }
 
-    public Chat addParticipant(String userId) {
-        if (participants.isFull()) {
-            throw new RuntimeException("정원이 다 찼습니다.");
-        }
-        participants.addParticipant(Participant.of(userId));
-        return this;
+    fun toChatBasicInfo(chatList: MutableList<Message?>?): ChatBasicInfo {
+//        Message chat = chatList.stream().filter(el -> el.getChatId().equals(this.chatId)).findFirst().orElse(Message.notFoundMessage());
+//        return new ChatBasicInfo(getChatId(), getName(), chat.getMessage(), chat.getCreatedAt());
+        //todo
+        return ChatBasicInfo("", "", "", ZonedDateTime.now())
     }
 
-    public Chat removeParticipant(String userId) {
-        participants.removeParticipant(Participant.of(userId));
-        return this;
-    }
+    val isEmptyChat: Boolean
+        get() = true
+    //        return participants.isEmpty();
 
-    public ChatBasicInfo toChatBasicInfo(List<Message> chatList) {
-        Message chat = chatList.stream().filter(el -> el.getChatId().equals(this.chatId)).findFirst().orElse(Message.notFoundMessage());
-        return new ChatBasicInfo(getChatId(), getName(), chat.getMessage(), chat.getCreatedAt());
-    }
-
-    public boolean isEmptyChat() {
-        return participants.isEmpty();
-    }
-
-    public void validateUserId(String userId) {
-        participants.validateUserId(userId);
+    fun validateUserId(userId: String?) {
+//        participants.validateUserId(userId);
     }
 }
