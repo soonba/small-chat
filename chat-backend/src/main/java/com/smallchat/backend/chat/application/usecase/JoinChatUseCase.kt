@@ -1,31 +1,24 @@
-package com.smallchat.backend.chat.application.usecase;
+package com.smallchat.backend.chat.application.usecase
 
-import com.smallchat.backend.chat.application.inputport.JoinChatInputPort;
-import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
-import com.smallchat.backend.chat.domain.model.Chat;
-import com.smallchat.backend.user.application.inputport.ValidateUserInputPort;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.smallchat.backend.chat.domain.interfaces.ChatRepository
+import com.smallchat.backend.chat.domain.interfaces.ChatUserRepository
+import com.smallchat.backend.chat.domain.model.vo.ChatRole
+import com.smallchat.backend.chat.domain.policy.ChatParticipationPolicy
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-@RequiredArgsConstructor
-public class JoinChatUseCase implements JoinChatInputPort {
+class JoinChatUseCase(
+    private val chatParticipationPolicy: ChatParticipationPolicy,
+    private val chatRepository: ChatRepository,
+    private val chatUserRepository: ChatUserRepository
+) {
 
-    private final ChatOutputPort chatOutputPort;
-//    private final EventOutputPort eventOutputPort;
-
-    //todo inputport 수정 필요
-    private final ValidateUserInputPort validateUserInputPort;
-
-    @Override
     @Transactional
-    public void join(String userId, String chatId) {
-        validateUserInputPort.hasReachedMaxChatLimit(userId);
-        Chat loadedChat = chatOutputPort.load(chatId);
-        loadedChat.validateUserId(userId);
-        Chat chat = loadedChat.addParticipant(userId);
-        chatOutputPort.save(chat);
-//        eventOutputPort.occurJoinChatEvent(new ChatJoined(userId, chatId));
+    fun join(userId: String, chatId: String) {
+        chatParticipationPolicy.ensureUserCanJoin(userId)
+        val chat1 = chatRepository.findByIdOrThrow(chatId)
+        chatUserRepository.save(chat1, userId, ChatRole.GUEST)
+        //        eventOutputPort.occurJoinChatEvent(new ChatJoined(userId, chatId));
     }
 }

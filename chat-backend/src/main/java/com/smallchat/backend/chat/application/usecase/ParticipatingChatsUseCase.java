@@ -1,7 +1,6 @@
 package com.smallchat.backend.chat.application.usecase;
 
 import com.smallchat.backend.chat.application.inputport.LastChatMessageInputPort;
-import com.smallchat.backend.chat.application.inputport.ParticipatingChatsInputPort;
 import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
 import com.smallchat.backend.chat.domain.model.Chat;
 import com.smallchat.backend.chat.domain.model.vo.Message;
@@ -17,14 +16,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ParticipatingChatsUseCase implements ParticipatingChatsInputPort {
+public class ParticipatingChatsUseCase {
 
     //todo inputport 수정 필요
     private final UserChatListInputPort userChatListInputPort;
     private final LastChatMessageInputPort lastChatMessageInputPort;
     private final ChatOutputPort chatOutputPort;
 
-    @Override
     @Transactional
     public ChatBasicInfoListDto.Response getChatList(String userId) {
         List<ParticipatingChat> userJoinedChats = userChatListInputPort.getUserJoinedChats(userId);
@@ -36,7 +34,6 @@ public class ParticipatingChatsUseCase implements ParticipatingChatsInputPort {
         return new ChatBasicInfoListDto.Response(chatList.stream().map(el -> el.toChatBasicInfo(lastMessageList)).toList());
     }
 
-    @Override
     public ChatDetail.Response getChatDetail(String chatId) {
         Chat chat = chatOutputPort.load(chatId);
         return new ChatDetail.Response(chatId, chat.getName());

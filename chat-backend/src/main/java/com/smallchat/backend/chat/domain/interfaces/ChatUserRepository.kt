@@ -6,5 +6,6 @@ import com.smallchat.backend.chat.domain.model.vo.ChatRole
 
 interface ChatUserRepository {
     fun findAllChatsByUserId(id: String): List<ChatUser>
+    fun findByChatIdAndUserId(chatId: String, userId: String): ChatUser?
     fun save(savedChat: Chat, userId: String, host: ChatRole): ChatUser
 }

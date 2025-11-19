@@ -3,6 +3,7 @@ package com.smallchat.backend.global.framework.advices
 import com.smallchat.backend.global.framework.web.ApiResponseKt
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
@@ -15,7 +16,8 @@ class ApiResponseAdvice : ResponseBodyAdvice<Any> {
         returnType: MethodParameter,
         converterType: Class<out HttpMessageConverter<*>?>
     ): Boolean {
-        //todo
+        if (returnType.parameterType == ResponseEntity::class.java) return false
+        if (returnType.parameterType == ApiResponseKt::class.java) return false
         return true
     }
 

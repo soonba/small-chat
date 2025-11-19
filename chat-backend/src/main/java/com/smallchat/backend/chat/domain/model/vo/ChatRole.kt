@@ -1,12 +1,12 @@
 package com.smallchat.backend.chat.domain.model.vo
 
-enum class ChatRole(val value: String) {
-    HOST("host"),
-    GUEST("guest");
+enum class ChatRole {
+    HOST,
+    GUEST;
 
     companion object {
-        fun fromValue(value: String): ChatRole =
-            entries.firstOrNull { it.value == value }
+        fun from(value: String): ChatRole =
+            entries.firstOrNull { it.name.equals(value, ignoreCase = true) }
                 ?: throw IllegalArgumentException("Invalid ChatRole: $value")
     }
 }

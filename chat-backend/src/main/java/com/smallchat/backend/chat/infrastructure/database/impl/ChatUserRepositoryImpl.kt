@@ -13,11 +13,20 @@ class ChatUserRepositoryImpl(private val chatUserJpaRepository: ChatUserJpaRepos
         return chatUserJpaRepository.findAllByUserId(id)
     }
 
+    override fun findByChatIdAndUserId(
+        chatId: String,
+        userId: String
+    ): ChatUser? {
+        //todo fix
+        return null
+//        return chatUserJpaRepository.findAllById(chatId, userId);
+    }
+
     override fun save(
         savedChat: Chat,
         userId: String,
         host: ChatRole
     ): ChatUser {
-        return chatUserJpaRepository.save(ChatUser(chat = savedChat, userId = userId, role = host.value))
+        return chatUserJpaRepository.save(ChatUser(chat = savedChat, userId = userId, role = host))
     }
 }

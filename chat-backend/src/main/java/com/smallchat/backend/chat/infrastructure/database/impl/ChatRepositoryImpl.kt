@@ -10,4 +10,8 @@ class ChatRepositoryImpl(private val chatJpaRepository: ChatJpaRepository) : Cha
     override fun save(chat: Chat): Chat {
         return chatJpaRepository.save(chat)
     }
+
+    override fun findByIdOrThrow(chatId: String): Chat {
+        return chatJpaRepository.findById(chatId).orElseThrow { throw RuntimeException("not found chat") }
+    }
 }

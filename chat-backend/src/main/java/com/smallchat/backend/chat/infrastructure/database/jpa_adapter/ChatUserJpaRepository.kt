@@ -14,4 +14,8 @@ interface ChatUserJpaRepository : JpaRepository<ChatUser, String> {
     WHERE cu.userId = :userId"""
     )
     fun findAllByUserId(@Param("userId") userId: String): List<ChatUser>
+    
+//    fun findByChatIdAndUserId(chatId: String, userId: String) {
+//        return
+//    }
 }

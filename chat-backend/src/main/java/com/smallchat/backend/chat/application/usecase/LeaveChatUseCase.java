@@ -1,6 +1,5 @@
 package com.smallchat.backend.chat.application.usecase;
 
-import com.smallchat.backend.chat.application.inputport.LeaveChatInputPort;
 import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
 import com.smallchat.backend.chat.domain.model.Chat;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class LeaveChatUseCase implements LeaveChatInputPort {
+public class LeaveChatUseCase {
     private final ChatOutputPort chatOutputPort;
 //    private final EventOutputPort eventOutputPort;
 
-    @Override
     @Transactional
     public void leave(String userId, String chatId) {
         Chat chat = chatOutputPort.load(chatId);

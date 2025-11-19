@@ -12,7 +12,7 @@ class RefreshRepositoryImpl(private val refreshTokenJpaRepository: RefreshTokenJ
     }
 
     override fun findByIdOrElseThrow(userId: String): RefreshToken {
-        return refreshTokenJpaRepository.findById(userId).orElseThrow { RuntimeException("refresh token not found") }
+        return refreshTokenJpaRepository.findById(userId).orElseThrow { RuntimeException("not found refresh token") }
     }
 
     override fun deleteById(userId: String) {

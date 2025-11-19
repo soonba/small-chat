@@ -1,5 +1,6 @@
 package com.smallchat.backend.chat.domain.model
 
+import com.smallchat.backend.chat.domain.model.vo.ChatRole
 import com.smallchat.backend.global.framework.jpa.BaseTime
 import jakarta.persistence.*
 
@@ -11,13 +12,14 @@ class ChatUser(
     @Column(name = "id", nullable = false)
     val id: String? = null,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id")
     val chat: Chat,
 
     @Column(name = "user_id", nullable = false)
     val userId: String,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    val role: String,
+    val role: ChatRole
 ) : BaseTime()
