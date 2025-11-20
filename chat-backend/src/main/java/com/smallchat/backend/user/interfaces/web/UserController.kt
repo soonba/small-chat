@@ -39,7 +39,7 @@ class UserController(
 
     @GetMapping("/{id}/exists")
     fun validateIDExists(@PathVariable id: String): CheckUserDuplicationDto.Response {
-        val isUsed = userRepository.isExistsByLoginId(id)
+        val isUsed = userRepository.existsByLoginId(id)
         return CheckUserDuplicationDto.Response(isUsed)
     }
 

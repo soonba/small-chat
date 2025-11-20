@@ -19,7 +19,12 @@ interface ChatUserRepository : JpaRepository<ChatUser, String> {
         """
     SELECT cu FROM ChatUser cu
     JOIN FETCH cu.chat
-    WHERE cu.userId = :userId AND cu.chatId = :chatId"""
+    WHERE cu.userId = :userId
+      AND cu.chat.id = :chatId
+    """
     )
-    fun findByChatIdAndUserId(chatId: String, userId: String): ChatUser?
+    fun findByChatIdAndUserId(
+        @Param("chatId") chatId: String,
+        @Param("userId") userId: String
+    ): ChatUser?
 }
