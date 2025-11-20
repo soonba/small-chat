@@ -1,8 +1,9 @@
 package com.smallchat.backend.user.application.usecase
 
 import com.smallchat.backend.global.utils.JwtProvider
-import com.smallchat.backend.user.domain.interfaces.RefreshRepository
+import com.smallchat.backend.user.domain.interfaces.RefreshTokenRepository
 import com.smallchat.backend.user.domain.interfaces.UserRepository
+import com.smallchat.backend.user.domain.model.RefreshToken
 import com.smallchat.backend.user.domain.model.User
 import com.smallchat.backend.user.domain.model.vo.Password
 import com.smallchat.backend.user.infrastructure.BcryptPasswordEncoder
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service
 class CreateUserUseCase(
     private val jwtProvider: JwtProvider,
     private val userRepository: UserRepository,
-    private val refreshRepository: RefreshRepository,
+    private val refreshTokenRepository: RefreshTokenRepository,
     private val passwordEncoder: BcryptPasswordEncoder,
 ) {
     @Transactional
@@ -24,7 +25,7 @@ class CreateUserUseCase(
         val hashPw = Password(presentPassword = hashPwStr)
         val savedUser = userRepository.save(User(nickname = nickname, loginId = id, password = hashPw))
         val tokens = jwtProvider.createTokens(savedUser.userIdOrThrow, savedUser.nickname)
-        refreshRepository.save(savedUser.userIdOrThrow, tokens.refreshToken)
+        refreshTokenRepository.save(RefreshToken(savedUser.userIdOrThrow, tokens.refreshToken))
         return CreateUserDto.Response(tokens)
     }
 }

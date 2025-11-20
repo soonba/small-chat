@@ -5,7 +5,7 @@ import com.smallchat.backend.global.utils.AuthenticatedUser
 import com.smallchat.backend.user.application.usecase.CreateUserUseCase
 import com.smallchat.backend.user.application.usecase.LoginUseCase
 import com.smallchat.backend.user.application.usecase.RefreshTokenUseCase
-import com.smallchat.backend.user.domain.interfaces.RefreshRepository
+import com.smallchat.backend.user.domain.interfaces.RefreshTokenRepository
 import com.smallchat.backend.user.domain.interfaces.UserRepository
 import com.smallchat.backend.user.interfaces.web.dto.*
 import org.springframework.web.bind.annotation.*
@@ -19,7 +19,7 @@ class UserController(
     private val refreshTokenUseCase: RefreshTokenUseCase,
 
     private val userRepository: UserRepository,
-    private val refreshRepository: RefreshRepository,
+    private val refreshTokenRepository: RefreshTokenRepository,
 ) {
 
     @PostMapping
@@ -39,7 +39,7 @@ class UserController(
 
     @GetMapping("/{id}/exists")
     fun validateIDExists(@PathVariable id: String): CheckUserDuplicationDto.Response {
-        val isUsed = userRepository.isExistByLoginId(id)
+        val isUsed = userRepository.isExistsByLoginId(id)
         return CheckUserDuplicationDto.Response(isUsed)
     }
 
@@ -51,6 +51,6 @@ class UserController(
 
     @PostMapping("/logout")
     fun logout(@CurrentUser authUser: AuthenticatedUser): Unit {
-        refreshRepository.deleteById(authUser.userId)
+        refreshTokenRepository.deleteById(authUser.userId)
     }
 }

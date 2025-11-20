@@ -1,9 +1,9 @@
 package com.smallchat.backend.user.domain.interfaces
 
 import com.smallchat.backend.user.domain.model.User
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface UserRepository {
-    fun save(user: User): User
-    fun findByLoginIdOrThrow(loginId: String): User
-    fun isExistByLoginId(loginId: String): Boolean
+interface UserRepository : JpaRepository<User, String> {
+    fun findByLoginId(loginId: String): User?
+    fun isExistsByLoginId(loginId: String?): Boolean
 }

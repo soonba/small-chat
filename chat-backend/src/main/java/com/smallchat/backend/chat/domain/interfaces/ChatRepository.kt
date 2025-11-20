@@ -1,8 +1,7 @@
 package com.smallchat.backend.chat.domain.interfaces
 
 import com.smallchat.backend.chat.domain.model.Chat
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface ChatRepository {
-    fun save(chat: Chat): Chat
-    fun findByIdOrThrow(chatId: String): Chat
+interface ChatRepository : JpaRepository<Chat, String> {
 }

@@ -1,7 +1,6 @@
-package com.smallchat.backend.user.infrastructure.database.jpa_adapter;
+package com.smallchat.backend.user.domain.interfaces
 
-import com.smallchat.backend.user.domain.model.RefreshToken;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.smallchat.backend.user.domain.model.RefreshToken
+import org.springframework.data.jpa.repository.JpaRepository
 
-public interface RefreshTokenJpaRepository extends JpaRepository<RefreshToken, String> {
-}
+interface RefreshTokenRepository : JpaRepository<RefreshToken, String>

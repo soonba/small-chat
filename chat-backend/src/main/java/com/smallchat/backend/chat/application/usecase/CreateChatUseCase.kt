@@ -3,6 +3,7 @@ package com.smallchat.backend.chat.application.usecase
 import com.smallchat.backend.chat.domain.interfaces.ChatRepository
 import com.smallchat.backend.chat.domain.interfaces.ChatUserRepository
 import com.smallchat.backend.chat.domain.model.Chat
+import com.smallchat.backend.chat.domain.model.ChatUser
 import com.smallchat.backend.chat.domain.model.vo.ChatRole
 import com.smallchat.backend.chat.domain.policy.ChatParticipationPolicy
 import com.smallchat.backend.chat.interfaces.web.dto.CreateChatDto
@@ -25,7 +26,7 @@ class CreateChatUseCase(
         val chatName = request.chatName
         chatParticipationPolicy.ensureUserCanJoin(userId)
         val savedChat = chatRepository.save(Chat(name = chatName))
-        chatUserRepository.save(savedChat, userId, ChatRole.HOST)
+        chatUserRepository.save(ChatUser(null, savedChat, userId, ChatRole.HOST))
         return savedChat.chatIdOrThrow
     }
 }

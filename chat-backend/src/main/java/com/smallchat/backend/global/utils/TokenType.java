@@ -1,6 +1,7 @@
 package com.smallchat.backend.global.utils;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 public enum TokenType {
     ACCESS_TOKEN(1000 * 60 * 60 * 24),
@@ -22,6 +23,6 @@ public enum TokenType {
                 return tokenType;
             }
         }
-        throw new IllegalArgumentException("No enum constant " + TokenType.class.getCanonicalName() + "." + tokenTypeString);
+        throw new NoSuchElementException("No enum constant " + TokenType.class.getCanonicalName() + "." + tokenTypeString);
     }
 }

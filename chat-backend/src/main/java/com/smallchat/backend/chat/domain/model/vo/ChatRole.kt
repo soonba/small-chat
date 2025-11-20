@@ -7,6 +7,6 @@ enum class ChatRole {
     companion object {
         fun from(value: String): ChatRole =
             entries.firstOrNull { it.name.equals(value, ignoreCase = true) }
-                ?: throw IllegalArgumentException("Invalid ChatRole: $value")
+                ?: throw NoSuchElementException("Invalid ChatRole: $value")
     }
 }

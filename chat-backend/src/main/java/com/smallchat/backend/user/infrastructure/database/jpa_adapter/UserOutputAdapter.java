@@ -1,6 +1,8 @@
 package com.smallchat.backend.user.infrastructure.database.jpa_adapter;
 
 import com.smallchat.backend.user.application.outputport.UserOutputPort;
+import com.smallchat.backend.user.domain.interfaces.RefreshTokenRepository;
+import com.smallchat.backend.user.domain.interfaces.UserRepository;
 import com.smallchat.backend.user.domain.model.RefreshToken;
 import com.smallchat.backend.user.domain.model.User;
 import lombok.RequiredArgsConstructor;
@@ -10,27 +12,27 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class UserOutputAdapter implements UserOutputPort {
 
-    private final UserJpaRepository userJpaRepository;
-    private final RefreshTokenJpaRepository refreshTokenJpaRepository;
+    private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public void validateRefreshToken(String id, String rt) {
-        RefreshToken refreshToken = refreshTokenJpaRepository.findById(id).orElseThrow(RuntimeException::new);
+        RefreshToken refreshToken = refreshTokenRepository.findById(id).orElseThrow(RuntimeException::new);
         refreshToken.verifying(rt);
     }
 
     public void saveRefreshToken(String id, String rt) {
         RefreshToken refreshToken = new RefreshToken(id, rt);
-        refreshTokenJpaRepository.save(refreshToken);
+        refreshTokenRepository.save(refreshToken);
     }
 
     @Override
     public boolean isExistID(String loginId) {
-        return userJpaRepository.existsByLoginId(loginId);
+        return userRepository.isExistsByLoginId(loginId);
     }
 
     @Override
     public User loadUser(String userId) {
-        return userJpaRepository.findById(userId).orElseThrow(RuntimeException::new);
+        return userRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 
     public User createUser(User user) {
@@ -42,14 +44,15 @@ public class UserOutputAdapter implements UserOutputPort {
 
     @Override
     public User saveUser(User user) {
-        return userJpaRepository.save(user);
+        return userRepository.save(user);
     }
 
+    @Deprecated
     public User loadUserById(String loginId) {
-        return userJpaRepository.findByLoginId(loginId).orElseThrow(RuntimeException::new);
+        return new User();
     }
 
     public void deleteRefreshToken(String userId) {
-        refreshTokenJpaRepository.deleteById(userId);
+        refreshTokenRepository.deleteById(userId);
     }
 }
