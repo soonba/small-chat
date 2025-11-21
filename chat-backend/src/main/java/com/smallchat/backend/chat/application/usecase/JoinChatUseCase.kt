@@ -5,8 +5,8 @@ import com.smallchat.backend.chat.domain.interfaces.ChatUserRepository
 import com.smallchat.backend.chat.domain.model.ChatUser
 import com.smallchat.backend.chat.domain.model.vo.ChatRole
 import com.smallchat.backend.chat.domain.policy.ChatParticipationPolicy
-import com.smallchat.backend.global.infrastructure.rabbitMq.ChatMessagePublisher
 import com.smallchat.backend.global.infrastructure.rabbitMq.MessageEvent
+import com.smallchat.backend.global.infrastructure.rabbitMq.MessagePublisher
 import com.smallchat.backend.global.utils.AuthenticatedUser
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
@@ -17,7 +17,7 @@ class JoinChatUseCase(
     private val chatParticipationPolicy: ChatParticipationPolicy,
     private val chatRepository: ChatRepository,
     private val chatUserRepository: ChatUserRepository,
-    private val chatMessagePublisher: ChatMessagePublisher
+    private val messagePublisher: MessagePublisher
 ) {
 
     @Transactional
@@ -26,8 +26,8 @@ class JoinChatUseCase(
         chatParticipationPolicy.ensureUserCanJoin(userId)
         val chat1 = chatRepository.findById(chatId).orElseThrow { throw EntityNotFoundException("찾을 수 없는 엔티티") }
         chatUserRepository.save(ChatUser(null, chat1, userId, ChatRole.GUEST))
-        chatMessagePublisher.publish(
-            chatId, MessageEvent.systemJoin(chatId, userId)
+        messagePublisher.publish(
+            MessageEvent.systemJoin(chatId, userId)
         )
     }
 }

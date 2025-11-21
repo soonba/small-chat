@@ -28,5 +28,13 @@ data class MessageEvent(
                 nickname = SystemMessageKt.SYSTEM_NICKNAME,
                 content = SystemMessageKt.userLeft(userNickname),
             )
+
+        fun systemCreated(chatId: String): MessageEvent =
+            MessageEvent(
+                chatId = chatId,
+                senderId = SystemMessageKt.SYSTEM_ID,
+                nickname = SystemMessageKt.SYSTEM_NICKNAME,
+                content = SystemMessageKt.chatCreated(),
+            )
     }
 }

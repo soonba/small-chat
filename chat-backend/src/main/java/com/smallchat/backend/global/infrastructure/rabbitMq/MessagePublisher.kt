@@ -1,18 +1,17 @@
 package com.smallchat.backend.global.infrastructure.rabbitMq
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
-class ChatMessagePublisher(
+@Component
+class MessagePublisher(
     private val rabbitTemplate: RabbitTemplate
 ) {
 
-    fun publish(chatId: String, event: MessageEvent) {
-        val routingKey = "chat.$chatId"
+    fun publish(event: MessageEvent) {
         rabbitTemplate.convertAndSend(
-            RabbitMQConfig.EXCHANGE_NAME,
-            routingKey,
+            RabbitMQConfig.CHAT_EXCHANGE,
+            RabbitMQConfig.ROUTING_KEY,
             event
         )
     }

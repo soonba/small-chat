@@ -4,17 +4,18 @@ import { ChatController } from './web/chat.controller';
 import { ChatKafkaProducer } from './web/chat.kafka.producer';
 import { EventsGateway } from './web/events.gateway';
 
-export const KAFKA_SERVICE = Symbol();
+export const RMQ_SVC = Symbol();
 @Module({
   imports: [
     ClientsModule.register([
       {
-        name: KAFKA_SERVICE,
-        transport: Transport.KAFKA,
+        name: RMQ_SVC,
+        transport: Transport.RMQ,
         options: {
-          client: {
-            // brokers: ['localhost:9092'],
-            brokers: ['kafka-1:29092'],
+          urls: ['amqp://guest:guest@rabbitmq:5672'], // RMQ 접속 URL
+          queue: 'chat.message.queue', // consume할 queue
+          queueOptions: {
+            durable: true, // 메시지 영속성
           },
         },
       },

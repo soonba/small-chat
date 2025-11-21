@@ -7,7 +7,8 @@ import com.smallchat.backend.chat.domain.model.ChatUser
 import com.smallchat.backend.chat.domain.model.vo.ChatRole
 import com.smallchat.backend.chat.domain.policy.ChatParticipationPolicy
 import com.smallchat.backend.chat.interfaces.web.dto.CreateChatDto
-import com.smallchat.backend.global.infrastructure.rabbitMq.ChatQueueManager
+import com.smallchat.backend.global.infrastructure.rabbitMq.MessageEvent
+import com.smallchat.backend.global.infrastructure.rabbitMq.MessagePublisher
 import com.smallchat.backend.global.utils.AuthenticatedUser
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
@@ -19,7 +20,7 @@ class CreateChatUseCase(
     private val chatUserRepository: ChatUserRepository,
     private val chatRepository: ChatRepository,
     private val chatParticipationPolicy: ChatParticipationPolicy,
-    private val chatQueueManager: ChatQueueManager
+    private val messagePublisher: MessagePublisher
 ) {
 
     @Transactional
@@ -29,7 +30,7 @@ class CreateChatUseCase(
         chatParticipationPolicy.ensureUserCanJoin(userId)
         val savedChat = chatRepository.save(Chat(name = chatName))
         chatUserRepository.save(ChatUser(null, savedChat, userId, ChatRole.HOST))
-        chatQueueManager.createQueueForChat(savedChat.chatIdOrThrow)
+        messagePublisher.publish(MessageEvent.systemCreated(savedChat.chatIdOrThrow))
         return savedChat.chatIdOrThrow
     }
 }
