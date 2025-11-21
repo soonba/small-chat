@@ -1,4 +1,4 @@
-export interface Message {
+export interface MessageEvent {
   chatId: string;
   userId: string;
   nickname: string;
