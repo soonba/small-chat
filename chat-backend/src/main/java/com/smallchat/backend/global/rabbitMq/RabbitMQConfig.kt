@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.infrastructure.rabbitMq
+package com.smallchat.backend.global.rabbitMq
 
 import org.springframework.amqp.core.BindingBuilder
 import org.springframework.amqp.core.Queue

@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.infrastructure.rabbitMq
+package com.smallchat.backend.global.rabbitMq
 
 import com.smallchat.backend.chat.domain.model.vo.SystemMessageKt
 import java.time.Instant

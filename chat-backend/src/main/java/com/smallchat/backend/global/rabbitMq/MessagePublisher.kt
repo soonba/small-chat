@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.infrastructure.rabbitMq
+package com.smallchat.backend.global.rabbitMq
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Component
