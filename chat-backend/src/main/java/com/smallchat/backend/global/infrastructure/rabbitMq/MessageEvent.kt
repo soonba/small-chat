@@ -5,9 +5,9 @@ import java.time.Instant
 
 data class MessageEvent(
     val chatId: String,
-    val senderId: String,
+    val userId: String,
     val nickname: String,
-    val content: String,
+    val message: String,
     val sentAt: Instant = Instant.now()
 ) {
 
@@ -15,26 +15,26 @@ data class MessageEvent(
         fun systemJoin(chatId: String, userNickname: String): MessageEvent {
             return MessageEvent(
                 chatId = chatId,
-                senderId = SystemMessageKt.SYSTEM_ID,
+                userId = SystemMessageKt.SYSTEM_ID,
                 nickname = SystemMessageKt.SYSTEM_NICKNAME,
-                content = SystemMessageKt.userJoined(userNickname),
+                message = SystemMessageKt.userJoined(userNickname),
             )
         }
 
         fun systemLeave(chatId: String, userNickname: String): MessageEvent =
             MessageEvent(
                 chatId = chatId,
-                senderId = SystemMessageKt.SYSTEM_ID,
+                userId = SystemMessageKt.SYSTEM_ID,
                 nickname = SystemMessageKt.SYSTEM_NICKNAME,
-                content = SystemMessageKt.userLeft(userNickname),
+                message = SystemMessageKt.userLeft(userNickname),
             )
 
         fun systemCreated(chatId: String): MessageEvent =
             MessageEvent(
                 chatId = chatId,
-                senderId = SystemMessageKt.SYSTEM_ID,
+                userId = SystemMessageKt.SYSTEM_ID,
                 nickname = SystemMessageKt.SYSTEM_NICKNAME,
-                content = SystemMessageKt.chatCreated(),
+                message = SystemMessageKt.chatCreated(),
             )
     }
 }
