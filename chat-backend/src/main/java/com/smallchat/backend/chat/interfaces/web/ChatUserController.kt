@@ -7,7 +7,7 @@ import com.smallchat.backend.chat.interfaces.web.dto.ChatBasicInfoListDto
 import com.smallchat.backend.chat.interfaces.web.dto.ChatDetail
 import com.smallchat.backend.chat.interfaces.web.dto.JoinChatDto
 import com.smallchat.backend.chat.interfaces.web.dto.LeaveChatDto
-import com.smallchat.backend.global.framework.web.CurrentUser
+import com.smallchat.backend.global.infrastructure.web.CurrentUser
 import com.smallchat.backend.global.utils.AuthenticatedUser
 import org.springframework.web.bind.annotation.*
 
@@ -24,8 +24,7 @@ class ChatUserController(
         @CurrentUser authenticatedUser: AuthenticatedUser,
         @RequestBody request: JoinChatDto.Request
     ): JoinChatDto.Response {
-        val userId = authenticatedUser.userId
-        joinChatUseCase.join(userId, request.chatId)
+        joinChatUseCase.join(authenticatedUser, request.chatId)
         return JoinChatDto.Response(request.chatId)
     }
 

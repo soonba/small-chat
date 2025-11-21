@@ -2,8 +2,8 @@ package com.smallchat.backend.chat.interfaces.web
 
 import com.smallchat.backend.chat.application.inputport.MessageListInputPort
 import com.smallchat.backend.chat.interfaces.web.dto.MessageListDto
-import com.smallchat.backend.global.framework.web.ApiResponse
-import com.smallchat.backend.global.framework.web.CurrentUser
+import com.smallchat.backend.global.infrastructure.web.ApiResponse
+import com.smallchat.backend.global.infrastructure.web.CurrentUser
 import com.smallchat.backend.global.utils.AuthenticatedUser
 import com.smallchat.backend.global.utils.JwtProvider
 import lombok.AllArgsConstructor

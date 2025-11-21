@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.framework.jpa;
+package com.smallchat.backend.global.infrastructure.jpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

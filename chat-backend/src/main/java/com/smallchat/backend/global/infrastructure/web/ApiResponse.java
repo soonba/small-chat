@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.framework.web;
+package com.smallchat.backend.global.infrastructure.web;
 
 @Deprecated
 public class ApiResponse<T> {

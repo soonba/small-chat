@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.framework.web
+package com.smallchat.backend.global.infrastructure.web
 
 import com.smallchat.backend.global.utils.AuthenticatedUser
 

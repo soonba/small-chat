@@ -1,6 +1,6 @@
-package com.smallchat.backend.global.framework.advices
+package com.smallchat.backend.global.infrastructure.advices
 
-import com.smallchat.backend.global.framework.web.ApiResponseKt
+import com.smallchat.backend.global.infrastructure.web.ApiResponseKt
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

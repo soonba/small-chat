@@ -14,7 +14,6 @@ class ChatParticipationPolicy(private val chatUserRepository: ChatUserRepository
         if (userChats.size >= PARTICIPATION_LIMIT) {
             throw RuntimeException("채팅은 최대 ${PARTICIPATION_LIMIT}개 까지 참여가 가능합니다.")
         }
-
     }
 
     fun ensureUserNotAlreadyJoined(chatId: String, userId: String): Unit {

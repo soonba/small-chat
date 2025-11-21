@@ -1,6 +1,6 @@
 package com.smallchat.backend.user.domain.model
 
-import com.smallchat.backend.global.framework.jpa.BaseTime
+import com.smallchat.backend.global.infrastructure.jpa.BaseTime
 import com.smallchat.backend.user.domain.model.vo.Password
 import jakarta.persistence.*
 

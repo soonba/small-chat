@@ -2,7 +2,7 @@ package com.smallchat.backend.chat.domain.model
 
 import com.smallchat.backend.chat.domain.model.vo.Message
 import com.smallchat.backend.chat.interfaces.web.dto.ChatBasicInfo
-import com.smallchat.backend.global.framework.jpa.BaseTime
+import com.smallchat.backend.global.infrastructure.jpa.BaseTime
 import jakarta.persistence.*
 import java.time.ZonedDateTime
 

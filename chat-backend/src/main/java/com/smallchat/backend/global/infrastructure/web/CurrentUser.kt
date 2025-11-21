@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.framework.web
+package com.smallchat.backend.global.infrastructure.web
 
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
