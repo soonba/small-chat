@@ -11,6 +11,6 @@ data class ChatMessage(
     val chatId: String,
     val chatName: String,
     val lastMessage: String,
-    val lastMessageTime: Instant
+    val lastSentAt: Instant
 )
 

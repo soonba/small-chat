@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class MessageListUseCase(val mongoTemplateAdapter: MongoTemplateAdapter) {
     fun execute(chatId: String, nextCursor: Long?): MessageListDto.Response {
         val list = mongoTemplateAdapter.getMessageList(chatId, nextCursor)
-        val nextCursor = list.lastOrNull()
+        val nextCursor = list.firstOrNull()
             ?.sentAt
             ?.epochSecond
         return MessageListDto.Response(list, nextCursor)

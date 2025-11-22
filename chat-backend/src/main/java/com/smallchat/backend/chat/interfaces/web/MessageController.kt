@@ -18,7 +18,7 @@ class MessageController(
     fun getMessageList(
         @CurrentUser authenticatedUser: AuthenticatedUser,
         @PathVariable chatId: String,
-        @RequestParam(value = "nextCursor", required = false) nextCursor: Long
+        @RequestParam(value = "nextCursor", required = false) nextCursor: Long?
     ): MessageListDto.Response {
         return messageListUseCase.execute(chatId, nextCursor)
     }

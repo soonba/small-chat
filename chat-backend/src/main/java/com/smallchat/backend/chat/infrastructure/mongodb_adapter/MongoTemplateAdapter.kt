@@ -13,9 +13,11 @@ import java.time.Instant
 class MongoTemplateAdapter(
     val mongoTemplate: MongoTemplate,
 ) : MessageRepositoryPort {
-    override fun getMessageList(chatId: String, nextCursor: Long?): List<MessageKt> {
-        val cursorInstant = nextCursor?.let { Instant.ofEpochSecond(it) } ?: Instant.MAX
+    private val MONGO_INSTANT_MAX: Instant = Instant.ofEpochMilli(Long.MAX_VALUE)
+    private val MESSAGE_PAGE_LIMIT: Int = 30
 
+    override fun getMessageList(chatId: String, nextCursor: Long?): List<MessageKt> {
+        val cursorInstant = nextCursor?.let { Instant.ofEpochSecond(it) } ?: MONGO_INSTANT_MAX
         val query = Query().apply {
             addCriteria(
                 where("chatId").`is`(chatId)
@@ -29,11 +31,6 @@ class MongoTemplateAdapter(
             .asReversed()
     }
 
-
-    companion object {
-        const val MESSAGE_PAGE_LIMIT: Int = 30
-    }
-    
 // list 조회
 //    override fun getLastMessageInfo(chatIdList: List<String>): List<MessageKt> {
 //        val condition: MatchOperation = Aggregation.match(

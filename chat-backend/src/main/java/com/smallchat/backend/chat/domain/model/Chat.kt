@@ -35,18 +35,7 @@ class Chat(
         return this
     }
 
-    fun toChatBasicInfo(chatList: MutableList<Message?>?): ChatMessage {
-//        Message chat = chatList.stream().filter(el -> el.getChatId().equals(this.chatId)).findFirst().orElse(Message.notFoundMessage());
-//        return new ChatBasicInfo(getChatId(), getName(), chat.getMessage(), chat.getCreatedAt());
-        //todo
-        return ChatMessage("", "", "", Instant.now())
-    }
-
     val isEmptyChat: Boolean
         get() = true
     //        return participants.isEmpty();
-
-    fun validateUserId(userId: String?) {
-//        participants.validateUserId(userId);
-    }
 }
