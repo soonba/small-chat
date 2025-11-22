@@ -22,7 +22,7 @@ class JoinChatUseCase(
 
     @Transactional
     fun execute(user: AuthenticatedUser, chatId: String) {
-        val (userId, nickname, type) = user
+        val userId = user.userId
         chatParticipationPolicy.ensureUserCanJoin(userId)
         val chat1 = chatRepository.findById(chatId).orElseThrow { throw EntityNotFoundException("찾을 수 없는 엔티티") }
         chatUserRepository.save(ChatUser(null, chat1, userId, ChatRole.GUEST))

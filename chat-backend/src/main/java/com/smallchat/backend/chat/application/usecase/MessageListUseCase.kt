@@ -1,26 +1,18 @@
-package com.smallchat.backend.chat.application.usecase;
+package com.smallchat.backend.chat.application.usecase
 
-import com.smallchat.backend.chat.application.inputport.MessageListInputPort;
-import com.smallchat.backend.chat.application.outputport.MessageOutputPort;
-import com.smallchat.backend.chat.domain.model.vo.Message;
-import com.smallchat.backend.chat.interfaces.web.dto.MessageListDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-import static com.smallchat.backend.chat.infrastructure.mongodb_adapter.MessageOutputAdapter.MESSAGE_PAGE_LIMIT;
+import com.smallchat.backend.chat.infrastructure.mongodb_adapter.MongoTemplateAdapter
+import com.smallchat.backend.chat.interfaces.web.dto.MessageListDto
+import lombok.RequiredArgsConstructor
+import org.springframework.stereotype.Service
 
 @Service
 @RequiredArgsConstructor
-public class MessageListUseCase implements MessageListInputPort {
-    private final MessageOutputPort messageOutputPort;
-
-    @Override
-    public MessageListDto.Response getMessageList(String chatID, Long nextCursor) {
-        List<Message> list = messageOutputPort.getMessageList(chatID, nextCursor);
-        long newNextCursor = list.isEmpty() || list.size() < MESSAGE_PAGE_LIMIT ? 0L : list.get(0).getCreatedAt().toEpochSecond();
-        return new MessageListDto.Response(list.stream().map(Message::toMessageBasicInfo).toList()
-                , newNextCursor);
+class MessageListUseCase(val mongoTemplateAdapter: MongoTemplateAdapter) {
+    fun execute(chatId: String, nextCursor: Long?): MessageListDto.Response {
+        val list = mongoTemplateAdapter.getMessageList(chatId, nextCursor)
+        val nextCursor = list.lastOrNull()
+            ?.sentAt
+            ?.epochSecond
+        return MessageListDto.Response(list, nextCursor)
     }
 }

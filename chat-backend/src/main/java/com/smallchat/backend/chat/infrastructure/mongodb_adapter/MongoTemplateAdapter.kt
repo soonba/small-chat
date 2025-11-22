@@ -1,63 +1,61 @@
-package com.smallchat.backend.chat.infrastructure.mongodb_adapter;
+package com.smallchat.backend.chat.infrastructure.mongodb_adapter
 
-import com.smallchat.backend.chat.application.outputport.MessageOutputPort;
-import com.smallchat.backend.chat.domain.interfaces.MessageRepository;
-import com.smallchat.backend.chat.domain.model.vo.Message;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.*;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.stereotype.Repository;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.smallchat.backend.chat.domain.interfaces.MessageRepositoryPort
+import com.smallchat.backend.chat.domain.model.MessageKt
+import org.springframework.data.domain.Sort
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.query.Criteria.where
+import org.springframework.data.mongodb.core.query.Query
+import org.springframework.stereotype.Repository
+import java.time.Instant
 
 @Repository
-@RequiredArgsConstructor
-public class MessageOutputAdapter implements MessageOutputPort {
-    public static final int MESSAGE_PAGE_LIMIT = 30;
+class MongoTemplateAdapter(
+    val mongoTemplate: MongoTemplate,
+) : MessageRepositoryPort {
+    override fun getMessageList(chatId: String, nextCursor: Long?): List<MessageKt> {
+        val cursorInstant = nextCursor?.let { Instant.ofEpochSecond(it) } ?: Instant.MAX
 
-    private final MessageRepository messageRepository;
-    private final MongoTemplate mongoTemplate;
-
-    @Override
-    public void save(Message chat) {
-        messageRepository.save(chat);
-    }
-
-    @Override
-    public List<Message> getMessageList(String chatID, Long nextCursor) {
-        Criteria criteria = Criteria.where("chatId").is(chatID);
-        if (nextCursor != null) {
-            criteria.and("createdAt").lt(LocalDateTime.ofInstant(Instant.ofEpochSecond(nextCursor - 1),
-                    ZoneOffset.UTC));
+        val query = Query().apply {
+            addCriteria(
+                where("chatId").`is`(chatId)
+                    .and("sentAt").lt(cursorInstant)
+            )
+            with(Sort.by(Sort.Direction.DESC, "sentAt"))
+            limit(MESSAGE_PAGE_LIMIT)
         }
-        MatchOperation condition = Aggregation.match(criteria);
-        SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
-        LimitOperation limit = Aggregation.limit(MESSAGE_PAGE_LIMIT);
-        Aggregation aggregation = Aggregation.newAggregation(condition, sort, limit);
-        List<Message> result = mongoTemplate.aggregate(aggregation, "message", Message.class).getMappedResults();
-        List<Message> messages = new ArrayList<>(result);
-        Collections.reverse(messages);
-        return messages;
+
+        return mongoTemplate.find(query, MessageKt::class.java, "message")
+            .asReversed()
     }
 
-    @Override
-    public List<Message> getLastMessageInfo(List<String> chatIdList) {
-        MatchOperation condition = Aggregation.match(Criteria.where("chatId").in(chatIdList));
-        SortOperation sort = Aggregation.sort(Sort.Direction.DESC, "createdAt");
-        GroupOperation group = Aggregation.group("chatId")
-                .first("message").as("message")
-                .first("createdAt").as("createdAt")
-                .first("chatId").as("chatId")
-                .first("messageType").as("messageType");
-        Aggregation aggregation = Aggregation.newAggregation(condition, sort, group);
-        AggregationResults<Message> results = mongoTemplate.aggregate(aggregation, "message", Message.class);
-        return results.getMappedResults();
+
+    companion object {
+        const val MESSAGE_PAGE_LIMIT: Int = 30
     }
+    
+// list 조회
+//    override fun getLastMessageInfo(chatIdList: List<String>): List<MessageKt> {
+//        val condition: MatchOperation = Aggregation.match(
+//            where("chatId").`in`(chatIdList)
+//        )
+//        val sort: SortOperation = Aggregation.sort(
+//            org.springframework.data.domain.Sort.Direction.DESC,
+//            "createdAt"
+//        )
+//        val group: GroupOperation = Aggregation.group("chatId")
+//            .first("message").`as`("message")
+//            .first("createdAt").`as`("createdAt")
+//            .first("chatId").`as`("chatId")
+//            .first("messageType").`as`("messageType")
+//        val aggregation =
+//            Aggregation.newAggregation(condition, sort, group)
+//        val results =
+//            mongoTemplate.aggregate(
+//                aggregation,
+//                "message",
+//                Message::class.java
+//            )
+//        return results.getMappedResults()
+//    }
 }

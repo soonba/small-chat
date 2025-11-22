@@ -4,7 +4,11 @@ import com.smallchat.backend.chat.domain.model.MessageKt
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
+/**
+ * Spring에서 제공하는 MongoRepository. 현재는 save와 마지막 메시지 조회에만 사용
+ * 단순한 쿼리는 이 인터페이스로 지원
+ */
 @Repository
-interface MessageRepositoryKt : MongoRepository<MessageKt, String> {
+interface MessageSimpleQueryRepository : MongoRepository<MessageKt, String> {
     fun findFirstByChatIdOrderBySentAtDesc(chatId: String): MessageKt?
 }

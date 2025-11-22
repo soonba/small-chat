@@ -2,7 +2,7 @@ package com.smallchat.backend.chat.application.usecase
 
 import com.smallchat.backend.chat.domain.interfaces.ChatRepository
 import com.smallchat.backend.chat.domain.interfaces.ChatUserRepository
-import com.smallchat.backend.chat.domain.interfaces.MessageRepositoryKt
+import com.smallchat.backend.chat.domain.interfaces.MessageSimpleQueryRepository
 import com.smallchat.backend.chat.interfaces.web.dto.ChatDetail
 import com.smallchat.backend.chat.interfaces.web.dto.ChatListDto
 import com.smallchat.backend.chat.interfaces.web.dto.ChatMessage
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 @Service
 class ParticipatingChatsUseCase(
     val chatUserRepository: ChatUserRepository,
-    val messageRepositoryKt: MessageRepositoryKt,
+    val messageSimpleQueryRepository: MessageSimpleQueryRepository,
     val chatRepository: ChatRepository
 ) {
 
@@ -22,7 +22,8 @@ class ParticipatingChatsUseCase(
             val chatId = chatUser.chat.chatIdOrThrow
             val chatName = chatUser.chat.name
             val lastMessageKt =
-                messageRepositoryKt.findFirstByChatIdOrderBySentAtDesc(chatId) ?: throw IllegalStateException("why")
+                messageSimpleQueryRepository.findFirstByChatIdOrderBySentAtDesc(chatId)
+                    ?: throw EntityNotFoundException("찾을 수 없는 마지막 메시지")
             ChatMessage(chatId, chatName, lastMessageKt.message, lastMessageKt.actualSentAt)
         }
 
