@@ -1,3 +1,0 @@
-import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{b as m}from"./ChatListItem-BmcTz15K.js";import"./date-XCo_F0VN.js";import"./index-CFahbR6w.js";import"./UserIcon-B4LrY4LZ.js";import"./chunk-NL6KNZEE-Tbs60UEK.js";const d={component:m,parameters:{layout:"fullscreen"},title:"Components/Chat/Skeleton",decorators:a=>r.jsx("div",{className:"h-full min-h-inherit w-full",children:r.jsx(a,{})})},e={args:{}};var t,o,s;e.parameters={...e.parameters,docs:{...(t=e.parameters)==null?void 0:t.docs,source:{originalSource:`{
-  args: {}
-}`,...(s=(o=e.parameters)==null?void 0:o.docs)==null?void 0:s.source}}};const f=["Default"];export{e as Default,f as __namedExportsOrder,d as default};
