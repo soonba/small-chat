@@ -1,10 +1,10 @@
 package com.smallchat.backend.chat.domain.model
 
 import com.smallchat.backend.chat.domain.model.vo.Message
-import com.smallchat.backend.chat.interfaces.web.dto.ChatBasicInfo
+import com.smallchat.backend.chat.interfaces.web.dto.ChatMessage
 import com.smallchat.backend.global.infrastructure.jpa.BaseTime
 import jakarta.persistence.*
-import java.time.ZonedDateTime
+import java.time.Instant
 
 
 @Entity
@@ -35,11 +35,11 @@ class Chat(
         return this
     }
 
-    fun toChatBasicInfo(chatList: MutableList<Message?>?): ChatBasicInfo {
+    fun toChatBasicInfo(chatList: MutableList<Message?>?): ChatMessage {
 //        Message chat = chatList.stream().filter(el -> el.getChatId().equals(this.chatId)).findFirst().orElse(Message.notFoundMessage());
 //        return new ChatBasicInfo(getChatId(), getName(), chat.getMessage(), chat.getCreatedAt());
         //todo
-        return ChatBasicInfo("", "", "", ZonedDateTime.now())
+        return ChatMessage("", "", "", Instant.now())
     }
 
     val isEmptyChat: Boolean

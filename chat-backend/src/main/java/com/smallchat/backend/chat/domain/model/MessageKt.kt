@@ -16,6 +16,8 @@ data class MessageKt(
     val type: MessageType? = MessageType.USER
 ) {
 
+    val actualSentAt: Instant get() = sentAt ?: Instant.now()
+
     companion object {
         fun userMessage(chatId: String, userId: String, nickname: String, message: String): MessageKt {
             return MessageKt(chatId, userId, nickname, message, Instant.now(), MessageType.USER)

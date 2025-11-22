@@ -13,7 +13,7 @@ class MessagePublisher(
         rabbitTemplate.convertAndSend(
             RabbitMQConfig.CHAT_EXCHANGE,
             RabbitMQConfig.ROUTING_KEY,
-            message
+            RabbitMQPayload("chat.message", message)
         )
     }
 }

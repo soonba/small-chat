@@ -3,8 +3,8 @@ package com.smallchat.backend.chat.interfaces.web
 import com.smallchat.backend.chat.application.usecase.JoinChatUseCase
 import com.smallchat.backend.chat.application.usecase.LeaveChatUseCase
 import com.smallchat.backend.chat.application.usecase.ParticipatingChatsUseCase
-import com.smallchat.backend.chat.interfaces.web.dto.ChatBasicInfoListDto
 import com.smallchat.backend.chat.interfaces.web.dto.ChatDetail
+import com.smallchat.backend.chat.interfaces.web.dto.ChatListDto
 import com.smallchat.backend.chat.interfaces.web.dto.JoinChatDto
 import com.smallchat.backend.chat.interfaces.web.dto.LeaveChatDto
 import com.smallchat.backend.global.infrastructure.web.CurrentUser
@@ -32,16 +32,14 @@ class ChatUserController(
     fun leaveChat(
         @CurrentUser authenticatedUser: AuthenticatedUser,
         @RequestBody request: LeaveChatDto.Request
-    ): Unit {
-        val userId = authenticatedUser.userId
-        leaveChatUseCase.leave(userId, request.chatId)
-        return
+    ) {
+        leaveChatUseCase.leave(authenticatedUser, request.chatId)
     }
 
     @GetMapping
     fun getParticipatingChats(
         @CurrentUser authenticatedUser: AuthenticatedUser,
-    ): ChatBasicInfoListDto.Response {
+    ): ChatListDto.Response {
         val userId = authenticatedUser.userId
         return participatingChatsUseCase.getChatList(userId)
     }

@@ -1,25 +1,23 @@
-package com.smallchat.backend.chat.application.usecase;
+package com.smallchat.backend.chat.application.usecase
 
-import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
-import com.smallchat.backend.chat.domain.model.Chat;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.smallchat.backend.chat.domain.interfaces.ChatUserRepository
+import com.smallchat.backend.chat.domain.model.MessageKt
+import com.smallchat.backend.chat.infrastructure.rabbitMq.MessagePublisher
+import com.smallchat.backend.global.utils.AuthenticatedUser
+import jakarta.persistence.EntityNotFoundException
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-@RequiredArgsConstructor
-public class LeaveChatUseCase {
-    private final ChatOutputPort chatOutputPort;
-//    private final EventOutputPort eventOutputPort;
-
+class LeaveChatUseCase(
+    val chatUserRepository: ChatUserRepository,
+    val messagePublisher: MessagePublisher
+) {
+    //    private final EventOutputPort eventOutputPort;
     @Transactional
-    public void leave(String userId, String chatId) {
-        Chat chat = chatOutputPort.load(chatId);
-        Chat removedChat = chat.removeParticipant(userId);
-        if (removedChat.isEmptyChat()) {
-            chatOutputPort.delete(removedChat);
-        }
-//        eventOutputPort.occurLeaveChatEvent(new ChatLeaved(userId, chatId));
-
+    fun leave(user: AuthenticatedUser, chatId: String) {
+        chatUserRepository.findByChatIdAndUserId(chatId, user.userId)
+            ?: throw EntityNotFoundException("찾을 수 없는 챗-유저 엔티티")
+        messagePublisher.publish(MessageKt.systemLeave(chatId, user.nickname))
     }
 }

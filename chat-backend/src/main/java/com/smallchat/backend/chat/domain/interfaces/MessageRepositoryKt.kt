@@ -5,4 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MessageRepositoryKt : MongoRepository<MessageKt, String>
+interface MessageRepositoryKt : MongoRepository<MessageKt, String> {
+    fun findFirstByChatIdOrderBySentAtDesc(chatId: String): MessageKt?
+}
