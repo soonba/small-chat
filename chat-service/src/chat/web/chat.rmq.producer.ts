@@ -1,5 +1,5 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
-import { ClientRMQ } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { MessageEvent } from '../domain/model/message';
 
 /**
@@ -9,10 +9,14 @@ import { MessageEvent } from '../domain/model/message';
 export class ChatRabbitMQProducer implements OnModuleInit {
   private readonly ROUTING_KEY = 'chat.message';
 
-  constructor(@Inject('RMQ_SVC') private readonly rmqService: ClientRMQ) {}
+  constructor(@Inject('RMQ_SVC') private readonly rmqService: ClientProxy) {}
 
   async onModuleInit() {
-    await this.rmqService.connect();
+    try {
+      await this.rmqService.connect();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async send(message: MessageEvent) {

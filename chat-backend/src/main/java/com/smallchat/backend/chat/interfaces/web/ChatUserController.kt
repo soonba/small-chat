@@ -24,7 +24,7 @@ class ChatUserController(
         @CurrentUser authenticatedUser: AuthenticatedUser,
         @RequestBody request: JoinChatDto.Request
     ): JoinChatDto.Response {
-        joinChatUseCase.join(authenticatedUser, request.chatId)
+        joinChatUseCase.execute(authenticatedUser, request.chatId)
         return JoinChatDto.Response(request.chatId)
     }
 

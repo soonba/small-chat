@@ -4,11 +4,11 @@ import com.smallchat.backend.chat.domain.interfaces.ChatRepository
 import com.smallchat.backend.chat.domain.interfaces.ChatUserRepository
 import com.smallchat.backend.chat.domain.model.Chat
 import com.smallchat.backend.chat.domain.model.ChatUser
+import com.smallchat.backend.chat.domain.model.MessageKt
 import com.smallchat.backend.chat.domain.model.vo.ChatRole
 import com.smallchat.backend.chat.domain.policy.ChatParticipationPolicy
+import com.smallchat.backend.chat.infrastructure.rabbitMq.MessagePublisher
 import com.smallchat.backend.chat.interfaces.web.dto.CreateChatDto
-import com.smallchat.backend.global.infrastructure.rabbitMq.MessageEvent
-import com.smallchat.backend.global.infrastructure.rabbitMq.MessagePublisher
 import com.smallchat.backend.global.utils.AuthenticatedUser
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
@@ -24,13 +24,13 @@ class CreateChatUseCase(
 ) {
 
     @Transactional
-    fun createChat(authUser: AuthenticatedUser, request: CreateChatDto.Request): String {
+    fun execute(authUser: AuthenticatedUser, request: CreateChatDto.Request): String {
         val userId = authUser.userId
         val chatName = request.chatName
         chatParticipationPolicy.ensureUserCanJoin(userId)
         val savedChat = chatRepository.save(Chat(name = chatName))
         chatUserRepository.save(ChatUser(null, savedChat, userId, ChatRole.HOST))
-        messagePublisher.publish(MessageEvent.systemCreated(savedChat.chatIdOrThrow))
+        messagePublisher.publish(MessageKt.systemCreated(savedChat.chatIdOrThrow))
         return savedChat.chatIdOrThrow
     }
 }

@@ -11,9 +11,9 @@ import { EventsGateway } from './web/events.gateway';
         name: 'RMQ_SVC',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://guest:guest@localhost:15672'],
+          urls: ['amqp://guest:guest@localhost:5672'],
           queue: 'chat.message.queue', // queue고정
-          queueOptions: { durable: false },
+          queueOptions: { durable: true },
         },
       },
     ]),

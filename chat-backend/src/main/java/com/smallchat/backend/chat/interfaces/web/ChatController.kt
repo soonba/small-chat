@@ -19,7 +19,7 @@ class ChatController(
         @CurrentUser authenticatedUser: AuthenticatedUser,
         @RequestBody request: CreateChatDto.Request
     ): CreateChatDto.Response {
-        val chatId = createChatUseCase.createChat(authenticatedUser, request)
+        val chatId = createChatUseCase.execute(authenticatedUser, request)
         return CreateChatDto.Response(chatId)
     }
 }

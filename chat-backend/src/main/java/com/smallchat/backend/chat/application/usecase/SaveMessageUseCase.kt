@@ -1,27 +1,20 @@
-package com.smallchat.backend.chat.application.usecase;
+package com.smallchat.backend.chat.application.usecase
 
-import org.springframework.stereotype.Service;
-
-import com.smallchat.backend.chat.application.inputport.SaveMessageInputPort;
-import com.smallchat.backend.chat.application.outputport.MessageOutputPort;
-import com.smallchat.backend.chat.domain.event.MessagePublished;
-import com.smallchat.backend.chat.domain.model.vo.Message;
-import com.smallchat.backend.chat.domain.model.vo.Sender;
-
-import lombok.RequiredArgsConstructor;
+import com.smallchat.backend.chat.domain.interfaces.MessageRepositoryKt
+import com.smallchat.backend.chat.domain.model.MessageKt
+import org.springframework.stereotype.Service
 
 @Service
-@RequiredArgsConstructor
-public class SaveMessageUseCase implements SaveMessageInputPort {
-
-    private final MessageOutputPort messageOutputPort;
-
-    @Override
-    public void saveMessage(MessagePublished messagePublished) {
-        String nickname = messagePublished.getNickname();
-        String userId = messagePublished.getUserId();
-        String message = messagePublished.getMessage();
-        String chatId = messagePublished.getChatId();
-        messageOutputPort.save(new Message(message, chatId, new Sender(userId, nickname)));
+class SaveMessageUseCase(private val messageRepositoryKt: MessageRepositoryKt) {
+    fun execute(messageKt: MessageKt) {
+        val (chatId, userId, nickname, message) = messageKt
+        messageRepositoryKt.save(
+            MessageKt.userMessage(
+                chatId,
+                userId,
+                nickname,
+                message,
+            )
+        )
     }
 }

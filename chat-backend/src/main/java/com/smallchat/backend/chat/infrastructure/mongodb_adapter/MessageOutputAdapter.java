@@ -1,6 +1,7 @@
 package com.smallchat.backend.chat.infrastructure.mongodb_adapter;
 
 import com.smallchat.backend.chat.application.outputport.MessageOutputPort;
+import com.smallchat.backend.chat.domain.interfaces.MessageRepository;
 import com.smallchat.backend.chat.domain.model.vo.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
