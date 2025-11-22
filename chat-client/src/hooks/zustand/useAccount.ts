@@ -17,12 +17,7 @@ const useAccount = () => {
     initAccount();
   }, [initAccount]);
 
-  return {
-    accountId,
-    nickname,
-    onAccountInit: handleAccountInit,
-    onAccountSet: handleAccountSet,
-  };
+  return { accountId, nickname, onAccountInit: handleAccountInit, onAccountSet: handleAccountSet };
 };
 
 export default useAccount;
