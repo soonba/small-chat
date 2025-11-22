@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useSocket } from '@hooks/utils';
 import { getData } from '@libs/axios';
@@ -10,11 +10,15 @@ interface IRequestBody {
   nextCursor: null | string;
 }
 
+export type MessageSenderType = 'SYSTEM' | 'USER';
+
 export type MessageListType = {
   createdAt: string;
   message: string;
   messageType: 'SYSTEM' | 'USER';
-  sender: { nickname: string; userId: string } | null;
+  nickname: string;
+  userId: string;
+  type: MessageSenderType;
 }[];
 
 interface IResponseBody {
@@ -29,8 +33,13 @@ const getChat = async (id: string, nextCursor: string): Promise<IResponseBody> =
 };
 
 const useGetChatHistory = (chatId: string) => {
+  const queryClient = useQueryClient();
   const { onChatJoin } = useSocket();
   const hasSubscribed = useRef(false);
+
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: chatKeys.history(chatId) });
+  }, [chatId, queryClient]);
 
   const { data, ...rest } = useInfiniteQuery<IResponseBody, Error>({
     getNextPageParam: () => undefined,
