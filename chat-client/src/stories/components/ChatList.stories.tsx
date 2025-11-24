@@ -8,9 +8,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   component: ChatList,
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
   title: 'Components/Chat/List',
   render: function Render() {
     const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +27,7 @@ const meta = {
             chatId: String(index),
             chatName: '작은대화' + (index + 1),
             lastMessage: '안녕하세요~~~!',
-            lastMessageTime: new Date().toDateString(),
+            lastSentAt: new Date().toDateString(),
           }))}
         />
       </div>
@@ -40,6 +38,4 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof ChatList>;
 
-export const Default: Story = {
-  args: {},
-};
+export const Default: Story = { args: {} };

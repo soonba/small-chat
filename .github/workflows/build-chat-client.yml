@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'chat-client/**'
+#      - 'chat-client/**'
 
 defaults:
   run:

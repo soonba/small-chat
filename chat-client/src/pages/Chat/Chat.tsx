@@ -80,9 +80,7 @@ export default function Chat() {
   const handleSubmit = useCallback(
     (message: string) => {
       if (accountId && nickname) {
-        onMessageSend({
-          messageBody: { chatId, message, nickname, userId: accountId },
-        });
+        onMessageSend({ messageBody: { chatId, message, nickname, userId: accountId } });
       } else {
         onToast(`문제가 발생하였습니다.\n잠시 후에 다시 시도해주세요.`, { delay: 5000 });
       }
@@ -162,15 +160,15 @@ export default function Chat() {
                 />
               ))}
               {list.map((message, index) => {
-                const isSender = message.sender === null ? false : message.sender.userId === accountId;
-                return message.sender === null ? (
+                const isSender = message.userId === accountId;
+                return message.type === 'SYSTEM' ? (
                   <MessageListItemSystem key={index} text={message.message} />
                 ) : (
                   <MessageListItem
                     key={index}
                     createdAt={message.createdAt}
                     message={message.message}
-                    nickname={message.sender.nickname}
+                    nickname={message.nickname}
                     position={isSender ? 'right' : 'left'}
                   />
                 );

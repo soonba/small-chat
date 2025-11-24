@@ -12,27 +12,13 @@ export enum EventType {
   UN_SUBSCRIBE = 'unSubscribe',
 }
 
-export type MessageType = {
-  chatId: string;
-  message: string;
-  nickname: string;
-  userId: string;
-};
+export type MessageType = { chatId: string; message: string; nickname: string; userId: string };
 
 export type SocketMessageType = { createdAt: string } & Omit<MessageType, 'chatId'>;
 
-type MessageBodyType = {
-  messageBody: MessageType;
-};
+type MessageBodyType = { messageBody: MessageType };
 
-type ChatListType = {
-  chatBasicInfos: {
-    chatId: string;
-    chatName: string;
-    lastMessage: string;
-    lastMessageTime: string;
-  }[];
-};
+type ChatListType = { chatBasicInfos: { chatId: string; chatName: string; lastMessage: string; lastSentAt: string }[] };
 
 const useSocket = () => {
   const queryClient = useQueryClient();
@@ -92,11 +78,7 @@ const useSocket = () => {
           if (previousList?.chatBasicInfos) {
             const newList = previousList.chatBasicInfos.slice(0);
             const index = newList.findIndex((data) => data.chatId === chatId);
-            newList[index] = {
-              ...newList[index],
-              lastMessage: message.message,
-              lastMessageTime: message.createdAt,
-            };
+            newList[index] = { ...newList[index], lastMessage: message.message, lastSentAt: message.createdAt };
             return { chatBasicInfos: newList };
           }
           return previousList;
