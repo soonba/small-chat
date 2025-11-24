@@ -1,6 +1,6 @@
 package com.smallchat.backend.chat.interfaces.mq
 
-import com.smallchat.backend.chat.application.usecase.SaveMessageUseCase
+import com.smallchat.backend.chat.application.SaveMessageUseCase
 import com.smallchat.backend.chat.infrastructure.rabbitMq.RabbitMQConfig
 import com.smallchat.backend.chat.infrastructure.rabbitMq.RabbitMQPayload
 import org.springframework.amqp.rabbit.annotation.RabbitListener

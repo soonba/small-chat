@@ -1,6 +1,6 @@
 package com.smallchat.backend.chat.interfaces.web
 
-import com.smallchat.backend.chat.application.usecase.CreateChatUseCase
+import com.smallchat.backend.chat.application.CreateChatUseCase
 import com.smallchat.backend.chat.interfaces.web.dto.CreateChatDto
 import com.smallchat.backend.global.infrastructure.web.CurrentUser
 import com.smallchat.backend.global.utils.AuthenticatedUser

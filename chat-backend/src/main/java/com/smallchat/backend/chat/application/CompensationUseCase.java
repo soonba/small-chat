@@ -1,12 +1,10 @@
-package com.smallchat.backend.chat.application.usecase;
-
-import org.springframework.stereotype.Service;
+package com.smallchat.backend.chat.application;
 
 import com.smallchat.backend.chat.application.inputport.CompensationInputPort;
 import com.smallchat.backend.chat.application.outputport.ChatOutputPort;
 import com.smallchat.backend.chat.domain.model.Chat;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

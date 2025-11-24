@@ -1,8 +1,8 @@
 package com.smallchat.backend.chat.interfaces.web
 
-import com.smallchat.backend.chat.application.usecase.JoinChatUseCase
-import com.smallchat.backend.chat.application.usecase.LeaveChatUseCase
-import com.smallchat.backend.chat.application.usecase.ParticipatingChatsUseCase
+import com.smallchat.backend.chat.application.JoinChatUseCase
+import com.smallchat.backend.chat.application.LeaveChatUseCase
+import com.smallchat.backend.chat.application.ParticipatingChatsUseCase
 import com.smallchat.backend.chat.interfaces.web.dto.ChatDetail
 import com.smallchat.backend.chat.interfaces.web.dto.ChatListDto
 import com.smallchat.backend.chat.interfaces.web.dto.JoinChatDto

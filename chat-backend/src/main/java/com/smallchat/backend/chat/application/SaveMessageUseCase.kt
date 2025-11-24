@@ -1,4 +1,4 @@
-package com.smallchat.backend.chat.application.usecase
+package com.smallchat.backend.chat.application
 
 import com.smallchat.backend.chat.domain.interfaces.MessageSimpleQueryRepository
 import com.smallchat.backend.chat.domain.model.MessageKt

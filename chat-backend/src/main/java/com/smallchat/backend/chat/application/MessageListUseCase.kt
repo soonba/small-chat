@@ -1,4 +1,4 @@
-package com.smallchat.backend.chat.application.usecase
+package com.smallchat.backend.chat.application
 
 import com.smallchat.backend.chat.infrastructure.mongodb_adapter.MongoTemplateAdapter
 import com.smallchat.backend.chat.interfaces.web.dto.MessageListDto
