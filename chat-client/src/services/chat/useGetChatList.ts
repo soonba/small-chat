@@ -7,12 +7,7 @@ import { getData } from '@libs/axios';
 import { chatKeys } from '@utils/queryKey';
 
 interface IResponseBody {
-  chatBasicInfos: {
-    chatId: string;
-    chatName: string;
-    lastMessage: string;
-    lastMessageTime: string;
-  }[];
+  chatMessages: { chatId: string; chatName: string; lastMessage: string; lastSentAt: string }[];
 }
 
 const getChatList = async (): Promise<IResponseBody> => {
@@ -26,7 +21,7 @@ const useGetChatList = () => {
   const { data, ...rest } = useQuery({
     queryFn: getChatList,
     queryKey: chatKeys.lists(),
-    select: (data) => data.chatBasicInfos,
+    select: (data) => data.chatMessages,
   });
 
   useEffect(() => {

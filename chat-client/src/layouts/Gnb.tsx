@@ -13,15 +13,7 @@ import { useLogout } from '@services/auth';
 import { chatKeys } from '@utils/queryKey';
 import { clearToken } from '@utils/storage';
 
-type ChatList = UseQueryResult<
-  {
-    chatId: string;
-    chatName: string;
-    lastMessage: string;
-    lastMessageTime: string;
-  }[],
-  Error
->;
+type ChatList = UseQueryResult<{ chatId: string; chatName: string; lastMessage: string; lastSentAt: string }[], Error>;
 
 export default function Gnb() {
   const client = useQueryClient();
