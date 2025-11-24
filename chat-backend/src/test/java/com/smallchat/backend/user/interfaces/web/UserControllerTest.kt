@@ -2,7 +2,7 @@ package com.smallchat.backend.user.interfaces.web
 
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.smallchat.backend.global.utils.JwtProvider
+import com.smallchat.backend.global.domain.auth.JwtProvider
 import com.smallchat.backend.user.domain.interfaces.RefreshRepository
 import com.smallchat.backend.user.domain.interfaces.UserRepository
 import com.smallchat.backend.user.domain.model.User

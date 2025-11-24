@@ -1,7 +1,7 @@
 package com.smallchat.backend.chat.infrastructure.mongodb_adapter
 
 import com.smallchat.backend.chat.domain.interfaces.MessageRepositoryPort
-import com.smallchat.backend.chat.domain.model.MessageKt
+import com.smallchat.backend.chat.domain.model.Message
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria.where
@@ -16,7 +16,7 @@ class MongoTemplateAdapter(
     private val MONGO_INSTANT_MAX: Instant = Instant.ofEpochMilli(Long.MAX_VALUE)
     private val MESSAGE_PAGE_LIMIT: Int = 30
 
-    override fun getMessageList(chatId: String, nextCursor: Long?): List<MessageKt> {
+    override fun getMessageList(chatId: String, nextCursor: Long?): List<Message> {
         val cursorInstant = nextCursor?.let { Instant.ofEpochSecond(it) } ?: MONGO_INSTANT_MAX
         val query = Query().apply {
             addCriteria(
@@ -27,7 +27,7 @@ class MongoTemplateAdapter(
             limit(MESSAGE_PAGE_LIMIT)
         }
 
-        return mongoTemplate.find(query, MessageKt::class.java, "message")
+        return mongoTemplate.find(query, Message::class.java, "message")
             .asReversed()
     }
 

@@ -1,6 +1,6 @@
 package com.smallchat.backend.user.interfaces.web.dto
 
-import com.smallchat.backend.global.utils.Tokens
+import com.smallchat.backend.global.domain.auth.Tokens
 
 
 class RefreshDto {

@@ -1,6 +1,6 @@
 package com.smallchat.backend.chat.domain.interfaces
 
-import com.smallchat.backend.chat.domain.model.MessageKt
+import com.smallchat.backend.chat.domain.model.Message
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository
  * 단순한 쿼리는 이 인터페이스로 지원
  */
 @Repository
-interface MessageSimpleQueryRepository : MongoRepository<MessageKt, String> {
-    fun findFirstByChatIdOrderBySentAtDesc(chatId: String): MessageKt?
+interface MessageSimpleQueryRepository : MongoRepository<Message, String> {
+    fun findFirstByChatIdOrderBySentAtDesc(chatId: String): Message?
 }

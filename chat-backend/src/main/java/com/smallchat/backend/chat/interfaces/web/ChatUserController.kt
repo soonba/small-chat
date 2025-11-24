@@ -7,8 +7,8 @@ import com.smallchat.backend.chat.interfaces.web.dto.ChatDetail
 import com.smallchat.backend.chat.interfaces.web.dto.ChatListDto
 import com.smallchat.backend.chat.interfaces.web.dto.JoinChatDto
 import com.smallchat.backend.chat.interfaces.web.dto.LeaveChatDto
-import com.smallchat.backend.global.infrastructure.web.CurrentUser
-import com.smallchat.backend.global.utils.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.CurrentUser
 import org.springframework.web.bind.annotation.*
 
 // todo: endpoint 수정

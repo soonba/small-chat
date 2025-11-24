@@ -1,6 +1,5 @@
 package com.smallchat.backend.chat.domain.model
 
-import com.smallchat.backend.chat.domain.model.vo.ChatRole
 import com.smallchat.backend.global.infrastructure.jpa.BaseTime
 import jakarta.persistence.*
 

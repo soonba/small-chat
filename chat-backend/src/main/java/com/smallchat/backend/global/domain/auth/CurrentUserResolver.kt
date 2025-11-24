@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.infrastructure.web
+package com.smallchat.backend.global.domain.auth
 
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component

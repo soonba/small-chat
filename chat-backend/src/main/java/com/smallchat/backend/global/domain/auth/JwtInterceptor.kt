@@ -1,6 +1,5 @@
-package com.smallchat.backend.global.infrastructure.web
+package com.smallchat.backend.global.domain.auth
 
-import com.smallchat.backend.global.utils.JwtProvider
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Component

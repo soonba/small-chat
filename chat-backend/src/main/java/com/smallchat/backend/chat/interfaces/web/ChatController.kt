@@ -2,8 +2,8 @@ package com.smallchat.backend.chat.interfaces.web
 
 import com.smallchat.backend.chat.application.CreateChatUseCase
 import com.smallchat.backend.chat.interfaces.web.dto.CreateChatDto
-import com.smallchat.backend.global.infrastructure.web.CurrentUser
-import com.smallchat.backend.global.utils.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.CurrentUser
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

@@ -2,7 +2,7 @@
 //
 //import com.smallchat.backend.global.utils.JwtProvider;
 //import com.smallchat.backend.global.utils.TokenPayload;
-//import com.smallchat.backend.global.utils.TokenType;
+//import com.smallchat.backend.global.infrastructure.auth.TokenType;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -38,24 +38,24 @@
 //        assertNotNull(token);
 //        assertEquals(payload.tokenType(), token);
 //    }
-////
-////    @Test
-////    public void testParseToken() {
-////        UUID userId = UUID.randomUUID();
-////        TokenPayload payload = new TokenPayload(TokenType.ACCESS_TOKEN, userId, "김철수");
-////        String token = jwtProvider.createToken(payload);
-////
-////        TokenPayload parsedPayload = jwtProvider.parseToken(token);
-////
-////        assertEquals(payload.tokenType(), parsedPayload.tokenType());
-////        assertEquals(payload.userId(), parsedPayload.userId());
-////        assertEquals(payload.nickname().getValue(), parsedPayload.nickname().getValue());
-////    }
-////
-////    @Test
-////    public void testParseToken_invalidToken() {
-////        String invalidToken = "invalid.token.value";
-////
-////        assertThrows(RuntimeException.class, () -> jwtProvider.parseToken(invalidToken));
-////    }
+/// /
+/// /    @Test
+/// /    public void testParseToken() {
+/// /        UUID userId = UUID.randomUUID();
+/// /        TokenPayload payload = new TokenPayload(TokenType.ACCESS_TOKEN, userId, "김철수");
+/// /        String token = jwtProvider.createToken(payload);
+/// /
+/// /        TokenPayload parsedPayload = jwtProvider.parseToken(token);
+/// /
+/// /        assertEquals(payload.tokenType(), parsedPayload.tokenType());
+/// /        assertEquals(payload.userId(), parsedPayload.userId());
+/// /        assertEquals(payload.nickname().getValue(), parsedPayload.nickname().getValue());
+/// /    }
+/// /
+/// /    @Test
+/// /    public void testParseToken_invalidToken() {
+/// /        String invalidToken = "invalid.token.value";
+/// /
+/// /        assertThrows(RuntimeException.class, () -> jwtProvider.parseToken(invalidToken));
+/// /    }
 //}

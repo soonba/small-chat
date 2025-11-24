@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.utils
+package com.smallchat.backend.global.domain.auth
 
 data class AuthenticatedUser(
     val userId: String,

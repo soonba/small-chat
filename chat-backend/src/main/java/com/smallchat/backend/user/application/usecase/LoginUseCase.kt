@@ -1,7 +1,7 @@
 package com.smallchat.backend.user.application.usecase
 
-import com.smallchat.backend.global.utils.JwtProvider
-import com.smallchat.backend.global.utils.Tokens
+import com.smallchat.backend.global.domain.auth.JwtProvider
+import com.smallchat.backend.global.domain.auth.Tokens
 import com.smallchat.backend.user.domain.interfaces.RefreshTokenRepository
 import com.smallchat.backend.user.domain.interfaces.UserRepository
 import com.smallchat.backend.user.domain.model.RefreshToken

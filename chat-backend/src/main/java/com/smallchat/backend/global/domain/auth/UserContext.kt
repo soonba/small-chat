@@ -1,6 +1,4 @@
-package com.smallchat.backend.global.infrastructure.web
-
-import com.smallchat.backend.global.utils.AuthenticatedUser
+package com.smallchat.backend.global.domain.auth
 
 object UserContext {
     private val holder = ThreadLocal<AuthenticatedUser?>()

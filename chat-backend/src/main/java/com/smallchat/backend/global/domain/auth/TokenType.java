@@ -1,4 +1,4 @@
-package com.smallchat.backend.global.utils;
+package com.smallchat.backend.global.domain.auth;
 
 import java.util.Date;
 import java.util.NoSuchElementException;

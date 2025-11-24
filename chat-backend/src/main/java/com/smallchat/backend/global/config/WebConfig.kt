@@ -1,7 +1,7 @@
 package com.smallchat.backend.global.config
 
-import com.smallchat.backend.global.infrastructure.web.CurrentUserResolver
-import com.smallchat.backend.global.infrastructure.web.JwtInterceptor
+import com.smallchat.backend.global.domain.auth.CurrentUserResolver
+import com.smallchat.backend.global.domain.auth.JwtInterceptor
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.support.HandlerMethodArgumentResolver

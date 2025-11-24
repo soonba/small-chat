@@ -2,7 +2,7 @@ package com.smallchat.backend.chat.utils;//package com.smallchat.backend.user.ut
 //
 //import com.smallchat.backend.global.utils.JwtProvider;
 //import com.smallchat.backend.global.utils.TokenPayload;
-//import com.smallchat.backend.global.utils.TokenType;
+//import com.smallchat.backend.global.infrastructure.auth.TokenType;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

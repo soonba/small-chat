@@ -1,9 +1,9 @@
 package com.smallchat.backend.chat.application
 
 import com.smallchat.backend.chat.domain.interfaces.ChatUserRepository
-import com.smallchat.backend.chat.domain.model.MessageKt
+import com.smallchat.backend.chat.domain.model.Message
 import com.smallchat.backend.chat.infrastructure.rabbitMq.MessagePublisher
-import com.smallchat.backend.global.utils.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.AuthenticatedUser
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,6 +18,6 @@ class LeaveChatUseCase(
     fun leave(user: AuthenticatedUser, chatId: String) {
         chatUserRepository.findByChatIdAndUserId(chatId, user.userId)
             ?: throw EntityNotFoundException("찾을 수 없는 챗-유저 엔티티")
-        messagePublisher.publish(MessageKt.systemLeave(chatId, user.nickname))
+        messagePublisher.publish(Message.systemLeave(chatId, user.nickname))
     }
 }

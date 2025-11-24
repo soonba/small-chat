@@ -2,8 +2,8 @@ package com.smallchat.backend.chat.interfaces.web
 
 import com.smallchat.backend.chat.application.MessageListUseCase
 import com.smallchat.backend.chat.interfaces.web.dto.MessageListDto
-import com.smallchat.backend.global.infrastructure.web.CurrentUser
-import com.smallchat.backend.global.utils.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.CurrentUser
 import lombok.AllArgsConstructor
 import org.springframework.web.bind.annotation.*
 

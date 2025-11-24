@@ -1,4 +1,4 @@
-package com.smallchat.backend.chat.domain.model.vo
+package com.smallchat.backend.chat.domain.model
 
 object SystemMessageKt {
     const val SYSTEM_ID = "system"

@@ -1,8 +1,8 @@
 package com.smallchat.backend.user.application.usecase
 
-import com.smallchat.backend.global.utils.AuthenticatedUser
-import com.smallchat.backend.global.utils.JwtProvider
-import com.smallchat.backend.global.utils.TokenType
+import com.smallchat.backend.global.domain.auth.AuthenticatedUser
+import com.smallchat.backend.global.domain.auth.JwtProvider
+import com.smallchat.backend.global.domain.auth.TokenType
 import com.smallchat.backend.user.domain.interfaces.RefreshTokenRepository
 import com.smallchat.backend.user.domain.model.RefreshToken
 import com.smallchat.backend.user.interfaces.web.dto.RefreshDto

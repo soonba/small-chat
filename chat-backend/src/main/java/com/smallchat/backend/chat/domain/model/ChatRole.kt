@@ -1,4 +1,4 @@
-package com.smallchat.backend.chat.domain.model.vo
+package com.smallchat.backend.chat.domain.model
 
 enum class ChatRole {
     HOST,
