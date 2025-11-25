@@ -24,9 +24,9 @@ data class Message(
         fun systemJoin(chatId: String, userNickname: String): Message {
             return Message(
                 chatId = chatId,
-                userId = SystemMessageKt.SYSTEM_ID,
-                nickname = SystemMessageKt.SYSTEM_NICKNAME,
-                message = SystemMessageKt.userJoined(userNickname),
+                userId = SystemMessage.SYSTEM_ID,
+                nickname = SystemMessage.SYSTEM_NICKNAME,
+                message = SystemMessage.userJoined(userNickname),
                 type = MessageType.SYSTEM
             )
         }
@@ -34,18 +34,18 @@ data class Message(
         fun systemLeave(chatId: String, userNickname: String): Message =
             Message(
                 chatId = chatId,
-                userId = SystemMessageKt.SYSTEM_ID,
-                nickname = SystemMessageKt.SYSTEM_NICKNAME,
-                message = SystemMessageKt.userLeft(userNickname),
+                userId = SystemMessage.SYSTEM_ID,
+                nickname = SystemMessage.SYSTEM_NICKNAME,
+                message = SystemMessage.userLeft(userNickname),
                 type = MessageType.SYSTEM
             )
 
         fun systemCreated(chatId: String): Message =
             Message(
                 chatId = chatId,
-                userId = SystemMessageKt.SYSTEM_ID,
-                nickname = SystemMessageKt.SYSTEM_NICKNAME,
-                message = SystemMessageKt.chatCreated(),
+                userId = SystemMessage.SYSTEM_ID,
+                nickname = SystemMessage.SYSTEM_NICKNAME,
+                message = SystemMessage.chatCreated(),
                 type = MessageType.SYSTEM
             )
     }

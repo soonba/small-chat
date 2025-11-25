@@ -1,6 +1,6 @@
 package com.smallchat.backend.chat.domain.model
 
-object SystemMessageKt {
+object SystemMessage {
     const val SYSTEM_ID = "system"
     const val SYSTEM_NICKNAME = "system"
 
