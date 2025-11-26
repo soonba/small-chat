@@ -13,9 +13,14 @@ class Chat(
     var id: String? = null,
 
     @Column(name = "name", nullable = false)
-    val name: String
+    var name: String
 ) : BaseTime() {
 
     val chatIdOrThrow: String
         get() = id ?: throw IllegalStateException("Chat ID is not assigned yet.")
+
+    fun changeName(newName: String): Chat {
+        this.name = newName
+        return this;
+    }
 }
