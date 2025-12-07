@@ -14,11 +14,11 @@ open class WebConfig(
     private val jwtInterceptor: JwtInterceptor,
     private val currentUserResolver: CurrentUserResolver
 ) : WebMvcConfigurer {
-    @Value("\${client-origin}")
-    private val origin: String? = "http://localhost:3000"
+    @Value("\${client.origin}")
+    private val origin: String? = "https://soonba.github.io"
 
     override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**").allowedOrigins(origin, "http://localhost:3000")
+        registry.addMapping("/**").allowedOrigins(origin, "http://localhost:3000", "https://soonba.github.io")
             .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true)
