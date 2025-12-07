@@ -12,7 +12,7 @@ import { ChatRabbitMQConsumer } from './web/chat.rmq.consumer';
         name: 'RMQ_SVC',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://guest:guest@localhost:5672'],
+          urls: ['amqp://guest:guest@rabbitmq:5672'],
           queue: 'chat.message.queue', // queue고정
           queueOptions: { durable: true },
         },
