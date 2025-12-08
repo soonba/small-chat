@@ -14,8 +14,8 @@ open class WebConfig(
     private val jwtInterceptor: JwtInterceptor,
     private val currentUserResolver: CurrentUserResolver
 ) : WebMvcConfigurer {
-    @Value("\${client.origin}")
-    private val origin: String? = "https://soonba.github.io"
+    @Value("\${client-origin}")
+    private val origin: String = "http://localhost:3000"
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**").allowedOrigins(origin, "http://localhost:3000", "https://soonba.github.io")

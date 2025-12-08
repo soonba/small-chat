@@ -2,6 +2,7 @@ package com.smallchat.backend.chat.domain.interfaces
 
 import com.smallchat.backend.chat.domain.model.ChatUser
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
@@ -27,4 +28,10 @@ interface ChatUserRepository : JpaRepository<ChatUser, String> {
         @Param("chatId") chatId: String,
         @Param("userId") userId: String
     ): ChatUser?
+
+    @Modifying
+    fun deleteByChatIdAndUserId(
+        @Param("chatId") chatId: String,
+        @Param("userId") userId: String
+    )
 }

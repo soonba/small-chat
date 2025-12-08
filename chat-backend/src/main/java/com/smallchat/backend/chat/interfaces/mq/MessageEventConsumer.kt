@@ -11,7 +11,7 @@ class MessageEventConsumer(
     private val saveMessageUseCase: SaveMessageUseCase
 ) {
 
-    @RabbitListener(queues = [RabbitMQConfig.CHAT_QUEUE])
+    @RabbitListener(queues = [RabbitMQConfig.CHAT_MESSAGE_QUEUE])
     fun consume(event: RabbitMQPayload) {
         saveMessageUseCase.execute(event.data)
     }
