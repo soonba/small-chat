@@ -4,22 +4,30 @@ import { ChatController } from './web/chat.controller';
 import { ChatRabbitMQProducer } from './web/chat.rmq.producer';
 import { EventsGateway } from './web/events.gateway';
 import { ChatRabbitMQConsumer } from './web/chat.rmq.consumer';
+import { CHAT_MESSAGE_QUEUE } from './web/types';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'RMQ_SVC',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://guest:guest@rabbitmq:5672'],
-          queue: 'chat.message.queue', // queue고정
-          queueOptions: { durable: true },
+        inject: [ConfigService],
+        useFactory: (config: ConfigService) => {
+          console.log(config.get<string>('RMQ_URL'));
+          return {
+            transport: Transport.RMQ,
+            options: {
+              urls: [config.get<string>('RMQ_URL')], // 이제 정상 주입됨
+              queue: CHAT_MESSAGE_QUEUE,
+              queueOptions: { durable: true },
+            },
+          };
         },
       },
     ]),
   ],
-  controllers: [ChatController],
-  providers: [EventsGateway, ChatRabbitMQProducer, ChatRabbitMQConsumer],
+  controllers: [ChatController, ChatRabbitMQConsumer],
+  providers: [EventsGateway, ChatRabbitMQProducer],
 })
 export class ChatModule {}

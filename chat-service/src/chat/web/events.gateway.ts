@@ -10,7 +10,7 @@ import {
 import * as console from 'node:console';
 import { Server, Socket } from 'socket.io';
 import { EventType, PropertyKey } from '../domain/model/event.type';
-import { MessageEvent } from '../domain/model/message';
+import { MessageEventType } from '../domain/model/message';
 import { ChatRabbitMQProducer } from './chat.rmq.producer';
 
 @WebSocketGateway({ cors: true })
@@ -35,10 +35,10 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @SubscribeMessage(EventType.MESSAGE)
-  async send(@MessageBody(PropertyKey.MESSAGE) messageBody: MessageEvent) {
+  async send(@MessageBody(PropertyKey.MESSAGE) messageBody: MessageEventType) {
     const { chatId, ...rest } = messageBody;
-    await this.server.to(chatId).emit(EventType.MESSAGE, messageBody);
-    await this.server
+    this.server.to(chatId).emit(EventType.MESSAGE, messageBody);
+    this.server
       .to(this.LIST_PREFIX + chatId)
       .emit(EventType.MESSAGE, { ...rest, chatId: this.LIST_PREFIX + chatId });
     await this.rmqProducer.send(messageBody);

@@ -1,14 +1,13 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { MessageEvent } from '../domain/model/message';
+import { MessageEventType } from '../domain/model/message';
+import { ROUTING_MESSAGE } from './types';
 
 /**
  * 채팅 서비스 -> 큐 -> 백엔드 컨슈머
  */
 @Injectable()
 export class ChatRabbitMQProducer implements OnModuleInit {
-  private readonly ROUTING_KEY = 'chat.message';
-
   constructor(@Inject('RMQ_SVC') private readonly rmqService: ClientProxy) {}
 
   async onModuleInit() {
@@ -19,7 +18,7 @@ export class ChatRabbitMQProducer implements OnModuleInit {
     }
   }
 
-  async send(message: MessageEvent) {
-    this.rmqService.emit(this.ROUTING_KEY, message);
+  async send(message: MessageEventType) {
+    this.rmqService.emit(ROUTING_MESSAGE, message);
   }
 }
