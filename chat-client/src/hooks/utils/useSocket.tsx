@@ -12,7 +12,13 @@ export enum EventType {
   UN_SUBSCRIBE = 'unSubscribe',
 }
 
-export type MessageType = { chatId: string; message: string; nickname: string; userId: string };
+export type MessageType = {
+  chatId: string;
+  message: string;
+  nickname: string;
+  userId: string;
+  type?: 'SYSTEM' | 'USER' | undefined;
+};
 
 export type SocketMessageType = { createdAt: string } & Omit<MessageType, 'chatId'>;
 

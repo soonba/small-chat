@@ -150,15 +150,19 @@ export default function Chat() {
         ) : (
           <>
             <MessageList id="chat-container" style={{ height: window.innerHeight - 56 - 77, overflowAnchor: 'none' }}>
-              {socketMessages?.map((message, index) => (
-                <MessageListItem
-                  key={index}
-                  createdAt={message.createdAt}
-                  message={message.message}
-                  nickname={message.nickname}
-                  position={message.userId === accountId ? 'right' : 'left'}
-                />
-              ))}
+              {socketMessages?.map((message, index) => {
+                return message?.type === 'SYSTEM' ? (
+                  <MessageListItemSystem key={index} text={message.message} />
+                ) : (
+                  <MessageListItem
+                    key={index}
+                    createdAt={message.createdAt}
+                    message={message.message}
+                    nickname={message.nickname}
+                    position={message.userId === accountId ? 'right' : 'left'}
+                  />
+                );
+              })}
               {list.map((message, index) => {
                 const isSender = message.userId === accountId;
                 return message.type === 'SYSTEM' ? (

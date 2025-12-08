@@ -17,8 +17,8 @@ export type MessageListType = {
   message: string;
   messageType: 'SYSTEM' | 'USER';
   nickname: string;
-  userId: string;
   type: MessageSenderType;
+  userId: string;
 }[];
 
 interface IResponseBody {
