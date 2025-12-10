@@ -24,7 +24,7 @@ export type SocketMessageType = { createdAt: string } & Omit<MessageType, 'chatI
 
 type MessageBodyType = { messageBody: MessageType };
 
-type ChatListType = { chatBasicInfos: { chatId: string; chatName: string; lastMessage: string; lastSentAt: string }[] };
+type ChatListType = { chatMessages: { chatId: string; chatName: string; lastMessage: string; lastSentAt: string }[] };
 
 const useSocket = () => {
   const queryClient = useQueryClient();
@@ -81,11 +81,11 @@ const useSocket = () => {
       if (message.chatId.startsWith('list_')) {
         const chatId = message.chatId.replace('list_', '');
         queryClient.setQueryData(chatKeys.lists(), (previousList: ChatListType | undefined) => {
-          if (previousList?.chatBasicInfos) {
-            const newList = previousList.chatBasicInfos.slice(0);
+          if (previousList?.chatMessages) {
+            const newList = previousList.chatMessages.slice(0);
             const index = newList.findIndex((data) => data.chatId === chatId);
             newList[index] = { ...newList[index], lastMessage: message.message, lastSentAt: message.createdAt };
-            return { chatBasicInfos: newList };
+            return { chatMessages: newList };
           }
           return previousList;
         });
