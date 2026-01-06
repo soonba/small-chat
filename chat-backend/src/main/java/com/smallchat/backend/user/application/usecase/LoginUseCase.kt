@@ -20,7 +20,9 @@ class LoginUseCase(
     fun execute(request: LoginDto.Request): LoginDto.Response {
         val (id, password) = request
         val user = userRepository.findByLoginId(id) ?: throw EntityNotFoundException("찾을 수 없는 유저 엔티티")
-        user.password.verifying(password, passwordEncoder)
+        if (!user.password.verifying(password, passwordEncoder)) {
+            throw IllegalArgumentException("비밀번호가 일치하지 않습니다.")
+        }
         val tokens: Tokens = jwtProvider.createTokens(user.userIdOrThrow, user.nickname)
         refreshTokenRepository.save(RefreshToken(user.userIdOrThrow, tokens.refreshToken))
         return LoginDto.Response(tokens)
