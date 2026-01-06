@@ -1,6 +1,7 @@
 package com.smallchat.backend.global.infrastructure.advices
 
 import com.smallchat.backend.global.infrastructure.web.ApiResponse
+import com.smallchat.backend.global.domain.auth.UnauthorizedException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -13,5 +14,12 @@ class GlobalExceptionHandler {
         return ResponseEntity
             .status(500)
             .body(ApiResponse(500, e.message ?: "", null))
+    }
+
+    @ExceptionHandler(UnauthorizedException::class)
+    fun handleUnauthorizedException(e: UnauthorizedException): ResponseEntity<ApiResponse> {
+        return ResponseEntity
+            .status(401)
+            .body(ApiResponse(401, e.message ?: "Unauthorized", null))
     }
 }

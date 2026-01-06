@@ -1,6 +1,7 @@
 package com.smallchat.backend.global.domain.auth
 
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -50,8 +51,10 @@ class JwtProvider(
             val nickname = payload["nickname"] as String
             val type = payload["type"] as String
             return AuthenticatedUser(userId, nickname, enumValueOf<TokenType>(type))
-        } catch (error: Error) {
-            throw RuntimeException("parse token failed")
+        } catch (error: JwtException) {
+            throw UnauthorizedException("invalid token")
+        } catch (error: IllegalArgumentException) {
+            throw UnauthorizedException("invalid token")
         }
     }
 }
