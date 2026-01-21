@@ -13,6 +13,6 @@ export class ChatRabbitMQConsumer {
     @Payload() payload: MessageEventType,
     @Ctx() context: RmqContext,
   ) {
-    await this.eventsGateway.send(payload);
+    await this.eventsGateway.broadcast(payload);
   }
 }

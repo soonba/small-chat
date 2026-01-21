@@ -7,13 +7,13 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import * as console from 'node:console';
 import { Server, Socket } from 'socket.io';
 import { EventType, PropertyKey } from '../domain/model/event.type';
 import { MessageEventType } from '../domain/model/message';
 import { ChatRabbitMQProducer } from './chat.rmq.producer';
+import { getCorsOrigins } from '../../config/cors';
 
-@WebSocketGateway({ cors: true })
+@WebSocketGateway({ cors: { origin: getCorsOrigins() } })
 export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
@@ -27,6 +27,9 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody(PropertyKey.CHAT_IDS) chatIds: string[],
     @ConnectedSocket() client: Socket,
   ) {
+    if (!Array.isArray(chatIds)) {
+      return;
+    }
     for (let i = 0; i < chatIds.length; i++) {
       const chat = chatIds[i];
       await client.join(chat);
@@ -36,12 +39,7 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage(EventType.MESSAGE)
   async send(@MessageBody(PropertyKey.MESSAGE) messageBody: MessageEventType) {
-    const { chatId, ...rest } = messageBody;
-    this.server.to(chatId).emit(EventType.MESSAGE, messageBody);
-    this.server
-      .to(this.LIST_PREFIX + chatId)
-      .emit(EventType.MESSAGE, { ...rest, chatId: this.LIST_PREFIX + chatId });
-    await this.rmqProducer.send(messageBody);
+    await this.broadcastAndPublish(messageBody);
   }
 
   @SubscribeMessage(EventType.UN_SUBSCRIBE)
@@ -58,5 +56,22 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   handleDisconnect(client: any): any {
     console.log(`client disconnected: ${client.id}`);
+  }
+
+  async broadcast(messageBody: MessageEventType) {
+    this.emitMessage(messageBody);
+  }
+
+  async broadcastAndPublish(messageBody: MessageEventType) {
+    this.emitMessage(messageBody);
+    await this.rmqProducer.send(messageBody);
+  }
+
+  private emitMessage(messageBody: MessageEventType) {
+    const { chatId, ...rest } = messageBody;
+    this.server.to(chatId).emit(EventType.MESSAGE, messageBody);
+    this.server
+      .to(this.LIST_PREFIX + chatId)
+      .emit(EventType.MESSAGE, { ...rest, chatId: this.LIST_PREFIX + chatId });
   }
 }
