@@ -14,7 +14,6 @@ import { ConfigService } from '@nestjs/config';
         name: 'RMQ_SVC',
         inject: [ConfigService],
         useFactory: (config: ConfigService) => {
-          console.log(config.get<string>('RMQ_URL'));
           return {
             transport: Transport.RMQ,
             options: {
