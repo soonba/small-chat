@@ -20,6 +20,6 @@ class CurrentUserResolver : HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any? {
-        return UserContext.get()
+        return UserContext.get() ?: throw UnauthorizedException("unauthorized")
     }
 }

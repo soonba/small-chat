@@ -1,5 +1,6 @@
 package com.smallchat.backend.user.domain.model
 
+import com.smallchat.backend.global.domain.auth.UnauthorizedException
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -19,7 +20,7 @@ class RefreshToken(
 ) {
     fun verifying(rt: String) {
         if (this.value != rt) {
-            throw RuntimeException("토큰 불일치")
+            throw UnauthorizedException("invalid refresh token")
         }
     }
 }

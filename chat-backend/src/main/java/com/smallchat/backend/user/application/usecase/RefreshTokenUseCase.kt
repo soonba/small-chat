@@ -3,10 +3,10 @@ package com.smallchat.backend.user.application.usecase
 import com.smallchat.backend.global.domain.auth.AuthenticatedUser
 import com.smallchat.backend.global.domain.auth.JwtProvider
 import com.smallchat.backend.global.domain.auth.TokenType
+import com.smallchat.backend.global.domain.auth.UnauthorizedException
 import com.smallchat.backend.user.domain.interfaces.RefreshTokenRepository
 import com.smallchat.backend.user.domain.model.RefreshToken
 import com.smallchat.backend.user.interfaces.web.dto.RefreshDto
-import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,10 +19,10 @@ class RefreshTokenUseCase(
         val parseToken: AuthenticatedUser = jwtProvider.parseToken(refreshToken)
         val (id, nickname, tokenType) = parseToken
         if (tokenType != TokenType.REFRESH_TOKEN) {
-            throw RuntimeException("refresh token required")
+            throw UnauthorizedException("refresh token required")
         }
         val tokenEntity =
-            refreshTokenRepository.findById(id).orElseThrow { throw EntityNotFoundException("찾을 수 없는 리프레쉬 토큰 엔티티") }
+            refreshTokenRepository.findById(id).orElseThrow { UnauthorizedException("invalid refresh token") }
         tokenEntity.verifying(refreshToken)
 
         val tokens = jwtProvider.createTokens(id, nickname)
